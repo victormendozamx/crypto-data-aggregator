@@ -1,0 +1,201 @@
+/**
+ * Top Gainers and Losers Page
+ * Real-time price movers in crypto
+ */
+
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { getTopCoins, formatPrice, formatPercent, formatNumber } from '@/lib/market-data';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Top Gainers & Losers',
+  description: 'Real-time crypto price movers. See which coins are pumping and dumping in the last 24 hours.',
+};
+
+export const revalidate = 60;
+
+export default async function MoversPage() {
+  const coins = await getTopCoins(100);
+  
+  // Sort by 24h change
+  const sortedByChange = [...coins].sort((a, b) => 
+    (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
+  );
+  
+  const gainers = sortedByChange.slice(0, 20);
+  const losers = sortedByChange.slice(-20).reverse();
+  
+  // Calculate market stats
+  const totalGainers = coins.filter(c => (c.price_change_percentage_24h || 0) > 0).length;
+  const totalLosers = coins.filter(c => (c.price_change_percentage_24h || 0) < 0).length;
+  const avgChange = coins.reduce((sum, c) => sum + (c.price_change_percentage_24h || 0), 0) / coins.length;
+  
+  return (
+    <div className="min-h-screen bg-white dark:bg-black">
+      <div className="max-w-7xl mx-auto">
+        <Header />
+        
+        <main className="px-4 py-8">
+          {/* Page Header */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3">
+              <svg className="w-8 h-8 text-neutral-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              <h1 className="text-4xl font-bold text-neutral-900 dark:text-white">Top Movers</h1>
+            </div>
+            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+              Biggest price changes in the last 24 hours
+            </p>
+          </div>
+
+          {/* Market Sentiment */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Gainers (24h)</p>
+              <p className="text-2xl font-bold text-neutral-900 dark:text-white">{totalGainers}</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Losers (24h)</p>
+              <p className="text-2xl font-bold text-neutral-500 dark:text-neutral-400">{totalLosers}</p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Avg Change</p>
+              <p className={`text-2xl font-bold ${avgChange >= 0 ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}>
+                {formatPercent(avgChange)}
+              </p>
+            </div>
+            <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Sentiment</p>
+              <p className={`text-2xl font-bold ${totalGainers > totalLosers ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}>
+                {totalGainers > totalLosers ? 'Bullish' : 'Bearish'}
+              </p>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Top Gainers */}
+            <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+              <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
+                <div className="flex items-center gap-2">
+                  <svg className="w-6 h-6 text-neutral-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                  </svg>
+                  <div>
+                    <h2 className="font-bold text-lg text-neutral-900 dark:text-white">Top Gainers</h2>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">Best performers in 24h</p>
+                  </div>
+                </div>
+              </div>
+              <div className="divide-y divide-neutral-100 dark:divide-neutral-800 max-h-[600px] overflow-y-auto">
+                {gainers.map((coin, index) => (
+                  <Link
+                    key={coin.id}
+                    href={`/coin/${coin.id}`}
+                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-neutral-400 text-sm w-6">{index + 1}</span>
+                      {coin.image && (
+                        <img 
+                          src={coin.image} 
+                          alt={coin.name}
+                          className="w-8 h-8 rounded-full"
+                        />
+                      )}
+                      <div>
+                        <span className="font-medium text-neutral-900 dark:text-white">{coin.name}</span>
+                        <span className="text-neutral-500 text-sm ml-2">{coin.symbol.toUpperCase()}</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium text-neutral-900 dark:text-white">{formatPrice(coin.current_price)}</p>
+                      <p className="text-neutral-900 dark:text-white font-bold">
+                        +{formatPercent(coin.price_change_percentage_24h)}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Losers */}
+            <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+              <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
+                <div className="flex items-center gap-2">
+                  <svg className="w-6 h-6 text-neutral-500 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                  <div>
+                    <h2 className="font-bold text-lg text-neutral-900 dark:text-white">Top Losers</h2>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">Worst performers in 24h</p>
+                  </div>
+                </div>
+              </div>
+              <div className="divide-y divide-neutral-100 dark:divide-neutral-800 max-h-[600px] overflow-y-auto">
+                {losers.map((coin, index) => (
+                  <Link
+                    key={coin.id}
+                    href={`/coin/${coin.id}`}
+                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-neutral-400 text-sm w-6">{index + 1}</span>
+                      {coin.image && (
+                        <img 
+                          src={coin.image} 
+                          alt={coin.name}
+                          className="w-8 h-8 rounded-full"
+                        />
+                      )}
+                      <div>
+                        <span className="font-medium text-neutral-900 dark:text-white">{coin.name}</span>
+                        <span className="text-neutral-500 text-sm ml-2">{coin.symbol.toUpperCase()}</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium text-neutral-900 dark:text-white">{formatPrice(coin.current_price)}</p>
+                      <p className="text-neutral-500 dark:text-neutral-400 font-bold">
+                        {formatPercent(coin.price_change_percentage_24h)}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="mt-8 flex justify-center gap-4">
+            <Link 
+              href="/markets" 
+              className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-6 py-3 rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-100 transition"
+            >
+              Full Markets Dashboard
+            </Link>
+            <Link 
+              href="/category/markets" 
+              className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 px-6 py-3 rounded-lg font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition"
+            >
+              Market News
+            </Link>
+          </div>
+
+          {/* Attribution */}
+          <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm mt-8">
+            Data from{' '}
+            <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer" className="text-neutral-900 dark:text-white hover:underline">
+              CoinGecko
+            </a>
+            . Updated every minute.
+          </p>
+        </main>
+        
+        <Footer />
+      </div>
+    </div>
+  );
+}

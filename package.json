@@ -1,0 +1,69 @@
+{
+  "name": "crypto-data-aggregator",
+  "version": "1.0.0",
+  "description": "Real-time cryptocurrency market data aggregator with DeFi analytics, portfolio tracking, watchlists, and comprehensive market insights.",
+  "private": false,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "analyze": "ANALYZE=true next build"
+  },
+  "keywords": [
+    "crypto",
+    "cryptocurrency",
+    "market-data",
+    "bitcoin",
+    "ethereum",
+    "defi",
+    "portfolio",
+    "watchlist",
+    "coingecko",
+    "defillama",
+    "aggregator"
+  ],
+  "author": "nirholas",
+  "license": "MIT",
+  "dependencies": {
+    "@types/recharts": "^1.8.29",
+    "framer-motion": "^12.28.1",
+    "lucide-react": "^0.562.0",
+    "next": "^16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "recharts": "^2.15.4",
+    "sanitize-html": "^2.17.0",
+    "swr": "^2.3.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.0.9",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "@types/sanitize-html": "^2.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
+    "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/ui": "^4.0.17",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^16.1.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "jsdom": "^27.4.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.17"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
