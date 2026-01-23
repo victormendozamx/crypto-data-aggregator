@@ -27,7 +27,8 @@ import { PAYMENT_ADDRESS, CURRENT_NETWORK } from './config';
  * Use this in your middleware.ts file
  */
 export function getPaymentMiddleware() {
-  return paymentProxy(createRoutes(), x402Server);
+  // Cast routes to expected type - RouteConfig is compatible with x402 expectations
+  return paymentProxy(createRoutes() as Parameters<typeof paymentProxy>[0], x402Server);
 }
 
 // =============================================================================

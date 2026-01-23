@@ -106,10 +106,10 @@ export interface PremiumFetchState {
 /**
  * Supported chains for payments
  */
-export const supportedChains = {
+export const supportedChains: Record<string, typeof base | typeof baseSepolia> = {
   'eip155:84532': baseSepolia,
   'eip155:8453': base,
-} as const;
+};
 
 /**
  * Default chain (Base Sepolia for testing)

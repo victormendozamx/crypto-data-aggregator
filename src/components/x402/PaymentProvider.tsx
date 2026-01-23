@@ -423,12 +423,4 @@ export function usePayment() {
 // TYPE AUGMENTATION FOR WINDOW.ETHEREUM
 // =============================================================================
 
-declare global {
-  interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-      on: (event: string, callback: (...args: unknown[]) => void) => void;
-      removeListener: (event: string, callback: (...args: unknown[]) => void) => void;
-    };
-  }
-}
+// Types are declared in @/lib/x402-client.ts
