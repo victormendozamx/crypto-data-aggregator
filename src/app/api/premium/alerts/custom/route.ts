@@ -17,7 +17,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withX402 } from '@x402/next';
 import { x402Server, getRouteConfig } from '@/lib/x402-server';
-import { getCoinDetails, getSimplePrices } from '@/lib/market-data';
+import { getCoinDetails, getPricesForCoins } from '@/lib/market-data';
 
 export const runtime = 'nodejs';
 
@@ -172,7 +172,7 @@ async function handler(
     const coinIds = [...new Set(rules.map((r) => r.coinId))];
 
     // Fetch current prices
-    const prices = await getSimplePrices(coinIds, 'usd');
+    const prices = await getPricesForCoins(coinIds, 'usd');
 
     // Fetch detailed data for each coin
     const coinDataPromises = coinIds.map(async (coinId) => {

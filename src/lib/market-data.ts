@@ -845,6 +845,42 @@ export async function getSimplePrices(): Promise<SimplePrices> {
 }
 
 /**
+ * Get prices for arbitrary coin IDs
+ * @param coinIds - Array of coin IDs to fetch prices for
+ * @param vsCurrency - Currency to get prices in (default: 'usd')
+ * @returns Price data for each coin
+ */
+export async function getPricesForCoins(
+  coinIds: string[],
+  vsCurrency: string = 'usd'
+): Promise<Record<string, { usd: number; usd_24h_change?: number }>> {
+  if (!coinIds.length) return {};
+
+  const idsParam = coinIds.join(',');
+  const cacheKey = `prices-${idsParam}-${vsCurrency}`;
+  const cached = getCached<Record<string, { usd: number; usd_24h_change?: number }>>(cacheKey);
+  if (cached) return cached.data;
+
+  try {
+    const response = await fetchWithTimeout(
+      `${COINGECKO_BASE}/simple/price?ids=${idsParam}&vs_currencies=${vsCurrency}&include_24hr_change=true`
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch prices');
+    }
+
+    const data = await response.json();
+    setCache(cacheKey, data, CACHE_TTL.prices);
+    return data;
+  } catch (error) {
+    console.error('Error fetching prices for coins:', error);
+    // Return empty object for failed requests
+    return {};
+  }
+}
+
+/**
  * Get top coins by market cap
  * @param limit - Number of coins to fetch (max 250)
  * @returns Array of top coins sorted by market cap

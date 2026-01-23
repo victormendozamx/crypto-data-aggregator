@@ -16,7 +16,7 @@
 import { NextRequest } from 'next/server';
 import { withX402 } from '@x402/next';
 import { x402Server, getRouteConfig } from '@/lib/x402-server';
-import { getSimplePrices } from '@/lib/market-data';
+import { getPricesForCoins } from '@/lib/market-data';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -49,7 +49,7 @@ async function handler(request: NextRequest): Promise<Response> {
         if (!isActive) return;
 
         try {
-          const prices = await getSimplePrices(coins, 'usd');
+          const prices = await getPricesForCoins(coins, 'usd');
 
           const priceUpdate = {
             type: 'prices',
