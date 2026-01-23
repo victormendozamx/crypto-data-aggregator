@@ -1,6 +1,6 @@
 /**
  * Newsletter Subscription & Email Digest System
- * 
+ *
  * Features:
  * - Email subscription management
  * - Daily/weekly digest generation
@@ -57,7 +57,7 @@ export async function subscribe(
   }
 
   // Check if already subscribed
-  const existing = Array.from(subscribers.values()).find(s => s.email === email);
+  const existing = Array.from(subscribers.values()).find((s) => s.email === email);
   if (existing) {
     return { success: false, message: 'Email already subscribed' };
   }
@@ -75,22 +75,104 @@ export async function subscribe(
 
   subscribers.set(subscriber.id, subscriber);
 
-  // TODO: Send verification email
-  // await sendVerificationEmail(subscriber);
+  // Send verification email
+  await sendVerificationEmail(subscriber);
 
-  return { 
-    success: true, 
+  return {
+    success: true,
     message: 'Subscribed successfully. Please check your email to verify.',
     subscriber,
   };
 }
 
+// App URL for email links
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://free-crypto-news.vercel.app';
+
+/**
+ * Send verification email to new subscriber
+ */
+async function sendVerificationEmail(subscriber: Subscriber): Promise<boolean> {
+  const verifyUrl = `${APP_URL}/api/newsletter?action=verify&token=${subscriber.unsubscribeToken}`;
+
+  const email: DigestEmail = {
+    to: subscriber.email,
+    subject: 'Verify your Crypto News subscription',
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a0a; color: #e5e5e5;">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h1 style="color: #fbbf24; margin: 0;">Crypto News</h1>
+    <p style="color: #737373; margin-top: 5px;">Real-time cryptocurrency updates</p>
+  </div>
+  
+  <div style="background: #171717; border-radius: 12px; padding: 30px; border: 1px solid #262626;">
+    <h2 style="margin-top: 0; color: #e5e5e5;">Confirm your subscription</h2>
+    <p style="color: #a3a3a3; line-height: 1.6;">
+      Thanks for subscribing to our ${subscriber.frequency} crypto news digest! 
+      Please click the button below to verify your email address.
+    </p>
+    
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="${verifyUrl}" 
+         style="background: #fbbf24; color: #0a0a0a; padding: 14px 28px; 
+                border-radius: 8px; text-decoration: none; font-weight: 600;
+                display: inline-block;">
+        Verify Email Address
+      </a>
+    </div>
+    
+    <p style="color: #737373; font-size: 14px;">
+      If the button doesn't work, copy and paste this link into your browser:<br>
+      <a href="${verifyUrl}" style="color: #fbbf24; word-break: break-all;">${verifyUrl}</a>
+    </p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 30px; color: #525252; font-size: 12px;">
+    <p>If you didn't subscribe, you can safely ignore this email.</p>
+    <p>© ${new Date().getFullYear()} Crypto News Aggregator</p>
+  </div>
+</body>
+</html>
+    `.trim(),
+    text: `
+Confirm your Crypto News subscription
+
+Thanks for subscribing to our ${subscriber.frequency} crypto news digest!
+
+Click this link to verify your email address:
+${verifyUrl}
+
+If you didn't subscribe, you can safely ignore this email.
+    `.trim(),
+  };
+
+  // Try available email providers in order
+  const resendKey = process.env.RESEND_API_KEY;
+  const sendgridKey = process.env.SENDGRID_API_KEY;
+
+  if (resendKey) {
+    return sendViaResend(email);
+  } else if (sendgridKey) {
+    return sendViaSendGrid(email);
+  } else {
+    console.warn('[Newsletter] No email provider configured. Verification email not sent.');
+    return false;
+  }
+}
+
 /**
  * Verify email subscription
  */
-export async function verifySubscription(token: string): Promise<{ success: boolean; message: string }> {
-  const subscriber = Array.from(subscribers.values()).find(s => s.unsubscribeToken === token);
-  
+export async function verifySubscription(
+  token: string
+): Promise<{ success: boolean; message: string }> {
+  const subscriber = Array.from(subscribers.values()).find((s) => s.unsubscribeToken === token);
+
   if (!subscriber) {
     return { success: false, message: 'Invalid verification token' };
   }
@@ -105,8 +187,8 @@ export async function verifySubscription(token: string): Promise<{ success: bool
  * Unsubscribe
  */
 export async function unsubscribe(token: string): Promise<{ success: boolean; message: string }> {
-  const subscriber = Array.from(subscribers.values()).find(s => s.unsubscribeToken === token);
-  
+  const subscriber = Array.from(subscribers.values()).find((s) => s.unsubscribeToken === token);
+
   if (!subscriber) {
     return { success: false, message: 'Invalid unsubscribe token' };
   }
@@ -126,8 +208,8 @@ export async function updatePreferences(
     sources?: string[];
   }
 ): Promise<{ success: boolean; message: string }> {
-  const subscriber = Array.from(subscribers.values()).find(s => s.unsubscribeToken === token);
-  
+  const subscriber = Array.from(subscribers.values()).find((s) => s.unsubscribeToken === token);
+
   if (!subscriber) {
     return { success: false, message: 'Invalid token' };
   }
@@ -143,17 +225,23 @@ export async function updatePreferences(
 /**
  * Get subscribers by frequency
  */
-export function getSubscribersByFrequency(frequency: 'daily' | 'weekly' | 'breaking'): Subscriber[] {
-  return Array.from(subscribers.values()).filter(
-    s => s.verified && s.frequency === frequency
-  );
+export function getSubscribersByFrequency(
+  frequency: 'daily' | 'weekly' | 'breaking'
+): Subscriber[] {
+  return Array.from(subscribers.values()).filter((s) => s.verified && s.frequency === frequency);
 }
 
 /**
  * Generate digest email HTML
  */
 export function generateDigestHtml(
-  articles: Array<{ title: string; link: string; source: string; description?: string; timeAgo: string }>,
+  articles: Array<{
+    title: string;
+    link: string;
+    source: string;
+    description?: string;
+    timeAgo: string;
+  }>,
   subscriber: Subscriber
 ): string {
   const articlesList = articles
@@ -265,7 +353,7 @@ export async function sendViaResend(email: DigestEmail): Promise<boolean> {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -298,7 +386,7 @@ export async function sendViaSendGrid(email: DigestEmail): Promise<boolean> {
     const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -328,14 +416,14 @@ export function getSubscriberStats(): {
   byFrequency: Record<string, number>;
 } {
   const all = Array.from(subscribers.values());
-  
+
   return {
     total: all.length,
-    verified: all.filter(s => s.verified).length,
+    verified: all.filter((s) => s.verified).length,
     byFrequency: {
-      daily: all.filter(s => s.frequency === 'daily').length,
-      weekly: all.filter(s => s.frequency === 'weekly').length,
-      breaking: all.filter(s => s.frequency === 'breaking').length,
+      daily: all.filter((s) => s.frequency === 'daily').length,
+      weekly: all.filter((s) => s.frequency === 'weekly').length,
+      breaking: all.filter((s) => s.frequency === 'breaking').length,
     },
   };
 }

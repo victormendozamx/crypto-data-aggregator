@@ -1,9 +1,9 @@
 /**
  * React Hooks for Crypto Data
- * 
+ *
  * Custom hooks for real-time crypto data fetching,
  * WebSocket connections, and local storage sync.
- * 
+ *
  * @module hooks/crypto
  */
 
@@ -55,13 +55,13 @@ export function useFetch<T>(
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  
+
   const fetchData = useCallback(async () => {
     if (!url || !enabled) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -74,16 +74,16 @@ export function useFetch<T>(
       setLoading(false);
     }
   }, [url, enabled]);
-  
+
   useEffect(() => {
     fetchData();
-    
+
     if (refreshInterval && enabled) {
       const interval = setInterval(fetchData, refreshInterval);
       return () => clearInterval(interval);
     }
   }, [fetchData, refreshInterval, enabled]);
-  
+
   return { data, loading, error, refetch: fetchData, lastUpdated };
 }
 
@@ -95,16 +95,16 @@ export function useCryptoPrice(
   options: UsePriceOptions = {}
 ): FetchState<PriceData> & { formattedPrice: string } {
   const { refreshInterval = 30000, enabled = true } = options;
-  
-  const url = enabled && coinId
-    ? `/api/market/price?coin=${encodeURIComponent(coinId)}`
-    : null;
-  
-  const state = useFetch<{ price: number; change24h: number; marketCap?: number; volume24h?: number }>(
-    url,
-    { refreshInterval, enabled }
-  );
-  
+
+  const url = enabled && coinId ? `/api/market/price?coin=${encodeURIComponent(coinId)}` : null;
+
+  const state = useFetch<{
+    price: number;
+    change24h: number;
+    marketCap?: number;
+    volume24h?: number;
+  }>(url, { refreshInterval, enabled });
+
   const formattedPrice = useMemo(() => {
     if (!state.data?.price) return '$--';
     return new Intl.NumberFormat('en-US', {
@@ -114,7 +114,7 @@ export function useCryptoPrice(
       maximumFractionDigits: state.data.price < 1 ? 6 : 2,
     }).format(state.data.price);
   }, [state.data?.price]);
-  
+
   return { ...state, formattedPrice };
 }
 
@@ -126,29 +126,32 @@ export function useMultiplePrices(
   options: UsePriceOptions = {}
 ): FetchState<Record<string, PriceData>> {
   const { refreshInterval = 30000, enabled = true } = options;
-  
-  const url = enabled && coinIds.length > 0
-    ? `/api/market/prices?coins=${encodeURIComponent(coinIds.join(','))}`
-    : null;
-  
+
+  const url =
+    enabled && coinIds.length > 0
+      ? `/api/market/prices?coins=${encodeURIComponent(coinIds.join(','))}`
+      : null;
+
   return useFetch<Record<string, PriceData>>(url, { refreshInterval, enabled });
 }
 
 /**
  * Hook for fetching news articles
  */
-export function useCryptoNews(options: {
-  limit?: number;
-  source?: string;
-  category?: string;
-  refreshInterval?: number;
-} = {}) {
+export function useCryptoNews(
+  options: {
+    limit?: number;
+    source?: string;
+    category?: string;
+    refreshInterval?: number;
+  } = {}
+) {
   const { limit = 10, source, category, refreshInterval = 60000 } = options;
-  
+
   let url = `/api/news?limit=${limit}`;
   if (source) url += `&source=${encodeURIComponent(source)}`;
   if (category) url += `&category=${encodeURIComponent(category)}`;
-  
+
   return useFetch<{
     articles: Array<{
       title: string;
@@ -203,22 +206,22 @@ export function useWebSocket<T>(
   const [data, setData] = useState<T | null>(null);
   const [connected, setConnected] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  
+
   const wsRef = useRef<WebSocket | null>(null);
   const attemptsRef = useRef(0);
-  
+
   const connect = useCallback(() => {
     if (!url) return;
-    
+
     try {
       wsRef.current = new WebSocket(url);
-      
+
       wsRef.current.onopen = () => {
         setConnected(true);
         setError(null);
         attemptsRef.current = 0;
       };
-      
+
       wsRef.current.onmessage = (event) => {
         try {
           const parsed = JSON.parse(event.data) as T;
@@ -228,14 +231,14 @@ export function useWebSocket<T>(
           // Non-JSON message
         }
       };
-      
+
       wsRef.current.onerror = () => {
         setError(new Error('WebSocket error'));
       };
-      
+
       wsRef.current.onclose = () => {
         setConnected(false);
-        
+
         // Auto-reconnect
         if (attemptsRef.current < reconnectAttempts) {
           attemptsRef.current++;
@@ -246,24 +249,24 @@ export function useWebSocket<T>(
       setError(e instanceof Error ? e : new Error('Failed to connect'));
     }
   }, [url, onMessage, reconnectAttempts, reconnectInterval]);
-  
+
   useEffect(() => {
     connect();
     return () => wsRef.current?.close();
   }, [connect]);
-  
+
   const send = useCallback((message: unknown) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     }
   }, []);
-  
+
   const reconnect = useCallback(() => {
     wsRef.current?.close();
     attemptsRef.current = 0;
     connect();
   }, [connect]);
-  
+
   return { data, connected, error, send, reconnect };
 }
 
@@ -272,21 +275,18 @@ export function useWebSocket<T>(
  */
 export function useLivePrices(coinIds: string[]) {
   const [prices, setPrices] = useState<Record<string, number>>({});
-  
+
   const { connected, error } = useWebSocket<{
     type: string;
     data: Record<string, number>;
-  }>(
-    coinIds.length > 0 ? `/api/ws/prices?coins=${coinIds.join(',')}` : null,
-    {
-      onMessage: (message) => {
-        if (message.type === 'prices') {
-          setPrices(prev => ({ ...prev, ...message.data }));
-        }
-      },
-    }
-  );
-  
+  }>(coinIds.length > 0 ? `/api/ws/prices?coins=${coinIds.join(',')}` : null, {
+    onMessage: (message) => {
+      if (message.type === 'prices') {
+        setPrices((prev) => ({ ...prev, ...message.data }));
+      }
+    },
+  });
+
   return { prices, connected, error };
 }
 
@@ -303,7 +303,7 @@ export function useLocalStorage<T>(
 ): [T, (value: T | ((prev: T) => T)) => void, () => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === 'undefined') return initialValue;
-    
+
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -311,26 +311,29 @@ export function useLocalStorage<T>(
       return initialValue;
     }
   });
-  
-  const setValue = useCallback((value: T | ((prev: T) => T)) => {
-    setStoredValue(prev => {
-      const valueToStore = value instanceof Function ? value(prev) : value;
-      
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-      
-      return valueToStore;
-    });
-  }, [key]);
-  
+
+  const setValue = useCallback(
+    (value: T | ((prev: T) => T)) => {
+      setStoredValue((prev) => {
+        const valueToStore = value instanceof Function ? value(prev) : value;
+
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        }
+
+        return valueToStore;
+      });
+    },
+    [key]
+  );
+
   const removeValue = useCallback(() => {
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(key);
     }
     setStoredValue(initialValue);
   }, [key, initialValue]);
-  
+
   return [storedValue, setValue, removeValue];
 }
 
@@ -342,29 +345,35 @@ export function useWatchlist() {
     'crypto-watchlist',
     []
   );
-  
-  const addCoin = useCallback((coinId: string) => {
-    setWatchlist(prev => {
-      if (prev.includes(coinId)) return prev;
-      return [...prev, coinId];
-    });
-  }, [setWatchlist]);
-  
-  const removeCoin = useCallback((coinId: string) => {
-    setWatchlist(prev => prev.filter(id => id !== coinId));
-  }, [setWatchlist]);
-  
-  const toggleCoin = useCallback((coinId: string) => {
-    setWatchlist(prev => 
-      prev.includes(coinId) 
-        ? prev.filter(id => id !== coinId)
-        : [...prev, coinId]
-    );
-  }, [setWatchlist]);
-  
-  const isWatching = useCallback((coinId: string) => 
-    watchlist.includes(coinId), [watchlist]);
-  
+
+  const addCoin = useCallback(
+    (coinId: string) => {
+      setWatchlist((prev) => {
+        if (prev.includes(coinId)) return prev;
+        return [...prev, coinId];
+      });
+    },
+    [setWatchlist]
+  );
+
+  const removeCoin = useCallback(
+    (coinId: string) => {
+      setWatchlist((prev) => prev.filter((id) => id !== coinId));
+    },
+    [setWatchlist]
+  );
+
+  const toggleCoin = useCallback(
+    (coinId: string) => {
+      setWatchlist((prev) =>
+        prev.includes(coinId) ? prev.filter((id) => id !== coinId) : [...prev, coinId]
+      );
+    },
+    [setWatchlist]
+  );
+
+  const isWatching = useCallback((coinId: string) => watchlist.includes(coinId), [watchlist]);
+
   return {
     watchlist,
     addCoin,
@@ -383,21 +392,26 @@ export function useBookmarks() {
   const [bookmarks, setBookmarks, clearBookmarks] = useLocalStorage<
     Array<{ id: string; title: string; link: string; savedAt: string }>
   >('crypto-bookmarks', []);
-  
-  const addBookmark = useCallback((article: { id: string; title: string; link: string }) => {
-    setBookmarks(prev => {
-      if (prev.some(b => b.id === article.id)) return prev;
-      return [...prev, { ...article, savedAt: new Date().toISOString() }];
-    });
-  }, [setBookmarks]);
-  
-  const removeBookmark = useCallback((id: string) => {
-    setBookmarks(prev => prev.filter(b => b.id !== id));
-  }, [setBookmarks]);
-  
-  const isBookmarked = useCallback((id: string) => 
-    bookmarks.some(b => b.id === id), [bookmarks]);
-  
+
+  const addBookmark = useCallback(
+    (article: { id: string; title: string; link: string }) => {
+      setBookmarks((prev) => {
+        if (prev.some((b) => b.id === article.id)) return prev;
+        return [...prev, { ...article, savedAt: new Date().toISOString() }];
+      });
+    },
+    [setBookmarks]
+  );
+
+  const removeBookmark = useCallback(
+    (id: string) => {
+      setBookmarks((prev) => prev.filter((b) => b.id !== id));
+    },
+    [setBookmarks]
+  );
+
+  const isBookmarked = useCallback((id: string) => bookmarks.some((b) => b.id === id), [bookmarks]);
+
   return {
     bookmarks,
     addBookmark,
@@ -417,12 +431,12 @@ export function useBookmarks() {
  */
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
-  
+
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedValue(value), delay);
     return () => clearTimeout(handler);
   }, [value, delay]);
-  
+
   return debouncedValue;
 }
 
@@ -435,21 +449,29 @@ export function useThrottle<T extends (...args: unknown[]) => unknown>(
 ): T {
   const lastRan = useRef(Date.now());
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  return useCallback((...args: Parameters<T>) => {
-    const now = Date.now();
-    
-    if (now - lastRan.current >= delay) {
-      callback(...args);
-      lastRan.current = now;
-    } else {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      const now = Date.now();
+
+      if (now - lastRan.current >= delay) {
         callback(...args);
-        lastRan.current = Date.now();
-      }, delay - (now - lastRan.current));
-    }
-  }, [callback, delay]) as T;
+        lastRan.current = now;
+      } else {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(
+          () => {
+            callback(...args);
+            lastRan.current = Date.now();
+          },
+          delay - (now - lastRan.current)
+        );
+      }
+    },
+    [callback, delay]
+  ) as T;
 }
 
 /**
@@ -459,20 +481,20 @@ export function useOnlineStatus(): boolean {
   const [isOnline, setIsOnline] = useState(
     typeof navigator !== 'undefined' ? navigator.onLine : true
   );
-  
+
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
-    
+
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-    
+
     return () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
-  
+
   return isOnline;
 }
 
@@ -481,19 +503,19 @@ export function useOnlineStatus(): boolean {
  */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false);
-  
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     const media = window.matchMedia(query);
     setMatches(media.matches);
-    
+
     const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
     media.addEventListener('change', listener);
-    
+
     return () => media.removeEventListener('change', listener);
   }, [query]);
-  
+
   return matches;
 }
 
@@ -519,31 +541,28 @@ export function useIntersectionObserver(
 ): [React.RefObject<HTMLElement | null>, boolean] {
   const ref = useRef<HTMLElement>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
-  
+
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    
+
     const observer = new IntersectionObserver(([entry]) => {
       setIsIntersecting(entry.isIntersecting);
     }, options);
-    
+
     observer.observe(element);
     return () => observer.disconnect();
   }, [options]);
-  
+
   return [ref, isIntersecting];
 }
 
 /**
  * Hook for copy to clipboard
  */
-export function useCopyToClipboard(): [
-  boolean,
-  (text: string) => Promise<boolean>
-] {
+export function useCopyToClipboard(): [boolean, (text: string) => Promise<boolean>] {
   const [copied, setCopied] = useState(false);
-  
+
   const copy = useCallback(async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -554,7 +573,7 @@ export function useCopyToClipboard(): [
       return false;
     }
   }, []);
-  
+
   return [copied, copy];
 }
 
@@ -575,18 +594,18 @@ export function useCountdown(targetDate: Date | null): {
     seconds: 0,
     isExpired: true,
   });
-  
+
   useEffect(() => {
     if (!targetDate) return;
-    
+
     const calculate = () => {
       const diff = targetDate.getTime() - Date.now();
-      
+
       if (diff <= 0) {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: true });
         return;
       }
-      
+
       setTimeLeft({
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
         hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -595,11 +614,11 @@ export function useCountdown(targetDate: Date | null): {
         isExpired: false,
       });
     };
-    
+
     calculate();
     const interval = setInterval(calculate, 1000);
     return () => clearInterval(interval);
   }, [targetDate]);
-  
+
   return timeLeft;
 }

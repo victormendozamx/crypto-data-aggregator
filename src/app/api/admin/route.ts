@@ -1,30 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDashboardStats, getSystemHealth, trackAPICall } from '@/lib/analytics';
+import { requireAdminAuth } from '@/lib/admin-auth';
 
 export const runtime = 'nodejs';
 
-// Simple admin authentication (use proper auth in production)
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'dev-admin-token';
-
-function isAuthorized(request: NextRequest): boolean {
-  const authHeader = request.headers.get('Authorization');
-  if (!authHeader) return false;
-  
-  const token = authHeader.replace('Bearer ', '');
-  return token === ADMIN_TOKEN;
-}
-
 export async function GET(request: NextRequest) {
   // Check authorization
-  if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
+  const authError = requireAdminAuth(request);
+  if (authError) return authError;
 
   const startTime = Date.now();
-  
+
   try {
     const { searchParams } = new URL(request.url);
     const view = searchParams.get('view') || 'dashboard';
@@ -35,24 +21,18 @@ export async function GET(request: NextRequest) {
       case 'dashboard':
         data = getDashboardStats();
         break;
-      
+
       case 'health':
         data = await getSystemHealth();
         break;
-      
+
       case 'full':
-        const [stats, health] = await Promise.all([
-          getDashboardStats(),
-          getSystemHealth(),
-        ]);
+        const [stats, health] = await Promise.all([getDashboardStats(), getSystemHealth()]);
         data = { stats, health };
         break;
-      
+
       default:
-        return NextResponse.json(
-          { error: 'Invalid view parameter' },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: 'Invalid view parameter' }, { status: 400 });
     }
 
     // Track this API call
@@ -66,7 +46,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Admin API error:', error);
-    
+
     trackAPICall({
       endpoint: '/api/admin',
       method: 'GET',
@@ -74,21 +54,14 @@ export async function GET(request: NextRequest) {
       responseTime: Date.now() - startTime,
     });
 
-    return NextResponse.json(
-      { error: 'Failed to fetch admin data' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch admin data' }, { status: 500 });
   }
 }
 
 // POST endpoint to track custom events
 export async function POST(request: NextRequest) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
+  const authError = requireAdminAuth(request);
+  if (authError) return authError;
 
   try {
     const body = await request.json();
@@ -105,18 +78,12 @@ export async function POST(request: NextRequest) {
           ip: data.ip,
         });
         return NextResponse.json({ success: true });
-      
+
       default:
-        return NextResponse.json(
-          { error: 'Invalid action' },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
   } catch (error) {
     console.error('Admin POST error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process request' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
   }
 }

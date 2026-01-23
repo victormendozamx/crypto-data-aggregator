@@ -1,24 +1,34 @@
 # Python SDK
 
-Zero dependencies Python client for Free Crypto News API.
+Zero dependencies Python client for Crypto Data Aggregator API.
+
+**Free tier available** - No API key required for basic endpoints!
 
 ## Installation
 
 Just copy `crypto_news.py` to your project - no pip install needed!
 
 Or for convenience:
+
 ```bash
 curl -O https://raw.githubusercontent.com/nirholas/free-crypto-news/main/sdk/python/crypto_news.py
 ```
 
-## Usage
+## Quick Start
 
 ```python
 from crypto_news import CryptoNews
 
-# Initialize client
+# Free usage (no auth required for basic endpoints)
 news = CryptoNews()
 
+# Or with API key for premium endpoints
+news = CryptoNews(api_key='cda_free_xxxxx')
+```
+
+## Free Endpoints
+
+```python
 # Get latest news
 articles = news.get_latest(limit=10)
 for article in articles:
@@ -38,6 +48,42 @@ breaking = news.get_breaking()
 
 # List all sources
 sources = news.get_sources()
+```
+
+## Premium Endpoints (API Key or x402)
+
+```python
+# Set API key
+news.set_api_key('cda_free_xxxxx')
+
+# Get premium coin data
+coins = news.get_premium_coins(per_page=10)
+
+# Get historical data
+history = news.get_historical('bitcoin', days=30)
+
+# Export data
+data = news.export_data('bitcoin', format='csv', days=90)
+
+# Check usage
+usage = news.get_usage()
+print(f"{usage['remaining']}/{usage['limit']} requests remaining")
+
+# Check rate limits after any request
+rate_limit = news.get_rate_limit_info()
+```
+
+## Error Handling
+
+```python
+from crypto_news import CryptoNews, RateLimitError, PaymentRequiredError
+
+try:
+    coins = news.get_premium_coins()
+except RateLimitError as e:
+    print(f'Rate limit exceeded. Retry after: {e.retry_after}')
+except PaymentRequiredError as e:
+    print(f'Payment required: {e.payment_required}')
 ```
 
 ## Analytics & Trends
@@ -70,20 +116,20 @@ for item in origins['items']:
 
 ## Available Methods
 
-| Method | Description |
-|--------|-------------|
-| `get_latest(limit, source)` | Get latest news |
-| `search(keywords, limit)` | Search by keywords |
-| `get_defi(limit)` | DeFi news |
-| `get_bitcoin(limit)` | Bitcoin news |
-| `get_breaking(limit)` | Breaking news (last 2 hours) |
-| `get_sources()` | List all sources |
-| `get_trending(limit, hours)` | Trending topics |
-| `get_stats()` | API statistics |
-| `get_health()` | API health status |
-| `analyze(limit, topic, sentiment)` | News with sentiment analysis |
-| `get_archive(date, query, limit)` | Historical archive |
-| `get_origins(query, category, limit)` | Find original sources |
+| Method                                | Description                  |
+| ------------------------------------- | ---------------------------- |
+| `get_latest(limit, source)`           | Get latest news              |
+| `search(keywords, limit)`             | Search by keywords           |
+| `get_defi(limit)`                     | DeFi news                    |
+| `get_bitcoin(limit)`                  | Bitcoin news                 |
+| `get_breaking(limit)`                 | Breaking news (last 2 hours) |
+| `get_sources()`                       | List all sources             |
+| `get_trending(limit, hours)`          | Trending topics              |
+| `get_stats()`                         | API statistics               |
+| `get_health()`                        | API health status            |
+| `analyze(limit, topic, sentiment)`    | News with sentiment analysis |
+| `get_archive(date, query, limit)`     | Historical archive           |
+| `get_origins(query, category, limit)` | Find original sources        |
 
 ## Quick Functions
 

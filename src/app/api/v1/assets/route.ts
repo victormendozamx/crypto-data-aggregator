@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAggregatedAssets, getCoinCapAsset, getCoinCapHistory } from '@/lib/external-apis';
+import { hybridAuthMiddleware } from '@/lib/x402';
 
 export const runtime = 'edge';
 export const revalidate = 30;
+
+const ENDPOINT = '/api/v1/assets';
 
 /**
  * GET /api/v1/assets
@@ -20,6 +23,9 @@ export const revalidate = 30;
  * GET /api/v1/assets?id=bitcoin    # Single asset
  */
 export async function GET(request: NextRequest) {
+  const authResponse = await hybridAuthMiddleware(request, ENDPOINT);
+  if (authResponse) return authResponse;
+
   const searchParams = request.nextUrl.searchParams;
   const id = searchParams.get('id');
   const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 250);

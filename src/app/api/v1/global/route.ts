@@ -1,12 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import {
   getAggregatedGlobalData,
   getCoinPaprikaGlobal,
   getCoinLoreGlobal,
 } from '@/lib/external-apis';
+import { hybridAuthMiddleware } from '@/lib/x402';
 
 export const runtime = 'edge';
 export const revalidate = 60;
+
+const ENDPOINT = '/api/v1/global';
 
 /**
  * GET /api/v1/global
@@ -17,7 +20,10 @@ export const revalidate = 60;
  * @example
  * GET /api/v1/global
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authResponse = await hybridAuthMiddleware(request, ENDPOINT);
+  if (authResponse) return authResponse;
+
   try {
     const globalData = await getAggregatedGlobalData();
 

@@ -25,8 +25,9 @@ export async function initRedis(): Promise<boolean> {
   initPromise = (async () => {
     try {
       // Dynamic import to avoid bundling in edge runtime
+      // @ts-expect-error - dynamic import of optional redis package
       const { createClient } = await import('redis');
-      
+
       redisClient = createClient({
         url: process.env.REDIS_URL,
         socket: {
@@ -84,7 +85,7 @@ export async function redisGet<T>(key: string): Promise<T | null> {
   } catch (error) {
     console.error('[Redis] Get error:', error);
   }
-  
+
   // Fallback to memory cache
   return newsCache.get<T>(key);
 }
@@ -98,7 +99,7 @@ export async function redisSet<T>(
   ttlSeconds: number = 300
 ): Promise<boolean> {
   const serialized = JSON.stringify(value);
-  
+
   // Always set in memory cache as backup
   newsCache.set(key, value, ttlSeconds);
 
@@ -261,25 +262,25 @@ export const redisKeys = {
  */
 export const redisTTL = {
   // News content
-  NEWS_FEED: 300,        // 5 minutes
-  ARTICLE: 3600,         // 1 hour
-  SEARCH: 600,           // 10 minutes
-  TRENDING: 300,         // 5 minutes
-  BREAKING: 60,          // 1 minute
-  SOURCES: 3600,         // 1 hour
+  NEWS_FEED: 300, // 5 minutes
+  ARTICLE: 3600, // 1 hour
+  SEARCH: 600, // 10 minutes
+  TRENDING: 300, // 5 minutes
+  BREAKING: 60, // 1 minute
+  SOURCES: 3600, // 1 hour
 
   // Market data
-  MARKET_PRICE: 30,      // 30 seconds
-  MARKET_HISTORY: 300,   // 5 minutes
+  MARKET_PRICE: 30, // 30 seconds
+  MARKET_HISTORY: 300, // 5 minutes
 
   // User data
-  USER_ALERTS: 300,      // 5 minutes
-  USER_PORTFOLIO: 300,   // 5 minutes
-  USER_BOOKMARKS: 600,   // 10 minutes
+  USER_ALERTS: 300, // 5 minutes
+  USER_PORTFOLIO: 300, // 5 minutes
+  USER_BOOKMARKS: 600, // 10 minutes
 
   // AI responses
-  AI_SUMMARY: 86400,     // 24 hours
-  AI_SENTIMENT: 86400,   // 24 hours
+  AI_SUMMARY: 86400, // 24 hours
+  AI_SENTIMENT: 86400, // 24 hours
   AI_TRANSLATION: 86400, // 24 hours
 };
 

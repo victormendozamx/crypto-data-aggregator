@@ -19,6 +19,7 @@ import type {
   VerifyResponse,
 } from '@x402/core/types';
 import { registerExactEvmScheme } from '@x402/evm/exact/server';
+import { sendWebhook, webhookPayloads } from './webhooks';
 
 // =============================================================================
 // CONFIGURATION
@@ -335,6 +336,25 @@ export async function verifyX402Payment(
     if (result.isValid) {
       // Settle the payment
       const settlement = await server.settlePayment(payment, matchingRequirements);
+
+      // Get API key ID if present in request
+      const apiKeyId = request.headers.get('X-API-Key')?.substring(0, 12) || undefined;
+
+      // Emit payment.received webhook (non-blocking)
+      sendWebhook(
+        'payment.received',
+        webhookPayloads.paymentReceived({
+          keyId: apiKeyId,
+          amount: matchingRequirements.amount,
+          currency: 'USDC',
+          network: matchingRequirements.network,
+          transactionId: settlement.transaction,
+          resource: paymentRequired.resource?.url || request.nextUrl.pathname,
+        })
+      ).catch((err) => {
+        console.error('[x402] Failed to send payment.received webhook:', err);
+      });
+
       return {
         valid: true,
         settlementId: settlement.transaction,

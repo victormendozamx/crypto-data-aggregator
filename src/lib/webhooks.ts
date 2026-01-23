@@ -1,24 +1,65 @@
 /**
  * Webhooks System
- * Send notifications to external services when events occur
+ * Send notifications to external services when API events occur
+ *
+ * Supports KV-based persistent storage for production use
+ * with fallback to in-memory storage for development
  */
 
-// Webhook subscription store (replace with database in production)
-const webhookStore = new Map<string, WebhookSubscription[]>();
-const webhookLogs = new Map<string, WebhookDeliveryLog[]>();
+import { kv } from '@vercel/kv';
 
-export type WebhookEvent = 
-  | 'news.new'           // New article published
-  | 'news.breaking'      // Breaking news alert
-  | 'news.trending'      // Article becomes trending
-  | 'price.alert'        // Price alert triggered
+// ============================================================================
+// Types
+// ============================================================================
+
+/**
+ * API key lifecycle events
+ */
+export type ApiKeyWebhookEvent =
+  | 'key.created' // New API key created
+  | 'key.usage.limit' // Rate limit threshold reached (90% or 100%)
+  | 'key.upgraded' // API key tier upgraded
+  | 'payment.received'; // x402 payment received
+
+/**
+ * Content/news events
+ */
+export type ContentWebhookEvent =
+  | 'news.new' // New article published
+  | 'news.breaking' // Breaking news alert
+  | 'news.trending' // Article becomes trending
+  | 'price.alert' // Price alert triggered
   | 'market.significant' // Significant market movement
-  | 'source.new'         // New source added
-  | 'system.health';     // System health change
+  | 'source.new' // New source added
+  | 'system.health'; // System health change
+
+/**
+ * All webhook event types
+ */
+export type WebhookEvent = ApiKeyWebhookEvent | ContentWebhookEvent;
+
+/**
+ * All valid webhook events for validation
+ */
+export const WEBHOOK_EVENTS: WebhookEvent[] = [
+  // API key events
+  'key.created',
+  'key.usage.limit',
+  'key.upgraded',
+  'payment.received',
+  // Content events
+  'news.new',
+  'news.breaking',
+  'news.trending',
+  'price.alert',
+  'market.significant',
+  'source.new',
+  'system.health',
+];
 
 export interface WebhookSubscription {
   id: string;
-  userId: string;
+  keyId: string; // Associated API key ID
   url: string;
   events: WebhookEvent[];
   secret: string;
@@ -26,12 +67,17 @@ export interface WebhookSubscription {
   createdAt: string;
   updatedAt: string;
   metadata?: Record<string, unknown>;
+  // Delivery stats
+  deliveryCount?: number;
+  lastDeliveryAt?: string;
+  lastDeliveryStatus?: number;
 }
 
 export interface WebhookPayload {
   event: WebhookEvent;
   timestamp: string;
   data: unknown;
+  signature?: string;
 }
 
 export interface WebhookDeliveryLog {
@@ -48,10 +94,38 @@ export interface WebhookDeliveryLog {
   error?: string;
 }
 
+// ============================================================================
+// KV Storage Configuration
+// ============================================================================
+
+const KV_PREFIX = {
+  webhook: 'webhook:', // webhook:{webhookId} -> WebhookSubscription
+  keyWebhooks: 'key-webhooks:', // key-webhooks:{keyId} -> webhookId[]
+  logs: 'webhook-logs:', // webhook-logs:{webhookId} -> WebhookDeliveryLog[]
+  eventIndex: 'event-webhooks:', // event-webhooks:{event} -> webhookId[]
+};
+
 /**
- * Generate HMAC signature for webhook payload
+ * Check if Vercel KV is configured
  */
-async function generateSignature(payload: string, secret: string): Promise<string> {
+function isKvConfigured(): boolean {
+  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+// Fallback in-memory stores for development
+const webhookStore = new Map<string, WebhookSubscription>();
+const keyWebhooksIndex = new Map<string, string[]>();
+const webhookLogs = new Map<string, WebhookDeliveryLog[]>();
+const eventIndex = new Map<WebhookEvent, string[]>();
+
+// ============================================================================
+// Signature Generation (HMAC-SHA256)
+// ============================================================================
+
+/**
+ * Generate HMAC-SHA256 signature for webhook payload
+ */
+export async function generateSignature(payload: string, secret: string): Promise<string> {
   const encoder = new TextEncoder();
   const keyData = encoder.encode(secret);
   const messageData = encoder.encode(payload);
@@ -66,8 +140,33 @@ async function generateSignature(payload: string, secret: string): Promise<strin
 
   const signature = await crypto.subtle.sign('HMAC', key, messageData);
   const hashArray = Array.from(new Uint8Array(signature));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
+
+/**
+ * Verify HMAC-SHA256 signature
+ */
+export async function verifySignature(
+  payload: string,
+  signature: string,
+  secret: string
+): Promise<boolean> {
+  const expectedSignature = await generateSignature(payload, secret);
+
+  // Constant-time comparison to prevent timing attacks
+  if (signature.length !== expectedSignature.length) return false;
+
+  let result = 0;
+  for (let i = 0; i < signature.length; i++) {
+    result |= signature.charCodeAt(i) ^ expectedSignature.charCodeAt(i);
+  }
+
+  return result === 0;
+}
+
+// ============================================================================
+// ID Generation
+// ============================================================================
 
 /**
  * Generate unique ID
@@ -82,18 +181,22 @@ function generateId(): string {
 function generateSecret(): string {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
-  return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+  return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+// ============================================================================
+// Webhook Registration (KV-backed)
+// ============================================================================
+
 /**
- * Create a new webhook subscription
+ * Register a new webhook for an API key
  */
-export function createWebhook(
-  userId: string,
+export async function registerWebhook(
+  keyId: string,
   url: string,
   events: WebhookEvent[],
   metadata?: Record<string, unknown>
-): WebhookSubscription {
+): Promise<WebhookSubscription> {
   // Validate URL
   try {
     new URL(url);
@@ -102,20 +205,15 @@ export function createWebhook(
   }
 
   // Validate events
-  const validEvents: WebhookEvent[] = [
-    'news.new', 'news.breaking', 'news.trending',
-    'price.alert', 'market.significant', 'source.new', 'system.health'
-  ];
-  
   for (const event of events) {
-    if (!validEvents.includes(event)) {
+    if (!WEBHOOK_EVENTS.includes(event)) {
       throw new Error(`Invalid event type: ${event}`);
     }
   }
 
   const webhook: WebhookSubscription = {
     id: generateId(),
-    userId,
+    keyId,
     url,
     events,
     secret: generateSecret(),
@@ -123,90 +221,235 @@ export function createWebhook(
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     metadata,
+    deliveryCount: 0,
   };
 
-  const userWebhooks = webhookStore.get(userId) || [];
-  userWebhooks.push(webhook);
-  webhookStore.set(userId, userWebhooks);
+  if (isKvConfigured()) {
+    // Store in KV
+    await kv.set(`${KV_PREFIX.webhook}${webhook.id}`, webhook);
+
+    // Add to key's webhook list
+    const keyWebhooks = (await kv.get<string[]>(`${KV_PREFIX.keyWebhooks}${keyId}`)) || [];
+    keyWebhooks.push(webhook.id);
+    await kv.set(`${KV_PREFIX.keyWebhooks}${keyId}`, keyWebhooks);
+
+    // Add to event indices
+    for (const event of events) {
+      const eventWebhooks = (await kv.get<string[]>(`${KV_PREFIX.eventIndex}${event}`)) || [];
+      eventWebhooks.push(webhook.id);
+      await kv.set(`${KV_PREFIX.eventIndex}${event}`, eventWebhooks);
+    }
+  } else {
+    // Fallback to in-memory
+    webhookStore.set(webhook.id, webhook);
+
+    const keyWebhooks = keyWebhooksIndex.get(keyId) || [];
+    keyWebhooks.push(webhook.id);
+    keyWebhooksIndex.set(keyId, keyWebhooks);
+
+    for (const event of events) {
+      const eventWebhooks = eventIndex.get(event) || [];
+      eventWebhooks.push(webhook.id);
+      eventIndex.set(event, eventWebhooks);
+    }
+  }
 
   return webhook;
 }
 
 /**
- * Get webhooks for a user
+ * Get all webhooks for an API key
  */
-export function getWebhooks(userId: string): WebhookSubscription[] {
-  return webhookStore.get(userId) || [];
+export async function getWebhooksByKeyId(keyId: string): Promise<WebhookSubscription[]> {
+  if (isKvConfigured()) {
+    const webhookIds = (await kv.get<string[]>(`${KV_PREFIX.keyWebhooks}${keyId}`)) || [];
+    const webhooks: WebhookSubscription[] = [];
+
+    for (const id of webhookIds) {
+      const webhook = await kv.get<WebhookSubscription>(`${KV_PREFIX.webhook}${id}`);
+      if (webhook) webhooks.push(webhook);
+    }
+
+    return webhooks;
+  } else {
+    const webhookIds = keyWebhooksIndex.get(keyId) || [];
+    return webhookIds
+      .map((id) => webhookStore.get(id))
+      .filter((w): w is WebhookSubscription => !!w);
+  }
 }
 
 /**
- * Get a specific webhook
+ * Get a specific webhook by ID
  */
-export function getWebhook(userId: string, webhookId: string): WebhookSubscription | null {
-  const userWebhooks = webhookStore.get(userId) || [];
-  return userWebhooks.find(w => w.id === webhookId) || null;
+export async function getWebhookById(webhookId: string): Promise<WebhookSubscription | null> {
+  if (isKvConfigured()) {
+    return await kv.get<WebhookSubscription>(`${KV_PREFIX.webhook}${webhookId}`);
+  } else {
+    return webhookStore.get(webhookId) || null;
+  }
 }
 
 /**
  * Update a webhook
  */
-export function updateWebhook(
-  userId: string,
+export async function updateWebhook(
   webhookId: string,
+  keyId: string,
   updates: Partial<Pick<WebhookSubscription, 'url' | 'events' | 'active' | 'metadata'>>
-): WebhookSubscription | null {
-  const userWebhooks = webhookStore.get(userId) || [];
-  const index = userWebhooks.findIndex(w => w.id === webhookId);
-  
-  if (index === -1) return null;
+): Promise<WebhookSubscription | null> {
+  const webhook = await getWebhookById(webhookId);
 
-  const webhook = userWebhooks[index];
-  
+  if (!webhook || webhook.keyId !== keyId) return null;
+
+  // Validate URL if provided
   if (updates.url) {
     try {
       new URL(updates.url);
-      webhook.url = updates.url;
     } catch {
       throw new Error('Invalid webhook URL');
     }
   }
 
+  // Validate events if provided
+  if (updates.events) {
+    for (const event of updates.events) {
+      if (!WEBHOOK_EVENTS.includes(event)) {
+        throw new Error(`Invalid event type: ${event}`);
+      }
+    }
+  }
+
+  const oldEvents = webhook.events;
+
+  // Apply updates
+  if (updates.url) webhook.url = updates.url;
   if (updates.events) webhook.events = updates.events;
   if (updates.active !== undefined) webhook.active = updates.active;
   if (updates.metadata) webhook.metadata = { ...webhook.metadata, ...updates.metadata };
-  
   webhook.updatedAt = new Date().toISOString();
-  
+
+  if (isKvConfigured()) {
+    await kv.set(`${KV_PREFIX.webhook}${webhookId}`, webhook);
+
+    // Update event indices if events changed
+    if (updates.events) {
+      // Remove from old event indices
+      for (const event of oldEvents) {
+        const eventWebhooks = (await kv.get<string[]>(`${KV_PREFIX.eventIndex}${event}`)) || [];
+        const idx = eventWebhooks.indexOf(webhookId);
+        if (idx > -1) {
+          eventWebhooks.splice(idx, 1);
+          await kv.set(`${KV_PREFIX.eventIndex}${event}`, eventWebhooks);
+        }
+      }
+      // Add to new event indices
+      for (const event of updates.events) {
+        const eventWebhooks = (await kv.get<string[]>(`${KV_PREFIX.eventIndex}${event}`)) || [];
+        if (!eventWebhooks.includes(webhookId)) {
+          eventWebhooks.push(webhookId);
+          await kv.set(`${KV_PREFIX.eventIndex}${event}`, eventWebhooks);
+        }
+      }
+    }
+  } else {
+    webhookStore.set(webhookId, webhook);
+
+    if (updates.events) {
+      for (const event of oldEvents) {
+        const eventWebhooks = eventIndex.get(event) || [];
+        const idx = eventWebhooks.indexOf(webhookId);
+        if (idx > -1) eventWebhooks.splice(idx, 1);
+      }
+      for (const event of updates.events) {
+        const eventWebhooks = eventIndex.get(event) || [];
+        if (!eventWebhooks.includes(webhookId)) {
+          eventWebhooks.push(webhookId);
+          eventIndex.set(event, eventWebhooks);
+        }
+      }
+    }
+  }
+
   return webhook;
 }
 
 /**
  * Delete a webhook
  */
-export function deleteWebhook(userId: string, webhookId: string): boolean {
-  const userWebhooks = webhookStore.get(userId) || [];
-  const index = userWebhooks.findIndex(w => w.id === webhookId);
-  
-  if (index === -1) return false;
+export async function deleteWebhook(webhookId: string, keyId: string): Promise<boolean> {
+  const webhook = await getWebhookById(webhookId);
 
-  userWebhooks.splice(index, 1);
-  webhookStore.set(userId, userWebhooks);
-  
+  if (!webhook || webhook.keyId !== keyId) return false;
+
+  if (isKvConfigured()) {
+    // Remove from webhook store
+    await kv.del(`${KV_PREFIX.webhook}${webhookId}`);
+
+    // Remove from key's webhook list
+    const keyWebhooks = (await kv.get<string[]>(`${KV_PREFIX.keyWebhooks}${keyId}`)) || [];
+    const idx = keyWebhooks.indexOf(webhookId);
+    if (idx > -1) {
+      keyWebhooks.splice(idx, 1);
+      await kv.set(`${KV_PREFIX.keyWebhooks}${keyId}`, keyWebhooks);
+    }
+
+    // Remove from event indices
+    for (const event of webhook.events) {
+      const eventWebhooks = (await kv.get<string[]>(`${KV_PREFIX.eventIndex}${event}`)) || [];
+      const eventIdx = eventWebhooks.indexOf(webhookId);
+      if (eventIdx > -1) {
+        eventWebhooks.splice(eventIdx, 1);
+        await kv.set(`${KV_PREFIX.eventIndex}${event}`, eventWebhooks);
+      }
+    }
+
+    // Remove logs
+    await kv.del(`${KV_PREFIX.logs}${webhookId}`);
+  } else {
+    webhookStore.delete(webhookId);
+
+    const keyWebhooks = keyWebhooksIndex.get(keyId) || [];
+    const idx = keyWebhooks.indexOf(webhookId);
+    if (idx > -1) keyWebhooks.splice(idx, 1);
+
+    for (const event of webhook.events) {
+      const eventWebhooks = eventIndex.get(event) || [];
+      const eventIdx = eventWebhooks.indexOf(webhookId);
+      if (eventIdx > -1) eventWebhooks.splice(eventIdx, 1);
+    }
+
+    webhookLogs.delete(webhookId);
+  }
+
   return true;
 }
 
 /**
  * Regenerate webhook secret
  */
-export function regenerateSecret(userId: string, webhookId: string): string | null {
-  const webhook = getWebhook(userId, webhookId);
-  if (!webhook) return null;
+export async function regenerateWebhookSecret(
+  webhookId: string,
+  keyId: string
+): Promise<string | null> {
+  const webhook = await getWebhookById(webhookId);
+  if (!webhook || webhook.keyId !== keyId) return null;
 
   webhook.secret = generateSecret();
   webhook.updatedAt = new Date().toISOString();
-  
+
+  if (isKvConfigured()) {
+    await kv.set(`${KV_PREFIX.webhook}${webhookId}`, webhook);
+  } else {
+    webhookStore.set(webhookId, webhook);
+  }
+
   return webhook.secret;
 }
+
+// ============================================================================
+// Webhook Delivery
+// ============================================================================
 
 /**
  * Deliver webhook to a single subscription
@@ -219,12 +462,19 @@ async function deliverWebhook(
   const payloadStr = JSON.stringify(payload);
   const signature = await generateSignature(payloadStr, webhook.secret);
 
+  // Add signature to payload for reference
+  const signedPayload = {
+    ...payload,
+    signature: `sha256=${signature}`,
+  };
+  const signedPayloadStr = JSON.stringify(signedPayload);
+
   const log: WebhookDeliveryLog = {
     id: generateId(),
     webhookId: webhook.id,
     event: payload.event,
     url: webhook.url,
-    payload,
+    payload: signedPayload,
     statusCode: null,
     response: null,
     success: false,
@@ -240,9 +490,10 @@ async function deliverWebhook(
         'X-Webhook-Signature': `sha256=${signature}`,
         'X-Webhook-Event': payload.event,
         'X-Webhook-Timestamp': payload.timestamp,
-        'User-Agent': 'CryptoNews-Webhooks/1.0',
+        'X-Webhook-Id': log.id,
+        'User-Agent': 'CryptoDataAggregator-Webhooks/1.0',
       },
-      body: payloadStr,
+      body: signedPayloadStr,
       signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
@@ -255,19 +506,37 @@ async function deliverWebhook(
 
   log.duration = Date.now() - startTime;
 
-  // Store log
-  const logs = webhookLogs.get(webhook.id) || [];
-  logs.unshift(log);
-  if (logs.length > 100) logs.pop(); // Keep last 100 logs
-  webhookLogs.set(webhook.id, logs);
+  // Store log and update webhook stats
+  if (isKvConfigured()) {
+    const logs = (await kv.get<WebhookDeliveryLog[]>(`${KV_PREFIX.logs}${webhook.id}`)) || [];
+    logs.unshift(log);
+    if (logs.length > 100) logs.pop();
+    await kv.set(`${KV_PREFIX.logs}${webhook.id}`, logs);
+
+    // Update webhook stats
+    webhook.deliveryCount = (webhook.deliveryCount || 0) + 1;
+    webhook.lastDeliveryAt = log.deliveredAt;
+    webhook.lastDeliveryStatus = log.statusCode || undefined;
+    await kv.set(`${KV_PREFIX.webhook}${webhook.id}`, webhook);
+  } else {
+    const logs = webhookLogs.get(webhook.id) || [];
+    logs.unshift(log);
+    if (logs.length > 100) logs.pop();
+    webhookLogs.set(webhook.id, logs);
+
+    webhook.deliveryCount = (webhook.deliveryCount || 0) + 1;
+    webhook.lastDeliveryAt = log.deliveredAt;
+    webhook.lastDeliveryStatus = log.statusCode || undefined;
+    webhookStore.set(webhook.id, webhook);
+  }
 
   return log;
 }
 
 /**
- * Trigger webhook event to all subscribers
+ * Send a webhook event to all subscribers
  */
-export async function triggerWebhook(
+export async function sendWebhook(
   event: WebhookEvent,
   data: unknown
 ): Promise<WebhookDeliveryLog[]> {
@@ -278,35 +547,60 @@ export async function triggerWebhook(
   };
 
   const deliveryPromises: Promise<WebhookDeliveryLog>[] = [];
+  const webhooks: WebhookSubscription[] = [];
 
   // Find all subscriptions for this event
-  for (const [, webhooks] of webhookStore) {
-    for (const webhook of webhooks) {
-      if (webhook.active && webhook.events.includes(event)) {
-        deliveryPromises.push(deliverWebhook(webhook, payload));
+  if (isKvConfigured()) {
+    const webhookIds = (await kv.get<string[]>(`${KV_PREFIX.eventIndex}${event}`)) || [];
+    for (const id of webhookIds) {
+      const webhook = await kv.get<WebhookSubscription>(`${KV_PREFIX.webhook}${id}`);
+      if (webhook && webhook.active) {
+        webhooks.push(webhook);
       }
     }
+  } else {
+    const webhookIds = eventIndex.get(event) || [];
+    for (const id of webhookIds) {
+      const webhook = webhookStore.get(id);
+      if (webhook && webhook.active) {
+        webhooks.push(webhook);
+      }
+    }
+  }
+
+  // Deliver to all matching webhooks
+  for (const webhook of webhooks) {
+    deliveryPromises.push(deliverWebhook(webhook, payload));
   }
 
   return Promise.all(deliveryPromises);
 }
 
 /**
+ * @deprecated Use sendWebhook instead
+ */
+export const triggerWebhook = sendWebhook;
+
+/**
  * Get delivery logs for a webhook
  */
-export function getDeliveryLogs(webhookId: string): WebhookDeliveryLog[] {
-  return webhookLogs.get(webhookId) || [];
+export async function getDeliveryLogs(webhookId: string): Promise<WebhookDeliveryLog[]> {
+  if (isKvConfigured()) {
+    return (await kv.get<WebhookDeliveryLog[]>(`${KV_PREFIX.logs}${webhookId}`)) || [];
+  } else {
+    return webhookLogs.get(webhookId) || [];
+  }
 }
 
 /**
  * Test a webhook by sending a test payload
  */
 export async function testWebhook(
-  userId: string,
+  keyId: string,
   webhookId: string
 ): Promise<WebhookDeliveryLog | null> {
-  const webhook = getWebhook(userId, webhookId);
-  if (!webhook) return null;
+  const webhook = await getWebhookById(webhookId);
+  if (!webhook || webhook.keyId !== keyId) return null;
 
   const payload: WebhookPayload = {
     event: 'system.health',
@@ -322,39 +616,97 @@ export async function testWebhook(
 }
 
 /**
- * Get webhook statistics
+ * Get webhook statistics for an API key
  */
-export function getWebhookStats(userId: string): {
+export async function getWebhookStats(keyId: string): Promise<{
   total: number;
   active: number;
   totalDeliveries: number;
   successRate: number;
-} {
-  const userWebhooks = webhookStore.get(userId) || [];
-  
+}> {
+  const webhooks = await getWebhooksByKeyId(keyId);
+
   let totalDeliveries = 0;
   let successfulDeliveries = 0;
 
-  for (const webhook of userWebhooks) {
-    const logs = webhookLogs.get(webhook.id) || [];
+  for (const webhook of webhooks) {
+    const logs = await getDeliveryLogs(webhook.id);
     totalDeliveries += logs.length;
-    successfulDeliveries += logs.filter(l => l.success).length;
+    successfulDeliveries += logs.filter((l) => l.success).length;
   }
 
   return {
-    total: userWebhooks.length,
-    active: userWebhooks.filter(w => w.active).length,
+    total: webhooks.length,
+    active: webhooks.filter((w) => w.active).length,
     totalDeliveries,
-    successRate: totalDeliveries > 0 
-      ? Math.round((successfulDeliveries / totalDeliveries) * 100) 
-      : 100,
+    successRate:
+      totalDeliveries > 0 ? Math.round((successfulDeliveries / totalDeliveries) * 100) : 100,
   };
 }
 
+// ============================================================================
+// Event Payload Builders
+// ============================================================================
+
 /**
- * Event payload builders
+ * Webhook payload builders for different event types
  */
 export const webhookPayloads = {
+  keyCreated: (data: { keyId: string; keyPrefix: string; tier: string; email: string }) => ({
+    keyId: data.keyId,
+    keyPrefix: data.keyPrefix,
+    tier: data.tier,
+    email: data.email,
+  }),
+
+  keyUsageLimit: (data: {
+    keyId: string;
+    keyPrefix: string;
+    tier: string;
+    usage: number;
+    limit: number;
+    percentage: number;
+    limitType: '90%' | '100%';
+  }) => ({
+    keyId: data.keyId,
+    keyPrefix: data.keyPrefix,
+    tier: data.tier,
+    usage: data.usage,
+    limit: data.limit,
+    percentage: data.percentage,
+    limitType: data.limitType,
+    message:
+      data.limitType === '100%' ? 'Daily rate limit reached' : 'Approaching daily rate limit (90%)',
+  }),
+
+  keyUpgraded: (data: {
+    keyId: string;
+    keyPrefix: string;
+    previousTier: string;
+    newTier: string;
+  }) => ({
+    keyId: data.keyId,
+    keyPrefix: data.keyPrefix,
+    previousTier: data.previousTier,
+    newTier: data.newTier,
+  }),
+
+  paymentReceived: (data: {
+    keyId?: string;
+    amount: string;
+    currency: string;
+    network: string;
+    transactionId?: string;
+    resource: string;
+  }) => ({
+    keyId: data.keyId,
+    amount: data.amount,
+    currency: data.currency,
+    network: data.network,
+    transactionId: data.transactionId,
+    resource: data.resource,
+  }),
+
   newArticle: (article: {
     id: string;
     title: string;
@@ -366,12 +718,7 @@ export const webhookPayloads = {
     article,
   }),
 
-  breakingNews: (article: {
-    id: string;
-    title: string;
-    source: string;
-    link: string;
-  }) => ({
+  breakingNews: (article: { id: string; title: string; source: string; link: string }) => ({
     article,
     severity: 'high',
   }),
@@ -396,10 +743,91 @@ export const webhookPayloads = {
     movement: data,
   }),
 
-  systemHealth: (data: {
-    status: 'healthy' | 'degraded' | 'unhealthy';
-    message?: string;
-  }) => ({
+  systemHealth: (data: { status: 'healthy' | 'degraded' | 'unhealthy'; message?: string }) => ({
     health: data,
   }),
 };
+
+// ============================================================================
+// Legacy Compatibility
+// ============================================================================
+
+/**
+ * @deprecated Use registerWebhook instead
+ */
+export function createWebhook(
+  userId: string,
+  url: string,
+  events: WebhookEvent[],
+  metadata?: Record<string, unknown>
+): WebhookSubscription {
+  // Validate URL
+  try {
+    new URL(url);
+  } catch {
+    throw new Error('Invalid webhook URL');
+  }
+
+  // Validate events
+  for (const event of events) {
+    if (!WEBHOOK_EVENTS.includes(event)) {
+      throw new Error(`Invalid event type: ${event}`);
+    }
+  }
+
+  const webhook: WebhookSubscription = {
+    id: generateId(),
+    keyId: userId,
+    url,
+    events,
+    secret: generateSecret(),
+    active: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    metadata,
+  };
+
+  webhookStore.set(webhook.id, webhook);
+
+  const keyWebhooks = keyWebhooksIndex.get(userId) || [];
+  keyWebhooks.push(webhook.id);
+  keyWebhooksIndex.set(userId, keyWebhooks);
+
+  for (const event of events) {
+    const eventWebhooks = eventIndex.get(event) || [];
+    eventWebhooks.push(webhook.id);
+    eventIndex.set(event, eventWebhooks);
+  }
+
+  return webhook;
+}
+
+/**
+ * @deprecated Use getWebhooksByKeyId instead
+ */
+export function getWebhooks(userId: string): WebhookSubscription[] {
+  const webhookIds = keyWebhooksIndex.get(userId) || [];
+  return webhookIds.map((id) => webhookStore.get(id)).filter((w): w is WebhookSubscription => !!w);
+}
+
+/**
+ * @deprecated Use getWebhookById instead
+ */
+export function getWebhook(userId: string, webhookId: string): WebhookSubscription | null {
+  const webhook = webhookStore.get(webhookId);
+  return webhook?.keyId === userId ? webhook : null;
+}
+
+/**
+ * @deprecated Use regenerateWebhookSecret instead
+ */
+export function regenerateSecret(userId: string, webhookId: string): string | null {
+  const webhook = webhookStore.get(webhookId);
+  if (!webhook || webhook.keyId !== userId) return null;
+
+  webhook.secret = generateSecret();
+  webhook.updatedAt = new Date().toISOString();
+  webhookStore.set(webhookId, webhook);
+
+  return webhook.secret;
+}

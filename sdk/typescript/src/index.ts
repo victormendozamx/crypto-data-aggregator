@@ -1,13 +1,13 @@
 /**
  * Free Crypto News TypeScript SDK
- * 
+ *
  * 100% FREE - no API keys required!
  * Full TypeScript support with type definitions.
- * 
+ *
  * @example
  * ```typescript
  * import { CryptoNews } from '@nirholas/crypto-news';
- * 
+ *
  * const client = new CryptoNews();
  * const articles = await client.getLatest(10);
  * ```
@@ -141,13 +141,13 @@ export interface OriginsResponse {
   categories: Record<string, number>;
 }
 
-export type SourceKey = 
-  | 'coindesk' 
-  | 'theblock' 
-  | 'decrypt' 
-  | 'cointelegraph' 
-  | 'bitcoinmagazine' 
-  | 'blockworks' 
+export type SourceKey =
+  | 'coindesk'
+  | 'theblock'
+  | 'decrypt'
+  | 'cointelegraph'
+  | 'bitcoinmagazine'
+  | 'blockworks'
   | 'defiant';
 
 export interface CryptoNewsOptions {
@@ -157,6 +157,37 @@ export interface CryptoNewsOptions {
   timeout?: number;
   /** Custom fetch function for environments without native fetch */
   fetch?: typeof fetch;
+  /** API key for authenticated requests (optional - enables higher rate limits) */
+  apiKey?: string;
+}
+
+export interface UsageResponse {
+  /** Current tier: free, pro, or enterprise */
+  tier: 'free' | 'pro' | 'enterprise';
+  /** Requests made today */
+  usageToday: number;
+  /** Requests made this month */
+  usageMonth: number;
+  /** Daily request limit (-1 = unlimited) */
+  limit: number;
+  /** Remaining requests today */
+  remaining: number;
+  /** Timestamp when limit resets (ISO 8601) */
+  resetAt: string;
+}
+
+export interface RateLimitInfo {
+  /** Requests remaining */
+  remaining: number;
+  /** Total limit */
+  limit: number;
+  /** Reset timestamp (Unix ms) */
+  resetAt: number;
+}
+
+export interface X402PaymentOptions {
+  /** x402 payment header (base64 encoded) */
+  paymentHeader: string;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -167,25 +198,82 @@ export class CryptoNews {
   private baseUrl: string;
   private timeout: number;
   private fetchFn: typeof fetch;
+  private apiKey?: string;
+  private lastRateLimit?: RateLimitInfo;
 
   constructor(options: CryptoNewsOptions = {}) {
     this.baseUrl = options.baseUrl || 'https://free-crypto-news.vercel.app';
     this.timeout = options.timeout || 30000;
     this.fetchFn = options.fetch || fetch;
+    this.apiKey = options.apiKey;
   }
 
-  private async request<T>(endpoint: string): Promise<T> {
+  /**
+   * Set API key for authenticated requests
+   * @param apiKey Your API key (get one at /developers)
+   */
+  setApiKey(apiKey: string): void {
+    this.apiKey = apiKey;
+  }
+
+  /**
+   * Get rate limit info from last request
+   */
+  getRateLimitInfo(): RateLimitInfo | undefined {
+    return this.lastRateLimit;
+  }
+
+  private async request<T>(endpoint: string, options: { payment?: string } = {}): Promise<T> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+    const headers: Record<string, string> = {
+      Accept: 'application/json',
+      'User-Agent': 'CryptoNewsSDK/1.0',
+    };
+
+    // Add API key if available
+    if (this.apiKey) {
+      headers['X-API-Key'] = this.apiKey;
+    }
+
+    // Add x402 payment header if provided
+    if (options.payment) {
+      headers['X-PAYMENT'] = options.payment;
+    }
 
     try {
       const response = await this.fetchFn(`${this.baseUrl}${endpoint}`, {
         signal: controller.signal,
-        headers: {
-          'Accept': 'application/json',
-          'User-Agent': 'CryptoNewsSDK/1.0',
-        },
+        headers,
       });
+
+      // Parse rate limit headers
+      const remaining = response.headers.get('X-RateLimit-Remaining');
+      const limit = response.headers.get('X-RateLimit-Limit');
+      const resetAt = response.headers.get('X-RateLimit-Reset');
+      if (remaining && limit) {
+        this.lastRateLimit = {
+          remaining: parseInt(remaining),
+          limit: parseInt(limit),
+          resetAt: resetAt ? parseInt(resetAt) : Date.now() + 86400000,
+        };
+      }
+
+      // Handle 402 Payment Required
+      if (response.status === 402) {
+        const paymentRequired = response.headers.get('X-PAYMENT-REQUIRED');
+        const error = new Error('Payment Required') as Error & { paymentRequired?: string };
+        error.paymentRequired = paymentRequired || undefined;
+        throw error;
+      }
+
+      // Handle 429 Rate Limit
+      if (response.status === 429) {
+        const error = new Error('Rate limit exceeded') as Error & { retryAfter?: number };
+        error.retryAfter = resetAt ? parseInt(resetAt) : undefined;
+        throw error;
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -293,7 +381,11 @@ export class CryptoNews {
    * @param topic Filter by topic
    * @param sentiment Filter by sentiment: 'bullish', 'bearish', 'neutral'
    */
-  async analyze(limit: number = 20, topic?: string, sentiment?: 'bullish' | 'bearish' | 'neutral'): Promise<AnalyzeResponse> {
+  async analyze(
+    limit: number = 20,
+    topic?: string,
+    sentiment?: 'bullish' | 'bearish' | 'neutral'
+  ): Promise<AnalyzeResponse> {
     let endpoint = `/api/analyze?limit=${limit}`;
     if (topic) endpoint += `&topic=${encodeURIComponent(topic)}`;
     if (sentiment) endpoint += `&sentiment=${sentiment}`;
@@ -319,7 +411,11 @@ export class CryptoNews {
    * @param category Filter by category: 'government', 'exchange', 'protocol', etc.
    * @param limit Maximum results (default: 20)
    */
-  async getOrigins(query?: string, category?: string, limit: number = 20): Promise<OriginsResponse> {
+  async getOrigins(
+    query?: string,
+    category?: string,
+    limit: number = 20
+  ): Promise<OriginsResponse> {
     const params = [`limit=${limit}`];
     if (query) params.push(`q=${encodeURIComponent(query)}`);
     if (category) params.push(`category=${category}`);
@@ -333,6 +429,69 @@ export class CryptoNews {
   getRSSUrl(feed: 'all' | 'defi' | 'bitcoin' = 'all'): string {
     if (feed === 'all') return `${this.baseUrl}/api/rss`;
     return `${this.baseUrl}/api/rss?feed=${feed}`;
+  }
+
+  /**
+   * Get API key usage statistics (requires API key)
+   * @returns Usage data including tier, limits, and current usage
+   */
+  async getUsage(): Promise<UsageResponse> {
+    if (!this.apiKey) {
+      throw new Error('API key required. Call setApiKey() first or pass apiKey in constructor.');
+    }
+    return this.request<UsageResponse>('/api/v1/usage');
+  }
+
+  /**
+   * Get premium coin data (requires API key or x402 payment)
+   * @param coinId CoinGecko coin ID
+   * @param payment Optional x402 payment header
+   */
+  async getPremiumCoin(coinId: string, payment?: string): Promise<unknown> {
+    return this.request(`/api/v1/coins/${coinId}`, { payment });
+  }
+
+  /**
+   * Get premium coins list (requires API key or x402 payment)
+   * @param options Query options
+   * @param payment Optional x402 payment header
+   */
+  async getPremiumCoins(
+    options: { page?: number; perPage?: number; order?: string; ids?: string } = {},
+    payment?: string
+  ): Promise<unknown> {
+    const params = new URLSearchParams();
+    if (options.page) params.set('page', options.page.toString());
+    if (options.perPage) params.set('per_page', options.perPage.toString());
+    if (options.order) params.set('order', options.order);
+    if (options.ids) params.set('ids', options.ids);
+    const query = params.toString() ? `?${params}` : '';
+    return this.request(`/api/v1/coins${query}`, { payment });
+  }
+
+  /**
+   * Get historical price data (requires API key or x402 payment)
+   * @param coinId CoinGecko coin ID
+   * @param days Number of days
+   * @param payment Optional x402 payment header
+   */
+  async getHistorical(coinId: string, days: number = 30, payment?: string): Promise<unknown> {
+    return this.request(`/api/v1/historical/${coinId}?days=${days}`, { payment });
+  }
+
+  /**
+   * Export data (requires API key or x402 payment)
+   * @param options Export options
+   * @param payment Optional x402 payment header
+   */
+  async exportData(
+    options: { coinId: string; format?: 'json' | 'csv'; days?: number },
+    payment?: string
+  ): Promise<unknown> {
+    const params = new URLSearchParams({ coin: options.coinId });
+    if (options.format) params.set('format', options.format);
+    if (options.days) params.set('days', options.days.toString());
+    return this.request(`/api/v1/export?${params}`, { payment });
   }
 }
 
@@ -348,7 +507,10 @@ export async function getCryptoNews(limit: number = 10): Promise<NewsArticle[]> 
 }
 
 /** Quick function to search news */
-export async function searchCryptoNews(keywords: string, limit: number = 10): Promise<NewsArticle[]> {
+export async function searchCryptoNews(
+  keywords: string,
+  limit: number = 10
+): Promise<NewsArticle[]> {
   return defaultClient.search(keywords, limit);
 }
 

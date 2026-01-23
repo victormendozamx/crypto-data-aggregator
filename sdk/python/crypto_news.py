@@ -1,12 +1,18 @@
 """
 Free Crypto News Python SDK
 
-100% FREE - no API keys required!
+Free tier available - no API key required for basic endpoints.
+API key enables higher rate limits and premium endpoints.
 
 Usage:
     from crypto_news import CryptoNews
     
+    # Free usage (100 requests/day on premium endpoints)
     news = CryptoNews()
+    
+    # With API key (higher limits)
+    news = CryptoNews(api_key='cda_free_xxx...')
+    
     articles = news.get_latest(limit=10)
     
     for article in articles:
@@ -14,28 +20,107 @@ Usage:
 """
 
 import urllib.request
+import urllib.parse
 import json
 from typing import Optional, List, Dict, Any
+
+
+class CryptoNewsError(Exception):
+    """Base exception for CryptoNews SDK."""
+    pass
+
+
+class PaymentRequiredError(CryptoNewsError):
+    """Raised when x402 payment is required."""
+    def __init__(self, message: str, payment_required: Optional[str] = None):
+        super().__init__(message)
+        self.payment_required = payment_required
+
+
+class RateLimitError(CryptoNewsError):
+    """Raised when rate limit is exceeded."""
+    def __init__(self, message: str, retry_after: Optional[int] = None):
+        super().__init__(message)
+        self.retry_after = retry_after
+
 
 class CryptoNews:
     """Free Crypto News API client."""
     
     BASE_URL = "https://free-crypto-news.vercel.app"
     
-    def __init__(self, base_url: Optional[str] = None):
+    def __init__(
+        self,
+        base_url: Optional[str] = None,
+        api_key: Optional[str] = None,
+        timeout: int = 30
+    ):
         """
         Initialize the client.
         
         Args:
             base_url: Optional custom API URL (for self-hosted instances)
+            api_key: Optional API key for authenticated requests
+            timeout: Request timeout in seconds (default: 30)
         """
         self.base_url = base_url or self.BASE_URL
+        self.api_key = api_key
+        self.timeout = timeout
+        self.last_rate_limit: Optional[Dict[str, Any]] = None
     
-    def _request(self, endpoint: str) -> Dict[str, Any]:
+    def set_api_key(self, api_key: str) -> None:
+        """Set API key for authenticated requests."""
+        self.api_key = api_key
+    
+    def get_rate_limit_info(self) -> Optional[Dict[str, Any]]:
+        """Get rate limit info from last request."""
+        return self.last_rate_limit
+    
+    def _request(self, endpoint: str, payment: Optional[str] = None) -> Dict[str, Any]:
         """Make API request."""
         url = f"{self.base_url}{endpoint}"
-        with urllib.request.urlopen(url) as response:
-            return json.loads(response.read().decode())
+        
+        headers = {
+            'Accept': 'application/json',
+            'User-Agent': 'CryptoNewsSDK-Python/1.0',
+        }
+        
+        # Add API key if available
+        if self.api_key:
+            headers['X-API-Key'] = self.api_key
+        
+        # Add x402 payment header if provided
+        if payment:
+            headers['X-PAYMENT'] = payment
+        
+        request = urllib.request.Request(url, headers=headers)
+        
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                # Parse rate limit headers
+                remaining = response.headers.get('X-RateLimit-Remaining')
+                limit = response.headers.get('X-RateLimit-Limit')
+                reset_at = response.headers.get('X-RateLimit-Reset')
+                if remaining and limit:
+                    self.last_rate_limit = {
+                        'remaining': int(remaining),
+                        'limit': int(limit),
+                        'reset_at': int(reset_at) if reset_at else None,
+                    }
+                
+                return json.loads(response.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code == 402:
+                payment_required = e.headers.get('X-PAYMENT-REQUIRED')
+                raise PaymentRequiredError('Payment required', payment_required)
+            elif e.code == 429:
+                reset_at = e.headers.get('X-RateLimit-Reset')
+                raise RateLimitError(
+                    'Rate limit exceeded',
+                    int(reset_at) if reset_at else None
+                )
+            else:
+                raise CryptoNewsError(f'HTTP {e.code}: {e.reason}')
     
     def get_latest(self, limit: int = 10, source: Optional[str] = None) -> List[Dict]:
         """
@@ -126,6 +211,91 @@ class CryptoNews:
         """Get portfolio news with optional prices from CoinGecko."""
         coins_param = ','.join(coins) if isinstance(coins, list) else coins
         return self._request(f"/api/portfolio?coins={urllib.parse.quote(coins_param)}&limit={limit}&prices={str(include_prices).lower()}")
+
+    # ═══════════════════════════════════════════════════════════════
+    # PREMIUM / AUTHENTICATED ENDPOINTS
+    # ═══════════════════════════════════════════════════════════════
+
+    def get_usage(self) -> Dict:
+        """
+        Get API key usage statistics (requires API key).
+        
+        Returns:
+            Dict with tier, usage_today, usage_month, limit, remaining, reset_at
+        """
+        if not self.api_key:
+            raise CryptoNewsError('API key required. Call set_api_key() first.')
+        return self._request('/api/v1/usage')
+
+    def get_premium_coin(self, coin_id: str, payment: Optional[str] = None) -> Dict:
+        """
+        Get premium coin data (requires API key or x402 payment).
+        
+        Args:
+            coin_id: CoinGecko coin ID
+            payment: Optional x402 payment header
+        """
+        return self._request(f'/api/v1/coins/{coin_id}', payment=payment)
+
+    def get_premium_coins(
+        self,
+        page: int = 1,
+        per_page: int = 100,
+        order: str = 'market_cap_desc',
+        ids: Optional[str] = None,
+        payment: Optional[str] = None
+    ) -> Dict:
+        """
+        Get premium coins list (requires API key or x402 payment).
+        
+        Args:
+            page: Page number
+            per_page: Results per page (max 250)
+            order: Sort order
+            ids: Comma-separated coin IDs
+            payment: Optional x402 payment header
+        """
+        params = [f'page={page}', f'per_page={per_page}', f'order={order}']
+        if ids:
+            params.append(f'ids={urllib.parse.quote(ids)}')
+        return self._request(f'/api/v1/coins?{"&".join(params)}', payment=payment)
+
+    def get_historical(
+        self,
+        coin_id: str,
+        days: int = 30,
+        payment: Optional[str] = None
+    ) -> Dict:
+        """
+        Get historical price data (requires API key or x402 payment).
+        
+        Args:
+            coin_id: CoinGecko coin ID
+            days: Number of days of history
+            payment: Optional x402 payment header
+        """
+        return self._request(f'/api/v1/historical/{coin_id}?days={days}', payment=payment)
+
+    def export_data(
+        self,
+        coin_id: str,
+        format: str = 'json',
+        days: int = 30,
+        payment: Optional[str] = None
+    ) -> Dict:
+        """
+        Export data (requires API key or x402 payment).
+        
+        Args:
+            coin_id: CoinGecko coin ID
+            format: Output format ('json' or 'csv')
+            days: Number of days
+            payment: Optional x402 payment header
+        """
+        return self._request(
+            f'/api/v1/export?coin={coin_id}&format={format}&days={days}',
+            payment=payment
+        )
 
 
 # Convenience functions

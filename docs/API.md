@@ -8,6 +8,7 @@ All endpoints are prefixed with `/api/` and return JSON responses.
 
 ## Table of Contents
 
+- [Authentication](#authentication)
 - [Market Data](#market-data)
   - [Get Coins](#get-coins)
   - [Get Coin Snapshot](#get-coin-snapshot)
@@ -35,8 +36,14 @@ All endpoints are prefixed with `/api/` and return JSON responses.
   - [Get Portfolio](#get-portfolio)
   - [Add Holding](#add-holding)
   - [Remove Holding](#remove-holding)
-- [Premium API (x402)](#premium-api-x402)
+- [Premium API v1](#premium-api-v1)
   - [Overview](#premium-overview)
+  - [Get Coins (Premium)](#get-coins-premium)
+  - [Get Historical Data](#get-historical-data)
+  - [Export Data](#export-data)
+  - [Gas Prices](#gas-prices)
+  - [DeFi Analytics](#defi-analytics)
+- [Premium API (x402)](#premium-api-x402)
   - [AI Analysis](#ai-analysis)
   - [Whale Tracking](#whale-tracking)
   - [Advanced Screener](#advanced-screener)
@@ -44,6 +51,70 @@ All endpoints are prefixed with `/api/` and return JSON responses.
 - [Response Formats](#response-formats)
 - [Error Handling](#error-handling)
 - [Rate Limits](#rate-limits)
+
+---
+
+## Authentication
+
+The API supports two authentication methods for premium endpoints.
+
+### Free Endpoints
+
+Public endpoints like `/api/news`, `/api/market/*`, and `/api/trending` require **no
+authentication**.
+
+### Premium Endpoints
+
+Premium endpoints (`/api/v1/*` and `/api/premium/*`) require authentication:
+
+#### Method 1: API Key
+
+Get a free API key at [/developers](https://free-crypto-news.vercel.app/developers).
+
+```bash
+# Header (recommended)
+curl -H "X-API-Key: cda_free_xxxxx" \
+  https://free-crypto-news.vercel.app/api/v1/coins
+
+# Query parameter
+curl "https://free-crypto-news.vercel.app/api/v1/coins?api_key=cda_free_xxxxx"
+```
+
+#### Method 2: x402 Micropayments
+
+Pay-per-request using USDC on Base network. No subscription required.
+
+```bash
+# Request returns 402 with payment requirements
+curl -i https://free-crypto-news.vercel.app/api/v1/coins
+# Response: 402 Payment Required
+# Header: X-PAYMENT-REQUIRED: <base64-encoded-requirements>
+
+# Send payment header
+curl -H "X-PAYMENT: <base64-encoded-payment>" \
+  https://free-crypto-news.vercel.app/api/v1/coins
+```
+
+See [AUTHENTICATION.md](AUTHENTICATION.md) for detailed documentation.
+
+### Rate Limits by Tier
+
+| Tier       | Requests/Day    | Price     |
+| ---------- | --------------- | --------- |
+| Free       | 100             | $0        |
+| Pro        | 10,000          | $29/month |
+| Enterprise | Unlimited       | $99/month |
+| x402       | Pay-per-request | $0.001+   |
+
+### Rate Limit Headers
+
+All authenticated requests include:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 87
+X-RateLimit-Reset: 1706054400000
+```
 
 ---
 
@@ -797,6 +868,240 @@ DELETE /api/portfolio/holding
 
 ```bash
 curl -X DELETE "http://localhost:3000/api/portfolio/holding?portfolioId=pf_123&coinId=bitcoin"
+```
+
+---
+
+## Premium API v1
+
+Premium v1 endpoints require authentication via API key or x402 payment.
+
+Base path: `/api/v1/`
+
+### Get Coins (Premium)
+
+Get paginated list of coins with enhanced market data.
+
+```
+GET /api/v1/coins
+```
+
+**Authentication:** API key or x402 payment required
+
+**Price:** $0.001 per request
+
+#### Query Parameters
+
+| Parameter   | Type    | Default         | Description                  |
+| ----------- | ------- | --------------- | ---------------------------- |
+| `page`      | number  | 1               | Page number                  |
+| `per_page`  | number  | 100             | Results per page (max 250)   |
+| `order`     | string  | market_cap_desc | Sort order                   |
+| `ids`       | string  | -               | Comma-separated coin IDs     |
+| `sparkline` | boolean | false           | Include 7-day sparkline data |
+
+#### Examples
+
+```bash
+# With API key
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/coins?per_page=10"
+
+# With x402 payment
+curl -H "X-PAYMENT: <payment-header>" \
+  "https://free-crypto-news.vercel.app/api/v1/coins"
+```
+
+#### Response
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "bitcoin",
+      "symbol": "btc",
+      "name": "Bitcoin",
+      "current_price": 45000,
+      "market_cap": 850000000000,
+      "price_change_percentage_24h": 2.5
+    }
+  ],
+  "meta": {
+    "endpoint": "/api/v1/coins",
+    "page": 1,
+    "perPage": 100,
+    "count": 100,
+    "hasMore": true,
+    "timestamp": "2026-01-23T12:00:00.000Z"
+  }
+}
+```
+
+---
+
+### Get Historical Data
+
+Get historical price data for a coin.
+
+```
+GET /api/v1/historical/:coinId
+```
+
+**Authentication:** API key or x402 payment required
+
+**Price:** $0.02 per year of data requested
+
+#### Path Parameters
+
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
+| `coinId`  | string | CoinGecko coin ID |
+
+#### Query Parameters
+
+| Parameter  | Type   | Default | Description                      |
+| ---------- | ------ | ------- | -------------------------------- |
+| `days`     | number | 30      | Days of history (1-365 or 'max') |
+| `interval` | string | auto    | Data interval: daily, hourly     |
+
+#### Examples
+
+```bash
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/historical/bitcoin?days=30"
+```
+
+---
+
+### Export Data
+
+Export historical data in various formats.
+
+```
+GET /api/v1/export
+```
+
+**Authentication:** API key or x402 payment required
+
+**Price:** $0.10 per export
+
+#### Query Parameters
+
+| Parameter | Type   | Default | Description              |
+| --------- | ------ | ------- | ------------------------ |
+| `coin`    | string | -       | Coin ID (required)       |
+| `format`  | string | json    | Output format: json, csv |
+| `days`    | number | 30      | Days of data             |
+
+#### Examples
+
+```bash
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/export?coin=bitcoin&format=csv&days=90"
+```
+
+---
+
+### Gas Prices
+
+Get current gas prices for major networks.
+
+```
+GET /api/v1/gas
+```
+
+**Authentication:** API key or x402 payment required
+
+**Price:** $0.001 per request
+
+#### Examples
+
+```bash
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/gas"
+```
+
+#### Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "ethereum": {
+      "slow": 15,
+      "standard": 20,
+      "fast": 30,
+      "unit": "gwei"
+    },
+    "polygon": {
+      "slow": 30,
+      "standard": 50,
+      "fast": 100,
+      "unit": "gwei"
+    }
+  }
+}
+```
+
+---
+
+### DeFi Analytics
+
+Get DeFi protocol analytics and TVL data.
+
+```
+GET /api/v1/defi
+```
+
+**Authentication:** API key or x402 payment required
+
+**Price:** $0.001 per request
+
+#### Query Parameters
+
+| Parameter | Type   | Default | Description         |
+| --------- | ------ | ------- | ------------------- |
+| `limit`   | number | 20      | Number of protocols |
+| `chain`   | string | -       | Filter by chain     |
+
+#### Examples
+
+```bash
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/defi?limit=10"
+```
+
+---
+
+### API Usage
+
+Check your API key usage and rate limits.
+
+```
+GET /api/v1/usage
+```
+
+**Authentication:** API key required
+
+#### Examples
+
+```bash
+curl -H "X-API-Key: cda_free_xxxxx" \
+  "https://free-crypto-news.vercel.app/api/v1/usage"
+```
+
+#### Response
+
+```json
+{
+  "tier": "free",
+  "usageToday": 45,
+  "usageMonth": 1250,
+  "limit": 100,
+  "remaining": 55,
+  "resetAt": "2026-01-24T00:00:00.000Z"
+}
 ```
 
 ---

@@ -8,6 +8,7 @@
  */
 
 import { kv } from '@vercel/kv';
+import { sendWebhook, webhookPayloads } from './webhooks';
 
 // ============================================================================
 // Edge-compatible crypto utilities (using Web Crypto API)
@@ -230,6 +231,19 @@ export async function createApiKey(params: {
     // Also store by keyId for reverse lookup
     await kv.set(`${KV_PREFIX.key}id:${keyId}`, hashedKey);
 
+    // Emit webhook event for key creation (non-blocking)
+    sendWebhook(
+      'key.created',
+      webhookPayloads.keyCreated({
+        keyId,
+        keyPrefix: keyData.keyPrefix,
+        tier,
+        email,
+      })
+    ).catch((err) => {
+      console.error('[API Keys] Failed to send key.created webhook:', err);
+    });
+
     return { key: rawKey, data: keyData };
   } catch (error) {
     console.error('Failed to create API key:', error);
@@ -356,6 +370,7 @@ export async function checkRateLimit(keyData: ApiKeyData): Promise<RateLimitResu
 
   const today = new Date().toISOString().split('T')[0];
   const usageKey = `${KV_PREFIX.usage}${keyData.id}:${today}`;
+  const notifiedKey = `${KV_PREFIX.usage}notified:${keyData.id}:${today}`;
 
   try {
     // Get current usage
@@ -365,6 +380,30 @@ export async function checkRateLimit(keyData: ApiKeyData): Promise<RateLimitResu
       // Calculate reset time (midnight UTC)
       const tomorrow = new Date();
       tomorrow.setUTCHours(24, 0, 0, 0);
+
+      // Check if we've already notified about 100% limit today
+      const notified = await kv.get<{ at90: boolean; at100: boolean }>(notifiedKey);
+      if (!notified?.at100) {
+        // Send rate limit webhook (100%)
+        sendWebhook(
+          'key.usage.limit',
+          webhookPayloads.keyUsageLimit({
+            keyId: keyData.id,
+            keyPrefix: keyData.keyPrefix,
+            tier: keyData.tier,
+            usage: currentUsage,
+            limit: tierConfig.requestsPerDay,
+            percentage: 100,
+            limitType: '100%',
+          })
+        ).catch((err) => {
+          console.error('[API Keys] Failed to send key.usage.limit webhook:', err);
+        });
+
+        // Mark as notified
+        await kv.set(notifiedKey, { ...notified, at100: true });
+        await kv.expire(notifiedKey, 90000);
+      }
 
       return {
         allowed: false,
@@ -380,6 +419,33 @@ export async function checkRateLimit(keyData: ApiKeyData): Promise<RateLimitResu
     // Set expiry on first use (25 hours to be safe)
     if (newUsage === 1) {
       await kv.expire(usageKey, 90000);
+    }
+
+    // Check if we've hit 90% threshold
+    const threshold90 = Math.floor(tierConfig.requestsPerDay * 0.9);
+    if (newUsage >= threshold90 && newUsage < tierConfig.requestsPerDay) {
+      const notified = await kv.get<{ at90: boolean; at100: boolean }>(notifiedKey);
+      if (!notified?.at90) {
+        // Send rate limit webhook (90%)
+        sendWebhook(
+          'key.usage.limit',
+          webhookPayloads.keyUsageLimit({
+            keyId: keyData.id,
+            keyPrefix: keyData.keyPrefix,
+            tier: keyData.tier,
+            usage: newUsage,
+            limit: tierConfig.requestsPerDay,
+            percentage: Math.round((newUsage / tierConfig.requestsPerDay) * 100),
+            limitType: '90%',
+          })
+        ).catch((err) => {
+          console.error('[API Keys] Failed to send key.usage.limit webhook:', err);
+        });
+
+        // Mark as notified
+        await kv.set(notifiedKey, { ...notified, at90: true });
+        await kv.expire(notifiedKey, 90000);
+      }
     }
 
     const tomorrow = new Date();
@@ -472,4 +538,163 @@ export async function validateRequest(request: Request): Promise<{
     keyData,
     rateLimit,
   };
+}
+// ============================================================================
+// Key Lookup by ID
+// ============================================================================
+
+/**
+ * Get API key data by key ID
+ */
+export async function getKeyById(keyId: string): Promise<ApiKeyData | null> {
+  if (!isKvConfigured()) return null;
+
+  try {
+    const hashedKey = await kv.get<string>(`${KV_PREFIX.key}id:${keyId}`);
+    if (!hashedKey) return null;
+
+    const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+    return keyData;
+  } catch (error) {
+    console.error('Failed to get key by ID:', error);
+    return null;
+  }
+}
+
+// ============================================================================
+// Subscription Management
+// ============================================================================
+
+/**
+ * Upgrade an API key to a new tier
+ */
+export async function upgradeKeyTier(
+  keyId: string,
+  newTier: 'pro' | 'enterprise',
+  expiresAt?: string
+): Promise<{ success: boolean; data?: ApiKeyData; error?: string }> {
+  if (!isKvConfigured()) {
+    return { success: false, error: 'API key storage not configured' };
+  }
+
+  try {
+    const hashedKey = await kv.get<string>(`${KV_PREFIX.key}id:${keyId}`);
+    if (!hashedKey) {
+      return { success: false, error: 'Key not found' };
+    }
+
+    const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+    if (!keyData) {
+      return { success: false, error: 'Key data not found' };
+    }
+
+    if (!keyData.active) {
+      return { success: false, error: 'Key is revoked' };
+    }
+
+    const tierConfig = API_KEY_TIERS[newTier];
+
+    const updatedKeyData: ApiKeyData = {
+      ...keyData,
+      tier: newTier,
+      permissions: [...tierConfig.features],
+      rateLimit: tierConfig.requestsPerDay,
+      expiresAt: expiresAt || keyData.expiresAt,
+      metadata: {
+        ...keyData.metadata,
+        upgradedAt: new Date().toISOString(),
+        previousTier: keyData.tier,
+      },
+    };
+
+    await kv.set(`${KV_PREFIX.key}${hashedKey}`, updatedKeyData);
+
+    // Emit webhook event for key upgrade (non-blocking)
+    sendWebhook(
+      'key.upgraded',
+      webhookPayloads.keyUpgraded({
+        keyId,
+        keyPrefix: keyData.keyPrefix,
+        previousTier: keyData.tier,
+        newTier,
+      })
+    ).catch((err) => {
+      console.error('[API Keys] Failed to send key.upgraded webhook:', err);
+    });
+
+    return { success: true, data: updatedKeyData };
+  } catch (error) {
+    console.error('Failed to upgrade key tier:', error);
+    return { success: false, error: 'Failed to upgrade key tier' };
+  }
+}
+
+/**
+ * Downgrade an API key to free tier (used when subscription expires)
+ */
+export async function downgradeKeyToFree(keyId: string): Promise<boolean> {
+  if (!isKvConfigured()) return false;
+
+  try {
+    const hashedKey = await kv.get<string>(`${KV_PREFIX.key}id:${keyId}`);
+    if (!hashedKey) return false;
+
+    const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+    if (!keyData) return false;
+
+    const tierConfig = API_KEY_TIERS.free;
+
+    const updatedKeyData: ApiKeyData = {
+      ...keyData,
+      tier: 'free',
+      permissions: [...tierConfig.features],
+      rateLimit: tierConfig.requestsPerDay,
+      expiresAt: undefined,
+      metadata: {
+        ...keyData.metadata,
+        downgradedAt: new Date().toISOString(),
+        previousTier: keyData.tier,
+      },
+    };
+
+    await kv.set(`${KV_PREFIX.key}${hashedKey}`, updatedKeyData);
+
+    return true;
+  } catch (error) {
+    console.error('Failed to downgrade key:', error);
+    return false;
+  }
+}
+
+/**
+ * Check for expired subscriptions and return keys that need to be downgraded
+ */
+export async function checkSubscriptionExpiry(): Promise<string[]> {
+  if (!isKvConfigured()) return [];
+
+  try {
+    // Get all keys with pro or enterprise tier that have an expiry date
+    // This uses a scan pattern - in production, you'd want a more efficient index
+    const keys = await kv.keys(`${KV_PREFIX.key}*`);
+    const expiredKeyIds: string[] = [];
+    const now = new Date();
+
+    for (const key of keys) {
+      // Skip id reference keys
+      if (key.includes(':id:')) continue;
+
+      const keyData = await kv.get<ApiKeyData>(key);
+      if (!keyData) continue;
+
+      // Check if key has expired
+      if (keyData.expiresAt && keyData.tier !== 'free' && new Date(keyData.expiresAt) < now) {
+        expiredKeyIds.push(keyData.id);
+      }
+    }
+
+    return expiredKeyIds;
+  } catch (error) {
+    console.error('Failed to check subscription expiry:', error);
+    return [];
+  }
 }
