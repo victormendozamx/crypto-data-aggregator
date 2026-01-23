@@ -383,7 +383,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     setSearchResults([]);
                     inputRef.current?.focus();
                   }}
-                  className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors"
+                  className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-black rounded transition-colors"
                   aria-label="Clear search"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -413,7 +413,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
                   activeTab === tab
                     ? 'bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300'
-                    : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700'
+                    : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300 hover:bg-gray-100 dark:hover:bg-black'
                 }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -440,14 +440,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         className={`w-full flex items-start gap-3 p-3 rounded-xl transition-all text-left group ${
                           selectedIndex === index
                             ? 'bg-brand-50 dark:bg-brand-900/30 ring-2 ring-brand-500/20'
-                            : 'hover:bg-gray-50 dark:hover:bg-slate-800'
+                            : 'hover:bg-gray-50 dark:hover:bg-black'
                         }`}
                       >
                         <div
                           className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
                             selectedIndex === index
                               ? 'bg-brand-100 dark:bg-brand-800/50'
-                              : 'bg-gray-100 dark:bg-slate-700'
+                              : 'bg-gray-100 dark:bg-black'
                           }`}
                         >
                           <CategoryIcon className="w-5 h-5" />
@@ -500,7 +500,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               {/* Search action */}
               <button
                 onClick={handleSearch}
-                className="w-full flex items-center gap-3 p-3 mt-2 rounded-xl text-left hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors border border-dashed border-gray-200 dark:border-slate-700"
+                className="w-full flex items-center gap-3 p-3 mt-2 rounded-xl text-left hover:bg-gray-50 dark:hover:bg-black transition-colors border border-dashed border-gray-200 dark:border-slate-700"
               >
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center">
                   <svg
@@ -567,7 +567,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <button
                         key={search.query}
                         onClick={() => handleQuickSearch(search.query)}
-                        className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black rounded-lg transition-colors"
                       >
                         {search.query}
                         <span
@@ -645,7 +645,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         key={action.href}
                         href={action.href}
                         onClick={onClose}
-                        className="flex items-center gap-3 p-3 text-left rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all group border border-transparent hover:border-gray-200 dark:hover:border-slate-700"
+                        className="flex items-center gap-3 p-3 text-left rounded-xl hover:bg-gray-50 dark:hover:bg-black transition-all group border border-transparent hover:border-gray-200 dark:hover:border-slate-700"
                       >
                         <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 dark:bg-black flex items-center justify-center group-hover:scale-110 transition-transform">
                           <ActionIcon className="w-5 h-5" />
@@ -672,29 +672,29 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-4">
               <span className="hidden sm:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
                   ↑↓
                 </kbd>
                 navigate
               </span>
               <span className="hidden sm:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
                   ↵
                 </kbd>
                 select
               </span>
               <span className="hidden md:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
                   Tab
                 </kbd>
                 switch tabs
               </span>
             </div>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+              <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
                 ⌘
               </kbd>
-              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+              <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
                 K
               </kbd>
               <span className="hidden sm:inline">to open</span>

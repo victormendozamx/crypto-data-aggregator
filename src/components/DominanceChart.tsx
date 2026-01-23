@@ -122,7 +122,7 @@ export function DominanceChart({ coins }: { coins: Coin[] }) {
   }, [dominanceData]);
 
   if (!coins.length) {
-    return <div className="h-64 bg-neutral-200 dark:bg-neutral-700 rounded-xl animate-pulse" />;
+    return <div className="h-64 bg-neutral-200 dark:bg-black rounded-xl animate-pulse" />;
   }
 
   return (
@@ -134,7 +134,7 @@ export function DominanceChart({ coins }: { coins: Coin[] }) {
             onClick={() => setDisplayMode('donut')}
             className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
               displayMode === 'donut'
-                ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                 : 'text-neutral-600 dark:text-neutral-400'
             }`}
           >
@@ -144,7 +144,7 @@ export function DominanceChart({ coins }: { coins: Coin[] }) {
             onClick={() => setDisplayMode('bar')}
             className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
               displayMode === 'bar'
-                ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                 : 'text-neutral-600 dark:text-neutral-400'
             }`}
           >
@@ -210,7 +210,7 @@ export function DominanceChart({ coins }: { coins: Coin[] }) {
                     {item.dominance.toFixed(2)}%
                   </span>
                 </div>
-                <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
+                <div className="h-4 bg-neutral-200 dark:bg-black rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all"
                     style={{
@@ -231,7 +231,7 @@ export function DominanceChart({ coins }: { coins: Coin[] }) {
             <div
               key={item.symbol}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors cursor-pointer ${
-                hoveredSegment === item.symbol ? 'bg-neutral-100 dark:bg-neutral-800' : ''
+                hoveredSegment === item.symbol ? 'bg-neutral-100 dark:bg-black' : ''
               }`}
               onMouseEnter={() => setHoveredSegment(item.symbol)}
               onMouseLeave={() => setHoveredSegment(null)}

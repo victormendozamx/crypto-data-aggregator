@@ -265,14 +265,14 @@ export default function PortfolioPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchPrices}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500 transition-colors"
               title="Refresh"
             >
               <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={handleExport}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500 transition-colors"
               title="Export"
             >
               <Download className="w-5 h-5" />

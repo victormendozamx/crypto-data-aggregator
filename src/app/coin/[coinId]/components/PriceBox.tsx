@@ -107,17 +107,17 @@ export default function PriceBox({
         : price;
 
   return (
-    <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6 h-full">
+    <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6 h-full">
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs text-gray-500 uppercase tracking-wide">{symbol} Price</span>
-        <div className="flex bg-gray-900 rounded-lg p-0.5">
+        <div className="flex bg-black rounded-lg p-0.5">
           {(['usd', 'btc', 'eth'] as Currency[]).map((c) => (
             <button
               key={c}
               onClick={() => setCurrency(c)}
               className={`px-2 py-1 text-xs font-medium rounded-md transition-colors ${
-                currency === c ? 'bg-gray-700 text-white' : 'text-gray-500 hover:text-gray-300'
+                currency === c ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
               }`}
             >
               {c.toUpperCase()}
@@ -177,7 +177,7 @@ export default function PriceBox({
           <span className="text-gray-500">24h High</span>
         </div>
 
-        <div className="relative h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div className="relative h-2 bg-black rounded-full overflow-hidden">
           {/* Range bar */}
           <div
             className="absolute inset-y-0 left-0 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 opacity-30"

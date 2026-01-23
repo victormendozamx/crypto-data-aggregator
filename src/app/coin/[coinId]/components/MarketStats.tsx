@@ -43,11 +43,13 @@ interface TooltipInfo {
 const tooltipContent: Record<string, TooltipInfo> = {
   marketCap: {
     title: 'Market Cap',
-    description: 'Total market value of circulating supply. Calculated by multiplying current price by circulating supply.',
+    description:
+      'Total market value of circulating supply. Calculated by multiplying current price by circulating supply.',
   },
   volume: {
     title: '24h Volume',
-    description: 'Total value of the cryptocurrency traded in the last 24 hours across all exchanges.',
+    description:
+      'Total value of the cryptocurrency traded in the last 24 hours across all exchanges.',
   },
   circulatingSupply: {
     title: 'Circulating Supply',
@@ -55,15 +57,18 @@ const tooltipContent: Record<string, TooltipInfo> = {
   },
   maxSupply: {
     title: 'Max Supply',
-    description: 'The maximum number of coins that will ever exist. Some cryptocurrencies have no maximum supply cap.',
+    description:
+      'The maximum number of coins that will ever exist. Some cryptocurrencies have no maximum supply cap.',
   },
   fdv: {
     title: 'Fully Diluted Valuation',
-    description: 'Market cap if the max supply was in circulation. Calculated by multiplying current price by max supply.',
+    description:
+      'Market cap if the max supply was in circulation. Calculated by multiplying current price by max supply.',
   },
   volumeMcap: {
     title: 'Volume / Market Cap',
-    description: 'Ratio of 24h trading volume to market cap. Higher ratios may indicate more trading activity relative to size.',
+    description:
+      'Ratio of 24h trading volume to market cap. Higher ratios may indicate more trading activity relative to size.',
   },
 };
 
@@ -99,12 +104,12 @@ function InfoTooltip({ id }: { id: string }) {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-gray-900 rounded-lg shadow-xl border border-gray-700"
+            className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-black rounded-lg shadow-xl border border-gray-700"
           >
             <h4 className="text-sm font-semibold text-white mb-1">{content.title}</h4>
             <p className="text-xs text-gray-400">{content.description}</p>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full">
-              <div className="w-2 h-2 bg-gray-900 border-r border-b border-gray-700 transform rotate-45 -translate-y-1" />
+              <div className="w-2 h-2 bg-black border-r border-b border-gray-700 transform rotate-45 -translate-y-1" />
             </div>
           </motion.div>
         )}
@@ -127,29 +132,27 @@ function StatCard({ label, value, subValue, badge, progress, tooltipId }: StatCa
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-4"
+      className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
     >
       <div className="flex items-center gap-1.5 mb-2">
         <span className="text-xs text-gray-500 uppercase tracking-wide">{label}</span>
         {tooltipId && <InfoTooltip id={tooltipId} />}
       </div>
-      
+
       <div className="flex items-baseline gap-2">
         <span className="text-xl font-bold text-white">${value}</span>
         {badge && (
-          <span className="px-1.5 py-0.5 bg-gray-700 text-gray-300 text-xs font-medium rounded">
+          <span className="px-1.5 py-0.5 bg-black text-gray-300 text-xs font-medium rounded">
             #{badge}
           </span>
         )}
       </div>
 
-      {subValue && (
-        <p className="text-xs text-gray-400 mt-1">{subValue}</p>
-      )}
+      {subValue && <p className="text-xs text-gray-400 mt-1">{subValue}</p>}
 
       {typeof progress === 'number' && (
         <div className="mt-2">
-          <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-black rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(100, progress)}%` }}
@@ -200,20 +203,20 @@ export default function MarketStats({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-4"
+        className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
       >
         <div className="flex items-center gap-1.5 mb-2">
           <span className="text-xs text-gray-500 uppercase tracking-wide">Circulating Supply</span>
           <InfoTooltip id="circulatingSupply" />
         </div>
-        
+
         <span className="text-xl font-bold text-white">
           {formatSupply(circulatingSupply, symbolUpper)}
         </span>
 
         {circulatingPercent !== null && (
           <div className="mt-2">
-            <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-black rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${Math.min(100, circulatingPercent)}%` }}
@@ -232,13 +235,13 @@ export default function MarketStats({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gray-800/50 rounded-xl border border-gray-700/50 p-4"
+        className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
       >
         <div className="flex items-center gap-1.5 mb-2">
           <span className="text-xs text-gray-500 uppercase tracking-wide">Max Supply</span>
           <InfoTooltip id="maxSupply" />
         </div>
-        
+
         <span className="text-xl font-bold text-white">
           {maxSupply ? formatSupply(maxSupply, symbolUpper) : '∞'}
         </span>

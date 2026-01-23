@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import { MobileNav } from './MobileNav';
-import ThemeToggle from './ThemeToggle';
 import { SearchModal } from './SearchModal';
 import { CommandPalette } from './CommandPalette';
 
@@ -159,10 +158,10 @@ function MegaMenu({ item, isOpen }: { item: (typeof navItems)[0]; isOpen: boolea
       aria-label={`${item.label} submenu`}
     >
       {/* Arrow pointer */}
-      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-white dark:bg-neutral-800 border-l border-t border-neutral-200 dark:border-neutral-700" />
+      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-white dark:bg-black border-l border-t border-neutral-200 dark:border-neutral-700" />
 
       <div
-        className={`relative bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-2xl overflow-hidden ${
+        className={`relative bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-2xl overflow-hidden ${
           hasMultipleSections ? 'min-w-[480px]' : 'min-w-[320px]'
         }`}
         style={{
@@ -183,10 +182,10 @@ function MegaMenu({ item, isOpen }: { item: (typeof navItems)[0]; isOpen: boolea
                       <li key={linkIdx}>
                         <Link
                           href={link.href}
-                          className="flex items-center gap-2.5 px-2 py-2 text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-700/50 rounded-lg transition-all duration-150 group"
+                          className="flex items-center gap-2.5 px-2 py-2 text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-black/50 rounded-lg transition-all duration-150 group"
                           role="menuitem"
                         >
-                          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-700 group-hover:bg-neutral-200 dark:group-hover:bg-neutral-600 group-hover:scale-105 transition-all duration-150 text-base">
+                          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-100 dark:bg-black group-hover:bg-neutral-200 dark:group-hover:bg-neutral-600 group-hover:scale-105 transition-all duration-150 text-base">
                             {link.icon}
                           </span>
                           <span className="font-medium text-sm">{link.label}</span>
@@ -357,8 +356,8 @@ export default function Header() {
                   href={item.href}
                   className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus-ring ${
                     activeMenu === item.label
-                      ? 'text-neutral-900 dark:text-white bg-neutral-100 dark:bg-neutral-800'
-                      : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                      ? 'text-neutral-900 dark:text-white bg-neutral-100 dark:bg-black'
+                      : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-black'
                   }`}
                   role="menuitem"
                   aria-haspopup={item.megaMenu ? 'true' : undefined}
@@ -399,7 +398,7 @@ export default function Header() {
             <div className="hidden xl:block mr-2">
               <Suspense
                 fallback={
-                  <div className="w-48 h-6 bg-neutral-100 dark:bg-neutral-800 rounded animate-pulse" />
+                  <div className="w-48 h-6 bg-neutral-100 dark:bg-black rounded animate-pulse" />
                 }
               >
                 <PriceWidget variant="compact" />
@@ -409,7 +408,7 @@ export default function Header() {
             {/* Search Button */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 py-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-all duration-200 focus-ring"
+              className="flex items-center gap-2 px-3 py-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-black rounded-lg transition-all duration-200 focus-ring"
               aria-label="Search (⌘K)"
             >
               <svg
@@ -427,14 +426,11 @@ export default function Header() {
                 />
               </svg>
               <span className="hidden md:flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-500">
-                <kbd className="px-1.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 rounded text-[10px] font-medium">
+                <kbd className="px-1.5 py-0.5 bg-neutral-100 dark:bg-black rounded text-[10px] font-medium">
                   ⌘K
                 </kbd>
               </span>
             </button>
-
-            {/* Theme Toggle */}
-            <ThemeToggle />
 
             {/* Currency Selector */}
             <div className="hidden sm:block">
@@ -446,7 +442,7 @@ export default function Header() {
               href="https://github.com/nirholas/crypto-data-aggregator"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 ml-1 px-4 py-2 bg-neutral-900 dark:bg-neutral-700 text-white rounded-full hover:bg-neutral-800 dark:hover:bg-neutral-600 hover:shadow-lg active:scale-95 transition-all duration-200 text-sm font-medium focus-ring"
+              className="hidden sm:flex items-center gap-2 ml-1 px-4 py-2 bg-black dark:bg-black text-white rounded-full hover:bg-black dark:hover:bg-neutral-600 hover:shadow-lg active:scale-95 transition-all duration-200 text-sm font-medium focus-ring"
               aria-label="View on GitHub"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

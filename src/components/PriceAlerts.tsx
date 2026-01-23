@@ -207,7 +207,7 @@ export function PriceAlerts() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-black rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -305,7 +305,7 @@ export function PriceAlerts() {
                       </div>
                       <button
                         onClick={() => removeAlert(alert.id)}
-                        className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                        className="p-1.5 hover:bg-gray-200 dark:hover:bg-black rounded"
                       >
                         <X className="w-4 h-4 text-gray-400" />
                       </button>
@@ -340,7 +340,7 @@ export function PriceAlerts() {
                         </div>
                         <button
                           onClick={() => removeAlert(alert.id)}
-                          className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                          className="p-1.5 hover:bg-gray-200 dark:hover:bg-black rounded"
                         >
                           <X className="w-4 h-4 text-gray-400" />
                         </button>

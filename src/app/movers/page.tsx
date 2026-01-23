@@ -127,7 +127,7 @@ export default async function MoversPage() {
                   <Link
                     key={coin.id}
                     href={`/coin/${coin.id}`}
-                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-black transition"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-neutral-400 text-sm w-6">{index + 1}</span>
@@ -188,7 +188,7 @@ export default async function MoversPage() {
                   <Link
                     key={coin.id}
                     href={`/coin/${coin.id}`}
-                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                    className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-black transition"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-neutral-400 text-sm w-6">{index + 1}</span>
@@ -222,13 +222,13 @@ export default async function MoversPage() {
           <div className="mt-8 flex justify-center gap-4">
             <Link
               href="/markets"
-              className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-6 py-3 rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-100 transition"
+              className="bg-black dark:bg-white text-white dark:text-neutral-900 px-6 py-3 rounded-lg font-medium hover:bg-black dark:hover:bg-neutral-100 transition"
             >
               Full Markets Dashboard
             </Link>
             <Link
               href="/category/markets"
-              className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 px-6 py-3 rounded-lg font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition"
+              className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 px-6 py-3 rounded-lg font-medium hover:bg-neutral-50 dark:hover:bg-black transition"
             >
               Market News
             </Link>

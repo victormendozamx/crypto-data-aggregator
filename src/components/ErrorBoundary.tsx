@@ -122,7 +122,7 @@ function DefaultErrorFallback({ error, onReset }: DefaultErrorFallbackProps) {
           )}
           <Link
             href="/"
-            className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
           >
             Go home
           </Link>
@@ -197,7 +197,7 @@ export function ErrorFallback({
         )}
         <Link
           href="/"
-          className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
+          className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
         >
           Go home
         </Link>

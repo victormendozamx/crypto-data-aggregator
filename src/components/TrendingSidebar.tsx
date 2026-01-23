@@ -32,7 +32,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
     <aside className="space-y-8 lg:sticky lg:top-4">
       {/* Trending Stories */}
       <div className="bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
-        <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-700/50">
+        <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-black/50">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-red-400 opacity-75"></span>
@@ -64,7 +64,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
 
       {/* Categories */}
       <div className="bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
-        <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-700/50">
+        <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-black/50">
           <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <Folder className="w-4 h-4" />
             Categories
@@ -78,7 +78,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
                 <Link
                   key={cat.slug}
                   href={`/category/${cat.slug}`}
-                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors ${cat.color}`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-50 dark:bg-black hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors ${cat.color}`}
                 >
                   <CategoryIcon className="w-4 h-4" />
                   {cat.name}

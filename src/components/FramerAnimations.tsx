@@ -298,16 +298,8 @@ export function AnimatedCounter({
   suffix = '',
 }: CounterProps) {
   return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={className}
-    >
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        key={value}
-      >
+    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={className}>
+      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} key={value}>
         {prefix}
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -334,7 +326,7 @@ export function AnimatedSkeleton({ className, count = 1 }: SkeletonProps) {
       {Array.from({ length: count }).map((_, i) => (
         <motion.div
           key={i}
-          className={`bg-gray-800 rounded ${className}`}
+          className={`bg-black rounded ${className}`}
           animate={{
             opacity: [0.5, 1, 0.5],
           }}
@@ -368,7 +360,7 @@ export function AnimatedTooltip({ children, content, position = 'top' }: Tooltip
     <motion.div className="relative group" whileHover="hover">
       {children}
       <motion.div
-        className={`absolute ${positionClasses[position]} px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap pointer-events-none z-50`}
+        className={`absolute ${positionClasses[position]} px-2 py-1 bg-black text-white text-xs rounded whitespace-nowrap pointer-events-none z-50`}
         initial={{ opacity: 0, scale: 0.9 }}
         variants={{
           hover: { opacity: 1, scale: 1 },

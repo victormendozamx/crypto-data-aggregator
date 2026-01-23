@@ -34,10 +34,14 @@ function formatVolume(volume: number): string {
 
 function getTrustColor(score: string | null): string {
   switch (score) {
-    case 'green': return 'bg-neutral-900 dark:bg-white';
-    case 'yellow': return 'bg-neutral-500 dark:bg-neutral-400';
-    case 'red': return 'bg-neutral-300 dark:bg-neutral-600';
-    default: return 'bg-neutral-200 dark:bg-neutral-700';
+    case 'green':
+      return 'bg-black dark:bg-white';
+    case 'yellow':
+      return 'bg-neutral-500 dark:bg-neutral-400';
+    case 'red':
+      return 'bg-neutral-300 dark:bg-neutral-600';
+    default:
+      return 'bg-neutral-200 dark:bg-black';
   }
 }
 
@@ -50,13 +54,11 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
   // Filter and sort tickers
   const filteredTickers = useMemo(() => {
     let filtered = tickers.filter((t) => !t.is_stale && !t.is_anomaly);
-    
+
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
-        (t) =>
-          t.market.name.toLowerCase().includes(query) ||
-          t.target.toLowerCase().includes(query)
+        (t) => t.market.name.toLowerCase().includes(query) || t.target.toLowerCase().includes(query)
       );
     }
 
@@ -80,7 +82,8 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
           break;
         case 'trust':
           const trustOrder = { green: 3, yellow: 2, red: 1, null: 0 };
-          comparison = (trustOrder[a.trust_score || 'null'] || 0) - (trustOrder[b.trust_score || 'null'] || 0);
+          comparison =
+            (trustOrder[a.trust_score || 'null'] || 0) - (trustOrder[b.trust_score || 'null'] || 0);
           break;
       }
       return sortOrder === 'asc' ? comparison : -comparison;
@@ -128,21 +131,18 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
   );
 
   return (
-    <div className="bg-neutral-900/50 rounded-2xl border border-neutral-700/50 overflow-hidden">
+    <div className="bg-black/50 rounded-2xl border border-neutral-700/50 overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-neutral-700/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">
-              {coinSymbol.toUpperCase()} Markets
-            </h3>
+            <h3 className="text-lg font-semibold text-white">{coinSymbol.toUpperCase()} Markets</h3>
             <p className="text-sm text-neutral-400">
-              {filteredTickers.length} trading pairs across {
-                new Set(tickers.map((t) => t.market.identifier)).size
-              } exchanges
+              {filteredTickers.length} trading pairs across{' '}
+              {new Set(tickers.map((t) => t.market.identifier)).size} exchanges
             </p>
           </div>
-          
+
           {/* Search */}
           <div className="relative">
             <svg
@@ -166,7 +166,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
-              className="pl-9 pr-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-white/50 w-full sm:w-64"
+              className="pl-9 pr-4 py-2 bg-black border border-neutral-700 rounded-lg text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-white/50 w-full sm:w-64"
             />
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.02 }}
-                className="hover:bg-gray-700/20 transition-colors"
+                className="hover:bg-black/20 transition-colors"
               >
                 {/* Exchange */}
                 <td className="px-4 py-3">
@@ -224,9 +224,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                         }}
                       />
                     )}
-                    <span className="text-sm font-medium text-white">
-                      {ticker.market.name}
-                    </span>
+                    <span className="text-sm font-medium text-white">{ticker.market.name}</span>
                     {ticker.market.has_trading_incentive && (
                       <span className="px-1 py-0.5 bg-white/20 text-white text-xs rounded">
                         PROMO
@@ -251,13 +249,15 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
 
                 {/* Spread */}
                 <td className="px-4 py-3 text-right hidden sm:table-cell">
-                  <span className={`text-sm ${
-                    ticker.bid_ask_spread_percentage > 1 
-                      ? 'text-neutral-400' 
-                      : ticker.bid_ask_spread_percentage > 0.5 
-                        ? 'text-neutral-300' 
-                        : 'text-white font-medium'
-                  }`}>
+                  <span
+                    className={`text-sm ${
+                      ticker.bid_ask_spread_percentage > 1
+                        ? 'text-neutral-400'
+                        : ticker.bid_ask_spread_percentage > 0.5
+                          ? 'text-neutral-300'
+                          : 'text-white font-medium'
+                    }`}
+                  >
                     {ticker.bid_ask_spread_percentage?.toFixed(2) || '-'}%
                   </span>
                 </td>
@@ -289,8 +289,18 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                       className="inline-flex items-center gap-1 px-2 py-1 bg-white/20 hover:bg-white/30 text-white text-xs font-medium rounded transition-colors"
                     >
                       Trade
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
                       </svg>
                     </a>
                   ) : (
@@ -307,18 +317,19 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
       {totalPages > 1 && (
         <div className="p-4 border-t border-gray-700/50 flex items-center justify-between">
           <span className="text-sm text-gray-400">
-            Showing {(page - 1) * ITEMS_PER_PAGE + 1}-{Math.min(page * ITEMS_PER_PAGE, filteredTickers.length)} of {filteredTickers.length}
+            Showing {(page - 1) * ITEMS_PER_PAGE + 1}-
+            {Math.min(page * ITEMS_PER_PAGE, filteredTickers.length)} of {filteredTickers.length}
           </span>
-          
+
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
             >
               Previous
             </button>
-            
+
             <div className="flex items-center gap-1">
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 let pageNum;
@@ -331,7 +342,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                 } else {
                   pageNum = page - 2 + i;
                 }
-                
+
                 return (
                   <button
                     key={pageNum}
@@ -339,7 +350,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                     className={`w-8 h-8 text-sm rounded-lg transition-colors ${
                       page === pageNum
                         ? 'bg-white text-neutral-900 font-medium'
-                        : 'bg-neutral-700 hover:bg-neutral-600 text-white'
+                        : 'bg-black hover:bg-neutral-600 text-white'
                     }`}
                   >
                     {pageNum}
@@ -347,11 +358,11 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                 );
               })}
             </div>
-            
+
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
             >
               Next
             </button>

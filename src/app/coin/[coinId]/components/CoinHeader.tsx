@@ -92,14 +92,10 @@ export default function CoinHeader({
           {/* Name and symbol */}
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                {coin.name}
-              </h1>
-              <span className="text-lg text-gray-400 font-medium">
-                {coin.symbol.toUpperCase()}
-              </span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">{coin.name}</h1>
+              <span className="text-lg text-gray-400 font-medium">{coin.symbol.toUpperCase()}</span>
               {coin.market_cap_rank && (
-                <span className="px-2 py-0.5 bg-gray-700 text-gray-300 text-xs font-medium rounded-md">
+                <span className="px-2 py-0.5 bg-black text-gray-300 text-xs font-medium rounded-md">
                   Rank #{coin.market_cap_rank}
                 </span>
               )}
@@ -112,7 +108,7 @@ export default function CoinHeader({
                   <Link
                     key={category}
                     href={`/category/${encodeURIComponent(category.toLowerCase().replace(/\s+/g, '-'))}`}
-                    className="px-2 py-0.5 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white text-xs rounded-md transition-colors"
+                    className="px-2 py-0.5 bg-black hover:bg-black text-gray-400 hover:text-white text-xs rounded-md transition-colors"
                   >
                     {category}
                   </Link>
@@ -131,7 +127,7 @@ export default function CoinHeader({
             className={`flex items-center gap-1.5 px-3 py-2 rounded-lg font-medium text-sm transition-colors ${
               isWatchlisted
                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                : 'bg-gray-800 text-gray-400 hover:text-white border border-gray-700 hover:border-gray-600'
+                : 'bg-black text-gray-400 hover:text-white border border-gray-700 hover:border-gray-600'
             }`}
           >
             <motion.svg
@@ -148,15 +144,13 @@ export default function CoinHeader({
                 d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
               />
             </motion.svg>
-            <span className="hidden sm:inline">
-              {isWatchlisted ? 'Watching' : 'Watchlist'}
-            </span>
+            <span className="hidden sm:inline">{isWatchlisted ? 'Watching' : 'Watchlist'}</span>
           </motion.button>
 
           {/* Price alert button */}
           <button
             onClick={onAlertClick}
-            className="flex items-center gap-1.5 px-3 py-2 bg-gray-800 text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-black text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
@@ -173,7 +167,7 @@ export default function CoinHeader({
           <div className="relative">
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3 py-2 bg-gray-800 text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 bg-black text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -193,7 +187,7 @@ export default function CoinHeader({
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-gray-700 text-white text-xs rounded whitespace-nowrap"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-black text-white text-xs rounded whitespace-nowrap"
                 >
                   Link copied!
                 </motion.div>

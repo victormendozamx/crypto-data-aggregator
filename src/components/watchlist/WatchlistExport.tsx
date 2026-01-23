@@ -11,7 +11,9 @@ interface WatchlistExportProps {
 export function WatchlistExport({ onClose }: WatchlistExportProps) {
   const { watchlist, exportWatchlist, exportWatchlistCSV, importWatchlist } = useWatchlist();
   const [isImporting, setIsImporting] = useState(false);
-  const [importResult, setImportResult] = useState<{ success?: boolean; message: string } | null>(null);
+  const [importResult, setImportResult] = useState<{ success?: boolean; message: string } | null>(
+    null
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExportJSON = () => {
@@ -50,7 +52,7 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
     try {
       const text = await file.text();
       const result = importWatchlist(text);
-      
+
       if (result.success) {
         setImportResult({
           success: true,
@@ -77,13 +79,13 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden">
+    <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden">
       <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
         <h3 className="font-semibold text-gray-900 dark:text-white">Export / Import Watchlist</h3>
         {onClose && (
           <button
             onClick={onClose}
-            className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500"
+            className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500"
           >
             <X className="w-5 h-5" />
           </button>
@@ -134,7 +136,7 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
           <button
             onClick={handleImportClick}
             disabled={isImporting}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-black disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
           >
             <Upload className="w-4 h-4" />
             {isImporting ? 'Importing...' : 'Import JSON'}
@@ -142,11 +144,13 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
 
           {/* Import Result */}
           {importResult && (
-            <div className={`mt-3 p-3 rounded-lg flex items-center gap-2 ${
-              importResult.success 
-                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400' 
-                : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
-            }`}>
+            <div
+              className={`mt-3 p-3 rounded-lg flex items-center gap-2 ${
+                importResult.success
+                  ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                  : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+              }`}
+            >
               {importResult.success ? (
                 <Check className="w-4 h-4 flex-shrink-0" />
               ) : (

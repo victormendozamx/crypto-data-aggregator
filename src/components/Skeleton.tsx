@@ -10,12 +10,7 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ className = '' }: SkeletonProps) {
-  return (
-    <div 
-      className={`skeleton ${className}`}
-      aria-hidden="true"
-    />
-  );
+  return <div className={`skeleton ${className}`} aria-hidden="true" />;
 }
 
 export function ArticleCardSkeleton() {
@@ -78,7 +73,7 @@ export function MarketStatsSkeleton() {
 
 export function PostsGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div 
+    <div
       className="grid grid-cols-1 md:grid-cols-2 gap-4"
       aria-label="Loading articles..."
       role="status"
@@ -92,20 +87,20 @@ export function PostsGridSkeleton({ count = 6 }: { count?: number }) {
 
 export function PriceTickerSkeleton() {
   return (
-    <div className="bg-gray-900 py-2.5 animate-fadeIn">
+    <div className="bg-black py-2.5 animate-fadeIn">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between gap-6">
           <div className="flex items-center gap-6">
             {[...Array(3)].map((_, i) => (
               <div key={i} className="flex items-center gap-2">
-                <Skeleton className="w-4 h-4 rounded-full bg-gray-700" />
-                <Skeleton className="h-4 w-10 rounded bg-gray-700" />
-                <Skeleton className="h-4 w-16 rounded bg-gray-700" />
-                <Skeleton className="h-4 w-12 rounded bg-gray-700" />
+                <Skeleton className="w-4 h-4 rounded-full bg-black" />
+                <Skeleton className="h-4 w-10 rounded bg-black" />
+                <Skeleton className="h-4 w-16 rounded bg-black" />
+                <Skeleton className="h-4 w-12 rounded bg-black" />
               </div>
             ))}
           </div>
-          <Skeleton className="h-4 w-32 rounded bg-gray-700" />
+          <Skeleton className="h-4 w-32 rounded bg-black" />
         </div>
       </div>
     </div>

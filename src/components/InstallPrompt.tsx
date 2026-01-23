@@ -98,7 +98,7 @@ export function InstallPrompt() {
 
             {/* Features */}
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-800 rounded-full text-xs text-gray-300">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-black rounded-full text-xs text-gray-300">
                 <svg
                   className="w-3 h-3 text-green-400"
                   fill="none"
@@ -114,7 +114,7 @@ export function InstallPrompt() {
                 </svg>
                 Lightning fast
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-800 rounded-full text-xs text-gray-300">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-black rounded-full text-xs text-gray-300">
                 <svg
                   className="w-3 h-3 text-blue-400"
                   fill="none"
@@ -130,7 +130,7 @@ export function InstallPrompt() {
                 </svg>
                 Works offline
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-800 rounded-full text-xs text-gray-300">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-black rounded-full text-xs text-gray-300">
                 <svg
                   className="w-3 h-3 text-purple-400"
                   fill="none"
@@ -172,7 +172,7 @@ export function InstallPrompt() {
       {/* iOS Instructions Modal */}
       {showIOSInstructions && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-gray-900 rounded-2xl max-w-sm w-full overflow-hidden border border-gray-700">
+          <div className="bg-black rounded-2xl max-w-sm w-full overflow-hidden border border-gray-700">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500" />
 
             <div className="p-6">
@@ -242,7 +242,7 @@ export function InstallPrompt() {
 
               <button
                 onClick={() => setShowIOSInstructions(false)}
-                className="w-full mt-6 py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-xl transition-colors"
+                className="w-full mt-6 py-3 px-4 bg-black hover:bg-black text-white font-semibold rounded-xl transition-colors"
               >
                 Got it
               </button>

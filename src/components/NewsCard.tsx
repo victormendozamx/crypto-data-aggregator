@@ -144,10 +144,10 @@ export default function NewsCard({
       <article className="group" data-article>
         <Link
           href={`/article/${articleId}`}
-          className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+          className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-black/50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
         >
           {priority && (
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-slate-500 font-bold text-sm flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-amber-900/30 group-hover:text-brand-600 dark:group-hover:text-amber-400 transition-colors">
+            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 dark:bg-black text-gray-400 dark:text-slate-500 font-bold text-sm flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-amber-900/30 group-hover:text-brand-600 dark:group-hover:text-amber-400 transition-colors">
               {priority}
             </span>
           )}

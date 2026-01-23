@@ -8,14 +8,14 @@ export default function MoversLoading() {
       {/* Header skeleton */}
       <div className="border-b border-neutral-200 dark:border-neutral-800">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="h-8 w-48 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+          <div className="h-8 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse" />
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Title skeleton */}
         <div className="text-center mb-8">
-          <div className="h-10 w-48 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mx-auto mb-2" />
+          <div className="h-10 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse mx-auto mb-2" />
           <div className="h-5 w-72 bg-neutral-100 dark:bg-black rounded animate-pulse mx-auto" />
         </div>
 
@@ -27,10 +27,10 @@ export default function MoversLoading() {
               className="bg-neutral-50 dark:bg-black rounded-xl p-6 border border-neutral-200 dark:border-neutral-800"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-800 rounded-lg animate-pulse" />
-                <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                <div className="w-10 h-10 bg-neutral-200 dark:bg-black rounded-lg animate-pulse" />
+                <div className="h-6 w-32 bg-neutral-200 dark:bg-black rounded animate-pulse" />
               </div>
-              <div className="h-8 w-24 bg-neutral-300 dark:bg-neutral-700 rounded animate-pulse" />
+              <div className="h-8 w-24 bg-neutral-300 dark:bg-black rounded animate-pulse" />
             </div>
           ))}
         </div>
@@ -42,7 +42,7 @@ export default function MoversLoading() {
               key={col}
               className="bg-neutral-50 dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-6"
             >
-              <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-6" />
+              <div className="h-6 w-32 bg-neutral-200 dark:bg-black rounded animate-pulse mb-6" />
 
               <div className="space-y-3">
                 {[...Array(10)].map((_, i) => (
@@ -51,11 +51,11 @@ export default function MoversLoading() {
                     className="flex items-center justify-between p-3 bg-white dark:bg-black rounded-lg"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="h-5 w-5 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
-                      <div className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full animate-pulse" />
-                      <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                      <div className="h-5 w-5 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+                      <div className="w-8 h-8 bg-neutral-200 dark:bg-black rounded-full animate-pulse" />
+                      <div className="h-4 w-24 bg-neutral-200 dark:bg-black rounded animate-pulse" />
                     </div>
-                    <div className="h-4 w-16 bg-neutral-300 dark:bg-neutral-700 rounded animate-pulse" />
+                    <div className="h-4 w-16 bg-neutral-300 dark:bg-black rounded animate-pulse" />
                   </div>
                 ))}
               </div>

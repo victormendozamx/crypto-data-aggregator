@@ -3,37 +3,40 @@
  * Displays BTC, ETH, SOL prices with 24h change
  */
 
-import { getSimplePrices, getFearGreedIndex, formatPrice, formatPercent, getFearGreedColor } from '@/lib/market-data';
+import {
+  getSimplePrices,
+  getFearGreedIndex,
+  formatPrice,
+  formatPercent,
+  getFearGreedColor,
+} from '@/lib/market-data';
 
 interface PriceTickerProps {
   className?: string;
 }
 
 export default async function PriceTicker({ className = '' }: PriceTickerProps) {
-  const [prices, fearGreed] = await Promise.all([
-    getSimplePrices(),
-    getFearGreedIndex(),
-  ]);
+  const [prices, fearGreed] = await Promise.all([getSimplePrices(), getFearGreedIndex()]);
 
   const coins = [
-    { 
-      symbol: 'BTC', 
+    {
+      symbol: 'BTC',
       name: 'Bitcoin',
       icon: '₿',
       color: 'text-orange-400',
       price: prices.bitcoin?.usd,
       change: prices.bitcoin?.usd_24h_change,
     },
-    { 
-      symbol: 'ETH', 
+    {
+      symbol: 'ETH',
       name: 'Ethereum',
       icon: 'Ξ',
       color: 'text-purple-400',
       price: prices.ethereum?.usd,
       change: prices.ethereum?.usd_24h_change,
     },
-    { 
-      symbol: 'SOL', 
+    {
+      symbol: 'SOL',
       name: 'Solana',
       icon: '◎',
       color: 'text-gradient-to-r from-purple-400 to-green-400',
@@ -43,8 +46,8 @@ export default async function PriceTicker({ className = '' }: PriceTickerProps) 
   ];
 
   return (
-    <div 
-      className={`bg-gray-900 text-white py-2.5 overflow-hidden ${className}`}
+    <div
+      className={`bg-black text-white py-2.5 overflow-hidden ${className}`}
       role="region"
       aria-label="Cryptocurrency prices"
     >
@@ -55,29 +58,37 @@ export default async function PriceTicker({ className = '' }: PriceTickerProps) 
             {coins.map((coin) => {
               const isPositive = (coin.change || 0) >= 0;
               return (
-                <div 
-                  key={coin.symbol} 
+                <div
+                  key={coin.symbol}
                   className="flex items-center gap-2 whitespace-nowrap"
                   role="listitem"
                 >
-                  <span className={coin.color} aria-hidden="true">{coin.icon}</span>
+                  <span className={coin.color} aria-hidden="true">
+                    {coin.icon}
+                  </span>
                   <span className="text-gray-400 font-medium">{coin.symbol}</span>
                   <span className="font-semibold">{formatPrice(coin.price)}</span>
-                  <span 
+                  <span
                     className={`inline-flex items-center gap-0.5 text-xs font-medium ${
                       isPositive ? 'text-green-400' : 'text-red-400'
                     }`}
                   >
                     {/* Arrow indicator */}
-                    <svg 
-                      className={`w-3 h-3 ${isPositive ? '' : 'rotate-180'}`} 
-                      fill="currentColor" 
+                    <svg
+                      className={`w-3 h-3 ${isPositive ? '' : 'rotate-180'}`}
+                      fill="currentColor"
                       viewBox="0 0 20 20"
                       aria-hidden="true"
                     >
-                      <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
-                    <span aria-label={`${coin.name} ${isPositive ? 'up' : 'down'} ${Math.abs(coin.change || 0).toFixed(2)} percent in 24 hours`}>
+                    <span
+                      aria-label={`${coin.name} ${isPositive ? 'up' : 'down'} ${Math.abs(coin.change || 0).toFixed(2)} percent in 24 hours`}
+                    >
                       {formatPercent(coin.change)}
                     </span>
                   </span>
@@ -88,7 +99,7 @@ export default async function PriceTicker({ className = '' }: PriceTickerProps) 
 
           {/* Fear & Greed Index */}
           {fearGreed && (
-            <div 
+            <div
               className="flex items-center gap-2 whitespace-nowrap border-l border-gray-700 pl-6"
               aria-label={`Fear and Greed Index: ${fearGreed.value}, ${fearGreed.value_classification}`}
             >

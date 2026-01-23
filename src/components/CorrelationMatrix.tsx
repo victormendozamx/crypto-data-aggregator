@@ -134,8 +134,8 @@ export function CorrelationMatrix() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-10 w-48 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse mx-auto" />
-        <div className="aspect-square max-w-2xl mx-auto bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+        <div className="h-10 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse mx-auto" />
+        <div className="aspect-square max-w-2xl mx-auto bg-neutral-200 dark:bg-black rounded animate-pulse" />
       </div>
     );
   }
@@ -151,7 +151,7 @@ export function CorrelationMatrix() {
               onClick={() => setTimeframe(tf)}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
                 timeframe === tf
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                  ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                   : 'text-neutral-600 dark:text-neutral-400'
               }`}
             >

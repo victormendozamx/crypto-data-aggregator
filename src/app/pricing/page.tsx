@@ -127,8 +127,8 @@ export default function PricingPage() {
               <button
                 className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
                   tier.highlighted
-                    ? 'bg-black text-white dark:bg-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200'
-                    : 'border-2 border-black dark:border-white text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900'
+                    ? 'bg-black text-white dark:bg-white dark:text-black hover:bg-black dark:hover:bg-neutral-200'
+                    : 'border-2 border-black dark:border-white text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-black'
                 }`}
               >
                 {tier.cta}
@@ -266,7 +266,7 @@ export default function PricingPage() {
           <div className="flex gap-4 justify-center">
             <Link
               href="/api/v1"
-              className="px-6 py-3 bg-white dark:bg-black text-black dark:text-white font-medium rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+              className="px-6 py-3 bg-white dark:bg-black text-black dark:text-white font-medium rounded-lg hover:bg-neutral-200 dark:hover:bg-black transition-colors"
             >
               View API Docs
             </Link>

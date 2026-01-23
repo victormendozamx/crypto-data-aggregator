@@ -94,7 +94,7 @@ function ArticleCardList({
 
           {/* Reading progress overlay on image */}
           {article.readProgress !== undefined && article.readProgress > 0 && (
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-900/50">
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/50">
               <div
                 className={`h-full ${article.readProgress >= 100 ? 'bg-green-500' : 'bg-brand-500'}`}
                 style={{ width: `${Math.min(100, article.readProgress)}%` }}

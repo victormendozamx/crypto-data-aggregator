@@ -5,7 +5,7 @@ import { InstallPrompt } from '@/components/InstallPrompt';
 import { UpdatePrompt } from '@/components/UpdatePrompt';
 import { OfflineIndicator } from '@/components/OfflineIndicator';
 import { BookmarksProvider } from '@/components/BookmarksProvider';
-import { ThemeProvider, ThemeScript } from '@/components/ThemeProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { KeyboardShortcutsProvider } from '@/components/KeyboardShortcuts';
 import { WatchlistProvider } from '@/components/watchlist';
 import { AlertsProvider } from '@/components/alerts';
@@ -163,11 +163,8 @@ import { OrganizationStructuredData, WebsiteStructuredData } from '@/components/
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en" dir="ltr" className="dark">
       <head>
-        {/* Theme Script - prevents flash of wrong theme */}
-        <ThemeScript />
-
         {/* Global Structured Data */}
         <OrganizationStructuredData />
         <WebsiteStructuredData />

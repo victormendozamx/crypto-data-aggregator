@@ -68,7 +68,7 @@ export function BackToTop({
         bg-white dark:bg-black 
         border border-gray-200 dark:border-slate-700
         text-gray-600 dark:text-slate-300
-        hover:bg-gray-50 dark:hover:bg-slate-700
+        hover:bg-gray-50 dark:hover:bg-black
         hover:text-brand-600 dark:hover:text-brand-400
         hover:shadow-xl hover:scale-110
         focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2

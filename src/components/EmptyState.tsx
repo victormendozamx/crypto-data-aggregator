@@ -32,11 +32,14 @@ interface EmptyStateProps {
   compact?: boolean;
 }
 
-const variantConfig: Record<EmptyStateVariant, { icon: string; title: string; description: string }> = {
+const variantConfig: Record<
+  EmptyStateVariant,
+  { icon: string; title: string; description: string }
+> = {
   default: {
     icon: 'EMPTY',
     title: 'No content yet',
-    description: 'There\'s nothing to show here at the moment.',
+    description: "There's nothing to show here at the moment.",
   },
   search: {
     icon: 'SEARCH',
@@ -51,11 +54,11 @@ const variantConfig: Record<EmptyStateVariant, { icon: string; title: string; de
   error: {
     icon: 'ERROR',
     title: 'Something went wrong',
-    description: 'We couldn\'t load this content. Please try again.',
+    description: "We couldn't load this content. Please try again.",
   },
   offline: {
     icon: 'OFFLINE',
-    title: 'You\'re offline',
+    title: "You're offline",
     description: 'Check your internet connection and try again.',
   },
   loading: {
@@ -76,15 +79,21 @@ export function EmptyState({
   compact = false,
 }: EmptyStateProps) {
   const config = variantConfig[variant];
-  
+
   const displayIcon = icon ?? config.icon;
   const displayTitle = title ?? config.title;
   const displayDescription = description ?? config.description;
 
-  const ActionButton = ({ action: act, primary = false }: { action: NonNullable<EmptyStateProps['action']>; primary?: boolean }) => {
+  const ActionButton = ({
+    action: act,
+    primary = false,
+  }: {
+    action: NonNullable<EmptyStateProps['action']>;
+    primary?: boolean;
+  }) => {
     const baseClasses = primary
-      ? 'px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-medium rounded-lg transition-colors hover:bg-neutral-800 dark:hover:bg-neutral-200'
-      : 'px-4 py-2 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-medium rounded-lg transition-colors';
+      ? 'px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-medium rounded-lg transition-colors hover:bg-black dark:hover:bg-neutral-200'
+      : 'px-4 py-2 bg-neutral-100 dark:bg-black hover:bg-neutral-200 dark:hover:bg-black text-neutral-700 dark:text-neutral-300 font-medium rounded-lg transition-colors';
 
     if (act.href) {
       return (
@@ -102,23 +111,31 @@ export function EmptyState({
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center text-center ${compact ? 'py-8' : 'py-16'} ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center text-center ${compact ? 'py-8' : 'py-16'} ${className}`}
+    >
       {/* Icon */}
       <div className={`${compact ? 'text-4xl mb-3' : 'text-6xl mb-4'}`}>
         {typeof displayIcon === 'string' ? (
-          <span role="img" aria-hidden="true">{displayIcon}</span>
+          <span role="img" aria-hidden="true">
+            {displayIcon}
+          </span>
         ) : (
           displayIcon
         )}
       </div>
 
       {/* Title */}
-      <h3 className={`font-semibold text-neutral-900 dark:text-white ${compact ? 'text-lg mb-1' : 'text-xl mb-2'}`}>
+      <h3
+        className={`font-semibold text-neutral-900 dark:text-white ${compact ? 'text-lg mb-1' : 'text-xl mb-2'}`}
+      >
         {displayTitle}
       </h3>
 
       {/* Description */}
-      <p className={`text-gray-500 dark:text-slate-400 max-w-sm ${compact ? 'text-sm mb-4' : 'text-base mb-6'}`}>
+      <p
+        className={`text-gray-500 dark:text-slate-400 max-w-sm ${compact ? 'text-sm mb-4' : 'text-base mb-6'}`}
+      >
         {displayDescription}
       </p>
 
@@ -148,10 +165,7 @@ export function SearchEmptyState({ query, onClear }: { query?: string; onClear?:
 
 export function BookmarksEmptyState() {
   return (
-    <EmptyState
-      variant="bookmarks"
-      action={{ label: 'Explore trending', href: '/trending' }}
-    />
+    <EmptyState variant="bookmarks" action={{ label: 'Explore trending', href: '/trending' }} />
   );
 }
 

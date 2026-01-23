@@ -91,7 +91,7 @@ interface TimeRangeSelectorProps {
 export function TimeRangeSelector({ value, onChange, isLoading }: TimeRangeSelectorProps) {
   return (
     <div
-      className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-800 rounded-lg"
+      className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-black rounded-lg"
       role="tablist"
     >
       {TIME_RANGES.map((range) => (
@@ -103,7 +103,7 @@ export function TimeRangeSelector({ value, onChange, isLoading }: TimeRangeSelec
           aria-selected={value === range.value}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
             value === range.value
-              ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
+              ? 'bg-white dark:bg-black text-gray-900 dark:text-white shadow-sm'
               : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
           } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
@@ -134,14 +134,14 @@ export function ChartTypeSelector({ value, onChange }: ChartTypeSelectorProps) {
   ];
 
   return (
-    <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-slate-800 rounded-lg">
+    <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-black rounded-lg">
       {types.map(({ type, label }) => (
         <button
           key={type}
           onClick={() => onChange(type)}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
             value === type
-              ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
+              ? 'bg-white dark:bg-black text-gray-900 dark:text-white shadow-sm'
               : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
@@ -175,7 +175,7 @@ export function ChartSkeleton({ height = 400 }: { height?: number }) {
 
 export function ChartError({ error, onRetry }: { error: string; onRetry?: () => void }) {
   return (
-    <div className="flex flex-col items-center justify-center h-64 bg-gray-50 dark:bg-slate-800/50 rounded-xl">
+    <div className="flex flex-col items-center justify-center h-64 bg-gray-50 dark:bg-black/50 rounded-xl">
       <svg
         className="w-12 h-12 text-gray-300 dark:text-slate-600 mb-3"
         fill="none"
@@ -218,7 +218,7 @@ function CustomTooltip({
   const date = new Date(data.timestamp);
 
   return (
-    <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-xl p-3 min-w-[140px]">
+    <div className="bg-white dark:bg-black border border-gray-200 dark:border-slate-700 rounded-xl shadow-xl p-3 min-w-[140px]">
       <div className="text-xs text-gray-500 dark:text-slate-400 mb-1">
         {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}{' '}
         {date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
@@ -399,7 +399,7 @@ export function MiniChart({ data, width = 100, height = 32 }: MiniChartProps) {
   }, [data]);
 
   if (data.length < 2)
-    return <div style={{ width, height }} className="bg-gray-100 dark:bg-slate-800 rounded" />;
+    return <div style={{ width, height }} className="bg-gray-100 dark:bg-black rounded" />;
 
   return (
     <ResponsiveContainer width={width} height={height}>
@@ -553,7 +553,7 @@ export function CoinChart({
 
       {/* Footer */}
       {stats && !isLoading && !error && (
-        <div className="px-4 py-3 bg-gray-50 dark:bg-slate-800/50 border-t border-gray-100 dark:border-slate-800">
+        <div className="px-4 py-3 bg-gray-50 dark:bg-black/50 border-t border-gray-100 dark:border-slate-800">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-4">
               <span>

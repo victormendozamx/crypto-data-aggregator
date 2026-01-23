@@ -83,7 +83,7 @@ export function ExportButton({ getData, label = 'Export', className = '' }: Expo
       <button
         onClick={() => setOpen(!open)}
         disabled={exporting}
-        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50 ${className}`}
+        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-lg hover:bg-neutral-100 dark:hover:bg-black transition-colors disabled:opacity-50 ${className}`}
       >
         <ArrowDownTrayIcon className="w-4 h-4" />
         {exporting ? 'Exporting...' : label}
@@ -92,17 +92,17 @@ export function ExportButton({ getData, label = 'Export', className = '' }: Expo
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full mt-1 z-50 w-40 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-lg py-1">
+          <div className="absolute right-0 top-full mt-1 z-50 w-40 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-lg py-1">
             <button
               onClick={() => handleExport('csv')}
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-black transition-colors"
             >
               <TableCellsIcon className="w-4 h-4" />
               Export CSV
             </button>
             <button
               onClick={() => handleExport('json')}
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-black transition-colors"
             >
               <DocumentTextIcon className="w-4 h-4" />
               Export JSON

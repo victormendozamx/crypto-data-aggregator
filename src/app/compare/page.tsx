@@ -240,14 +240,14 @@ function ComparePageContent() {
           <div className="flex items-center gap-2">
             <button
               onClick={fetchCoinData}
-              className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 transition-colors"
+              className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-black text-neutral-500 transition-colors"
               title="Refresh"
             >
               <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={handleShare}
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-lg text-neutral-700 dark:text-neutral-300 font-medium transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-black hover:bg-neutral-200 dark:hover:bg-black rounded-lg text-neutral-700 dark:text-neutral-300 font-medium transition-colors"
             >
               <Share2 className="w-4 h-4" />
               <span className="hidden sm:inline">Share</span>
@@ -263,7 +263,7 @@ function ComparePageContent() {
               return (
                 <div
                   key={coinId}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-neutral-100 dark:bg-black"
                   style={{ borderLeft: `4px solid ${colors[index % colors.length]}` }}
                 >
                   {coin && (
@@ -274,7 +274,7 @@ function ComparePageContent() {
                       {selectedCoins.length > 1 && (
                         <button
                           onClick={() => removeCoin(coinId)}
-                          className="p-1 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-500"
+                          className="p-1 rounded-full hover:bg-neutral-200 dark:hover:bg-black text-neutral-500"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -305,7 +305,7 @@ function ComparePageContent() {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Search coins..."
-                          className="w-full pl-9 pr-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-sm focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent"
+                          className="w-full pl-9 pr-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black text-neutral-900 dark:text-white text-sm focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent"
                           autoFocus
                         />
                       </div>
@@ -315,7 +315,7 @@ function ComparePageContent() {
                         <button
                           key={coin.id}
                           onClick={() => addCoin(coin.id)}
-                          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-black transition-colors text-left"
                         >
                           {(coin as TokenPrice).image ? (
                             <img
@@ -324,7 +324,7 @@ function ComparePageContent() {
                               className="w-6 h-6 rounded-full"
                             />
                           ) : (
-                            <div className="w-6 h-6 rounded-full bg-neutral-200 dark:bg-neutral-700" />
+                            <div className="w-6 h-6 rounded-full bg-neutral-200 dark:bg-black" />
                           )}
                           <div>
                             <p className="font-medium text-neutral-900 dark:text-white text-sm">
@@ -348,14 +348,14 @@ function ComparePageContent() {
             )}
 
             {/* Time Range Selector */}
-            <div className="ml-auto flex items-center gap-1 bg-neutral-100 dark:bg-neutral-800 rounded-lg p-1">
+            <div className="ml-auto flex items-center gap-1 bg-neutral-100 dark:bg-black rounded-lg p-1">
               {(['24h', '7d', '30d', '90d', '1y'] as TimeRange[]).map((range) => (
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     timeRange === range
-                      ? 'bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white shadow'
+                      ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow'
                       : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                   }`}
                 >
@@ -391,7 +391,7 @@ function ComparePageContent() {
               <RefreshCw className="w-8 h-8 text-neutral-400 animate-spin" />
             </div>
           ) : normalizedData.length > 0 ? (
-            <div className="h-80 flex items-center justify-center bg-neutral-50 dark:bg-neutral-800/50 rounded-xl">
+            <div className="h-80 flex items-center justify-center bg-neutral-50 dark:bg-black/50 rounded-xl">
               {/* Simple visual representation */}
               <div className="text-center">
                 <p className="text-neutral-500 dark:text-neutral-400 mb-4">
@@ -694,10 +694,10 @@ export default function ComparePage() {
         <div className="min-h-screen bg-white dark:bg-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="animate-pulse space-y-6">
-              <div className="h-12 bg-neutral-200 dark:bg-neutral-800 rounded-lg w-48" />
-              <div className="h-20 bg-neutral-200 dark:bg-neutral-800 rounded-2xl" />
-              <div className="h-80 bg-neutral-200 dark:bg-neutral-800 rounded-2xl" />
-              <div className="h-96 bg-neutral-200 dark:bg-neutral-800 rounded-2xl" />
+              <div className="h-12 bg-neutral-200 dark:bg-black rounded-lg w-48" />
+              <div className="h-20 bg-neutral-200 dark:bg-black rounded-2xl" />
+              <div className="h-80 bg-neutral-200 dark:bg-black rounded-2xl" />
+              <div className="h-96 bg-neutral-200 dark:bg-black rounded-2xl" />
             </div>
           </div>
         </div>

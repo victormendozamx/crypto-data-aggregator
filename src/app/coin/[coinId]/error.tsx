@@ -20,7 +20,7 @@ export default function CoinPageError({ error, reset }: ErrorProps) {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-gray-800/50 rounded-2xl border border-gray-700/50 p-8 text-center">
+      <div className="max-w-md w-full bg-black/50 rounded-2xl border border-gray-700/50 p-8 text-center">
         {/* Error Icon */}
         <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/10 flex items-center justify-center">
           <svg
@@ -59,7 +59,7 @@ export default function CoinPageError({ error, reset }: ErrorProps) {
 
           <Link
             href="/markets"
-            className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-xl transition-colors"
+            className="px-6 py-3 bg-black hover:bg-gray-600 text-white font-medium rounded-xl transition-colors"
           >
             Back to Markets
           </Link>

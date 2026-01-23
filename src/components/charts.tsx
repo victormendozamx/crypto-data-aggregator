@@ -35,7 +35,16 @@ const COLORS = {
   gray: '#6b7280',
 };
 
-const PIE_COLORS = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
+const PIE_COLORS = [
+  '#f59e0b',
+  '#3b82f6',
+  '#10b981',
+  '#ef4444',
+  '#8b5cf6',
+  '#ec4899',
+  '#06b6d4',
+  '#f97316',
+];
 
 interface ChartProps {
   data: Record<string, unknown>[];
@@ -48,11 +57,12 @@ function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload) return null;
 
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-lg p-3 shadow-xl">
+    <div className="bg-black border border-gray-700 rounded-lg p-3 shadow-xl">
       <p className="text-gray-400 text-sm mb-1">{label}</p>
       {payload.map((entry: any, index: number) => (
         <p key={index} className="text-sm" style={{ color: entry.color }}>
-          {entry.name}: {typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value}
+          {entry.name}:{' '}
+          {typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
     </div>
@@ -78,9 +88,7 @@ export function PriceLineChart({
     <div className={className}>
       <ResponsiveContainer width="100%" height={height}>
         <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-          {showGrid && (
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
-          )}
+          {showGrid && <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />}
           <XAxis
             dataKey="time"
             tick={{ fill: '#9ca3af', fontSize: 12 }}
@@ -206,12 +214,7 @@ interface ComparisonChartProps extends ChartProps {
   lines: { dataKey: string; name: string; color: string }[];
 }
 
-export function ComparisonChart({
-  data,
-  height = 300,
-  className,
-  lines,
-}: ComparisonChartProps) {
+export function ComparisonChart({ data, height = 300, className, lines }: ComparisonChartProps) {
   return (
     <div className={className}>
       <ResponsiveContainer width="100%" height={height}>
@@ -229,10 +232,7 @@ export function ComparisonChart({
             tickLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend
-            wrapperStyle={{ paddingTop: 20 }}
-            iconType="circle"
-          />
+          <Legend wrapperStyle={{ paddingTop: 20 }} iconType="circle" />
           {lines.map((line) => (
             <Line
               key={line.dataKey}
@@ -343,11 +343,7 @@ interface HeatmapProps {
   className?: string;
 }
 
-export function ActivityHeatmap({
-  data,
-  height = 200,
-  className,
-}: HeatmapProps) {
+export function ActivityHeatmap({ data, height = 200, className }: HeatmapProps) {
   // Group by hour
   const hourlyData = useMemo(() => {
     const grouped: Record<number, number> = {};

@@ -54,20 +54,15 @@ export default function HistoricalTable({
       '30d': 30 * 24 * 60 * 60 * 1000,
       '90d': 90 * 24 * 60 * 60 * 1000,
       '1y': 365 * 24 * 60 * 60 * 1000,
-      'all': Infinity,
+      all: Infinity,
     };
 
     const cutoff = now - ranges[dateRange];
-    return ohlcData
-      .filter((d) => d.timestamp >= cutoff)
-      .sort((a, b) => b.timestamp - a.timestamp); // Most recent first
+    return ohlcData.filter((d) => d.timestamp >= cutoff).sort((a, b) => b.timestamp - a.timestamp); // Most recent first
   }, [ohlcData, dateRange]);
 
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-  const paginatedData = filteredData.slice(
-    (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
-  );
+  const paginatedData = filteredData.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   // Calculate daily change
   const getChange = useCallback((data: OHLCData) => {
@@ -97,14 +92,12 @@ export default function HistoricalTable({
   }, [filteredData, coinId, dateRange, getChange]);
 
   return (
-    <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 overflow-hidden">
+    <div className="bg-black/50 rounded-2xl border border-gray-700/50 overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-gray-700/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">
-              Historical Data
-            </h3>
+            <h3 className="text-lg font-semibold text-white">Historical Data</h3>
             <p className="text-sm text-gray-400">
               {filteredData.length} data points for {coinName}
             </p>
@@ -112,7 +105,7 @@ export default function HistoricalTable({
 
           <div className="flex items-center gap-3">
             {/* Date Range Selector */}
-            <div className="flex bg-gray-900 rounded-lg p-0.5">
+            <div className="flex bg-black rounded-lg p-0.5">
               {(['7d', '30d', '90d', '1y', 'all'] as const).map((range) => (
                 <button
                   key={range}
@@ -122,7 +115,7 @@ export default function HistoricalTable({
                   }}
                   className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                     dateRange === range
-                      ? 'bg-gray-700 text-white'
+                      ? 'bg-black text-white'
                       : 'text-gray-500 hover:text-gray-300'
                   }`}
                 >
@@ -134,10 +127,15 @@ export default function HistoricalTable({
             {/* Export Button */}
             <button
               onClick={handleExportCSV}
-              className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 bg-black hover:bg-gray-600 text-white text-sm rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
               Export CSV
             </button>
@@ -181,27 +179,19 @@ export default function HistoricalTable({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.02 }}
-                  className="hover:bg-gray-700/20 transition-colors"
+                  className="hover:bg-black/20 transition-colors"
                 >
                   <td className="px-4 py-3">
-                    <span className="text-sm text-white">
-                      {formatDate(data.timestamp)}
-                    </span>
+                    <span className="text-sm text-white">{formatDate(data.timestamp)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-gray-300">
-                      {formatPrice(data.open)}
-                    </span>
+                    <span className="text-sm text-gray-300">{formatPrice(data.open)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-green-400">
-                      {formatPrice(data.high)}
-                    </span>
+                    <span className="text-sm text-green-400">{formatPrice(data.high)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-red-400">
-                      {formatPrice(data.low)}
-                    </span>
+                    <span className="text-sm text-red-400">{formatPrice(data.low)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
                     <span className="text-sm font-medium text-white">
@@ -226,7 +216,7 @@ export default function HistoricalTable({
 
       {/* Summary Stats */}
       {filteredData.length > 0 && (
-        <div className="p-4 border-t border-gray-700/50 bg-gray-900/30">
+        <div className="p-4 border-t border-gray-700/50 bg-black/30">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
               <span className="text-gray-500">Period High</span>
@@ -281,14 +271,14 @@ export default function HistoricalTable({
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
             >
               Previous
             </button>
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
             >
               Next
             </button>

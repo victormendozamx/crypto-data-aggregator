@@ -42,18 +42,29 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
   const popularArticles = articles.slice(0, 5);
 
   return (
-    <div className="bg-neutral-50 dark:bg-neutral-900 rounded-2xl shadow-card dark:shadow-none dark:border dark:border-neutral-800 p-6">
+    <div className="bg-neutral-50 dark:bg-black rounded-2xl shadow-card dark:shadow-none dark:border dark:border-neutral-800 p-6">
       {/* Header with Filter */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-lg text-neutral-900 dark:text-white flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+            />
           </svg>
           Most Read
         </h3>
-        
+
         {/* Time Filter Toggle */}
-        <div className="flex items-center bg-neutral-100 dark:bg-neutral-800 rounded-lg p-0.5">
+        <div className="flex items-center bg-neutral-100 dark:bg-black rounded-lg p-0.5">
           <button
             onClick={() => setTimeFilter('24h')}
             className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
@@ -61,7 +72,8 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
                 ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow-sm'
                 : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
             }`}
-            aria-pressed={timeFilter === '24h'}>
+            aria-pressed={timeFilter === '24h'}
+          >
             24h
           </button>
           <button
@@ -71,7 +83,8 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
                 ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow-sm'
                 : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
             }`}
-            aria-pressed={timeFilter === '7d'}>
+            aria-pressed={timeFilter === '7d'}
+          >
             7d
           </button>
         </div>
@@ -82,16 +95,16 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
         {popularArticles.map((article, index) => {
           const articleId = article.id || generateArticleId(article.title, article.source);
           const views = estimateViews(index);
-          
+
           return (
             <Link
               key={articleId}
               href={`/article/${articleId}`}
-              className="group flex gap-3 p-2 -mx-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-ring"
+              className="group flex gap-3 p-2 -mx-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-black transition-colors focus-ring"
               role="listitem"
             >
               {/* Monochrome Thumbnail Placeholder */}
-              <div 
+              <div
                 className={`flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br ${defaultGradient} relative overflow-hidden`}
                 aria-hidden="true"
               >
@@ -105,7 +118,11 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
                   <span className="text-[10px] font-medium text-white flex items-center gap-0.5">
                     <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     {views}
                   </span>

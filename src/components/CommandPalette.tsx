@@ -332,7 +332,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center pt-[15vh]">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-gray-900/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       {/* Palette */}
       <div className="relative w-full max-w-xl mx-4 bg-white dark:bg-black rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-slate-700 animate-fade-in-up">
@@ -400,7 +400,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                         className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
                           isSelected
                             ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-900 dark:text-brand-100'
-                            : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'
+                            : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-black'
                         }`}
                       >
                         <span className="w-8 flex justify-center" aria-hidden="true">
@@ -448,13 +448,13 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600">
                   ↑↓
                 </kbd>
                 navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-black rounded border border-gray-200 dark:border-slate-600">
                   ↵
                 </kbd>
                 select

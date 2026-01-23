@@ -52,7 +52,7 @@ async function getSentiment(): Promise<SentimentData | null> {
 const sentimentColors: Record<string, { text: string; bg: string; border: string }> = {
   very_bullish: {
     text: 'text-neutral-900 dark:text-white',
-    bg: 'bg-neutral-100 dark:bg-neutral-800',
+    bg: 'bg-neutral-100 dark:bg-black',
     border: 'border-neutral-300 dark:border-neutral-600',
   },
   bullish: {
@@ -62,7 +62,7 @@ const sentimentColors: Record<string, { text: string; bg: string; border: string
   },
   neutral: {
     text: 'text-neutral-600 dark:text-neutral-400',
-    bg: 'bg-neutral-100 dark:bg-neutral-800',
+    bg: 'bg-neutral-100 dark:bg-black',
     border: 'border-neutral-200 dark:border-neutral-700',
   },
   bearish: {
@@ -72,7 +72,7 @@ const sentimentColors: Record<string, { text: string; bg: string; border: string
   },
   very_bearish: {
     text: 'text-neutral-500 dark:text-neutral-400',
-    bg: 'bg-neutral-100 dark:bg-neutral-800',
+    bg: 'bg-neutral-100 dark:bg-black',
     border: 'border-neutral-300 dark:border-neutral-600',
   },
 };
@@ -108,11 +108,11 @@ function SentimentGauge({ score }: { score: number }) {
       </div>
       {/* Needle */}
       <div
-        className="absolute bottom-0 left-1/2 w-1 h-20 bg-neutral-900 dark:bg-white origin-bottom rounded-full transition-transform duration-500"
+        className="absolute bottom-0 left-1/2 w-1 h-20 bg-black dark:bg-white origin-bottom rounded-full transition-transform duration-500"
         style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
       />
       {/* Center dot */}
-      <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-neutral-900 dark:bg-white rounded-full -translate-x-1/2 translate-y-1/2" />
+      <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-black dark:bg-white rounded-full -translate-x-1/2 translate-y-1/2" />
       {/* Score */}
       <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-2xl font-bold text-neutral-900 dark:text-white">
         {score > 0 ? '+' : ''}
@@ -167,7 +167,7 @@ export default async function SentimentPage() {
                     <SentimentGauge score={data.market.score} />
                     <div className="mt-12">
                       <span
-                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-lg font-bold ${sentimentColors[data.market.overall]?.bg || 'bg-neutral-100 dark:bg-neutral-800'} ${sentimentColors[data.market.overall]?.text || 'text-neutral-600 dark:text-neutral-400'}`}
+                        className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-lg font-bold ${sentimentColors[data.market.overall]?.bg || 'bg-neutral-100 dark:bg-black'} ${sentimentColors[data.market.overall]?.text || 'text-neutral-600 dark:text-neutral-400'}`}
                       >
                         {sentimentLabels[data.market.overall] || 'NEUTRAL'}
                       </span>
@@ -240,12 +240,12 @@ export default async function SentimentPage() {
                         </div>
                         <div className="flex flex-col items-end gap-2">
                           <span
-                            className={`px-3 py-1 rounded-full text-sm font-medium ${sentimentColors[article.sentiment]?.bg || 'bg-neutral-100 dark:bg-neutral-800'} ${sentimentColors[article.sentiment]?.text || 'text-neutral-600 dark:text-neutral-400'}`}
+                            className={`px-3 py-1 rounded-full text-sm font-medium ${sentimentColors[article.sentiment]?.bg || 'bg-neutral-100 dark:bg-black'} ${sentimentColors[article.sentiment]?.text || 'text-neutral-600 dark:text-neutral-400'}`}
                           >
                             {article.sentiment.replace('_', ' ')}
                           </span>
                           <span
-                            className={`text-xs px-2 py-0.5 rounded ${article.impactLevel === 'high' ? 'bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-white font-semibold' : article.impactLevel === 'medium' ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400'}`}
+                            className={`text-xs px-2 py-0.5 rounded ${article.impactLevel === 'high' ? 'bg-neutral-200 dark:bg-black text-neutral-900 dark:text-white font-semibold' : article.impactLevel === 'medium' ? 'bg-neutral-100 dark:bg-black text-neutral-700 dark:text-neutral-300' : 'bg-neutral-100 dark:bg-black text-neutral-600 dark:text-neutral-400'}`}
                           >
                             {article.impactLevel} impact
                           </span>
@@ -260,7 +260,7 @@ export default async function SentimentPage() {
                             <Link
                               key={asset}
                               href={`/search?q=${asset}`}
-                              className="text-xs px-2 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white rounded hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                              className="text-xs px-2 py-1 bg-neutral-100 dark:bg-black text-neutral-900 dark:text-white rounded hover:bg-neutral-200 dark:hover:bg-black"
                             >
                               {asset}
                             </Link>

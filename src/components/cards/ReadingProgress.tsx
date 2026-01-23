@@ -18,7 +18,7 @@ export default function ReadingProgress({ progress, className = '' }: ReadingPro
   return (
     <div className={`relative ${className}`}>
       {/* Progress bar background */}
-      <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-1 bg-gray-200 dark:bg-black rounded-full overflow-hidden">
         {/* Progress fill */}
         <div
           className={`h-full rounded-full transition-all duration-300 ${

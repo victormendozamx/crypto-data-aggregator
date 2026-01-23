@@ -22,11 +22,9 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
     : null;
 
   return (
-    <tr className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+    <tr className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors group">
       {/* Rank */}
-      <td className="p-4 text-gray-500 dark:text-gray-400 text-sm">
-        {coin.market_cap_rank}
-      </td>
+      <td className="p-4 text-gray-500 dark:text-gray-400 text-sm">{coin.market_cap_rank}</td>
 
       {/* Coin */}
       <td className="p-4">
@@ -98,7 +96,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
           </span>
           {supplyPercentage !== null && (
             <div className="w-full max-w-[80px] mt-1">
-              <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-gray-200 dark:bg-black rounded-full overflow-hidden">
                 <div
                   className="h-full bg-blue-500 rounded-full"
                   style={{ width: `${Math.min(supplyPercentage, 100)}%` }}
@@ -120,7 +118,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
             change={coin.price_change_percentage_7d_in_currency || 0}
           />
         ) : (
-          <div className="w-[100px] h-[32px] bg-gray-100 dark:bg-gray-700 rounded" />
+          <div className="w-[100px] h-[32px] bg-gray-100 dark:bg-black rounded" />
         )}
       </td>
 
@@ -134,12 +132,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
             }}
             className="text-gray-300 dark:text-gray-600 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

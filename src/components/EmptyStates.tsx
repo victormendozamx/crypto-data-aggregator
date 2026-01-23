@@ -70,14 +70,14 @@ export function EmptyState({
             (secondaryAction.href ? (
               <Link
                 href={secondaryAction.href}
-                className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
               >
                 {secondaryAction.label}
               </Link>
             ) : (
               <button
                 onClick={secondaryAction.onClick}
-                className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
               >
                 {secondaryAction.label}
               </button>

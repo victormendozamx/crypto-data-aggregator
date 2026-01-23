@@ -77,7 +77,7 @@ export default async function TrendingPage() {
                 <Link
                   key={coin.id}
                   href={`/coin/${coin.id}`}
-                  className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-lg transition-all"
+                  className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-lg transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">

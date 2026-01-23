@@ -148,7 +148,7 @@ export default async function DefiPage() {
                       {protocols.map((protocol, index) => (
                         <tr
                           key={protocol.id}
-                          className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                          className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-black transition"
                         >
                           <td className="p-4 text-neutral-500 dark:text-neutral-400">
                             {index + 1}
@@ -189,7 +189,7 @@ export default async function DefiPage() {
                             {formatPercent(protocol.change_7d)}
                           </td>
                           <td className="p-4 hidden lg:table-cell">
-                            <span className="text-xs bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 px-2 py-1 rounded-full">
+                            <span className="text-xs bg-neutral-100 dark:bg-black text-neutral-700 dark:text-neutral-300 px-2 py-1 rounded-full">
                               {protocol.category}
                             </span>
                           </td>
@@ -234,7 +234,7 @@ export default async function DefiPage() {
                   {chains.slice(0, 10).map((chain, index) => (
                     <div
                       key={chain.name}
-                      className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition"
+                      className="flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-black transition"
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-neutral-400 text-sm w-5">{index + 1}</span>

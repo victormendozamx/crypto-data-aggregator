@@ -82,10 +82,7 @@ export function GasTracker() {
       <div className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-32 bg-neutral-200 dark:bg-neutral-700 rounded-xl animate-pulse"
-            />
+            <div key={i} className="h-32 bg-neutral-200 dark:bg-black rounded-xl animate-pulse" />
           ))}
         </div>
       </div>
@@ -107,8 +104,8 @@ export function GasTracker() {
               key={priority}
               className={`p-5 rounded-xl border transition-colors ${
                 priority === 'instant'
-                  ? 'bg-neutral-900 dark:bg-white border-neutral-900 dark:border-white'
-                  : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700'
+                  ? 'bg-black dark:bg-white border-neutral-900 dark:border-white'
+                  : 'bg-white dark:bg-black border-neutral-200 dark:border-neutral-700'
               }`}
             >
               <div className="flex items-center gap-2 mb-3">
@@ -142,7 +139,7 @@ export function GasTracker() {
       </div>
 
       {/* Transaction Type Selector */}
-      <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl p-6">
+      <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl p-6">
         <h3 className="text-sm font-medium text-neutral-900 dark:text-white mb-4">
           Estimate costs for:
         </h3>
@@ -158,8 +155,8 @@ export function GasTracker() {
               onClick={() => setSelectedTx(tx.id as typeof selectedTx)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedTx === tx.id
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
-                  : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600'
+                  ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
+                  : 'bg-neutral-100 dark:bg-black text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600'
               }`}
             >
               {tx.label}

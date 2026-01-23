@@ -216,7 +216,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
 
   const SortHeader = ({ field, children }: { field: SortField; children: React.ReactNode }) => (
     <th
-      className="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800 select-none"
+      className="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider cursor-pointer hover:bg-neutral-100 dark:hover:bg-black select-none"
       onClick={() => handleSort(field)}
     >
       <div className="flex items-center gap-1">
@@ -245,15 +245,15 @@ export function Screener({ coins }: { coins: Coin[] }) {
             placeholder="Search coins..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-black text-neutral-900 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
           />
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
             showFilters || activeFilterCount > 0
-              ? 'border-neutral-900 dark:border-white bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
-              : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+              ? 'border-neutral-900 dark:border-white bg-black dark:bg-white text-white dark:text-neutral-900'
+              : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-black'
           }`}
         >
           <FunnelIcon className="w-5 h-5" />
@@ -299,7 +299,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
           <button
             key={preset.name}
             onClick={() => applyPreset(preset)}
-            className="px-3 py-1.5 text-sm rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            className="px-3 py-1.5 text-sm rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-black transition-colors"
           >
             {preset.name}
           </button>
@@ -308,7 +308,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
 
       {/* Filter Panel */}
       {showFilters && (
-        <div className="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-800/50">
+        <div className="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-black/50">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {/* Market Cap */}
             <div>
@@ -321,14 +321,14 @@ export function Screener({ coins }: { coins: Coin[] }) {
                   placeholder="Min"
                   value={filters.minMarketCap}
                   onChange={(e) => setFilters((f) => ({ ...f, minMarketCap: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxMarketCap}
                   onChange={(e) => setFilters((f) => ({ ...f, maxMarketCap: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
               </div>
             </div>
@@ -344,14 +344,14 @@ export function Screener({ coins }: { coins: Coin[] }) {
                   placeholder="Min"
                   value={filters.minVolume}
                   onChange={(e) => setFilters((f) => ({ ...f, minVolume: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxVolume}
                   onChange={(e) => setFilters((f) => ({ ...f, maxVolume: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
               </div>
             </div>
@@ -367,14 +367,14 @@ export function Screener({ coins }: { coins: Coin[] }) {
                   placeholder="Min"
                   value={filters.minChange24h}
                   onChange={(e) => setFilters((f) => ({ ...f, minChange24h: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxChange24h}
                   onChange={(e) => setFilters((f) => ({ ...f, maxChange24h: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
               </div>
             </div>
@@ -390,14 +390,14 @@ export function Screener({ coins }: { coins: Coin[] }) {
                   placeholder="Min"
                   value={filters.minPrice}
                   onChange={(e) => setFilters((f) => ({ ...f, minPrice: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxPrice}
                   onChange={(e) => setFilters((f) => ({ ...f, maxPrice: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
               </div>
             </div>
@@ -413,14 +413,14 @@ export function Screener({ coins }: { coins: Coin[] }) {
                   placeholder="Min"
                   value={filters.minAthDistance}
                   onChange={(e) => setFilters((f) => ({ ...f, minAthDistance: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxAthDistance}
                   onChange={(e) => setFilters((f) => ({ ...f, maxAthDistance: e.target.value }))}
-                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-neutral-700"
+                  className="w-full px-2 py-1.5 text-sm border border-neutral-300 dark:border-neutral-600 rounded bg-white dark:bg-black"
                 />
               </div>
             </div>
@@ -436,7 +436,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
       {/* Table */}
       <div className="overflow-x-auto border border-neutral-200 dark:border-neutral-700 rounded-lg">
         <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-          <thead className="bg-neutral-50 dark:bg-neutral-800">
+          <thead className="bg-neutral-50 dark:bg-black">
             <tr>
               <th className="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider w-10">
                 <StarIcon className="w-4 h-4" />
@@ -454,7 +454,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
           </thead>
           <tbody className="bg-white dark:bg-black divide-y divide-neutral-200 dark:divide-neutral-700">
             {filteredCoins.map((coin) => (
-              <tr key={coin.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
+              <tr key={coin.id} className="hover:bg-neutral-50 dark:hover:bg-black/50">
                 <td className="px-4 py-3">
                   <button
                     onClick={() => toggleWatchlist(coin.id)}

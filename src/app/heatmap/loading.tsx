@@ -1,29 +1,29 @@
 export default function HeatmapLoading() {
   return (
     <div className="min-h-screen bg-white dark:bg-black">
-      <div className="h-16 bg-neutral-100 dark:bg-neutral-800 animate-pulse" />
+      <div className="h-16 bg-neutral-100 dark:bg-black animate-pulse" />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="h-8 w-48 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse mb-2" />
-          <div className="h-5 w-96 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+          <div className="h-8 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse mb-2" />
+          <div className="h-5 w-96 bg-neutral-200 dark:bg-black rounded animate-pulse" />
         </div>
 
         {/* Controls skeleton */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div className="flex gap-4">
-            <div className="h-10 w-28 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse" />
-            <div className="h-10 w-40 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse" />
-            <div className="h-10 w-28 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse" />
+            <div className="h-10 w-28 bg-neutral-200 dark:bg-black rounded-lg animate-pulse" />
+            <div className="h-10 w-40 bg-neutral-200 dark:bg-black rounded-lg animate-pulse" />
+            <div className="h-10 w-28 bg-neutral-200 dark:bg-black rounded-lg animate-pulse" />
           </div>
           <div className="flex gap-6">
-            <div className="h-5 w-20 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
-            <div className="h-5 w-20 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+            <div className="h-5 w-20 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+            <div className="h-5 w-20 bg-neutral-200 dark:bg-black rounded animate-pulse" />
           </div>
         </div>
 
         {/* Legend skeleton */}
         <div className="flex justify-center mb-6">
-          <div className="h-4 w-64 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+          <div className="h-4 w-64 bg-neutral-200 dark:bg-black rounded animate-pulse" />
         </div>
 
         {/* Heatmap grid skeleton */}
@@ -44,9 +44,9 @@ export default function HeatmapLoading() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-4 border-t border-neutral-200 dark:border-neutral-700">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="text-center">
-              <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse mx-auto mb-2" />
-              <div className="h-6 w-16 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse mx-auto mb-1" />
-              <div className="h-4 w-20 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse mx-auto" />
+              <div className="h-4 w-24 bg-neutral-200 dark:bg-black rounded animate-pulse mx-auto mb-2" />
+              <div className="h-6 w-16 bg-neutral-200 dark:bg-black rounded animate-pulse mx-auto mb-1" />
+              <div className="h-4 w-20 bg-neutral-200 dark:bg-black rounded animate-pulse mx-auto" />
             </div>
           ))}
         </div>

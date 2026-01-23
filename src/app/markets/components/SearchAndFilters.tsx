@@ -73,7 +73,7 @@ function FilterDropdown({ label, options, value, onChange }: DropdownProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
+        className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors"
       >
         <span className="text-gray-500 dark:text-gray-400">{label}:</span>
         <span className="text-gray-900 dark:text-white">{selectedOption.label}</span>
@@ -87,7 +87,7 @@ function FilterDropdown({ label, options, value, onChange }: DropdownProps) {
         </svg>
       </button>
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-20 min-w-[160px]">
+        <div className="absolute top-full left-0 mt-1 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-20 min-w-[160px]">
           {options.map((option) => (
             <button
               key={option.id}
@@ -95,7 +95,7 @@ function FilterDropdown({ label, options, value, onChange }: DropdownProps) {
                 onChange(option.id);
                 setIsOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg ${
+              className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-black first:rounded-t-lg last:rounded-b-lg ${
                 option.id === value
                   ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                   : 'text-gray-700 dark:text-gray-300'
@@ -227,7 +227,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
               onFocus={() => setShowAutocomplete(true)}
-              className="w-full pl-10 pr-10 py-2.5 bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 dark:focus:border-blue-400 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none transition-colors"
+              className="w-full pl-10 pr-10 py-2.5 bg-gray-100 dark:bg-black border border-transparent focus:border-blue-500 dark:focus:border-blue-400 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none transition-colors"
             />
             {searchQuery && (
               <button
@@ -248,7 +248,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
 
           {/* Autocomplete Dropdown */}
           {showAutocomplete && (searchQuery || recentSearches.length > 0) && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-30 overflow-hidden">
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-30 overflow-hidden">
               {/* Search Results */}
               {filteredCoins.length > 0 && (
                 <div>
@@ -259,7 +259,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
                     <button
                       key={coin.id}
                       onClick={() => handleSelectCoin(coin.id, coin.name)}
-                      className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-black transition-colors"
                     >
                       <div className="relative w-6 h-6">
                         {coin.image && (
@@ -305,7 +305,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
                     <button
                       key={search}
                       onClick={() => handleSearch(search)}
-                      className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-black transition-colors"
                     >
                       <svg
                         className="w-4 h-4 text-gray-400"
@@ -362,7 +362,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
           <select
             value={searchParams.get('perPage') || '50'}
             onChange={(e) => updateUrlParams('perPage', e.target.value)}
-            className="px-2 py-1.5 bg-gray-100 dark:bg-gray-700 border-none rounded-lg text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-2 py-1.5 bg-gray-100 dark:bg-black border-none rounded-lg text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {ROWS_PER_PAGE_OPTIONS.map((num) => (
               <option key={num} value={num}>

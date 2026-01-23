@@ -14,11 +14,11 @@ interface SparklineCellProps {
   height?: number;
 }
 
-export default function SparklineCell({ 
-  data, 
+export default function SparklineCell({
+  data,
   change,
-  width = 100, 
-  height = 32 
+  width = 100,
+  height = 32,
 }: SparklineCellProps) {
   const pathData = useMemo(() => {
     if (!data || data.length < 2) return '';
@@ -42,10 +42,7 @@ export default function SparklineCell({
 
   if (!data || data.length < 2) {
     return (
-      <div 
-        className="bg-gray-100 dark:bg-gray-700 rounded animate-pulse"
-        style={{ width, height }}
-      />
+      <div className="bg-gray-100 dark:bg-black rounded animate-pulse" style={{ width, height }} />
     );
   }
 
@@ -58,10 +55,7 @@ export default function SparklineCell({
         </linearGradient>
       </defs>
       {/* Fill area under the line */}
-      <path
-        d={`${pathData} L ${width},${height} L 0,${height} Z`}
-        fill={`url(#${gradientId})`}
-      />
+      <path d={`${pathData} L ${width},${height} L 0,${height} Z`} fill={`url(#${gradientId})`} />
       {/* Line */}
       <path
         d={pathData}

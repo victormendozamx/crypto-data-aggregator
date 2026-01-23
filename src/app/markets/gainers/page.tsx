@@ -65,11 +65,11 @@ export default async function GainersPage() {
           </div>
 
           {/* Gainers Table */}
-          <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-neutral-50 dark:bg-neutral-900/50 border-b border-neutral-200 dark:border-neutral-800">
+                  <tr className="bg-neutral-50 dark:bg-black/50 border-b border-neutral-200 dark:border-neutral-800">
                     <th className="text-left text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4">
                       #
                     </th>
@@ -97,7 +97,7 @@ export default async function GainersPage() {
                   {gainers.map((coin, index) => (
                     <tr
                       key={coin.id}
-                      className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
+                      className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-black/50 transition-colors"
                     >
                       <td className="p-4 text-neutral-500 dark:text-neutral-400">{index + 1}</td>
                       <td className="p-4">

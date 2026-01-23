@@ -127,7 +127,7 @@ export function Heatmap({ coins }: HeatmapProps) {
                 onClick={() => setTimeframe(tf)}
                 className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   timeframe === tf
-                    ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                    ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                     : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                 }`}
               >
@@ -142,7 +142,7 @@ export function Heatmap({ coins }: HeatmapProps) {
               onClick={() => setSortBy('market_cap')}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
                 sortBy === 'market_cap'
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                  ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                   : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
               }`}
             >
@@ -152,7 +152,7 @@ export function Heatmap({ coins }: HeatmapProps) {
               onClick={() => setSortBy('change')}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
                 sortBy === 'change'
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                  ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                   : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
               }`}
             >
@@ -164,7 +164,7 @@ export function Heatmap({ coins }: HeatmapProps) {
           <select
             value={showTop}
             onChange={(e) => setShowTop(Number(e.target.value))}
-            className="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white"
+            className="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-black text-neutral-900 dark:text-white"
           >
             <option value={25}>Top 25</option>
             <option value={50}>Top 50</option>
@@ -243,7 +243,7 @@ export function Heatmap({ coins }: HeatmapProps) {
               </div>
 
               {/* Hover tooltip */}
-              <div className="absolute inset-0 bg-neutral-900/95 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-2 rounded-lg">
+              <div className="absolute inset-0 bg-black/95 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-2 rounded-lg">
                 <span className="text-xs font-bold truncate w-full text-center">{coin.name}</span>
                 <span className="text-xs font-mono">{formatPrice(coin.current_price)}</span>
                 <span className="text-xs font-mono">{formatPercent(change)}</span>

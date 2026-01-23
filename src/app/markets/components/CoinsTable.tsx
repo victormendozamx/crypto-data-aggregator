@@ -34,7 +34,7 @@ export default function CoinsTable({
 
   if (coins.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="p-8 text-center">
           <div className="flex justify-center mb-4">
             <Search className="w-10 h-10 text-gray-400" />
@@ -51,7 +51,7 @@ export default function CoinsTable({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>

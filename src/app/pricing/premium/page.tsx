@@ -131,7 +131,7 @@ export default function PremiumPricingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 px-4 bg-white dark:bg-gray-800">
+      <section className="py-16 px-4 bg-white dark:bg-black">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">How It Works</h2>
           <div className="grid md:grid-cols-4 gap-8">
@@ -171,7 +171,7 @@ export default function PremiumPricingPage() {
                 className={`rounded-xl p-8 ${
                   pass.popular
                     ? 'bg-blue-600 text-white ring-4 ring-blue-300 dark:ring-blue-800'
-                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+                    : 'bg-white dark:bg-black border border-gray-200 dark:border-gray-700'
                 }`}
               >
                 {pass.popular && <div className="text-sm font-semibold mb-2">MOST POPULAR</div>}
@@ -207,7 +207,7 @@ export default function PremiumPricingPage() {
       </section>
 
       {/* AI Endpoints */}
-      <section className="py-16 px-4 bg-white dark:bg-gray-800">
+      <section className="py-16 px-4 bg-white dark:bg-black">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <Brain className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
@@ -237,7 +237,7 @@ export default function PremiumPricingPage() {
       </section>
 
       {/* Data & Analytics */}
-      <section className="py-16 px-4 bg-white dark:bg-gray-800">
+      <section className="py-16 px-4 bg-white dark:bg-black">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <BarChart3 className="w-10 h-10 text-purple-600 dark:text-purple-400" />
@@ -255,9 +255,9 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">Why Pay-Per-Use?</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg">
+          <div className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-lg">
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-700">
+              <thead className="bg-gray-50 dark:bg-black">
                 <tr>
                   <th className="px-6 py-4 text-left dark:text-white">Provider</th>
                   <th className="px-6 py-4 text-left dark:text-white">Price</th>
@@ -343,7 +343,7 @@ function EndpointCard({
         </span>
       </div>
       <p className="text-gray-600 dark:text-gray-400 mb-3">{description}</p>
-      <code className="text-sm bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-700 dark:text-gray-300">
+      <code className="text-sm bg-gray-200 dark:bg-black px-2 py-1 rounded text-gray-700 dark:text-gray-300">
         GET {path}
       </code>
     </div>

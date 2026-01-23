@@ -7,7 +7,7 @@ import React from 'react';
 
 function Skeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 ${className}`} aria-hidden="true" />
+    <div className={`animate-pulse bg-gray-200 dark:bg-black ${className}`} aria-hidden="true" />
   );
 }
 

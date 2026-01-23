@@ -17,15 +17,9 @@ interface CoinConverterProps {
 
 const quickAmounts = [1, 10, 100, 1000];
 
-export default function CoinConverter({
-  coinId,
-  symbol,
-  name,
-  price,
-  image,
-}: CoinConverterProps) {
+export default function CoinConverter({ coinId, symbol, name, price, image }: CoinConverterProps) {
   const [coinAmount, setCoinAmount] = useState<string>('1');
-  const [usdAmount, setUsdAmount] = useState<string>((price).toFixed(2));
+  const [usdAmount, setUsdAmount] = useState<string>(price.toFixed(2));
   const [lastChanged, setLastChanged] = useState<'coin' | 'usd'>('coin');
   const [copied, setCopied] = useState<'coin' | 'usd' | null>(null);
 
@@ -54,10 +48,8 @@ export default function CoinConverter({
     const cleaned = value.replace(/[^0-9.]/g, '');
     // Prevent multiple decimals
     const parts = cleaned.split('.');
-    const formatted = parts.length > 2 
-      ? parts[0] + '.' + parts.slice(1).join('')
-      : cleaned;
-    
+    const formatted = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : cleaned;
+
     setCoinAmount(formatted);
     setLastChanged('coin');
   }, []);
@@ -77,24 +69,25 @@ export default function CoinConverter({
   const handleSwap = useCallback(() => {
     const currentCoin = parseFloat(coinAmount) || 0;
     const currentUsd = parseFloat(usdAmount.replace(/,/g, '')) || 0;
-    
+
     setCoinAmount(formatCoinValue(currentUsd / price));
     setUsdAmount(formatUsdValue(currentCoin));
     setLastChanged('coin');
   }, [coinAmount, usdAmount, price]);
 
-  const handleCopy = useCallback(async (type: 'coin' | 'usd') => {
-    const value = type === 'coin' ? coinAmount : usdAmount;
-    await navigator.clipboard.writeText(value);
-    setCopied(type);
-    setTimeout(() => setCopied(null), 2000);
-  }, [coinAmount, usdAmount]);
+  const handleCopy = useCallback(
+    async (type: 'coin' | 'usd') => {
+      const value = type === 'coin' ? coinAmount : usdAmount;
+      await navigator.clipboard.writeText(value);
+      setCopied(type);
+      setTimeout(() => setCopied(null), 2000);
+    },
+    [coinAmount, usdAmount]
+  );
 
   return (
-    <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">
-        {symbolUpper} Converter
-      </h3>
+    <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
+      <h3 className="text-lg font-semibold text-white mb-4">{symbolUpper} Converter</h3>
 
       <div className="space-y-4">
         {/* Coin Input */}
@@ -102,7 +95,7 @@ export default function CoinConverter({
           <label className="block text-xs text-gray-500 mb-1.5">
             {name} ({symbolUpper})
           </label>
-          <div className="flex items-center bg-gray-900 rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
+          <div className="flex items-center bg-black rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
             {image && (
               <div className="pl-3">
                 <img src={image} alt={name} className="w-6 h-6 rounded-full" />
@@ -123,12 +116,27 @@ export default function CoinConverter({
                 title="Copy"
               >
                 {copied === 'coin' ? (
-                  <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-green-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 ) : (
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
                   </svg>
                 )}
               </button>
@@ -142,20 +150,28 @@ export default function CoinConverter({
             onClick={handleSwap}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2 bg-gray-700 hover:bg-gray-600 rounded-full transition-colors"
+            className="p-2 bg-black hover:bg-gray-600 rounded-full transition-colors"
           >
-            <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            <svg
+              className="w-5 h-5 text-gray-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+              />
             </svg>
           </motion.button>
         </div>
 
         {/* USD Input */}
         <div className="relative">
-          <label className="block text-xs text-gray-500 mb-1.5">
-            US Dollar (USD)
-          </label>
-          <div className="flex items-center bg-gray-900 rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
+          <label className="block text-xs text-gray-500 mb-1.5">US Dollar (USD)</label>
+          <div className="flex items-center bg-black rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
             <div className="pl-3">
               <span className="text-xl text-gray-400">$</span>
             </div>
@@ -174,12 +190,27 @@ export default function CoinConverter({
                 title="Copy"
               >
                 {copied === 'usd' ? (
-                  <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-green-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 ) : (
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
                   </svg>
                 )}
               </button>
@@ -198,7 +229,7 @@ export default function CoinConverter({
                 className={`flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                   coinAmount === amount.toString()
                     ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600'
+                    : 'bg-black text-gray-300 hover:bg-gray-600 border border-gray-600'
                 }`}
               >
                 {amount} {symbolUpper}

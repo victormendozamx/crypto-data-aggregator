@@ -112,7 +112,7 @@ function getRankStyle(rank: number): string {
     return 'bg-gradient-to-br from-gray-300 to-gray-500 text-black shadow-lg shadow-gray-400/30';
   if (rank === 3)
     return 'bg-gradient-to-br from-amber-600 to-amber-800 text-white shadow-lg shadow-amber-700/30';
-  return 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400';
+  return 'bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-400';
 }
 
 function ArticleCardSmall({

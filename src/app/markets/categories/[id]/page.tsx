@@ -302,7 +302,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
           {/* Coins Table */}
           {coins.length > 0 ? (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -334,7 +334,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
                     {coins.map((coin, index) => (
                       <tr
                         key={coin.id}
-                        className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                        className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors"
                       >
                         <td className="p-4 text-gray-500 dark:text-gray-400">{index + 1}</td>
                         <td className="p-4">
@@ -394,7 +394,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               </div>
             </div>
           ) : (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 text-center">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-8 text-center">
               <div className="flex justify-center mb-4">
                 <Search className="w-10 h-10 text-gray-400" />
               </div>

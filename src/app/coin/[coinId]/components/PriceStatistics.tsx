@@ -30,7 +30,9 @@ function formatPrice(price: number): string {
     return '$' + price.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
   if (price >= 1) {
-    return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return (
+      '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    );
   }
   if (price >= 0.01) {
     return '$' + price.toFixed(4);
@@ -70,7 +72,7 @@ function RangeBar({ low, high, current, label }: RangeBarProps) {
     <div className="flex items-center justify-between py-3 border-b border-gray-700/50 last:border-0">
       <span className="text-sm text-gray-400 w-24">{label}</span>
       <div className="flex-1 mx-4">
-        <div className="relative h-2 bg-gray-700 rounded-full overflow-hidden">
+        <div className="relative h-2 bg-black rounded-full overflow-hidden">
           <div
             className="absolute inset-y-0 left-0 bg-gradient-to-r from-red-500/30 via-yellow-500/30 to-green-500/30"
             style={{ width: '100%' }}
@@ -104,11 +106,7 @@ function PriceChangeRow({ periods }: PriceChangeRowProps) {
           <div className="text-xs text-gray-500 mb-1">{label}</div>
           <div
             className={`text-sm font-medium ${
-              value == null
-                ? 'text-gray-500'
-                : value >= 0
-                ? 'text-green-400'
-                : 'text-red-400'
+              value == null ? 'text-gray-500' : value >= 0 ? 'text-green-400' : 'text-red-400'
             }`}
           >
             {formatPercent(value)}
@@ -139,35 +137,33 @@ export default function PriceStatistics({
   // Calculate 7d and 30d ranges (approximation based on current price and change)
   const price7dAgo = priceChange7d ? currentPrice / (1 + priceChange7d / 100) : currentPrice;
   const price30dAgo = priceChange30d ? currentPrice / (1 + priceChange30d / 100) : currentPrice;
-  
+
   const low7d = Math.min(price7dAgo * 0.95, currentPrice * 0.95);
   const high7d = Math.max(price7dAgo * 1.05, currentPrice * 1.05);
-  
+
   const low52w = Math.min(atl * 1.1, currentPrice * 0.5);
   const high52w = Math.max(ath, currentPrice);
 
   return (
-    <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-6">
+    <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
       <h3 className="text-lg font-semibold text-white mb-4">Price Statistics</h3>
 
       <div className="space-y-6">
         {/* ATH / ATL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* All-Time High */}
-          <div className="p-4 bg-gray-900/50 rounded-xl border border-gray-700/30">
+          <div className="p-4 bg-black/50 rounded-xl border border-gray-700/30">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-400">All-Time High</span>
               <span className="text-xs text-gray-500">{formatDate(athDate)}</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl font-bold text-white">{formatPrice(ath)}</span>
-              <span className="text-sm text-red-400">
-                {formatPercent(athChangePercentage)}
-              </span>
+              <span className="text-sm text-red-400">{formatPercent(athChangePercentage)}</span>
             </div>
             {/* Distance to ATH bar */}
             <div className="mt-3">
-              <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-black rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${Math.min(100, (currentPrice / ath) * 100)}%` }}
@@ -182,19 +178,20 @@ export default function PriceStatistics({
           </div>
 
           {/* All-Time Low */}
-          <div className="p-4 bg-gray-900/50 rounded-xl border border-gray-700/30">
+          <div className="p-4 bg-black/50 rounded-xl border border-gray-700/30">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-400">All-Time Low</span>
               <span className="text-xs text-gray-500">{formatDate(atlDate)}</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl font-bold text-white">{formatPrice(atl)}</span>
-              <span className="text-sm text-green-400">
-                {formatPercent(atlChangePercentage)}
-              </span>
+              <span className="text-sm text-green-400">{formatPercent(atlChangePercentage)}</span>
             </div>
             <p className="text-xs text-gray-500 mt-3">
-              {((currentPrice / atl - 1) * 100).toLocaleString('en-US', { maximumFractionDigits: 0 })}x from ATL
+              {((currentPrice / atl - 1) * 100).toLocaleString('en-US', {
+                maximumFractionDigits: 0,
+              })}
+              x from ATL
             </p>
           </div>
         </div>

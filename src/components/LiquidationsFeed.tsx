@@ -91,10 +91,7 @@ export function LiquidationsFeed() {
     return (
       <div className="space-y-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div
-            key={i}
-            className="h-16 bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"
-          />
+          <div key={i} className="h-16 bg-neutral-200 dark:bg-black rounded-lg animate-pulse" />
         ))}
       </div>
     );
@@ -104,25 +101,25 @@ export function LiquidationsFeed() {
     <div className="space-y-6">
       {/* Stats Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl">
+        <div className="p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">Longs Liquidated</div>
           <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
             {formatAmount(stats.totalLongs)}
           </div>
         </div>
-        <div className="p-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl">
+        <div className="p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">Shorts Liquidated</div>
           <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
             {formatAmount(stats.totalShorts)}
           </div>
         </div>
-        <div className="p-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl">
+        <div className="p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">Largest Liquidation</div>
           <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
             {formatAmount(stats.largestLiq)}
           </div>
         </div>
-        <div className="p-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl">
+        <div className="p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-xl">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">Total Events</div>
           <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
             {stats.count}
@@ -139,7 +136,7 @@ export function LiquidationsFeed() {
               onClick={() => setFilter(f)}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors capitalize ${
                 filter === f
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                  ? 'bg-black dark:bg-white text-white dark:text-neutral-900'
                   : 'text-neutral-600 dark:text-neutral-400'
               }`}
             >
@@ -151,7 +148,7 @@ export function LiquidationsFeed() {
         <select
           value={minAmount}
           onChange={(e) => setMinAmount(Number(e.target.value))}
-          className="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800"
+          className="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg bg-white dark:bg-black"
         >
           <option value={0}>All sizes</option>
           <option value={10000}>$10K+</option>
@@ -168,14 +165,14 @@ export function LiquidationsFeed() {
             key={liq.id}
             className={`flex items-center gap-4 p-4 rounded-lg border transition-colors ${
               liq.side === 'long'
-                ? 'bg-neutral-50 dark:bg-neutral-800/50 border-neutral-200 dark:border-neutral-700'
-                : 'bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-600'
+                ? 'bg-neutral-50 dark:bg-black/50 border-neutral-200 dark:border-neutral-700'
+                : 'bg-neutral-100 dark:bg-black border-neutral-300 dark:border-neutral-600'
             }`}
           >
             <div
               className={`p-2 rounded-lg ${
                 liq.side === 'long'
-                  ? 'bg-neutral-200 dark:bg-neutral-700'
+                  ? 'bg-neutral-200 dark:bg-black'
                   : 'bg-neutral-300 dark:bg-neutral-600'
               }`}
             >
@@ -192,8 +189,8 @@ export function LiquidationsFeed() {
                 <span
                   className={`text-xs font-medium px-2 py-0.5 rounded uppercase ${
                     liq.side === 'long'
-                      ? 'bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300'
-                      : 'bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900'
+                      ? 'bg-neutral-200 dark:bg-black text-neutral-600 dark:text-neutral-300'
+                      : 'bg-black dark:bg-neutral-200 text-white dark:text-neutral-900'
                   }`}
                 >
                   {liq.side}

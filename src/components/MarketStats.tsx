@@ -45,7 +45,7 @@ export default async function MarketStats() {
           </h3>
           <Link
             href="/markets"
-            className="group text-sm font-semibold text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors focus-ring rounded-lg px-3 py-1.5 -mr-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1"
+            className="group text-sm font-semibold text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors focus-ring rounded-lg px-3 py-1.5 -mr-3 hover:bg-neutral-100 dark:hover:bg-black flex items-center gap-1"
           >
             View All
             <span className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true">
@@ -69,8 +69,8 @@ export default async function MarketStats() {
               <span
                 className={`inline-flex items-center gap-1 text-sm font-bold px-3 py-1.5 rounded-full ${
                   isPositive
-                    ? 'text-neutral-900 bg-neutral-100 dark:text-white dark:bg-neutral-800'
-                    : 'text-neutral-600 bg-neutral-100 dark:text-neutral-400 dark:bg-neutral-800'
+                    ? 'text-neutral-900 bg-neutral-100 dark:text-white dark:bg-black'
+                    : 'text-neutral-600 bg-neutral-100 dark:text-neutral-400 dark:bg-black'
                 }`}
               >
                 <svg
@@ -148,7 +148,7 @@ export default async function MarketStats() {
                   aria-label={`Fear and Greed Index: ${market.fearGreed.value} - ${market.fearGreed.value_classification}`}
                 >
                   <div
-                    className="absolute h-3 bg-neutral-100 dark:bg-neutral-800 right-0 top-0 transition-all duration-500"
+                    className="absolute h-3 bg-neutral-100 dark:bg-black right-0 top-0 transition-all duration-500"
                     style={{ width: `${100 - fearGreedValue}%` }}
                   />
                 </div>
@@ -199,7 +199,7 @@ export default async function MarketStats() {
                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-default ${
                       index === 0
                         ? 'bg-black dark:bg-white text-white dark:text-black'
-                        : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700'
+                        : 'bg-neutral-100 dark:bg-black text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-black border border-neutral-200 dark:border-neutral-700'
                     }`}
                     role="listitem"
                   >

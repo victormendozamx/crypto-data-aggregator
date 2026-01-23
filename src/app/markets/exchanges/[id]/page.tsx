@@ -131,7 +131,7 @@ export default async function ExchangeDetailPage({ params }: ExchangePageProps) 
           </nav>
 
           {/* Exchange Header */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <div className="relative w-20 h-20 flex-shrink-0">
                 {exchange.image && (
@@ -183,7 +183,7 @@ export default async function ExchangeDetailPage({ params }: ExchangePageProps) 
                       href={`https://twitter.com/${exchange.twitter_handle}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium transition-colors"
                     >
                       Twitter
                     </a>
@@ -195,25 +195,25 @@ export default async function ExchangeDetailPage({ params }: ExchangePageProps) 
 
           {/* Stats Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <p className="text-gray-500 dark:text-gray-400 text-sm">24h Volume (BTC)</p>
               <p className="text-xl font-bold text-gray-900 dark:text-white">
                 ₿ {formatNumber(exchange.trade_volume_24h_btc_normalized)}
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <p className="text-gray-500 dark:text-gray-400 text-sm">24h Volume (USD)</p>
               <p className="text-xl font-bold text-gray-900 dark:text-white">
                 ${formatNumber(exchange.trade_volume_24h_btc_normalized * BTC_PRICE_ESTIMATE)}
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <p className="text-gray-500 dark:text-gray-400 text-sm">Year Established</p>
               <p className="text-xl font-bold text-gray-900 dark:text-white">
                 {exchange.year_established || 'Unknown'}
               </p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <p className="text-gray-500 dark:text-gray-400 text-sm">Country</p>
               <p className="text-xl font-bold text-gray-900 dark:text-white">
                 {exchange.country || 'Unknown'}
@@ -222,7 +222,7 @@ export default async function ExchangeDetailPage({ params }: ExchangePageProps) 
           </div>
 
           {/* Trading Pairs */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="p-4 border-b border-gray-200 dark:border-gray-700">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                 Top Trading Pairs ({topTickers.length})
@@ -259,7 +259,7 @@ export default async function ExchangeDetailPage({ params }: ExchangePageProps) 
                   {topTickers.map((ticker, index) => (
                     <tr
                       key={`${ticker.base}-${ticker.target}-${index}`}
-                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors"
                     >
                       <td className="p-4 text-gray-500 dark:text-gray-400">{index + 1}</td>
                       <td className="p-4">

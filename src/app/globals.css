@@ -18,9 +18,77 @@ html, body {
   scroll-behavior: smooth;
 }
 
-/* Force all elements to inherit */
+/* Override white backgrounds to near-black for components */
+.dark .bg-white,
+.bg-white {
+  background-color: #0a0a0a !important;
+}
+
+/* Force all elements to inherit dark border */
 * {
-  border-color: #333333;
+  border-color: #1a1a1a;
+}
+
+/* ============================================
+   Card & Component Styling - Subtle glow effect
+   Black background with soft white glow for depth
+   ============================================ */
+
+/* Cards, panels, modals - subtle glow effect */
+.card, 
+[class*="rounded-xl"],
+[class*="rounded-2xl"],
+[class*="rounded-lg"] {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
+              0 4px 20px rgba(255, 255, 255, 0.03);
+}
+
+/* Enhanced hover glow */
+.card:hover,
+[class*="rounded-xl"]:hover,
+[class*="rounded-2xl"]:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1),
+              0 8px 30px rgba(255, 255, 255, 0.05);
+}
+
+/* Buttons - subtle glow */
+button, .btn {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+button:hover, .btn:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15),
+              0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+/* Input fields */
+input, select, textarea {
+  background-color: #0a0a0a;
+  border: 1px solid #222222;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #444444;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Tables */
+table {
+  border: 1px solid #1a1a1a;
+}
+
+th {
+  background-color: #0a0a0a;
+  border-bottom: 1px solid #222222;
+}
+
+tr {
+  border-bottom: 1px solid #111111;
+}
+
+tr:hover {
+  background-color: #0a0a0a;
 }
 
 /* Links */

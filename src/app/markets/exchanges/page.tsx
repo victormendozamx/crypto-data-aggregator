@@ -95,7 +95,7 @@ export default async function ExchangesPage() {
           </div>
 
           {/* Exchanges Table */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -130,7 +130,7 @@ export default async function ExchangesPage() {
                   {exchanges.map((exchange) => (
                     <tr
                       key={exchange.id}
-                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors"
                     >
                       <td className="p-4 text-gray-500 dark:text-gray-400">
                         {exchange.trust_score_rank}
@@ -183,7 +183,7 @@ export default async function ExchangesPage() {
                           href={exchange.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-black hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                           title={`Visit ${exchange.name}`}
                         >
                           <svg

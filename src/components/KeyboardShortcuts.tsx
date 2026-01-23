@@ -296,7 +296,7 @@ function ShortcutsHelp({ onClose }: { onClose: () => void }) {
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">⌨️ Keyboard Shortcuts</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black transition-colors"
             aria-label="Close"
           >
             <svg

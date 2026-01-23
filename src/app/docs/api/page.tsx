@@ -139,7 +139,7 @@ export default function DocsPage() {
         {/* Base URL */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Base URL</h2>
-          <code className="block p-4 bg-neutral-100 dark:bg-neutral-900 rounded-lg font-mono text-sm text-black dark:text-white">
+          <code className="block p-4 bg-neutral-100 dark:bg-black rounded-lg font-mono text-sm text-black dark:text-white">
             https://cryptodata.example.com/api/v1
           </code>
         </section>
@@ -153,7 +153,7 @@ export default function DocsPage() {
               <p className="text-neutral-600 dark:text-neutral-400 mb-3">
                 Include your API key in the request header or query parameter.
               </p>
-              <code className="block p-3 bg-neutral-100 dark:bg-neutral-900 rounded font-mono text-sm text-black dark:text-white">
+              <code className="block p-3 bg-neutral-100 dark:bg-black rounded font-mono text-sm text-black dark:text-white">
                 curl -H &quot;X-API-Key: your_api_key&quot; https://api.example.com/v1/coins
               </code>
             </div>
@@ -170,7 +170,7 @@ export default function DocsPage() {
                 <li>Send USDC to the provided address on Base</li>
                 <li>
                   Include tx hash in header:{' '}
-                  <code className="bg-neutral-100 dark:bg-neutral-900 px-1 rounded">
+                  <code className="bg-neutral-100 dark:bg-black px-1 rounded">
                     X-Payment-Proof: {`{"txHash": "0x..."}`}
                   </code>
                 </li>
@@ -188,7 +188,7 @@ export default function DocsPage() {
                 key={endpoint.path}
                 className="border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden"
               >
-                <div className="p-4 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+                <div className="p-4 bg-neutral-50 dark:bg-black border-b border-neutral-200 dark:border-neutral-800">
                   <div className="flex items-center gap-3">
                     <span className="px-2 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-bold rounded">
                       {endpoint.method}
@@ -236,7 +236,7 @@ export default function DocsPage() {
 
                   <div>
                     <h4 className="text-sm font-medium text-neutral-500 mb-2">Response</h4>
-                    <pre className="p-3 bg-neutral-100 dark:bg-neutral-900 rounded text-xs font-mono text-black dark:text-white overflow-x-auto">
+                    <pre className="p-3 bg-neutral-100 dark:bg-black rounded text-xs font-mono text-black dark:text-white overflow-x-auto">
                       {endpoint.response}
                     </pre>
                   </div>
@@ -280,7 +280,7 @@ export default function DocsPage() {
           <p className="text-neutral-600 dark:text-neutral-400 mb-4">
             Rate limits are enforced per API key. Check response headers for current status:
           </p>
-          <div className="p-4 bg-neutral-100 dark:bg-neutral-900 rounded-lg font-mono text-sm space-y-1 text-black dark:text-white">
+          <div className="p-4 bg-neutral-100 dark:bg-black rounded-lg font-mono text-sm space-y-1 text-black dark:text-white">
             <div>X-RateLimit-Limit: 10000</div>
             <div>X-RateLimit-Remaining: 9542</div>
             <div>X-RateLimit-Reset: 1706054400</div>

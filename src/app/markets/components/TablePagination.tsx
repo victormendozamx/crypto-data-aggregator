@@ -27,14 +27,14 @@ export default function TablePagination({
   const goToPage = useCallback(
     (page: number) => {
       if (page < 1 || page > totalPages) return;
-      
+
       const params = new URLSearchParams(searchParams.toString());
       if (page === 1) {
         params.delete('page');
       } else {
         params.set('page', String(page));
       }
-      
+
       const queryString = params.toString();
       router.push(`/markets${queryString ? `?${queryString}` : ''}`);
     },
@@ -45,19 +45,15 @@ export default function TablePagination({
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
     const delta = 2; // Number of pages to show on each side of current page
-    
+
     for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= currentPage - delta && i <= currentPage + delta)
-      ) {
+      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
         pages.push(i);
       } else if (pages[pages.length - 1] !== '...') {
         pages.push('...');
       }
     }
-    
+
     return pages;
   };
 
@@ -79,10 +75,15 @@ export default function TablePagination({
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           <span className="hidden sm:inline">Prev</span>
         </button>
@@ -104,7 +105,7 @@ export default function TablePagination({
                 className={`min-w-[40px] px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                   currentPage === page
                     ? 'bg-blue-600 text-white'
-                    : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-black'
                 }`}
               >
                 {page}
@@ -122,7 +123,7 @@ export default function TablePagination({
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <span className="hidden sm:inline">Next</span>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +148,7 @@ export default function TablePagination({
               }
             }
           }}
-          className="w-16 px-2 py-1.5 text-sm text-center border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-16 px-2 py-1.5 text-sm text-center border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-black text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
     </div>

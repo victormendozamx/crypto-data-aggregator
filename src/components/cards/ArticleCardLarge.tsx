@@ -177,7 +177,7 @@ function ArticleCardLarge({ article, externalLink = false }: ArticleCardLargePro
   ].join(' ');
 
   const categoryClasses =
-    'inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200';
+    'inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-gray-100 dark:bg-black text-gray-800 dark:text-gray-200';
 
   const badgeClasses = [
     'text-xs font-bold px-3 py-1.5 rounded-full shadow-lg',

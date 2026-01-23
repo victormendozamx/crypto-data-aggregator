@@ -202,7 +202,7 @@ export default function CoinPageClient({
             <div className="space-y-6">
               {/* Interactive Chart */}
               {chartData.length > 0 && (
-                <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 p-4 sm:p-6">
+                <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-4 sm:p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">
                     {coinData.symbol.toUpperCase()} Price Chart
                   </h3>
@@ -333,7 +333,7 @@ export default function CoinPageClient({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-gray-800 rounded-2xl border border-gray-700 p-6 max-w-md w-full"
+              className="bg-black rounded-2xl border border-gray-700 p-6 max-w-md w-full"
             >
               <h3 className="text-xl font-bold text-white mb-4">
                 Set Price Alert for {coinData.symbol.toUpperCase()}
@@ -351,7 +351,7 @@ export default function CoinPageClient({
                     <button className="flex-1 px-4 py-2 bg-white/20 text-white rounded-lg border border-white/30 font-medium">
                       Above
                     </button>
-                    <button className="flex-1 px-4 py-2 bg-neutral-700 text-neutral-300 rounded-lg border border-neutral-600 font-medium">
+                    <button className="flex-1 px-4 py-2 bg-black text-neutral-300 rounded-lg border border-neutral-600 font-medium">
                       Below
                     </button>
                   </div>
@@ -362,7 +362,7 @@ export default function CoinPageClient({
                   <input
                     type="number"
                     placeholder={priceData.price.toString()}
-                    className="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-white"
+                    className="w-full px-4 py-3 bg-black border border-neutral-700 rounded-lg text-white focus:outline-none focus:border-white"
                   />
                 </div>
               </div>
@@ -370,7 +370,7 @@ export default function CoinPageClient({
               <div className="flex gap-3 mt-6">
                 <button
                   onClick={() => setShowAlertModal(false)}
-                  className="flex-1 px-4 py-2 bg-neutral-700 text-white rounded-lg font-medium hover:bg-neutral-600 transition-colors"
+                  className="flex-1 px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-neutral-600 transition-colors"
                 >
                   Cancel
                 </button>
