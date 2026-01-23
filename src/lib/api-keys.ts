@@ -1,0 +1,422 @@
+/**
+ * API Key Management System
+ *
+ * Handles generation, validation, and rate limiting of API keys.
+ * Uses Vercel KV for persistent storage.
+ *
+ * @module lib/api-keys
+ */
+
+import { kv } from '@vercel/kv';
+import { createHash, randomBytes } from 'crypto';
+
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface ApiKeyData {
+  id: string;
+  key: string; // Hashed key (never store raw)
+  keyPrefix: string; // First 8 chars for display
+  name: string;
+  email: string;
+  tier: 'free' | 'pro' | 'enterprise';
+  permissions: string[];
+  rateLimit: number; // Requests per day
+  usageToday: number;
+  usageMonth: number;
+  createdAt: string;
+  lastUsedAt?: string;
+  expiresAt?: string;
+  active: boolean;
+  metadata?: Record<string, unknown>;
+}
+
+export interface ApiKeyUsage {
+  keyId: string;
+  count: number;
+  resetAt: number; // Unix timestamp
+}
+
+export interface RateLimitResult {
+  allowed: boolean;
+  remaining: number;
+  limit: number;
+  resetAt: number;
+}
+
+// ============================================================================
+// Configuration
+// ============================================================================
+
+export const API_KEY_TIERS = {
+  free: {
+    name: 'Free',
+    requestsPerDay: 100,
+    requestsPerMinute: 10,
+    features: ['market:read', 'trending:read', 'search:read'],
+  },
+  pro: {
+    name: 'Pro',
+    requestsPerDay: 10000,
+    requestsPerMinute: 100,
+    features: ['market:read', 'market:premium', 'defi:read', 'historical:read', 'export:json'],
+  },
+  enterprise: {
+    name: 'Enterprise',
+    requestsPerDay: -1, // Unlimited
+    requestsPerMinute: 1000,
+    features: ['*'], // All permissions
+  },
+} as const;
+
+// Key prefixes for different tiers
+const KEY_PREFIXES = {
+  free: 'cda_free_',
+  pro: 'cda_pro_',
+  enterprise: 'cda_ent_',
+} as const;
+
+// ============================================================================
+// Key Generation
+// ============================================================================
+
+/**
+ * Generate a secure random API key
+ */
+export function generateApiKey(tier: 'free' | 'pro' | 'enterprise' = 'free'): string {
+  const prefix = KEY_PREFIXES[tier];
+  const randomPart = randomBytes(24).toString('base64url');
+  return `${prefix}${randomPart}`;
+}
+
+/**
+ * Hash an API key for secure storage
+ */
+export function hashApiKey(key: string): string {
+  return createHash('sha256').update(key).digest('hex');
+}
+
+/**
+ * Generate a unique ID for the key record
+ */
+function generateKeyId(): string {
+  return `key_${Date.now()}_${randomBytes(4).toString('hex')}`;
+}
+
+// ============================================================================
+// Key Storage (Vercel KV)
+// ============================================================================
+
+const KV_PREFIX = {
+  key: 'apikey:', // apikey:{hashedKey} -> ApiKeyData
+  email: 'email:', // email:{email} -> keyId[]
+  usage: 'usage:', // usage:{keyId}:{date} -> count
+  rateLimit: 'rl:', // rl:{keyId}:{minute} -> count
+};
+
+/**
+ * Check if Vercel KV is configured
+ */
+export function isKvConfigured(): boolean {
+  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+/**
+ * Create a new API key
+ */
+export async function createApiKey(params: {
+  email: string;
+  name?: string;
+  tier?: 'free' | 'pro' | 'enterprise';
+}): Promise<{ key: string; data: ApiKeyData } | { error: string }> {
+  const { email, name = 'Default', tier = 'free' } = params;
+
+  // Check if KV is configured
+  if (!isKvConfigured()) {
+    return { error: 'API key storage not configured. Set KV_REST_API_URL and KV_REST_API_TOKEN.' };
+  }
+
+  // Check existing keys for this email
+  const existingKeys = await getKeysByEmail(email);
+  if (existingKeys.length >= 3) {
+    return { error: 'Maximum 3 API keys per email. Please revoke an existing key first.' };
+  }
+
+  // Generate new key
+  const rawKey = generateApiKey(tier);
+  const hashedKey = hashApiKey(rawKey);
+  const keyId = generateKeyId();
+
+  const tierConfig = API_KEY_TIERS[tier];
+
+  const keyData: ApiKeyData = {
+    id: keyId,
+    key: hashedKey,
+    keyPrefix: rawKey.substring(0, 12),
+    name,
+    email,
+    tier,
+    permissions: [...tierConfig.features],
+    rateLimit: tierConfig.requestsPerDay,
+    usageToday: 0,
+    usageMonth: 0,
+    createdAt: new Date().toISOString(),
+    active: true,
+  };
+
+  try {
+    // Store key data
+    await kv.set(`${KV_PREFIX.key}${hashedKey}`, keyData);
+
+    // Add to email index
+    const emailKeys = existingKeys.map((k) => k.id);
+    emailKeys.push(keyId);
+    await kv.set(`${KV_PREFIX.email}${email}`, emailKeys);
+
+    // Also store by keyId for reverse lookup
+    await kv.set(`${KV_PREFIX.key}id:${keyId}`, hashedKey);
+
+    return { key: rawKey, data: keyData };
+  } catch (error) {
+    console.error('Failed to create API key:', error);
+    return { error: 'Failed to create API key. Please try again.' };
+  }
+}
+
+/**
+ * Validate an API key and return its data
+ */
+export async function validateApiKey(rawKey: string): Promise<ApiKeyData | null> {
+  if (!isKvConfigured()) {
+    console.warn('[API Keys] KV not configured, skipping validation');
+    return null;
+  }
+
+  if (!rawKey || !rawKey.startsWith('cda_')) {
+    return null;
+  }
+
+  const hashedKey = hashApiKey(rawKey);
+
+  try {
+    const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+
+    if (!keyData || !keyData.active) {
+      return null;
+    }
+
+    // Update last used timestamp (non-blocking)
+    kv.set(`${KV_PREFIX.key}${hashedKey}`, {
+      ...keyData,
+      lastUsedAt: new Date().toISOString(),
+    }).catch(() => {});
+
+    return keyData;
+  } catch (error) {
+    console.error('Failed to validate API key:', error);
+    return null;
+  }
+}
+
+/**
+ * Get all keys for an email
+ */
+export async function getKeysByEmail(email: string): Promise<ApiKeyData[]> {
+  if (!isKvConfigured()) return [];
+
+  try {
+    const keyIds = await kv.get<string[]>(`${KV_PREFIX.email}${email}`);
+    if (!keyIds || keyIds.length === 0) return [];
+
+    const keys: ApiKeyData[] = [];
+    for (const keyId of keyIds) {
+      const hashedKey = await kv.get<string>(`${KV_PREFIX.key}id:${keyId}`);
+      if (hashedKey) {
+        const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+        if (keyData) keys.push(keyData);
+      }
+    }
+
+    return keys;
+  } catch (error) {
+    console.error('Failed to get keys by email:', error);
+    return [];
+  }
+}
+
+/**
+ * Revoke an API key
+ */
+export async function revokeApiKey(keyId: string, email: string): Promise<boolean> {
+  if (!isKvConfigured()) return false;
+
+  try {
+    const hashedKey = await kv.get<string>(`${KV_PREFIX.key}id:${keyId}`);
+    if (!hashedKey) return false;
+
+    const keyData = await kv.get<ApiKeyData>(`${KV_PREFIX.key}${hashedKey}`);
+    if (!keyData || keyData.email !== email) return false;
+
+    // Mark as inactive
+    await kv.set(`${KV_PREFIX.key}${hashedKey}`, {
+      ...keyData,
+      active: false,
+    });
+
+    return true;
+  } catch (error) {
+    console.error('Failed to revoke API key:', error);
+    return false;
+  }
+}
+
+// ============================================================================
+// Rate Limiting
+// ============================================================================
+
+/**
+ * Check and update rate limit for a key
+ */
+export async function checkRateLimit(keyData: ApiKeyData): Promise<RateLimitResult> {
+  const tierConfig = API_KEY_TIERS[keyData.tier];
+
+  // Unlimited tier
+  if (tierConfig.requestsPerDay === -1) {
+    return {
+      allowed: true,
+      remaining: -1,
+      limit: -1,
+      resetAt: 0,
+    };
+  }
+
+  if (!isKvConfigured()) {
+    // If KV not configured, allow but warn
+    return {
+      allowed: true,
+      remaining: tierConfig.requestsPerDay,
+      limit: tierConfig.requestsPerDay,
+      resetAt: Date.now() + 86400000,
+    };
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  const usageKey = `${KV_PREFIX.usage}${keyData.id}:${today}`;
+
+  try {
+    // Get current usage
+    const currentUsage = (await kv.get<number>(usageKey)) || 0;
+
+    if (currentUsage >= tierConfig.requestsPerDay) {
+      // Calculate reset time (midnight UTC)
+      const tomorrow = new Date();
+      tomorrow.setUTCHours(24, 0, 0, 0);
+
+      return {
+        allowed: false,
+        remaining: 0,
+        limit: tierConfig.requestsPerDay,
+        resetAt: tomorrow.getTime(),
+      };
+    }
+
+    // Increment usage (atomic)
+    const newUsage = await kv.incr(usageKey);
+
+    // Set expiry on first use (25 hours to be safe)
+    if (newUsage === 1) {
+      await kv.expire(usageKey, 90000);
+    }
+
+    const tomorrow = new Date();
+    tomorrow.setUTCHours(24, 0, 0, 0);
+
+    return {
+      allowed: true,
+      remaining: tierConfig.requestsPerDay - newUsage,
+      limit: tierConfig.requestsPerDay,
+      resetAt: tomorrow.getTime(),
+    };
+  } catch (error) {
+    console.error('Rate limit check failed:', error);
+    // On error, allow the request
+    return {
+      allowed: true,
+      remaining: tierConfig.requestsPerDay,
+      limit: tierConfig.requestsPerDay,
+      resetAt: Date.now() + 86400000,
+    };
+  }
+}
+
+// ============================================================================
+// Middleware Helper
+// ============================================================================
+
+/**
+ * Extract API key from request
+ */
+export function extractApiKey(request: Request): string | null {
+  // Check header first
+  const headerKey = request.headers.get('X-API-Key');
+  if (headerKey) return headerKey;
+
+  // Check query param
+  const url = new URL(request.url);
+  const queryKey = url.searchParams.get('api_key');
+  if (queryKey) return queryKey;
+
+  // Check Authorization header (Bearer token)
+  const authHeader = request.headers.get('Authorization');
+  if (authHeader?.startsWith('Bearer cda_')) {
+    return authHeader.slice(7);
+  }
+
+  return null;
+}
+
+/**
+ * Validate request and return key data with rate limit info
+ */
+export async function validateRequest(request: Request): Promise<{
+  valid: boolean;
+  keyData?: ApiKeyData;
+  rateLimit?: RateLimitResult;
+  error?: string;
+}> {
+  const rawKey = extractApiKey(request);
+
+  if (!rawKey) {
+    return {
+      valid: false,
+      error: 'API key required. Get a free key at /api/register',
+    };
+  }
+
+  const keyData = await validateApiKey(rawKey);
+
+  if (!keyData) {
+    return {
+      valid: false,
+      error: 'Invalid or revoked API key',
+    };
+  }
+
+  const rateLimit = await checkRateLimit(keyData);
+
+  if (!rateLimit.allowed) {
+    return {
+      valid: false,
+      keyData,
+      rateLimit,
+      error: `Rate limit exceeded. Resets at ${new Date(rateLimit.resetAt).toISOString()}`,
+    };
+  }
+
+  return {
+    valid: true,
+    keyData,
+    rateLimit,
+  };
+}

@@ -233,20 +233,6 @@ export default async function MoversPage() {
               Market News
             </Link>
           </div>
-
-          {/* Attribution */}
-          <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm mt-8">
-            Data from{' '}
-            <a
-              href="https://www.coingecko.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-900 dark:text-white hover:underline"
-            >
-              CoinGecko
-            </a>
-            . Updated every minute.
-          </p>
         </main>
 
         <Footer />

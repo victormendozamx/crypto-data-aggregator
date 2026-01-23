@@ -288,23 +288,6 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
               showWatchlist={true}
             />
           </Suspense>
-
-          {/* Data Attribution */}
-          <div className="mt-8 text-center text-neutral-500 dark:text-neutral-400 text-sm">
-            <p>
-              Market data provided by{' '}
-              <a
-                href="https://www.coingecko.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-900 dark:text-white hover:underline"
-              >
-                CoinGecko
-              </a>
-              {' • '}
-              Updates every minute
-            </p>
-          </div>
         </main>
 
         <Footer />

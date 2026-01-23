@@ -174,10 +174,34 @@ tr:hover {
 /* Links */
 a {
   color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 a:hover {
-  color: #cccccc;
+  color: #e0e0e0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* Navigation links - subtle underline glow */
+nav a, .nav-link {
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+nav a::after, .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav a:hover::after, .nav-link:hover::after {
+  width: 80%;
 }
 
 /* Focus Styles - Accessibility */

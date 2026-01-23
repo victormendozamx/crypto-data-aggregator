@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { MobileNav } from './MobileNav';
 import { SearchModal } from './SearchModal';
 import { CommandPalette } from './CommandPalette';
-import { TrendingUp } from 'lucide-react';
 import { CurrencySelector } from './CurrencySelector';
 
 // Lazy load PriceWidget
@@ -325,15 +324,9 @@ export default function Header() {
         <div className="flex justify-between items-center px-4 lg:px-6 max-w-7xl mx-auto h-full transition-all duration-300">
           {/* Logo */}
           <div className="flex items-center">
-            <Link
-              href="/"
-              className="flex items-center gap-3 focus-ring rounded-lg px-2 py-1.5 -mx-2 group"
-            >
-              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm border border-neutral-200 dark:border-neutral-700 group-hover:scale-105 transition-transform">
-                <TrendingUp className="w-5 h-5 text-black" />
-              </div>
-              <span className="hidden sm:inline text-lg font-semibold tracking-tight text-white">
-                Crypto Data
+            <Link href="/" className="flex items-center gap-3 focus-ring rounded-lg group">
+              <span className="text-xl font-light tracking-wide text-white">
+                crypto<span className="font-semibold">data</span>
               </span>
             </Link>
           </div>

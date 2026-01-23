@@ -276,9 +276,6 @@ export default function Footer() {
               </a>
             </span>
           </p>
-          <p className="text-center md:text-right text-neutral-600 text-sm">
-            Data from CoinDesk, The Block, Decrypt & more
-          </p>
         </div>
       </div>
     </footer>
