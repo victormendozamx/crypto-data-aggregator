@@ -303,4 +303,8 @@ async function handler(
  * POST /api/premium/alerts/custom
  * Body: { "rules": [...] }
  */
-export const POST = withX402(handler, getRouteConfig('/api/premium/alerts/custom'), x402Server);
+export const POST = withX402(
+  handler,
+  getRouteConfig('/api/premium/alerts/custom' as any),
+  x402Server
+);

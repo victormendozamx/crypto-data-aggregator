@@ -127,14 +127,13 @@ async function handler(
     let ohlcData: OHLCDataPoint[] | undefined;
     if (includeOHLC && days <= 365) {
       const ohlcRaw = await getOHLC(coinId, days);
-      ohlcData = (ohlcRaw || []).map(
-        ([timestamp, open, high, low, close]: [number, number, number, number, number]) => ({
-          timestamp,
-          date: new Date(timestamp).toISOString(),
-          open,
-          high,
-          low,
-          close,
+      ohlcData = (ohlcRaw || []).map((item) => ({
+          timestamp: item.timestamp,
+          date: new Date(item.timestamp).toISOString(),
+          open: item.open,
+          high: item.high,
+          low: item.low,
+          close: item.close,
         })
       );
     }

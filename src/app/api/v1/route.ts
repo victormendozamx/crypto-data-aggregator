@@ -64,7 +64,7 @@ export async function GET() {
       tiers: Object.entries(API_TIERS).map(([id, tier]) => ({
         id,
         name: tier.name,
-        price: tier.priceDisplay || `$${tier.price}/month`,
+        price: `$${tier.price}/month`,
         requestsPerDay: tier.requestsPerDay === -1 ? 'Unlimited' : tier.requestsPerDay,
         features: tier.features,
       })),
@@ -79,7 +79,6 @@ export async function GET() {
           price: priceStr,
           priceUSDC: Math.round(parseFloat(priceStr.replace('$', '')) * 1e6),
           description: meta?.description || `API endpoint: ${path}`,
-          parameters: meta?.parameters,
         };
       }),
 

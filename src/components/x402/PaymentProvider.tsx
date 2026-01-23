@@ -203,7 +203,8 @@ export function PaymentProvider({ children, testnet = true }: PaymentProviderPro
     checkConnection();
 
     // Listen for account changes
-    const handleAccountsChanged = (accounts: string[]) => {
+    const handleAccountsChanged = (...args: unknown[]) => {
+      const accounts = args[0] as string[];
       if (accounts.length === 0) {
         setWallet({
           connected: false,
@@ -223,7 +224,8 @@ export function PaymentProvider({ children, testnet = true }: PaymentProviderPro
     };
 
     // Listen for chain changes
-    const handleChainChanged = (chainId: string) => {
+    const handleChainChanged = (...args: unknown[]) => {
+      const chainId = args[0] as string;
       const chainIdNum = parseInt(chainId, 16);
       setWallet((prev) => ({
         ...prev,
@@ -232,8 +234,8 @@ export function PaymentProvider({ children, testnet = true }: PaymentProviderPro
       }));
     };
 
-    window.ethereum.on('accountsChanged', handleAccountsChanged);
-    window.ethereum.on('chainChanged', handleChainChanged);
+    window.ethereum?.on('accountsChanged', handleAccountsChanged);
+    window.ethereum?.on('chainChanged', handleChainChanged);
 
     return () => {
       window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);

@@ -13,7 +13,7 @@
  * @module api/premium/streams/prices
  */
 
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { withX402 } from '@x402/next';
 import { x402Server, getRouteConfig } from '@/lib/x402-server';
 import { getPricesForCoins } from '@/lib/market-data';
@@ -24,7 +24,7 @@ export const dynamic = 'force-dynamic';
 /**
  * Handler for real-time price stream
  */
-async function handler(request: NextRequest): Promise<Response> {
+async function handler(request: NextRequest): Promise<NextResponse> {
   const searchParams = request.nextUrl.searchParams;
   const coins = searchParams.get('coins')?.split(',').slice(0, 20) || ['bitcoin', 'ethereum'];
   const interval = Math.max(1000, parseInt(searchParams.get('interval') || '2000', 10));
@@ -108,7 +108,7 @@ async function handler(request: NextRequest): Promise<Response> {
     },
   });
 
-  return new Response(stream, {
+  return new NextResponse(stream, {
     headers: {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',

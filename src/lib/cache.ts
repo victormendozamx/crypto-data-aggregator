@@ -147,6 +147,12 @@ export const newsCache = new MemoryCache(500);
 export const aiCache = new MemoryCache(200);
 
 /**
+ * Generic shared cache instance.
+ * Max 1000 entries, used by various lib modules.
+ */
+export const cache = new MemoryCache(1000);
+
+/**
  * Shared cache instance for translated content.
  * Max 300 entries, used by translate.ts.
  */

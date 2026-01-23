@@ -264,6 +264,65 @@ export const premiumRoutes = {
     mimeType: 'text/csv',
   },
 
+  // Alerts
+  '/api/premium/alerts/custom': {
+    accepts: {
+      scheme: 'exact' as const,
+      price: pricing.basic,
+      network: defaultNetwork,
+      payTo: payToAddress,
+    },
+    description: 'Custom price alerts with advanced conditions',
+    mimeType: 'application/json',
+  },
+
+  '/api/premium/alerts/whales': {
+    accepts: {
+      scheme: 'exact' as const,
+      price: pricing.analytics,
+      network: defaultNetwork,
+      payTo: payToAddress,
+    },
+    description: 'Whale transaction alerts and notifications',
+    mimeType: 'application/json',
+  },
+
+  // API Keys
+  '/api/premium/api-keys': {
+    accepts: {
+      scheme: 'exact' as const,
+      price: pricing.basic,
+      network: defaultNetwork,
+      payTo: payToAddress,
+    },
+    description: 'Manage API keys for programmatic access',
+    mimeType: 'application/json',
+  },
+
+  // Portfolio
+  '/api/premium/portfolio/analytics': {
+    accepts: {
+      scheme: 'exact' as const,
+      price: pricing.analytics,
+      network: defaultNetwork,
+      payTo: payToAddress,
+    },
+    description: 'Advanced portfolio analytics and performance metrics',
+    mimeType: 'application/json',
+  },
+
+  // Streams
+  '/api/premium/streams/prices': {
+    accepts: {
+      scheme: 'exact' as const,
+      price: pricing.basic,
+      network: defaultNetwork,
+      payTo: payToAddress,
+    },
+    description: 'Real-time price streaming via Server-Sent Events',
+    mimeType: 'text/event-stream',
+  },
+
   // Access Passes
   '/api/premium/pass/hour': {
     accepts: {
