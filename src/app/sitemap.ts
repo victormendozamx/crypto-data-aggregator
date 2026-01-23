@@ -66,6 +66,34 @@ const CATEGORIES = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
+  // AI Agent Discovery files
+  const aiDiscoveryRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/llms.txt`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/llms-full.txt`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/agents.json`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/.well-known/ai-plugin.json`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+  ];
+
   // Static routes
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -188,6 +216,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.6,
     },
+    {
+      url: `${BASE_URL}/pricing`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/docs/api`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
   ];
 
   // Dynamic coin routes
@@ -206,5 +246,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...coinRoutes, ...categoryRoutes];
+  return [...aiDiscoveryRoutes, ...staticRoutes, ...coinRoutes, ...categoryRoutes];
 }

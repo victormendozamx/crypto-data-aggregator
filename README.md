@@ -11,10 +11,12 @@
   <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" alt="TypeScript 5.0">
   <img src="https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS 4">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React 19">
+  <img src="https://img.shields.io/badge/x402-Enabled-00D4AA?style=flat-square&logo=ethereum" alt="x402 Enabled">
+  <img src="https://img.shields.io/badge/AI_Agents-Ready-8B5CF6?style=flat-square&logo=robot" alt="AI Agents Ready">
 </p>
 
 <p align="center">
-  <b>🆓 100% Free • 🔑 No API Keys Required • ⚡ Real-Time Data • 📱 PWA Ready</b>
+  <b>🆓 100% Free • 🔑 No API Keys Required • ⚡ Real-Time Data • 📱 PWA Ready • 🤖 AI Agent Ready</b>
 </p>
 
 <p align="center">
@@ -27,6 +29,7 @@
   <a href="#-features">Features</a> •
   <a href="#-feature-deep-dive">Deep Dive</a> •
   <a href="#-api-endpoints">API</a> •
+  <a href="#-ai-agents">AI Agents</a> •
   <a href="#-deployment">Deploy</a> •
   <a href="docs/API.md">Docs</a>
 </p>
@@ -474,6 +477,76 @@ curl "http://localhost:3000/api/sentiment"
 
 ---
 
+## 🤖 AI Agents
+
+This API is designed for AI agent discoverability with full x402 payment protocol support.
+
+### Discovery Files
+
+AI agents can discover this API through standard discovery endpoints:
+
+| File               | URL                           | Description                          |
+| ------------------ | ----------------------------- | ------------------------------------ |
+| **llms.txt**       | `/llms.txt`                   | Quick reference for LLMs             |
+| **llms-full.txt**  | `/llms-full.txt`              | Extended documentation with examples |
+| **agents.json**    | `/agents.json`                | Machine-readable endpoint catalog    |
+| **ai-plugin.json** | `/.well-known/ai-plugin.json` | OpenAI plugin manifest               |
+
+### x402 Payment Protocol
+
+This API supports the [x402 payment protocol](https://x402.org) for autonomous micropayments:
+
+| Feature         | Details                                |
+| --------------- | -------------------------------------- |
+| **Protocol**    | HTTP 402 Payment Required              |
+| **Networks**    | Base (mainnet), Base Sepolia (testnet) |
+| **Asset**       | USDC                                   |
+| **Min Payment** | $0.001 per request                     |
+| **No API Keys** | Just pay and access                    |
+
+### For AI Agent Developers
+
+```typescript
+import { wrapAxiosWithPayment, x402Client } from '@x402/axios';
+import { registerExactEvmScheme } from '@x402/evm/exact/client';
+import axios from 'axios';
+import { privateKeyToAccount } from 'viem/accounts';
+
+// Setup wallet
+const account = privateKeyToAccount('0xYourPrivateKey');
+const client = new x402Client();
+registerExactEvmScheme(client, { signer: account });
+
+// Create payment-enabled HTTP client
+const api = wrapAxiosWithPayment(axios.create({ baseURL: 'https://your-domain.com/api' }), client);
+
+// Payments are handled automatically on 402 responses
+const response = await api.get('/market/snapshot/bitcoin');
+```
+
+### Bazaar Discovery
+
+This API is registered with the
+[x402 Bazaar](https://docs.x402.org/core-concepts/bazaar-discovery-layer) for autonomous discovery:
+
+```typescript
+import { HTTPFacilitatorClient } from '@x402/core/http';
+import { withBazaar } from '@x402/extensions';
+
+const client = withBazaar(
+  new HTTPFacilitatorClient({
+    url: 'https://x402.org/facilitator',
+  })
+);
+
+// Discover crypto data endpoints
+const resources = await client.extensions.discovery.listResources({ type: 'http' });
+```
+
+📚 See [docs/X402_INTEGRATION.md](docs/X402_INTEGRATION.md) for complete x402 integration guide.
+
+---
+
 ## 📡 Data Sources
 
 All data is fetched from free, public APIs — no API keys required for basic usage.
@@ -728,22 +801,23 @@ crypto-data-aggregator/
 
 ## 📚 Documentation
 
-| Document                                   | Description                                   |
-| ------------------------------------------ | --------------------------------------------- |
-| [Documentation Index](docs/README.md)      | Full documentation overview                   |
-| [API Reference](docs/API.md)               | Complete endpoint documentation with examples |
-| [Architecture](docs/ARCHITECTURE.md)       | System design, data flow & caching strategy   |
-| [Tech Stack](docs/TECH_STACK.md)           | Technologies, libraries & tools               |
-| [Components](docs/COMPONENTS.md)           | UI component library & usage                  |
-| [Data Sources](docs/DATA_SOURCES.md)       | External APIs & caching strategies            |
-| [Development](docs/DEVELOPMENT.md)         | Local setup, debugging & workflow             |
-| [Testing](docs/TESTING.md)                 | Vitest setup, mocking & coverage              |
-| [Deployment](docs/DEPLOYMENT.md)           | Vercel, Railway, Docker, self-hosting         |
-| [Performance](docs/PERFORMANCE.md)         | Optimization strategies & monitoring          |
-| [Security](docs/SECURITY.md)               | Security practices & hardening                |
-| [PWA Guide](docs/PWA.md)                   | Progressive Web App features                  |
-| [Troubleshooting](docs/TROUBLESHOOTING.md) | Common issues & solutions                     |
-| [Changelog](docs/CHANGELOG.md)             | Version history & upgrades                    |
+| Document                                     | Description                                   |
+| -------------------------------------------- | --------------------------------------------- |
+| [Documentation Index](docs/README.md)        | Full documentation overview                   |
+| [API Reference](docs/API.md)                 | Complete endpoint documentation with examples |
+| [Architecture](docs/ARCHITECTURE.md)         | System design, data flow & caching strategy   |
+| [Tech Stack](docs/TECH_STACK.md)             | Technologies, libraries & tools               |
+| [Components](docs/COMPONENTS.md)             | UI component library & usage                  |
+| [Data Sources](docs/DATA_SOURCES.md)         | External APIs & caching strategies            |
+| [Development](docs/DEVELOPMENT.md)           | Local setup, debugging & workflow             |
+| [Testing](docs/TESTING.md)                   | Vitest setup, mocking & coverage              |
+| [Deployment](docs/DEPLOYMENT.md)             | Vercel, Railway, Docker, self-hosting         |
+| [Performance](docs/PERFORMANCE.md)           | Optimization strategies & monitoring          |
+| [Security](docs/SECURITY.md)                 | Security practices & hardening                |
+| [PWA Guide](docs/PWA.md)                     | Progressive Web App features                  |
+| [x402 Integration](docs/X402_INTEGRATION.md) | Micropayments & API monetization              |
+| [Troubleshooting](docs/TROUBLESHOOTING.md)   | Common issues & solutions                     |
+| [Changelog](docs/CHANGELOG.md)               | Version history & upgrades                    |
 
 ---
 

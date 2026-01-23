@@ -19,13 +19,34 @@ export default function robots(): MetadataRoute.Robots {
           '/admin/', // Don't crawl admin (if exists)
         ],
       },
+      // AI Agent Crawlers - Allow full access for discoverability
       {
         userAgent: 'GPTBot',
-        allow: '/', // Allow AI crawlers for better discoverability
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
       },
       {
         userAgent: 'ChatGPT-User',
-        allow: '/',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
+      },
+      {
+        userAgent: 'Claude-Web',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
+      },
+      {
+        userAgent: 'Anthropic-AI',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
+      },
+      {
+        userAgent: 'Cohere-AI',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
+      },
+      {
+        userAgent: 'PerplexityBot',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/'],
+      },
+      {
+        userAgent: 'x402-agent',
+        allow: ['/', '/llms.txt', '/llms-full.txt', '/agents.json', '/.well-known/', '/api/'],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

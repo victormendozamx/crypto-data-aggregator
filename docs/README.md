@@ -7,24 +7,25 @@ contribute to the project.
 
 ## 📚 Documentation Overview
 
-| Document                              | Description                             | Audience     |
-| ------------------------------------- | --------------------------------------- | ------------ |
-| [README](../README.md)                | Project overview, quick start, features | Everyone     |
-| [CONTRIBUTING](../CONTRIBUTING.md)    | How to contribute to the project        | Contributors |
-| [API Reference](API.md)               | Complete API endpoint documentation     | Developers   |
-| [Architecture](ARCHITECTURE.md)       | System design and data flow             | Developers   |
-| [Tech Stack](TECH_STACK.md)           | Technologies, libraries, and tools      | Developers   |
-| [Components](COMPONENTS.md)           | React component reference               | Developers   |
-| [Data Sources](DATA_SOURCES.md)       | External APIs and caching               | Developers   |
-| [Development](DEVELOPMENT.md)         | Local setup and workflow                | Contributors |
-| [Testing](TESTING.md)                 | Testing guide and best practices        | Contributors |
-| [Deployment](DEPLOYMENT.md)           | Production deployment guide             | DevOps       |
-| [Performance](PERFORMANCE.md)         | Optimization strategies                 | Developers   |
-| [Security](SECURITY.md)               | Security guidelines                     | Everyone     |
-| [PWA](PWA.md)                         | Progressive Web App features            | Developers   |
-| [x402 Integration](X402_INTEGRATION.md) | x402 payment protocol guide           | Developers   |
-| [Troubleshooting](TROUBLESHOOTING.md) | Common issues and solutions             | Everyone     |
-| [Changelog](CHANGELOG.md)             | Version history and changes             | Everyone     |
+| Document                                | Description                             | Audience      |
+| --------------------------------------- | --------------------------------------- | ------------- |
+| [README](../README.md)                  | Project overview, quick start, features | Everyone      |
+| [CONTRIBUTING](../CONTRIBUTING.md)      | How to contribute to the project        | Contributors  |
+| [API Reference](API.md)                 | Complete API endpoint documentation     | Developers    |
+| [AI Agents](AI_AGENTS.md)               | AI agent discoverability guide          | AI Developers |
+| [Architecture](ARCHITECTURE.md)         | System design and data flow             | Developers    |
+| [Tech Stack](TECH_STACK.md)             | Technologies, libraries, and tools      | Developers    |
+| [Components](COMPONENTS.md)             | React component reference               | Developers    |
+| [Data Sources](DATA_SOURCES.md)         | External APIs and caching               | Developers    |
+| [Development](DEVELOPMENT.md)           | Local setup and workflow                | Contributors  |
+| [Testing](TESTING.md)                   | Testing guide and best practices        | Contributors  |
+| [Deployment](DEPLOYMENT.md)             | Production deployment guide             | DevOps        |
+| [Performance](PERFORMANCE.md)           | Optimization strategies                 | Developers    |
+| [Security](SECURITY.md)                 | Security guidelines                     | Everyone      |
+| [PWA](PWA.md)                           | Progressive Web App features            | Developers    |
+| [x402 Integration](X402_INTEGRATION.md) | x402 payment protocol guide             | Developers    |
+| [Troubleshooting](TROUBLESHOOTING.md)   | Common issues and solutions             | Everyone      |
+| [Changelog](CHANGELOG.md)               | Version history and changes             | Everyone      |
 
 ---
 

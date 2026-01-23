@@ -115,6 +115,34 @@ const navItems = [
     href: '/watchlist',
     icon: null,
   },
+  {
+    label: 'API',
+    href: '/pricing',
+    icon: null,
+    megaMenu: {
+      sections: [
+        {
+          title: 'Developer',
+          links: [
+            { label: 'API Documentation', href: '/docs/api', icon: null },
+            { label: 'Pricing', href: '/pricing', icon: null },
+          ],
+        },
+        {
+          title: 'Payments',
+          links: [
+            { label: 'x402 Micropayments', href: '/pricing#x402', icon: null },
+            { label: 'API Tiers', href: '/pricing', icon: null },
+          ],
+        },
+      ],
+      featured: {
+        title: 'API Access',
+        description: 'Pay-per-request or subscribe for monthly access',
+        href: '/pricing',
+      },
+    },
+  },
 ];
 
 // Mega Menu Component - Refined design

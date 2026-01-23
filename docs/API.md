@@ -35,6 +35,12 @@ All endpoints are prefixed with `/api/` and return JSON responses.
   - [Get Portfolio](#get-portfolio)
   - [Add Holding](#add-holding)
   - [Remove Holding](#remove-holding)
+- [Premium API (x402)](#premium-api-x402)
+  - [Overview](#premium-overview)
+  - [AI Analysis](#ai-analysis)
+  - [Whale Tracking](#whale-tracking)
+  - [Advanced Screener](#advanced-screener)
+  - [Access Passes](#access-passes)
 - [Response Formats](#response-formats)
 - [Error Handling](#error-handling)
 - [Rate Limits](#rate-limits)
@@ -791,6 +797,613 @@ DELETE /api/portfolio/holding
 
 ```bash
 curl -X DELETE "http://localhost:3000/api/portfolio/holding?portfolioId=pf_123&coinId=bitcoin"
+```
+
+---
+
+## Premium API (x402)
+
+Premium endpoints require payment via the x402 protocol. Pay with USDC on Base - no API keys needed.
+
+### Premium Overview
+
+```
+GET /api/premium
+```
+
+Returns complete documentation of all premium endpoints, pricing, and payment information.
+
+#### Response
+
+```json
+{
+  "name": "Crypto Data Aggregator Premium API",
+  "version": "2.0.0",
+  "payment": {
+    "network": "Base Mainnet",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "categories": [
+    {
+      "category": "ai",
+      "name": "AI Analysis",
+      "icon": "🧠",
+      "endpoints": [...]
+    }
+  ]
+}
+```
+
+### How to Pay
+
+1. **Make a request** to any premium endpoint
+2. **Receive 402** with payment requirements in response
+3. **Sign payment** using any x402-compatible wallet
+4. **Resend request** with `X-Payment` header containing signed payment
+5. **Receive data** - payment settles automatically
+
+```bash
+# Step 1: Initial request returns 402
+curl https://api.example.com/api/premium/ai/sentiment
+# Response: 402 Payment Required + payment details
+
+# Step 2: Resend with payment
+curl -H "X-Payment: <base64-signed-payment>" \
+  https://api.example.com/api/premium/ai/sentiment
+# Response: 200 OK + data
+```
+
+---
+
+### AI Analysis
+
+#### AI Sentiment Analysis
+
+Analyze crypto news for market sentiment using AI.
+
+```
+GET /api/premium/ai/sentiment
+```
+
+**Price:** $0.02 per request
+
+| Parameter | Type   | Default | Description                            |
+| --------- | ------ | ------- | -------------------------------------- |
+| `limit`   | number | `20`    | Number of articles to analyze (max 50) |
+| `asset`   | string | -       | Filter by asset (e.g., `BTC`, `ETH`)   |
+
+#### Response
+
+```json
+{
+  "articles": [
+    {
+      "title": "Bitcoin Breaks $100K Resistance",
+      "sentiment": "very_bullish",
+      "confidence": 92,
+      "reasoning": "Major price milestone with institutional backing",
+      "impact": "high",
+      "affectedCoins": ["BTC", "ETH"]
+    }
+  ],
+  "overall": {
+    "sentiment": "bullish",
+    "score": 65,
+    "summary": "Market sentiment is bullish driven by BTC price action",
+    "keyDrivers": ["BTC breaking ATH", "ETF inflows", "Institutional adoption"]
+  },
+  "meta": {
+    "analyzedAt": "2026-01-23T12:00:00Z",
+    "articlesAnalyzed": 20,
+    "model": "llama-3.3-70b-versatile",
+    "price": 0.02
+  }
+}
+```
+
+---
+
+#### AI Trading Signals
+
+Get AI-generated buy/sell signals based on market data.
+
+```
+GET /api/premium/ai/signals
+```
+
+**Price:** $0.05 per request
+
+| Parameter | Type   | Default                   | Description              |
+| --------- | ------ | ------------------------- | ------------------------ |
+| `coins`   | string | `bitcoin,ethereum,solana` | Comma-separated coin IDs |
+
+#### Response
+
+```json
+{
+  "signals": [
+    {
+      "coin": "BTC",
+      "coinId": "bitcoin",
+      "signal": "buy",
+      "confidence": 78,
+      "reasoning": "Bullish momentum with volume confirmation",
+      "keyLevels": {
+        "support": 95000,
+        "resistance": 105000,
+        "stopLoss": 92000,
+        "takeProfit": 110000
+      },
+      "indicators": {
+        "rsi": "neutral",
+        "trend": "up",
+        "momentum": "increasing"
+      },
+      "timeframe": "medium"
+    }
+  ],
+  "marketContext": {
+    "btcTrend": "up",
+    "marketPhase": "markup",
+    "riskLevel": "medium"
+  },
+  "meta": {
+    "disclaimer": "Not financial advice. Do your own research."
+  }
+}
+```
+
+---
+
+#### AI Market Summary
+
+Get an AI-generated market summary for any cryptocurrency.
+
+```
+GET /api/premium/ai/summary
+```
+
+**Price:** $0.01 per request
+
+| Parameter | Type   | Description                |
+| --------- | ------ | -------------------------- |
+| `coin`    | string | Optional coin ID for focus |
+
+#### Response
+
+```json
+{
+  "summary": {
+    "headline": "Crypto markets rally as BTC tests new highs",
+    "overview": "The cryptocurrency market is experiencing strong momentum...",
+    "keyEvents": [
+      "Bitcoin approaches $100K milestone",
+      "Ethereum Layer 2 activity surging",
+      "DeFi TVL reaches new record"
+    ],
+    "topMovers": {
+      "gainers": ["SOL +15%", "AVAX +12%"],
+      "losers": ["DOGE -5%", "SHIB -8%"]
+    },
+    "outlook": {
+      "shortTerm": "bullish",
+      "reasoning": "Strong momentum and positive sentiment"
+    }
+  },
+  "coinHighlight": {
+    "coin": "BTC",
+    "analysis": "Bitcoin is showing strong buying pressure...",
+    "priceAction": "Consolidating near ATH with bullish structure"
+  }
+}
+```
+
+---
+
+#### AI Coin Comparison
+
+Compare multiple cryptocurrencies using AI analysis.
+
+```
+GET /api/premium/ai/compare
+```
+
+**Price:** $0.03 per request
+
+| Parameter | Type   | Required | Description                          |
+| --------- | ------ | -------- | ------------------------------------ |
+| `coins`   | string | Yes      | Comma-separated coin IDs (2-5 coins) |
+
+#### Example
+
+```bash
+curl "https://api.example.com/api/premium/ai/compare?coins=bitcoin,ethereum,solana"
+```
+
+#### Response
+
+```json
+{
+  "comparison": {
+    "coins": ["BTC", "ETH", "SOL"],
+    "verdict": "BTC for store of value, ETH for DeFi, SOL for speed",
+    "table": {
+      "technology": {
+        "BTC": "8/10",
+        "ETH": "9/10",
+        "SOL": "8/10",
+        "analysis": "ETH leads with smart contract capabilities"
+      },
+      "adoption": {
+        "BTC": "10/10",
+        "ETH": "9/10",
+        "SOL": "7/10",
+        "analysis": "BTC has highest brand recognition"
+      }
+    }
+  },
+  "recommendation": {
+    "forTrading": "SOL - highest volatility for short-term trades",
+    "forHolding": "BTC - best risk-adjusted long-term returns",
+    "forBeginner": "BTC - most established and understood"
+  },
+  "risks": [
+    "Market correlation - all assets may move together",
+    "Regulatory uncertainty",
+    "Technical vulnerabilities"
+  ]
+}
+```
+
+---
+
+### Whale Tracking
+
+#### Whale Transactions
+
+Track large cryptocurrency transactions ($1M+).
+
+```
+GET /api/premium/whales/transactions
+```
+
+**Price:** $0.05 per request
+
+| Parameter   | Type   | Default   | Description                                       |
+| ----------- | ------ | --------- | ------------------------------------------------- |
+| `limit`     | number | `50`      | Number of transactions (max 100)                  |
+| `minAmount` | number | `1000000` | Minimum USD value                                 |
+| `token`     | string | -         | Filter by token (e.g., `BTC`)                     |
+| `chain`     | string | -         | Filter by blockchain                              |
+| `type`      | string | -         | `transfer`, `exchange_inflow`, `exchange_outflow` |
+
+#### Response
+
+```json
+{
+  "transactions": [
+    {
+      "id": "whale_1706012400_0",
+      "hash": "0x...",
+      "blockchain": "ethereum",
+      "timestamp": "2026-01-23T11:30:00Z",
+      "from": {
+        "address": "0x...",
+        "label": "Binance",
+        "isExchange": true
+      },
+      "to": {
+        "address": "0x...",
+        "label": null,
+        "isExchange": false
+      },
+      "amount": 500,
+      "amountUsd": 50000000,
+      "token": {
+        "symbol": "ETH",
+        "name": "Ethereum"
+      },
+      "type": "exchange_outflow",
+      "significance": "high"
+    }
+  ],
+  "aggregates": {
+    "totalVolume": 250000000,
+    "exchangeInflow": 80000000,
+    "exchangeOutflow": 170000000,
+    "netFlow": 90000000,
+    "topTokens": {
+      "BTC": 150000000,
+      "ETH": 100000000
+    }
+  }
+}
+```
+
+---
+
+#### Smart Money Flow
+
+Track institutional and smart money movements.
+
+```
+GET /api/premium/smart-money
+```
+
+**Price:** $0.05 per request
+
+| Parameter   | Type   | Default | Description              |
+| ----------- | ------ | ------- | ------------------------ |
+| `token`     | string | -       | Filter by token          |
+| `timeframe` | string | `24h`   | Time period for analysis |
+
+#### Response
+
+```json
+{
+  "institutions": {
+    "netBuying": true,
+    "volume24h": 85000000,
+    "topBuys": [
+      { "token": "ETH", "amount": 5000, "usd": 20000000 },
+      { "token": "SOL", "amount": 100000, "usd": 15000000 }
+    ],
+    "topSells": []
+  },
+  "whaleActivity": {
+    "accumulationPhase": true,
+    "distribution": {
+      "accumulating": ["ETH", "SOL", "AVAX"],
+      "distributing": ["DOGE", "SHIB"],
+      "neutral": ["BTC"]
+    }
+  },
+  "exchangeFlow": {
+    "btc": { "inflow": 500, "outflow": 800, "net": 300 },
+    "eth": { "inflow": 10000, "outflow": 15000, "net": 5000 }
+  },
+  "signals": {
+    "overallSentiment": "accumulation",
+    "confidence": 72,
+    "keyInsights": [
+      "Large ETH accumulation by institutional wallets",
+      "Exchange reserves declining for BTC",
+      "Smart money rotating into L2 tokens"
+    ]
+  }
+}
+```
+
+---
+
+#### Whale Alerts (Webhook)
+
+Subscribe to real-time whale alerts via webhook.
+
+```
+POST /api/premium/whales/alerts
+```
+
+**Price:** $0.05 per subscription (24h)
+
+#### Request Body
+
+```json
+{
+  "minAmount": 5000000,
+  "tokens": ["BTC", "ETH"],
+  "types": ["exchange_inflow", "exchange_outflow"],
+  "chains": ["ethereum", "bitcoin"],
+  "webhookUrl": "https://your-server.com/webhook",
+  "durationHours": 24
+}
+```
+
+#### Response
+
+```json
+{
+  "success": true,
+  "alert": {
+    "id": "alert_1706012400_abc123",
+    "conditions": {
+      "minAmount": 5000000,
+      "tokens": ["BTC", "ETH"],
+      "types": ["exchange_inflow", "exchange_outflow"]
+    },
+    "webhookUrl": "https://your-server.com/webhook",
+    "expiresAt": "2026-01-24T12:00:00Z",
+    "createdAt": "2026-01-23T12:00:00Z"
+  }
+}
+```
+
+---
+
+### Advanced Screener
+
+#### Advanced Crypto Screener
+
+Powerful screening with unlimited filter combinations.
+
+```
+GET /api/premium/screener/advanced
+```
+
+**Price:** $0.02 per request
+
+| Parameter         | Type   | Description                                                                                                                                                                  |
+| ----------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `preset`          | string | Use preset filter: `hot-gainers`, `momentum-leaders`, `oversold-bounce`, `undervalued-gems`, `near-ath`, `large-caps`, `mid-caps`, `small-caps`, `micro-caps`, `high-volume` |
+| `minMarketCap`    | number | Minimum market cap (USD)                                                                                                                                                     |
+| `maxMarketCap`    | number | Maximum market cap (USD)                                                                                                                                                     |
+| `minVolume`       | number | Minimum 24h volume (USD)                                                                                                                                                     |
+| `maxVolume`       | number | Maximum 24h volume (USD)                                                                                                                                                     |
+| `minChange24h`    | number | Minimum 24h price change (%)                                                                                                                                                 |
+| `maxChange24h`    | number | Maximum 24h price change (%)                                                                                                                                                 |
+| `minChange7d`     | number | Minimum 7d price change (%)                                                                                                                                                  |
+| `maxChange7d`     | number | Maximum 7d price change (%)                                                                                                                                                  |
+| `minAthDistance`  | number | Minimum distance from ATH (%)                                                                                                                                                |
+| `maxAthDistance`  | number | Maximum distance from ATH (%)                                                                                                                                                |
+| `minVolumeToMcap` | number | Minimum volume/market cap ratio                                                                                                                                              |
+| `sort`            | string | Sort field                                                                                                                                                                   |
+| `order`           | string | `asc` or `desc`                                                                                                                                                              |
+| `limit`           | number | Results per page (max 500)                                                                                                                                                   |
+| `offset`          | number | Pagination offset                                                                                                                                                            |
+
+#### Example: Find Hot Gainers
+
+```bash
+curl "https://api.example.com/api/premium/screener/advanced?preset=hot-gainers"
+# OR with custom filters:
+curl "https://api.example.com/api/premium/screener/advanced?minChange24h=10&minVolume=10000000"
+```
+
+#### Example: Find Undervalued Gems
+
+```bash
+curl "https://api.example.com/api/premium/screener/advanced?maxAthDistance=-70&minMarketCap=10000000&minVolume=1000000"
+```
+
+#### Response
+
+```json
+{
+  "coins": [
+    {
+      "id": "solana",
+      "symbol": "sol",
+      "name": "Solana",
+      "current_price": 150.25,
+      "market_cap": 65000000000,
+      "market_cap_rank": 5,
+      "total_volume": 3500000000,
+      "price_change_percentage_24h": 12.5,
+      "price_change_percentage_7d": 25.3,
+      "ath": 260,
+      "ath_change_percentage": -42.2,
+      "volume_to_mcap": 0.054,
+      "supply_ratio": 0.85
+    }
+  ],
+  "aggregates": {
+    "totalMatching": 45,
+    "avgChange24h": 8.5,
+    "totalMarketCap": 450000000000,
+    "totalVolume": 25000000000,
+    "topGainer": { "id": "solana", "symbol": "sol", "change": 12.5 },
+    "topLoser": { "id": "cardano", "symbol": "ada", "change": -2.1 }
+  },
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 45,
+    "hasMore": false
+  },
+  "availablePresets": [
+    "hot-gainers",
+    "momentum-leaders",
+    "oversold-bounce",
+    "undervalued-gems",
+    "near-ath",
+    "large-caps",
+    "mid-caps",
+    "small-caps",
+    "micro-caps",
+    "high-volume"
+  ]
+}
+```
+
+---
+
+### Access Passes
+
+For power users, purchase unlimited access for a fixed price.
+
+#### 1 Hour Pass
+
+```
+GET /api/premium/pass/hour
+```
+
+**Price:** $0.25
+
+Returns a token valid for 1 hour of unlimited premium API access.
+
+---
+
+#### 24 Hour Pass
+
+```
+GET /api/premium/pass/day
+```
+
+**Price:** $2.00
+
+Returns a token valid for 24 hours of unlimited premium API access.
+
+---
+
+#### 7 Day Pass
+
+```
+GET /api/premium/pass/week
+```
+
+**Price:** $10.00
+
+Returns a token valid for 7 days of unlimited premium API access.
+
+---
+
+### Premium Error Responses
+
+#### 402 Payment Required
+
+When payment is required:
+
+```json
+{
+  "error": "Payment Required",
+  "code": "PAYMENT_REQUIRED",
+  "message": "AI-powered sentiment analysis of crypto news",
+  "price": {
+    "usd": 0.02,
+    "usdc": "20000"
+  },
+  "features": [
+    "Real-time news sentiment scoring",
+    "Bullish/bearish classification",
+    "Impact assessment"
+  ],
+  "freeAlternative": "/api/sentiment?limit=5",
+  "documentation": "https://docs.x402.org",
+  "x402Version": 2,
+  "accepts": [
+    {
+      "scheme": "exact",
+      "network": "eip155:8453",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "payTo": "0x...",
+      "maxAmountRequired": "20000"
+    }
+  ]
+}
+```
+
+#### 429 Rate Limited
+
+When rate limit is exceeded:
+
+```json
+{
+  "error": "Rate limit exceeded",
+  "message": "You have exceeded the rate limit for this endpoint",
+  "resetAt": "2026-01-23T12:01:00Z",
+  "suggestion": "Consider purchasing an access pass for higher limits"
+}
 ```
 
 ---

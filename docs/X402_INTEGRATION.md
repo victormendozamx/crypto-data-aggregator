@@ -21,9 +21,12 @@ Future implementation guide for adding x402 payment protocol support to Crypto D
 
 ## Overview
 
-x402 is an open payment protocol built on HTTP 402 (Payment Required) that enables micropayments for API access. It's developed by Coinbase and provides a standardized way to monetize APIs with cryptocurrency payments.
+x402 is an open payment protocol built on HTTP 402 (Payment Required) that enables micropayments for
+API access. It's developed by Coinbase and provides a standardized way to monetize APIs with
+cryptocurrency payments.
 
 **Key Benefits:**
+
 - 💵 No fees, 2-second settlement
 - 💰 Micropayments from $0.001
 - 🔓 No API keys required for clients
@@ -34,15 +37,16 @@ x402 is an open payment protocol built on HTTP 402 (Payment Required) that enabl
 
 ## What is x402?
 
-x402 is a payment protocol that uses the HTTP 402 status code ("Payment Required") to enable direct payments for web resources. It provides:
+x402 is a payment protocol that uses the HTTP 402 status code ("Payment Required") to enable direct
+payments for web resources. It provides:
 
 ### Core Components
 
-| Component | Description |
-|-----------|-------------|
-| **Resource Server** | Your API that requires payment for access |
-| **Client** | Application making paid requests |
-| **Facilitator** | Service that verifies and settles payments on-chain |
+| Component           | Description                                         |
+| ------------------- | --------------------------------------------------- |
+| **Resource Server** | Your API that requires payment for access           |
+| **Client**          | Application making paid requests                    |
+| **Facilitator**     | Service that verifies and settles payments on-chain |
 
 ### Payment Flow
 
@@ -76,11 +80,11 @@ x402 is a payment protocol that uses the HTTP 402 status code ("Payment Required
 
 ### Protocol Headers
 
-| Header | Direction | Purpose |
-|--------|-----------|---------|
-| `PAYMENT-REQUIRED` | Server → Client | Contains payment requirements (402 response) |
-| `PAYMENT-SIGNATURE` | Client → Server | Contains signed payment authorization |
-| `PAYMENT-RESPONSE` | Server → Client | Contains settlement confirmation |
+| Header              | Direction       | Purpose                                      |
+| ------------------- | --------------- | -------------------------------------------- |
+| `PAYMENT-REQUIRED`  | Server → Client | Contains payment requirements (402 response) |
+| `PAYMENT-SIGNATURE` | Client → Server | Contains signed payment authorization        |
+| `PAYMENT-RESPONSE`  | Server → Client | Contains settlement confirmation             |
 
 ---
 
@@ -88,13 +92,13 @@ x402 is a payment protocol that uses the HTTP 402 status code ("Payment Required
 
 ### Monetization Opportunities
 
-| Feature | Price Point | Use Case |
-|---------|-------------|----------|
-| **Premium API Access** | $0.001/request | High-frequency trading bots |
-| **Real-time WebSocket** | $0.01/hour | Live price feeds |
-| **Historical Data Export** | $0.10/export | Bulk data downloads |
-| **Advanced Analytics** | $0.05/query | Custom screener queries |
-| **Priority Rate Limits** | $1.00/day | Higher API limits |
+| Feature                    | Price Point    | Use Case                    |
+| -------------------------- | -------------- | --------------------------- |
+| **Premium API Access**     | $0.001/request | High-frequency trading bots |
+| **Real-time WebSocket**    | $0.01/hour     | Live price feeds            |
+| **Historical Data Export** | $0.10/export   | Bulk data downloads         |
+| **Advanced Analytics**     | $0.05/query    | Custom screener queries     |
+| **Priority Rate Limits**   | $1.00/day      | Higher API limits           |
 
 ### Benefits for Our Project
 
@@ -218,28 +222,28 @@ After successful payment:
 ```typescript
 // Premium routes requiring payment
 const premiumRoutes = {
-  "GET /api/premium/coins": {
+  'GET /api/premium/coins': {
     accepts: {
       payTo: process.env.PAYMENT_ADDRESS,
-      scheme: "exact",
-      price: "$0.001",
-      network: "eip155:8453",  // Base mainnet
+      scheme: 'exact',
+      price: '$0.001',
+      network: 'eip155:8453', // Base mainnet
     },
   },
-  "GET /api/premium/export": {
+  'GET /api/premium/export': {
     accepts: {
       payTo: process.env.PAYMENT_ADDRESS,
-      scheme: "exact",
-      price: "$0.10",
-      network: "eip155:8453",
+      scheme: 'exact',
+      price: '$0.10',
+      network: 'eip155:8453',
     },
   },
-  "GET /api/premium/analytics/*": {
+  'GET /api/premium/analytics/*': {
     accepts: {
       payTo: process.env.PAYMENT_ADDRESS,
-      scheme: "exact",
-      price: "$0.05",
-      network: "eip155:8453",
+      scheme: 'exact',
+      price: '$0.05',
+      network: 'eip155:8453',
     },
   },
 };
@@ -255,24 +259,24 @@ const premiumRoutes = {
 
 ```typescript
 // src/app/api/premium/route.ts
-import { paymentMiddleware } from "@x402/express";
-import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
-import { registerExactEvmScheme } from "@x402/evm/exact/server";
+import { paymentMiddleware } from '@x402/express';
+import { x402ResourceServer, HTTPFacilitatorClient } from '@x402/core/server';
+import { registerExactEvmScheme } from '@x402/evm/exact/server';
 
 const facilitatorClient = new HTTPFacilitatorClient({
-  url: "https://x402.org/facilitator",
+  url: 'https://x402.org/facilitator',
 });
 
 const server = new x402ResourceServer(facilitatorClient);
 registerExactEvmScheme(server);
 
 const routes = {
-  "GET /api/premium/coins": {
+  'GET /api/premium/coins': {
     accepts: {
       payTo: process.env.PAYMENT_ADDRESS as `0x${string}`,
-      scheme: "exact",
-      price: "$0.001",
-      network: "eip155:8453",
+      scheme: 'exact',
+      price: '$0.001',
+      network: 'eip155:8453',
     },
   },
 };
@@ -285,12 +289,12 @@ app.use(paymentMiddleware(routes, server));
 
 ```typescript
 // middleware.ts
-import { paymentProxy } from "@x402/next";
-import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
-import { registerExactEvmScheme } from "@x402/evm/exact/server";
+import { paymentProxy } from '@x402/next';
+import { x402ResourceServer, HTTPFacilitatorClient } from '@x402/core/server';
+import { registerExactEvmScheme } from '@x402/evm/exact/server';
 
 const facilitatorClient = new HTTPFacilitatorClient({
-  url: "https://x402.org/facilitator",
+  url: 'https://x402.org/facilitator',
 });
 
 const server = new x402ResourceServer(facilitatorClient);
@@ -298,12 +302,12 @@ registerExactEvmScheme(server);
 
 export const middleware = paymentProxy(
   {
-    "GET /api/premium/:path*": {
+    'GET /api/premium/:path*': {
       accepts: {
         payTo: process.env.PAYMENT_ADDRESS,
-        scheme: "exact",
-        price: "$0.001",
-        network: "eip155:8453",
+        scheme: 'exact',
+        price: '$0.001',
+        network: 'eip155:8453',
       },
     },
   },
@@ -311,7 +315,7 @@ export const middleware = paymentProxy(
 );
 
 export const config = {
-  matcher: "/api/premium/:path*",
+  matcher: '/api/premium/:path*',
 };
 ```
 
@@ -321,11 +325,11 @@ export const config = {
 
 ```typescript
 // Automatic payment handling with axios
-import axios from "axios";
-import { wrapAxiosWithPayment } from "@x402/axios";
-import { x402Client } from "@x402/core/client";
-import { registerExactEvmScheme } from "@x402/evm/exact/client";
-import { privateKeyToAccount } from "viem/accounts";
+import axios from 'axios';
+import { wrapAxiosWithPayment } from '@x402/axios';
+import { x402Client } from '@x402/core/client';
+import { registerExactEvmScheme } from '@x402/evm/exact/client';
+import { privateKeyToAccount } from 'viem/accounts';
 
 const account = privateKeyToAccount(process.env.PRIVATE_KEY);
 
@@ -335,9 +339,7 @@ registerExactEvmScheme(client, { signer: account });
 const axiosClient = wrapAxiosWithPayment(axios.create(), client);
 
 // Payments happen automatically!
-const response = await axiosClient.get(
-  "https://crypto-aggregator.com/api/premium/coins"
-);
+const response = await axiosClient.get('https://crypto-aggregator.com/api/premium/coins');
 ```
 
 ### Phase 3: Premium Endpoints
@@ -347,7 +349,7 @@ const response = await axiosClient.get(
 export async function GET(request: Request) {
   // This only runs after successful payment verification
   const coins = await getDetailedCoinData();
-  
+
   return Response.json({
     coins,
     meta: {
@@ -364,19 +366,19 @@ export async function GET(request: Request) {
 ```typescript
 // Support both EVM (Base) and Solana
 const routes = {
-  "GET /api/premium/coins": {
+  'GET /api/premium/coins': {
     accepts: [
       {
         payTo: process.env.EVM_ADDRESS,
-        scheme: "exact",
-        price: "$0.001",
-        network: "eip155:8453",  // Base
+        scheme: 'exact',
+        price: '$0.001',
+        network: 'eip155:8453', // Base
       },
       {
         payTo: process.env.SOL_ADDRESS,
-        scheme: "exact",
-        price: "$0.001",
-        network: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",  // Solana
+        scheme: 'exact',
+        price: '$0.001',
+        network: 'solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1', // Solana
       },
     ],
   },
@@ -389,34 +391,34 @@ const routes = {
 
 ### TypeScript/JavaScript
 
-| Package | Purpose | Install |
-|---------|---------|---------|
-| `@x402/core` | Core client/server | `npm i @x402/core` |
+| Package         | Purpose            | Install               |
+| --------------- | ------------------ | --------------------- |
+| `@x402/core`    | Core client/server | `npm i @x402/core`    |
 | `@x402/express` | Express middleware | `npm i @x402/express` |
-| `@x402/next` | Next.js middleware | `npm i @x402/next` |
-| `@x402/hono` | Hono middleware | `npm i @x402/hono` |
-| `@x402/axios` | Axios interceptor | `npm i @x402/axios` |
-| `@x402/fetch` | Fetch wrapper | `npm i @x402/fetch` |
-| `@x402/evm` | EVM chain support | `npm i @x402/evm` |
-| `@x402/svm` | Solana support | `npm i @x402/svm` |
+| `@x402/next`    | Next.js middleware | `npm i @x402/next`    |
+| `@x402/hono`    | Hono middleware    | `npm i @x402/hono`    |
+| `@x402/axios`   | Axios interceptor  | `npm i @x402/axios`   |
+| `@x402/fetch`   | Fetch wrapper      | `npm i @x402/fetch`   |
+| `@x402/evm`     | EVM chain support  | `npm i @x402/evm`     |
+| `@x402/svm`     | Solana support     | `npm i @x402/svm`     |
 
 ### Python
 
-| Package | Purpose | Install |
-|---------|---------|---------|
-| `x402` | Core SDK | `pip install x402` |
+| Package | Purpose  | Install            |
+| ------- | -------- | ------------------ |
+| `x402`  | Core SDK | `pip install x402` |
 
 ### Go
 
-| Package | Purpose | Import |
-|---------|---------|--------|
-| `x402` | Core SDK | `github.com/coinbase/x402/go` |
-| `gin` | Gin middleware | `github.com/coinbase/x402/go/http/gin` |
+| Package | Purpose        | Import                                 |
+| ------- | -------------- | -------------------------------------- |
+| `x402`  | Core SDK       | `github.com/coinbase/x402/go`          |
+| `gin`   | Gin middleware | `github.com/coinbase/x402/go/http/gin` |
 
 ### Java
 
-| Package | Purpose |
-|---------|---------|
+| Package     | Purpose                 |
+| ----------- | ----------------------- |
 | `x402-java` | Spring Boot integration |
 
 ---
@@ -519,7 +521,7 @@ Always verify the payment amount matches requirements:
 
 ```typescript
 if (paymentPayload.amount < requirements.maxAmountRequired) {
-  return { isValid: false, invalidReason: "Insufficient payment" };
+  return { isValid: false, invalidReason: 'Insufficient payment' };
 }
 ```
 
@@ -551,12 +553,12 @@ FACILITATOR_PRIVATE_KEY=0x...
 ```typescript
 // Use Base Sepolia for testing
 const testRoutes = {
-  "GET /api/premium/test": {
+  'GET /api/premium/test': {
     accepts: {
       payTo: process.env.TEST_ADDRESS,
-      scheme: "exact",
-      price: "$0.001",
-      network: "eip155:84532",  // Base Sepolia testnet
+      scheme: 'exact',
+      price: '$0.001',
+      network: 'eip155:84532', // Base Sepolia testnet
     },
   },
 };
@@ -602,31 +604,37 @@ curl -i https://localhost:3000/api/premium/coins
 
 ## Implementation Checklist
 
-### Phase 1: Setup
-- [ ] Install x402 packages (`@x402/core`, `@x402/next`, `@x402/evm`)
-- [ ] Configure facilitator client
-- [ ] Set up payment receiving address
-- [ ] Create environment variables
+### Phase 1: Setup ✅ COMPLETE
 
-### Phase 2: Middleware
-- [ ] Add x402 middleware to Next.js
-- [ ] Configure protected routes
-- [ ] Set pricing for each endpoint
+- [x] Install x402 packages (`@x402/core`, `@x402/next`, `@x402/evm`)
+- [x] Configure facilitator client
+- [x] Set up payment receiving address
+- [x] Create environment variables
+
+### Phase 2: Middleware ✅ COMPLETE
+
+- [x] Add x402 middleware to Next.js (`src/lib/x402-middleware.ts`)
+- [x] Configure protected routes (`src/lib/x402-config.ts`)
+- [x] Set pricing for each endpoint (25+ endpoints configured)
 - [ ] Test with testnet
 
-### Phase 3: Premium Endpoints
-- [ ] Create `/api/premium/` routes
-- [ ] Implement premium coin data endpoint
-- [ ] Implement export endpoint
-- [ ] Implement analytics endpoint
+### Phase 3: Premium Endpoints ✅ COMPLETE
 
-### Phase 4: Documentation
-- [ ] Update API documentation
-- [ ] Add client integration examples
-- [ ] Document pricing
-- [ ] Create billing FAQ
+- [x] Create `/api/premium/` routes
+- [x] Implement AI analysis endpoints (sentiment, signals, summary, compare)
+- [x] Implement whale tracking endpoints (transactions, alerts, smart-money)
+- [x] Implement advanced screener endpoint
+- [x] Implement access pass endpoints (hour, day, week)
+
+### Phase 4: Documentation ✅ COMPLETE
+
+- [x] Update API documentation (`docs/API.md`)
+- [x] Add client integration examples
+- [x] Document pricing (`/api/premium` endpoint)
+- [x] Create premium pricing page (`/pricing/premium`)
 
 ### Phase 5: Launch
+
 - [ ] Switch to mainnet
 - [ ] Monitor payments
 - [ ] Track revenue analytics
@@ -634,25 +642,245 @@ curl -i https://localhost:3000/api/premium/coins
 
 ---
 
-## Pricing Strategy
+## Files Created
 
-### Suggested Pricing
-
-| Tier | Price | Rate Limit | Features |
-|------|-------|------------|----------|
-| **Free** | $0 | 50 req/min | Basic market data |
-| **Pay-per-use** | $0.001/req | Unlimited | Premium endpoints |
-| **Daily Pass** | $1.00/day | Unlimited | All premium features |
-| **Export** | $0.10/export | N/A | CSV/JSON downloads |
-
-### Competitive Analysis
-
-| Provider | Price | x402 Advantage |
-|----------|-------|----------------|
-| CoinGecko Pro | $129/month | Pay only for what you use |
-| CoinMarketCap | $99/month | No subscription needed |
-| Messari | $249/month | Micropayments possible |
+| File                                       | Purpose                                                          |
+| ------------------------------------------ | ---------------------------------------------------------------- |
+| `src/lib/x402-config.ts`                   | Centralized pricing & configuration for 25+ premium endpoints    |
+| `src/lib/x402-middleware.ts`               | Next.js middleware for x402 payment verification                 |
+| `src/lib/premium-ai.ts`                    | AI-powered analysis (sentiment, signals, summaries, comparisons) |
+| `src/lib/premium-whales.ts`                | Whale tracking & smart money analysis                            |
+| `src/lib/premium-screener.ts`              | Advanced screener with unlimited filters                         |
+| `src/app/api/premium/route.ts`             | Premium API documentation endpoint                               |
+| `src/app/api/premium/ai/*/route.ts`        | AI analysis endpoints                                            |
+| `src/app/api/premium/whales/*/route.ts`    | Whale tracking endpoints                                         |
+| `src/app/api/premium/screener/*/route.ts`  | Screener endpoints                                               |
+| `src/app/api/premium/smart-money/route.ts` | Smart money endpoint                                             |
+| `src/app/pricing/premium/page.tsx`         | Premium pricing UI page                                          |
 
 ---
 
-*This document will be updated as x402 implementation progresses.*
+## Pricing Strategy
+
+### Implemented Pricing
+
+| Category     | Endpoint                           | Price  | Description             |
+| ------------ | ---------------------------------- | ------ | ----------------------- |
+| **AI**       | `/api/premium/ai/sentiment`        | $0.02  | News sentiment analysis |
+| **AI**       | `/api/premium/ai/signals`          | $0.05  | Trading signals         |
+| **AI**       | `/api/premium/ai/summary`          | $0.01  | Market summary          |
+| **AI**       | `/api/premium/ai/compare`          | $0.03  | Coin comparison         |
+| **Whales**   | `/api/premium/whales/transactions` | $0.05  | Whale transactions      |
+| **Whales**   | `/api/premium/whales/alerts`       | $0.05  | Webhook alerts          |
+| **Whales**   | `/api/premium/wallets/analyze`     | $0.10  | Wallet analysis         |
+| **Whales**   | `/api/premium/smart-money`         | $0.05  | Smart money flow        |
+| **Screener** | `/api/premium/screener/advanced`   | $0.02  | Advanced screener       |
+| **Data**     | `/api/premium/history/full`        | $0.05  | 5+ years history        |
+| **Data**     | `/api/premium/correlations`        | $0.03  | Correlation matrix      |
+| **Data**     | `/api/premium/export/full`         | $0.15  | Full database export    |
+| **Pass**     | `/api/premium/pass/hour`           | $0.25  | 1 hour unlimited        |
+| **Pass**     | `/api/premium/pass/day`            | $2.00  | 24 hour unlimited       |
+| **Pass**     | `/api/premium/pass/week`           | $10.00 | 7 day unlimited         |
+
+### Competitive Analysis
+
+| Provider      | Price      | x402 Advantage            |
+| ------------- | ---------- | ------------------------- |
+| CoinGecko Pro | $129/month | Pay only for what you use |
+| CoinMarketCap | $99/month  | No subscription needed    |
+| Messari       | $249/month | Micropayments possible    |
+
+---
+
+## Competitive Analysis: x402 Ecosystem
+
+### Top x402 Projects
+
+| Project                              | Stars  | Description                 | What They Do Well                            |
+| ------------------------------------ | ------ | --------------------------- | -------------------------------------------- |
+| **coinbase/x402**                    | 5,300+ | Reference implementation    | Full SDK suite, multi-lang, production-ready |
+| **google-agentic-commerce/a2a-x402** | 200+   | Agent-to-Agent extension    | AI agent monetization                        |
+| **daydreamsai/lucid-agents**         | 150+   | Protocol-agnostic agent SDK | Multi-protocol support                       |
+| **daydreamsai/facilitator**          | 100+   | Multi-chain facilitator     | EVM, Solana, Starknet                        |
+| **nuwa-protocol/x402-exec**          | 50+    | Programmable settlement     | Custom settlement hooks                      |
+
+### How We Can Do Better
+
+#### 1. **Freemium Model (Most x402 Projects Are Paywall-Only)**
+
+Most x402 examples require payment for ALL access. We offer:
+
+```typescript
+// Free tier with generous limits
+"/api/market/coins": { /* No payment required */ },
+
+// Premium tier for advanced features
+"/api/premium/market/coins": {
+  accepts: { price: "$0.001", ... },
+  // Full metadata, no rate limits
+}
+```
+
+**Advantage**: Lower barrier to entry, viral growth potential, gradual upgrade path.
+
+#### 2. **AI Agent Marketplace (Beyond Simple Paywalls)**
+
+Create a discoverable marketplace for AI agents:
+
+```typescript
+import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
+
+export const GET = withX402(handler, {
+  accepts: { ... },
+  extensions: {
+    ...declareDiscoveryExtension({
+      category: "crypto-market-data",
+      tags: ["bitcoin", "ethereum", "defi", "real-time"],
+      popularity: 4.5,
+      inputSchema: { coinId: "string", days: "number" },
+      outputSchema: {
+        example: { price: 50000, change24h: 2.5, volume: 1000000 },
+      },
+    }),
+  },
+}, server);
+```
+
+**Advantage**: AI agents can discover and use our API automatically via Bazaar extension.
+
+#### 3. **Multi-Chain Choice (Not Just Base)**
+
+Support user preference for payment chain:
+
+```typescript
+accepts: [
+  // Let users choose their preferred chain
+  { scheme: "exact", price: "$0.001", network: "eip155:8453", payTo: evmAddr },   // Base
+  { scheme: "exact", price: "$0.001", network: "eip155:1", payTo: evmAddr },      // Ethereum
+  { scheme: "exact", price: "$0.001", network: "eip155:137", payTo: evmAddr },    // Polygon
+  { scheme: "exact", price: "$0.001", network: "solana:mainnet", payTo: solAddr }, // Solana
+],
+```
+
+**Advantage**: Users pay with their preferred chain, reducing friction.
+
+#### 4. **Usage-Based Bundles (Not Just Per-Request)**
+
+Offer time-based access for heavy users:
+
+```typescript
+"/api/premium/pass/hour": {
+  accepts: { price: "$0.10" },
+  description: "1 hour unlimited premium access",
+  // Returns JWT valid for 1 hour
+},
+"/api/premium/pass/day": {
+  accepts: { price: "$1.00" },
+  description: "24 hour unlimited premium access",
+},
+```
+
+**Advantage**: Power users get predictable costs; we get committed revenue.
+
+#### 5. **Rich Error Responses (Most Projects Return Basic 402)**
+
+Provide helpful 402 responses:
+
+```typescript
+// Enhanced 402 response
+{
+  "x402Version": 2,
+  "error": "payment_required",
+  "message": "This endpoint requires payment to access premium features",
+  "freeAlternative": "/api/market/coins?limit=100",
+  "pricing": {
+    "perRequest": "$0.001",
+    "hourlyPass": "$0.10",
+    "dailyPass": "$1.00",
+  },
+  "documentation": "https://docs.example.com/premium",
+  "accepts": [...]
+}
+```
+
+**Advantage**: Better developer experience, clear upgrade path, SEO for docs.
+
+#### 6. **Pre-Built Paywall UI (Customized for Crypto)**
+
+Custom paywall with crypto branding:
+
+```typescript
+const paywallConfig = {
+  appName: 'Crypto Data Aggregator',
+  appLogo: '/logo.svg',
+  theme: 'dark',
+  accentColor: '#3b82f6',
+  supportedWallets: ['coinbase', 'metamask', 'phantom', 'rainbow'],
+  showPriceInUSD: true,
+  showPriceInCrypto: true, // Show USDC amount
+  customCopy: {
+    title: 'Unlock Premium Data',
+    description: 'Access detailed market analytics, historical data, and AI insights',
+    cta: 'Pay with Crypto',
+  },
+};
+```
+
+**Advantage**: Branded, trustworthy UI increases conversion.
+
+#### 7. **Transparent Analytics Dashboard**
+
+Provide users visibility into their spending:
+
+```typescript
+// GET /api/account/usage (free, requires wallet signature)
+{
+  "wallet": "0x...",
+  "totalSpent": "$4.52",
+  "thisMonth": "$1.20",
+  "requests": 1200,
+  "endpoints": {
+    "/api/premium/market/history": { calls: 500, spent: "$2.50" },
+    "/api/premium/ai/analyze": { calls: 10, spent: "$0.50" },
+  },
+  "savedVsSubscription": "$124.48" // vs $129/month CoinGecko Pro
+}
+```
+
+**Advantage**: Transparency builds trust, shows value vs subscriptions.
+
+#### 8. **Webhook Support for AI Agents**
+
+Enable async workflows:
+
+```typescript
+// POST /api/premium/alerts/subscribe
+{
+  accepts: { price: "$0.05" },
+  description: "Subscribe to price alert webhook (24h)",
+  inputSchema: {
+    coinId: "string",
+    condition: "above|below",
+    threshold: "number",
+    webhookUrl: "string",
+  },
+}
+```
+
+**Advantage**: AI agents can subscribe to events, not just poll.
+
+### Implementation Priority
+
+| Feature                    | Impact | Effort | Priority |
+| -------------------------- | ------ | ------ | -------- |
+| Freemium model             | High   | Low    | 🔴 P0    |
+| Multi-chain support        | High   | Medium | 🟠 P1    |
+| Bazaar discovery extension | Medium | Low    | 🟠 P1    |
+| Usage bundles/passes       | Medium | Medium | 🟡 P2    |
+| Analytics dashboard        | Medium | High   | 🟡 P2    |
+| Custom paywall UI          | Low    | Medium | 🟢 P3    |
+| Webhook support            | Medium | High   | 🟢 P3    |
+
+---
+
+_This document will be updated as x402 implementation progresses._
