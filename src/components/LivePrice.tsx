@@ -123,7 +123,7 @@ export function LivePriceCard({
   const displayChange = isConnected && priceChange !== 0 ? priceChange : initialChange24h;
 
   return (
-    <div className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-700">
       <div className="flex items-center gap-3">
         {image && <img src={image} alt={name} className="w-8 h-8 rounded-full" />}
         <div>

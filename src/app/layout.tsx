@@ -15,16 +15,13 @@ import { ToastProvider } from '@/components/Toast';
 import { CurrencyProvider } from '@/components/CurrencySelector';
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7931a' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
-  ],
+  themeColor: '#000000',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  colorScheme: 'dark light',
+  colorScheme: 'dark',
 };
 
 export const metadata: Metadata = {
@@ -194,7 +191,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           media="(prefers-color-scheme: light)"
         />
       </head>
-      <body className="bg-white dark:bg-black antialiased min-h-screen text-black dark:text-white transition-colors duration-200">
+      <body className="bg-black antialiased min-h-screen text-white">
         {/* Skip Link for Accessibility */}
         <a href="#main-content" className="skip-link">
           Skip to main content

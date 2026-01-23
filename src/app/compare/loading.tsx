@@ -16,12 +16,12 @@ export default function CompareLoading() {
         {/* Title skeleton */}
         <div className="text-center mb-8">
           <div className="h-10 w-64 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mx-auto mb-2" />
-          <div className="h-5 w-80 bg-neutral-100 dark:bg-neutral-900 rounded animate-pulse mx-auto" />
+          <div className="h-5 w-80 bg-neutral-100 dark:bg-black rounded animate-pulse mx-auto" />
         </div>
 
         {/* Search bar skeleton */}
         <div className="mb-8">
-          <div className="h-12 w-full max-w-xl mx-auto bg-neutral-100 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 animate-pulse" />
+          <div className="h-12 w-full max-w-xl mx-auto bg-neutral-100 dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 animate-pulse" />
         </div>
 
         {/* Selected coins skeleton */}
@@ -29,7 +29,7 @@ export default function CompareLoading() {
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 rounded-full"
+              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-black rounded-full"
             >
               <div className="w-6 h-6 bg-neutral-200 dark:bg-neutral-800 rounded-full animate-pulse" />
               <div className="h-4 w-16 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
@@ -38,7 +38,7 @@ export default function CompareLoading() {
         </div>
 
         {/* Comparison table skeleton */}
-        <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+        <div className="bg-neutral-50 dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
           {/* Table header */}
           <div className="grid grid-cols-4 gap-4 p-4 border-b border-neutral-200 dark:border-neutral-800">
             <div className="h-5 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />

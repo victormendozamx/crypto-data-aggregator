@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { Fish, BarChart3, Brain, Check } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Premium API Pricing | Crypto Data Aggregator',
@@ -187,16 +188,16 @@ export default function PremiumPricingPage() {
                   className={`space-y-3 mb-8 ${pass.popular ? 'text-blue-100' : 'text-gray-600 dark:text-gray-400'}`}
                 >
                   <li className="flex items-center gap-2">
-                    <span className="text-green-400">✓</span> All premium endpoints
+                    <Check className="w-4 h-4 text-green-400" /> All premium endpoints
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="text-green-400">✓</span> No per-request fees
+                    <Check className="w-4 h-4 text-green-400" /> No per-request fees
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="text-green-400">✓</span> {pass.savings}
+                    <Check className="w-4 h-4 text-green-400" /> {pass.savings}
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="text-green-400">✓</span> Higher rate limits
+                    <Check className="w-4 h-4 text-green-400" /> Higher rate limits
                   </li>
                 </ul>
               </div>
@@ -209,7 +210,7 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4 bg-white dark:bg-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-4xl">🧠</span>
+            <Brain className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
             <h2 className="text-3xl font-bold dark:text-white">AI Analysis</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -224,7 +225,7 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-4xl">🐋</span>
+            <Fish className="w-10 h-10 text-blue-600 dark:text-blue-400" />
             <h2 className="text-3xl font-bold dark:text-white">Whale Tracking</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -239,7 +240,7 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4 bg-white dark:bg-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-4xl">📊</span>
+            <BarChart3 className="w-10 h-10 text-purple-600 dark:text-purple-400" />
             <h2 className="text-3xl font-bold dark:text-white">Data & Analytics</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -267,7 +268,9 @@ export default function PremiumPricingPage() {
                 <tr>
                   <td className="px-6 py-4 font-semibold text-blue-600">Crypto Data Aggregator</td>
                   <td className="px-6 py-4 dark:text-white">From $0.01</td>
-                  <td className="px-6 py-4 text-green-600 font-medium">Pay per use ✓</td>
+                  <td className="px-6 py-4 text-green-600 font-medium flex items-center gap-1">
+                    Pay per use <Check className="w-4 h-4" />
+                  </td>
                 </tr>
                 <tr className="text-gray-600 dark:text-gray-400">
                   <td className="px-6 py-4">CoinGecko Pro</td>

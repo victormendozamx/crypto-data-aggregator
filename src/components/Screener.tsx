@@ -259,7 +259,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
           <FunnelIcon className="w-5 h-5" />
           Filters
           {activeFilterCount > 0 && (
-            <span className="ml-1 px-2 py-0.5 text-xs rounded-full bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">
+            <span className="ml-1 px-2 py-0.5 text-xs rounded-full bg-white dark:bg-black text-neutral-900 dark:text-white">
               {activeFilterCount}
             </span>
           )}
@@ -452,7 +452,7 @@ export function Screener({ coins }: { coins: Coin[] }) {
               <SortHeader field="ath_change_percentage">From ATH</SortHeader>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-700">
+          <tbody className="bg-white dark:bg-black divide-y divide-neutral-200 dark:divide-neutral-700">
             {filteredCoins.map((coin) => (
               <tr key={coin.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
                 <td className="px-4 py-3">

@@ -292,19 +292,19 @@ export function CryptoCalculator({ coins = [] }: CalculatorProps) {
 
         {/* Results */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg text-center">
+          <div className="p-4 bg-neutral-50 dark:bg-black rounded-lg text-center">
             <div className="text-sm text-neutral-500 dark:text-neutral-400">Coins Bought</div>
             <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
               {coinsBought.toFixed(6)}
             </div>
           </div>
-          <div className="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg text-center">
+          <div className="p-4 bg-neutral-50 dark:bg-black rounded-lg text-center">
             <div className="text-sm text-neutral-500 dark:text-neutral-400">Final Value</div>
             <div className="text-xl font-bold text-neutral-900 dark:text-white font-mono">
               ${finalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
             </div>
           </div>
-          <div className="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg text-center">
+          <div className="p-4 bg-neutral-50 dark:bg-black rounded-lg text-center">
             <div className="text-sm text-neutral-500 dark:text-neutral-400">Profit/Loss</div>
             <div
               className={`text-xl font-bold font-mono ${profit >= 0 ? 'text-neutral-900 dark:text-white' : 'text-neutral-500'}`}
@@ -313,7 +313,7 @@ export function CryptoCalculator({ coins = [] }: CalculatorProps) {
               {profit.toLocaleString(undefined, { maximumFractionDigits: 2 })}
             </div>
           </div>
-          <div className="p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg text-center">
+          <div className="p-4 bg-neutral-50 dark:bg-black rounded-lg text-center">
             <div className="text-sm text-neutral-500 dark:text-neutral-400">Return %</div>
             <div
               className={`text-xl font-bold font-mono ${percent >= 0 ? 'text-neutral-900 dark:text-white' : 'text-neutral-500'}`}

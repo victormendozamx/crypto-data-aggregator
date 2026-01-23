@@ -26,10 +26,12 @@ import type { SortField, SortOrder } from './markets/components/SortableHeader';
 
 export const metadata: Metadata = {
   title: 'Crypto Data Aggregator - Live Market Data & Analytics',
-  description: 'Real-time cryptocurrency prices, market data, DeFi analytics, portfolio tracking, and more. Your complete crypto data dashboard.',
+  description:
+    'Real-time cryptocurrency prices, market data, DeFi analytics, portfolio tracking, and more. Your complete crypto data dashboard.',
   openGraph: {
     title: 'Crypto Data Aggregator - Live Market Data & Analytics',
-    description: 'Real-time cryptocurrency prices, market data, DeFi analytics, and portfolio tracking.',
+    description:
+      'Real-time cryptocurrency prices, market data, DeFi analytics, and portfolio tracking.',
   },
 };
 
@@ -77,9 +79,7 @@ function filterCoins(
   if (params.search) {
     const query = params.search.toLowerCase();
     filtered = filtered.filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(query) ||
-        coin.symbol.toLowerCase().includes(query)
+      (coin) => coin.name.toLowerCase().includes(query) || coin.symbol.toLowerCase().includes(query)
     );
   }
 
@@ -140,11 +140,7 @@ function filterCoins(
 }
 
 // Sort coins based on URL params
-function sortCoins(
-  coins: TokenPrice[],
-  sortField: SortField,
-  order: SortOrder
-): TokenPrice[] {
+function sortCoins(coins: TokenPrice[], sortField: SortField, order: SortOrder): TokenPrice[] {
   const sorted = [...coins];
 
   sorted.sort((a, b) => {
@@ -196,13 +192,11 @@ function sortCoins(
 
 export default async function MarketsPage({ searchParams }: MarketsPageProps) {
   const params = await searchParams;
-  
+
   // Parse URL params
   const currentPage = Math.max(1, parseInt(params.page || '1', 10));
   const sortField = (
-    VALID_SORT_FIELDS.includes(params.sort as SortField) 
-      ? params.sort 
-      : 'market_cap_rank'
+    VALID_SORT_FIELDS.includes(params.sort as SortField) ? params.sort : 'market_cap_rank'
   ) as SortField;
   const sortOrder = (params.order === 'asc' ? 'asc' : 'desc') as SortOrder;
   const perPage = [20, 50, 100].includes(parseInt(params.perPage || '50', 10))
@@ -250,7 +244,8 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
               Cryptocurrency Markets
             </h1>
             <p className="text-neutral-600 dark:text-neutral-400">
-              Live prices, charts, and market data for {totalCount.toLocaleString()} cryptocurrencies
+              Live prices, charts, and market data for {totalCount.toLocaleString()}{' '}
+              cryptocurrencies
             </p>
           </div>
 
@@ -310,7 +305,7 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
 function TrendingSectionSkeleton() {
   return (
     <div className="grid md:grid-cols-2 gap-4 mb-6">
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+      <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
         <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-3 animate-pulse" />
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -321,14 +316,11 @@ function TrendingSectionSkeleton() {
           ))}
         </div>
       </div>
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+      <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
         <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-3 animate-pulse" />
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="h-8 bg-gray-100 dark:bg-gray-700 rounded animate-pulse"
-            />
+            <div key={i} className="h-8 bg-gray-100 dark:bg-gray-700 rounded animate-pulse" />
           ))}
         </div>
       </div>
@@ -362,7 +354,7 @@ function SearchFiltersSkeleton() {
 
 function TableSkeleton() {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="h-6 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
       </div>

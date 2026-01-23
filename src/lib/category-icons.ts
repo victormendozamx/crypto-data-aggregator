@@ -1,9 +1,9 @@
 /**
  * @fileoverview Category Icons Configuration
- * 
+ *
  * Maps category slugs to their corresponding Lucide icons
  * for consistent icon usage across the application.
- * 
+ *
  * @module lib/category-icons
  */
 
@@ -34,7 +34,7 @@ export const CATEGORY_ICONS: Record<string, LucideIcon> = {
   // Cryptocurrencies
   bitcoin: TrendingUp,
   ethereum: TrendingUp,
-  
+
   // Categories
   defi: Landmark,
   nft: Image,

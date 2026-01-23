@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { formatNumber } from '@/lib/market-data';
 import type { Metadata } from 'next';
+import { Building2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Cryptocurrency Exchanges - Crypto Data Aggregator',
@@ -84,8 +85,9 @@ export default async function ExchangesPage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              🏛️ Cryptocurrency Exchanges
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+              <Building2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              Cryptocurrency Exchanges
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               Top {exchanges.length} exchanges ranked by 24-hour trading volume

@@ -31,7 +31,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
   return (
     <aside className="space-y-8 lg:sticky lg:top-4">
       {/* Trending Stories */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
+      <div className="bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
         <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-700/50">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2">
@@ -43,17 +43,12 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
         </div>
         <div className="divide-y divide-gray-50 dark:divide-slate-700">
           {topTrending.map((article, index) => (
-            <NewsCard
-              key={article.link}
-              article={article}
-              variant="compact"
-              priority={index + 1}
-            />
+            <NewsCard key={article.link} article={article} variant="compact" priority={index + 1} />
           ))}
         </div>
         <div className="px-5 py-3 border-t border-gray-100 dark:border-slate-700">
-          <Link 
-            href="/trending" 
+          <Link
+            href="/trending"
             className="text-sm font-semibold text-brand-600 dark:text-amber-400 hover:text-brand-700 dark:hover:text-amber-300 transition-colors flex items-center justify-center gap-1"
           >
             View All Trending
@@ -68,7 +63,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
       <MarketStats />
 
       {/* Categories */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
+      <div className="bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
         <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-700/50">
           <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <Folder className="w-4 h-4" />
@@ -80,19 +75,19 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
             {featuredCategories.map((cat) => {
               const CategoryIcon = getCategoryIcon(cat.slug);
               return (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors ${cat.color}`}
-              >
-                <CategoryIcon className="w-4 h-4" />
-                {cat.name}
-              </Link>
+                <Link
+                  key={cat.slug}
+                  href={`/category/${cat.slug}`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors ${cat.color}`}
+                >
+                  <CategoryIcon className="w-4 h-4" />
+                  {cat.name}
+                </Link>
               );
             })}
           </div>
-          <Link 
-            href="/topics" 
+          <Link
+            href="/topics"
             className="mt-3 text-sm font-semibold text-brand-600 dark:text-amber-400 hover:text-brand-700 dark:hover:text-amber-300 transition-colors flex items-center justify-center gap-1"
           >
             All Topics →
@@ -104,7 +99,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
       <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-6 text-white shadow-xl overflow-hidden relative">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-brand-500/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-purple-500/20 rounded-full blur-2xl" />
-        
+
         <div className="relative">
           <div className="flex items-center gap-2 mb-3">
             <Rocket className="w-6 h-6" />
@@ -114,17 +109,22 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
             No API keys required. No rate limits. Build your own crypto news app.
           </p>
           <div className="flex flex-col gap-2">
-            <Link 
-              href="/about" 
+            <Link
+              href="/about"
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-100 transition-colors"
             >
               Learn More
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </Link>
-            <Link 
-              href="/examples" 
+            <Link
+              href="/examples"
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 text-white rounded-lg text-sm font-semibold hover:bg-white/20 transition-colors"
             >
               <Code className="w-4 h-4" />

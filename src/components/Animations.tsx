@@ -1,10 +1,10 @@
 /**
  * @fileoverview Animated Components with Framer Motion
- * 
+ *
  * Micro-animations for polished UI interactions.
- * 
+ *
  * @module components/Animations
- * 
+ *
  * @features
  * - Fade in/out transitions
  * - Slide animations
@@ -27,10 +27,7 @@ interface AnimatedProps {
  */
 export function FadeIn({ children, className = '', delay = 0 }: AnimatedProps) {
   return (
-    <div
-      className={`animate-fadeIn ${className}`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div className={`animate-fadeIn ${className}`} style={{ animationDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -41,10 +38,7 @@ export function FadeIn({ children, className = '', delay = 0 }: AnimatedProps) {
  */
 export function SlideUp({ children, className = '', delay = 0 }: AnimatedProps) {
   return (
-    <div
-      className={`animate-slideUp ${className}`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div className={`animate-slideUp ${className}`} style={{ animationDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -55,10 +49,7 @@ export function SlideUp({ children, className = '', delay = 0 }: AnimatedProps) 
  */
 export function ScaleIn({ children, className = '', delay = 0 }: AnimatedProps) {
   return (
-    <div
-      className={`animate-scaleIn ${className}`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div className={`animate-scaleIn ${className}`} style={{ animationDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -94,7 +85,7 @@ export function Stagger({ children, className = '', staggerDelay = 50 }: Stagger
  */
 export function Shimmer({ className = '' }: { className?: string }) {
   return (
-    <div className={`relative overflow-hidden bg-gray-200 dark:bg-gray-700 ${className}`}>
+    <div className={`relative overflow-hidden bg-gray-200 dark:bg-black ${className}`}>
       <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
     </div>
   );
@@ -116,11 +107,7 @@ export function Pulse({ className = '' }: { className?: string }) {
  * Bounce animation for attention
  */
 export function Bounce({ children, className = '' }: AnimatedProps) {
-  return (
-    <div className={`animate-bounce ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`animate-bounce ${className}`}>{children}</div>;
 }
 
 /**
@@ -134,14 +121,7 @@ export function Spin({ className = 'w-5 h-5' }: { className?: string }) {
       fill="none"
       viewBox="0 0 24 24"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
@@ -161,11 +141,7 @@ interface CounterProps {
 }
 
 export function Counter({ value, className = '' }: CounterProps) {
-  return (
-    <span className={`tabular-nums ${className}`}>
-      {value.toLocaleString()}
-    </span>
-  );
+  return <span className={`tabular-nums ${className}`}>{value.toLocaleString()}</span>;
 }
 
 /**
@@ -179,7 +155,9 @@ interface TypewriterProps {
 
 export function Typewriter({ text, className = '' }: TypewriterProps) {
   return (
-    <span className={`inline-block overflow-hidden whitespace-nowrap border-r-2 border-current animate-typewriter ${className}`}>
+    <span
+      className={`inline-block overflow-hidden whitespace-nowrap border-r-2 border-current animate-typewriter ${className}`}
+    >
       {text}
     </span>
   );
@@ -190,7 +168,9 @@ export function Typewriter({ text, className = '' }: TypewriterProps) {
  */
 export function HoverLift({ children, className = '' }: AnimatedProps) {
   return (
-    <div className={`transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg ${className}`}>
+    <div
+      className={`transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg ${className}`}
+    >
       {children}
     </div>
   );
@@ -201,7 +181,9 @@ export function HoverLift({ children, className = '' }: AnimatedProps) {
  */
 export function HoverGlow({ children, className = '' }: AnimatedProps) {
   return (
-    <div className={`transition-shadow duration-200 hover:shadow-xl hover:shadow-brand-500/20 ${className}`}>
+    <div
+      className={`transition-shadow duration-200 hover:shadow-xl hover:shadow-brand-500/20 ${className}`}
+    >
       {children}
     </div>
   );
@@ -280,7 +262,12 @@ interface MotionAnimatedProps {
   duration?: number;
 }
 
-export function MotionFadeIn({ children, className, delay = 0, duration = 0.4 }: MotionAnimatedProps) {
+export function MotionFadeIn({
+  children,
+  className,
+  delay = 0,
+  duration = 0.4,
+}: MotionAnimatedProps) {
   return (
     <motion.div
       initial="initial"
@@ -295,7 +282,12 @@ export function MotionFadeIn({ children, className, delay = 0, duration = 0.4 }:
   );
 }
 
-export function MotionFadeInUp({ children, className, delay = 0, duration = 0.4 }: MotionAnimatedProps) {
+export function MotionFadeInUp({
+  children,
+  className,
+  delay = 0,
+  duration = 0.4,
+}: MotionAnimatedProps) {
   return (
     <motion.div
       initial="initial"
@@ -310,7 +302,12 @@ export function MotionFadeInUp({ children, className, delay = 0, duration = 0.4 
   );
 }
 
-export function MotionFadeInDown({ children, className, delay = 0, duration = 0.4 }: MotionAnimatedProps) {
+export function MotionFadeInDown({
+  children,
+  className,
+  delay = 0,
+  duration = 0.4,
+}: MotionAnimatedProps) {
   return (
     <motion.div
       initial="initial"
@@ -325,7 +322,12 @@ export function MotionFadeInDown({ children, className, delay = 0, duration = 0.
   );
 }
 
-export function MotionScaleIn({ children, className, delay = 0, duration = 0.3 }: MotionAnimatedProps) {
+export function MotionScaleIn({
+  children,
+  className,
+  delay = 0,
+  duration = 0.3,
+}: MotionAnimatedProps) {
   return (
     <motion.div
       initial="initial"
@@ -346,7 +348,11 @@ interface MotionStaggerProps {
   staggerDelay?: number;
 }
 
-export function MotionStaggerContainer({ children, className, staggerDelay = 0.1 }: MotionStaggerProps) {
+export function MotionStaggerContainer({
+  children,
+  className,
+  staggerDelay = 0.1,
+}: MotionStaggerProps) {
   return (
     <motion.div
       initial="initial"
@@ -366,7 +372,13 @@ export function MotionStaggerContainer({ children, className, staggerDelay = 0.1
   );
 }
 
-export function MotionStaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+export function MotionStaggerItem({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <motion.div variants={staggerItemVariant} className={className}>
       {children}
@@ -505,16 +517,8 @@ export function AnimatedCounter({
   suffix = '',
 }: AnimatedCounterProps) {
   return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={className}
-    >
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        key={value}
-      >
+    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={className}>
+      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} key={value}>
         {prefix}
         <motion.span
           initial={{ opacity: 0, y: 10 }}

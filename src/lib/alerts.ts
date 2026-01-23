@@ -321,7 +321,7 @@ export async function checkPriceAlerts(): Promise<AlertNotification[]> {
         const notification: AlertNotification = {
           type: 'price',
           alertId: alert.id,
-          title: `💰 Price Alert: ${coin.name}`,
+          title: `Price Alert: ${coin.name}`,
           message,
           data: {
             coin: coin.name,
@@ -398,7 +398,7 @@ export async function checkKeywordAlerts(): Promise<AlertNotification[]> {
             const notification: AlertNotification = {
               type: 'keyword',
               alertId: alert.id,
-              title: `🔔 Keyword Alert: ${matchedKeywords.join(', ')}`,
+              title: `Keyword Alert: ${matchedKeywords.join(', ')}`,
               message: article.title,
               data: {
                 keywords: matchedKeywords,
@@ -623,9 +623,7 @@ export function updateLastTriggered(ruleId: string): void {
 /**
  * Evaluate a single alert condition
  */
-export async function evaluateCondition(
-  condition: AlertCondition
-): Promise<{
+export async function evaluateCondition(condition: AlertCondition): Promise<{
   triggered: boolean;
   currentValue: number | string;
   context?: Record<string, unknown>;

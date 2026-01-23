@@ -396,7 +396,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   </svg>
                 </button>
               )}
-              <kbd className="hidden md:inline-flex items-center px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-slate-800 rounded border border-gray-200 dark:border-slate-700">
+              <kbd className="hidden md:inline-flex items-center px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-black rounded border border-gray-200 dark:border-slate-700">
                 ESC
               </kbd>
             </div>
@@ -405,7 +405,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
         {/* Tabs */}
         {showResults && (
-          <div className="flex items-center gap-1 px-4 py-2 border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/50">
+          <div className="flex items-center gap-1 px-4 py-2 border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-black/50">
             {(['all', 'articles', 'actions'] as const).map((tab) => (
               <button
                 key={tab}
@@ -525,7 +525,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     Press Enter to see all results
                   </div>
                 </div>
-                <kbd className="px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-slate-800 rounded">
+                <kbd className="px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-black rounded">
                   ↵
                 </kbd>
               </button>
@@ -567,7 +567,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <button
                         key={search.query}
                         onClick={() => handleQuickSearch(search.query)}
-                        className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
                       >
                         {search.query}
                         <span
@@ -647,7 +647,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         onClick={onClose}
                         className="flex items-center gap-3 p-3 text-left rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all group border border-transparent hover:border-gray-200 dark:hover:border-slate-700"
                       >
-                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 dark:bg-black flex items-center justify-center group-hover:scale-110 transition-transform">
                           <ActionIcon className="w-5 h-5" />
                         </div>
                         <div>

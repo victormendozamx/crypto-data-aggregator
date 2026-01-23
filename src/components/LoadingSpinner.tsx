@@ -187,7 +187,7 @@ export default function LoadingSpinner({
 // Full page loading state
 export function PageLoader({ text = 'Loading...' }: { text?: string }) {
   return (
-    <div className="fixed inset-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="flex flex-col items-center gap-6 p-8 rounded-3xl bg-white dark:bg-black shadow-2xl border border-gray-200 dark:border-gray-800">
         <LoadingSpinner size="xl" variant="brand" />
         <div className="text-center">
@@ -207,12 +207,12 @@ export function CardSkeleton() {
       <div className="h-[200px] bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-700 animate-pulse motion-reduce:animate-none" />
       {/* Content placeholder */}
       <div className="p-5 space-y-4">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 animate-pulse motion-reduce:animate-none" />
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-full animate-pulse motion-reduce:animate-none" />
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-5/6 animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-3/4 animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-full animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-5/6 animate-pulse motion-reduce:animate-none" />
         <div className="flex items-center gap-3 pt-2">
-          <div className="h-6 w-20 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse motion-reduce:animate-none" />
-          <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse motion-reduce:animate-none" />
+          <div className="h-6 w-20 bg-gray-200 dark:bg-black rounded-full animate-pulse motion-reduce:animate-none" />
+          <div className="h-4 w-16 bg-gray-200 dark:bg-black rounded-full animate-pulse motion-reduce:animate-none" />
         </div>
       </div>
     </div>

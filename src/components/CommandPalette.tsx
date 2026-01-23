@@ -335,7 +335,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       <div className="absolute inset-0 bg-gray-900/70 backdrop-blur-sm" onClick={onClose} />
 
       {/* Palette */}
-      <div className="relative w-full max-w-xl mx-4 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-slate-700 animate-fade-in-up">
+      <div className="relative w-full max-w-xl mx-4 bg-white dark:bg-black rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-slate-700 animate-fade-in-up">
         {/* Search Input */}
         <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100 dark:border-slate-800">
           <svg
@@ -362,7 +362,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
             autoComplete="off"
             spellCheck={false}
           />
-          <kbd className="hidden sm:inline-flex px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-slate-800 rounded border border-gray-200 dark:border-slate-700">
+          <kbd className="hidden sm:inline-flex px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-black rounded border border-gray-200 dark:border-slate-700">
             ESC
           </kbd>
         </div>
@@ -415,7 +415,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                           )}
                         </div>
                         {cmd.shortcut && (
-                          <kbd className="px-2 py-0.5 text-xs font-medium text-gray-400 dark:text-slate-500 bg-gray-100 dark:bg-slate-800 rounded">
+                          <kbd className="px-2 py-0.5 text-xs font-medium text-gray-400 dark:text-slate-500 bg-gray-100 dark:bg-black rounded">
                             {cmd.shortcut}
                           </kbd>
                         )}
@@ -444,7 +444,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800/50">
+        <div className="px-4 py-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-black/50">
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">

@@ -89,7 +89,7 @@ export function PriceAlerts() {
 
             // Show browser notification
             if ('Notification' in window && Notification.permission === 'granted') {
-              new Notification(`🚨 Price Alert: ${alert.symbol}`, {
+              new Notification(`Price Alert: ${alert.symbol}`, {
                 body: `${alert.symbol} is now ${alert.direction} $${alert.targetPrice.toLocaleString()} (Current: $${price.toLocaleString()})`,
                 icon: '/icons/icon-192x192.png',
               });
@@ -216,7 +216,7 @@ export function PriceAlerts() {
             {/* Content */}
             <div className="p-4 space-y-4 overflow-y-auto max-h-[60vh]">
               {/* Add Alert Form */}
-              <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg space-y-3">
+              <div className="p-4 bg-gray-50 dark:bg-black rounded-lg space-y-3">
                 <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">
                   Create Alert
                 </h3>
@@ -227,7 +227,7 @@ export function PriceAlerts() {
                     onChange={(e) =>
                       setSelectedCoin(COINS.find((c) => c.id === e.target.value) || COINS[0])
                     }
-                    className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
+                    className="px-3 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
                   >
                     {COINS.map((coin) => (
                       <option key={coin.id} value={coin.id}>
@@ -239,7 +239,7 @@ export function PriceAlerts() {
                   <select
                     value={direction}
                     onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
-                    className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
+                    className="px-3 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
                   >
                     <option value="above">Goes above</option>
                     <option value="below">Goes below</option>
@@ -256,7 +256,7 @@ export function PriceAlerts() {
                       value={targetPrice}
                       onChange={(e) => setTargetPrice(e.target.value)}
                       placeholder="Target price"
-                      className="w-full pl-7 pr-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
+                      className="w-full pl-7 pr-3 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
                     />
                   </div>
                   <button
@@ -284,7 +284,7 @@ export function PriceAlerts() {
                   {activeAlerts.map((alert) => (
                     <div
                       key={alert.id}
-                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black rounded-lg"
                     >
                       <div className="flex items-center gap-3">
                         {alert.direction === 'above' ? (

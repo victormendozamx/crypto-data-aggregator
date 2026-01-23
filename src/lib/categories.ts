@@ -16,7 +16,7 @@ export const categories: Category[] = [
   {
     slug: 'bitcoin',
     name: 'Bitcoin',
-    icon: '₿',
+    icon: 'bitcoin',
     description: 'Bitcoin news, mining, Lightning Network, and BTC market updates',
     keywords: [
       'bitcoin',
@@ -35,7 +35,7 @@ export const categories: Category[] = [
   {
     slug: 'ethereum',
     name: 'Ethereum',
-    icon: 'Ξ',
+    icon: 'ethereum',
     description: 'Ethereum ecosystem, ETH updates, Layer 2s, and smart contracts',
     keywords: [
       'ethereum',
@@ -59,7 +59,7 @@ export const categories: Category[] = [
   {
     slug: 'defi',
     name: 'DeFi',
-    icon: '🏦',
+    icon: 'defi',
     description: 'Decentralized finance, yield farming, DEXs, and lending protocols',
     keywords: [
       'defi',
@@ -86,7 +86,7 @@ export const categories: Category[] = [
   {
     slug: 'nft',
     name: 'NFTs',
-    icon: '🖼️',
+    icon: 'nft',
     description: 'Non-fungible tokens, digital art, collectibles, and NFT marketplaces',
     keywords: [
       'nft',
@@ -108,7 +108,7 @@ export const categories: Category[] = [
   {
     slug: 'regulation',
     name: 'Regulation',
-    icon: '⚖️',
+    icon: 'regulation',
     description: 'Crypto regulations, legal news, SEC, and government policies',
     keywords: [
       'regulation',
@@ -132,7 +132,7 @@ export const categories: Category[] = [
   {
     slug: 'altcoins',
     name: 'Altcoins',
-    icon: '🪙',
+    icon: 'altcoins',
     description: 'Alternative cryptocurrencies, tokens, and emerging projects',
     keywords: [
       'solana',
@@ -161,7 +161,7 @@ export const categories: Category[] = [
   {
     slug: 'trading',
     name: 'Markets',
-    icon: '📈',
+    icon: 'trading',
     description: 'Market analysis, trading updates, price movements, and exchanges',
     keywords: [
       'price',
@@ -188,7 +188,7 @@ export const categories: Category[] = [
   {
     slug: 'technology',
     name: 'Technology',
-    icon: '⚙️',
+    icon: 'technology',
     description: 'Blockchain technology, development updates, and infrastructure',
     keywords: [
       'blockchain',

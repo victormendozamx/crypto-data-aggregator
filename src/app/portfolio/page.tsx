@@ -31,7 +31,8 @@ interface HoldingWithPrice extends Holding {
 }
 
 export default function PortfolioPage() {
-  const { holdings, transactions, clearPortfolio, exportPortfolio, importPortfolio, isLoaded } = usePortfolio();
+  const { holdings, transactions, clearPortfolio, exportPortfolio, importPortfolio, isLoaded } =
+    usePortfolio();
   const { addToast } = useToast();
 
   const [holdingsWithPrices, setHoldingsWithPrices] = useState<HoldingWithPrice[]>([]);
@@ -52,16 +53,17 @@ export default function PortfolioPage() {
     try {
       setError(null);
       const allCoins = await getTopCoins(250);
-      const coinMap = new Map(allCoins.map(c => [c.id, c]));
+      const coinMap = new Map(allCoins.map((c) => [c.id, c]));
 
       let totalValue = 0;
-      const enrichedHoldings: HoldingWithPrice[] = holdings.map(holding => {
+      const enrichedHoldings: HoldingWithPrice[] = holdings.map((holding) => {
         const coin = coinMap.get(holding.coinId);
         const currentPrice = coin?.current_price || 0;
         const change24h = coin?.price_change_percentage_24h || 0;
         const value = holding.amount * currentPrice;
         const profitLoss = value - holding.totalCost;
-        const profitLossPercent = holding.totalCost > 0 ? (profitLoss / holding.totalCost) * 100 : 0;
+        const profitLossPercent =
+          holding.totalCost > 0 ? (profitLoss / holding.totalCost) * 100 : 0;
 
         totalValue += value;
 
@@ -78,7 +80,7 @@ export default function PortfolioPage() {
       });
 
       // Calculate allocation percentages
-      enrichedHoldings.forEach(h => {
+      enrichedHoldings.forEach((h) => {
         h.allocation = totalValue > 0 ? (h.value / totalValue) * 100 : 0;
       });
 
@@ -107,9 +109,10 @@ export default function PortfolioPage() {
   // Calculate summary data
   const totalValue = holdingsWithPrices.reduce((sum, h) => sum + h.value, 0);
   const totalCost = holdingsWithPrices.reduce((sum, h) => sum + h.totalCost, 0);
-  const change24h = holdingsWithPrices.length > 0
-    ? holdingsWithPrices.reduce((sum, h) => sum + (h.change24h * h.allocation / 100), 0)
-    : 0;
+  const change24h =
+    holdingsWithPrices.length > 0
+      ? holdingsWithPrices.reduce((sum, h) => sum + (h.change24h * h.allocation) / 100, 0)
+      : 0;
 
   const sortedByChange = [...holdingsWithPrices].sort((a, b) => b.change24h - a.change24h);
   const bestPerformer = sortedByChange[0];
@@ -156,11 +159,11 @@ export default function PortfolioPage() {
           </div>
           <div className="animate-pulse space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="h-32 bg-gray-200 dark:bg-gray-800 rounded-2xl" />
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-32 bg-gray-200 dark:bg-black rounded-2xl" />
               ))}
             </div>
-            <div className="h-96 bg-gray-200 dark:bg-gray-800 rounded-2xl" />
+            <div className="h-96 bg-gray-200 dark:bg-black rounded-2xl" />
           </div>
         </div>
       </div>
@@ -177,7 +180,7 @@ export default function PortfolioPage() {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Portfolio</h1>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-12 text-center">
+          <div className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-700 p-12 text-center">
             <PieChart className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               Start tracking your portfolio
@@ -196,7 +199,7 @@ export default function PortfolioPage() {
               </button>
               <button
                 onClick={() => setShowImportModal(true)}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-colors"
               >
                 <Upload className="w-5 h-5" />
                 Import Portfolio
@@ -205,17 +208,21 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        {showAddModal && <AddHoldingModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />}
-        
+        {showAddModal && (
+          <AddHoldingModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+        )}
+
         {showImportModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Import Portfolio</h3>
+            <div className="bg-white dark:bg-black rounded-2xl shadow-2xl max-w-lg w-full p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Import Portfolio
+              </h3>
               <textarea
                 value={importText}
-                onChange={e => setImportText(e.target.value)}
+                onChange={(e) => setImportText(e.target.value)}
                 placeholder="Paste your portfolio JSON here..."
-                className="w-full h-48 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full h-48 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <div className="flex justify-end gap-3 mt-4">
                 <button
@@ -249,7 +256,8 @@ export default function PortfolioPage() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Portfolio</h1>
               <p className="text-gray-500 dark:text-gray-400">
-                {holdings.length} asset{holdings.length !== 1 ? 's' : ''} • {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
+                {holdings.length} asset{holdings.length !== 1 ? 's' : ''} • {transactions.length}{' '}
+                transaction{transactions.length !== 1 ? 's' : ''}
               </p>
             </div>
           </div>
@@ -296,8 +304,16 @@ export default function PortfolioPage() {
             totalValue={totalValue}
             totalCost={totalCost}
             change24h={change24h}
-            bestPerformer={bestPerformer ? { name: bestPerformer.coinName, change: bestPerformer.change24h } : undefined}
-            worstPerformer={worstPerformer ? { name: worstPerformer.coinName, change: worstPerformer.change24h } : undefined}
+            bestPerformer={
+              bestPerformer
+                ? { name: bestPerformer.coinName, change: bestPerformer.change24h }
+                : undefined
+            }
+            worstPerformer={
+              worstPerformer
+                ? { name: worstPerformer.coinName, change: worstPerformer.change24h }
+                : undefined
+            }
             isLoading={isLoading}
           />
         </div>
@@ -308,7 +324,7 @@ export default function PortfolioPage() {
           <HoldingsTable
             holdings={holdingsWithPrices}
             onAddTransaction={(coinId) => {
-              const holding = holdings.find(h => h.coinId === coinId);
+              const holding = holdings.find((h) => h.coinId === coinId);
               // You could open the modal with prefilled coin here
               setShowAddModal(true);
             }}
@@ -318,9 +334,7 @@ export default function PortfolioPage() {
 
         {/* Footer Actions */}
         <div className="flex items-center justify-between text-sm">
-          <p className="text-gray-500 dark:text-gray-400">
-            Data refreshes every minute
-          </p>
+          <p className="text-gray-500 dark:text-gray-400">Data refreshes every minute</p>
           <button
             onClick={handleClearPortfolio}
             className="flex items-center gap-1 text-red-600 dark:text-red-400 hover:underline"
@@ -331,18 +345,22 @@ export default function PortfolioPage() {
         </div>
 
         {/* Add Transaction Modal */}
-        {showAddModal && <AddHoldingModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />}
-        
+        {showAddModal && (
+          <AddHoldingModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+        )}
+
         {/* Import Modal */}
         {showImportModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Import Portfolio</h3>
+            <div className="bg-white dark:bg-black rounded-2xl shadow-2xl max-w-lg w-full p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Import Portfolio
+              </h3>
               <textarea
                 value={importText}
-                onChange={e => setImportText(e.target.value)}
+                onChange={(e) => setImportText(e.target.value)}
                 placeholder="Paste your portfolio JSON here..."
-                className="w-full h-48 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full h-48 p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <div className="flex justify-end gap-3 mt-4">
                 <button

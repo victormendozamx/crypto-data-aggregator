@@ -13,7 +13,7 @@ interface BackToTopProps {
   rightOffset?: string;
 }
 
-export function BackToTop({ 
+export function BackToTop({
   threshold = 400,
   smooth = true,
   bottomOffset = '6rem',
@@ -26,14 +26,14 @@ export function BackToTop({
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      
+
       setIsVisible(scrollTop > threshold);
       setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Check initial state
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [threshold]);
 
@@ -65,7 +65,7 @@ export function BackToTop({
       onClick={scrollToTop}
       className={`
         fixed z-40 p-3 rounded-full shadow-lg
-        bg-white dark:bg-slate-800 
+        bg-white dark:bg-black 
         border border-gray-200 dark:border-slate-700
         text-gray-600 dark:text-slate-300
         hover:bg-gray-50 dark:hover:bg-slate-700

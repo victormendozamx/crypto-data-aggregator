@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded ${className}`} />;
+  return <div className={`animate-pulse bg-gray-200 dark:bg-black rounded ${className}`} />;
 }
 
 export default function MarketsLoading() {
@@ -40,7 +40,7 @@ export default function MarketsLoading() {
           {/* Trending Section Skeleton */}
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             {/* Trending Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <div className="flex items-center justify-between mb-3">
                 <Skeleton className="h-6 w-32" />
                 <Skeleton className="h-4 w-20" />
@@ -52,7 +52,7 @@ export default function MarketsLoading() {
               </div>
             </div>
             {/* Gainers/Losers Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-4">
               <div className="flex items-center justify-between mb-3">
                 <Skeleton className="h-6 w-32" />
                 <Skeleton className="h-8 w-36 rounded-lg" />
@@ -95,7 +95,7 @@ export default function MarketsLoading() {
           </div>
 
           {/* Coins Table Skeleton */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             {/* Table Header */}
             <div className="bg-gray-50 dark:bg-black/50 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center p-4 gap-4">

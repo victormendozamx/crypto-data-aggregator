@@ -10,67 +10,69 @@ import Image from 'next/image';
 import { getTopCoins, formatPrice, formatPercent, formatNumber } from '@/lib/market-data';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getCategoryIcon } from '@/lib/category-icons';
+import { Search } from 'lucide-react';
 
 // Category metadata
-const CATEGORY_META: Record<string, { name: string; icon: string; description: string }> = {
+const CATEGORY_META: Record<string, { name: string; iconKey: string; description: string }> = {
   defi: {
     name: 'DeFi',
-    icon: '🏦',
+    iconKey: 'defi',
     description: 'Decentralized Finance protocols',
   },
   nft: {
     name: 'NFT',
-    icon: '🖼️',
+    iconKey: 'nft',
     description: 'NFT ecosystem tokens',
   },
   gaming: {
     name: 'Gaming',
-    icon: '🎮',
+    iconKey: 'gaming',
     description: 'Blockchain gaming tokens',
   },
   'layer-1': {
     name: 'Layer 1',
-    icon: '⛓️',
+    iconKey: 'layer-1',
     description: 'Base layer blockchains',
   },
   'layer-2': {
     name: 'Layer 2',
-    icon: '📦',
+    iconKey: 'layer-2',
     description: 'Scaling solutions',
   },
   meme: {
     name: 'Meme Coins',
-    icon: '🐕',
+    iconKey: 'meme',
     description: 'Community-driven meme tokens',
   },
   ai: {
     name: 'AI & Big Data',
-    icon: '🤖',
+    iconKey: 'ai',
     description: 'AI and data-focused projects',
   },
   exchange: {
     name: 'Exchange Tokens',
-    icon: '💱',
+    iconKey: 'exchange',
     description: 'Cryptocurrency exchange native tokens',
   },
   stablecoin: {
     name: 'Stablecoins',
-    icon: '💵',
+    iconKey: 'stablecoin',
     description: 'Price-stable cryptocurrencies',
   },
   privacy: {
     name: 'Privacy Coins',
-    icon: '🔒',
+    iconKey: 'privacy',
     description: 'Privacy-focused cryptocurrencies',
   },
   storage: {
     name: 'Storage',
-    icon: '💾',
+    iconKey: 'storage',
     description: 'Decentralized storage networks',
   },
   oracle: {
     name: 'Oracles',
-    icon: '🔮',
+    iconKey: 'oracle',
     description: 'Blockchain oracle networks',
   },
 };
@@ -286,8 +288,12 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              {category.icon} {category.name} Cryptocurrencies
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+              {(() => {
+                const Icon = getCategoryIcon(category.iconKey);
+                return <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />;
+              })()}
+              {category.name} Cryptocurrencies
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               {category.description} • {coins.length} coins
@@ -389,7 +395,9 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
             </div>
           ) : (
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 text-center">
-              <span className="text-4xl mb-4 block">🔍</span>
+              <div className="flex justify-center mb-4">
+                <Search className="w-10 h-10 text-gray-400" />
+              </div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 No coins found
               </h3>

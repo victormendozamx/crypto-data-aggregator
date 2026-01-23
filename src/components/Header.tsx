@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import { MobileNav } from './MobileNav';
-import { ThemeToggle } from './ThemeProvider';
+import ThemeToggle from './ThemeToggle';
 import { SearchModal } from './SearchModal';
 import { CommandPalette } from './CommandPalette';
 

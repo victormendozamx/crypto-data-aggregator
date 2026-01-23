@@ -57,7 +57,7 @@ const sentimentColors: Record<string, { text: string; bg: string; border: string
   },
   bullish: {
     text: 'text-neutral-900 dark:text-white',
-    bg: 'bg-neutral-50 dark:bg-neutral-900',
+    bg: 'bg-neutral-50 dark:bg-black',
     border: 'border-neutral-200 dark:border-neutral-700',
   },
   neutral: {
@@ -67,7 +67,7 @@ const sentimentColors: Record<string, { text: string; bg: string; border: string
   },
   bearish: {
     text: 'text-neutral-500 dark:text-neutral-400',
-    bg: 'bg-neutral-50 dark:bg-neutral-900',
+    bg: 'bg-neutral-50 dark:bg-black',
     border: 'border-neutral-200 dark:border-neutral-700',
   },
   very_bearish: {
@@ -158,7 +158,7 @@ export default async function SentimentPage() {
           {data ? (
             <div className="space-y-8">
               {/* Overall Sentiment Card */}
-              <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-8">
+              <div className="bg-white dark:bg-black rounded-2xl border border-neutral-200 dark:border-neutral-800 p-8">
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div className="text-center">
                     <h2 className="text-lg text-neutral-500 dark:text-neutral-400 mb-4">
@@ -227,7 +227,7 @@ export default async function SentimentPage() {
                   {data.articles?.map((article, i) => (
                     <div
                       key={i}
-                      className={`bg-white dark:bg-neutral-900 rounded-xl border p-5 ${sentimentColors[article.sentiment]?.border || 'border-neutral-200 dark:border-neutral-800'}`}
+                      className={`bg-white dark:bg-black rounded-xl border p-5 ${sentimentColors[article.sentiment]?.border || 'border-neutral-200 dark:border-neutral-800'}`}
                     >
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <div className="flex-1">
@@ -273,7 +273,7 @@ export default async function SentimentPage() {
               </div>
             </div>
           ) : (
-            <div className="text-center py-16 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800">
+            <div className="text-center py-16 bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800">
               <svg
                 className="w-16 h-16 mx-auto mb-4 text-neutral-400"
                 fill="none"

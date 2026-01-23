@@ -199,7 +199,7 @@ export default function PricingPage() {
             </table>
           </div>
 
-          <div className="mt-6 p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
+          <div className="mt-6 p-4 bg-neutral-50 dark:bg-black rounded-lg">
             <h4 className="font-medium text-black dark:text-white mb-2">How it works:</h4>
             <ol className="list-decimal list-inside space-y-1 text-neutral-600 dark:text-neutral-400">
               <li>Make a request to any endpoint</li>

@@ -317,7 +317,7 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
 function TrendingSectionSkeleton() {
   return (
     <div className="grid md:grid-cols-2 gap-4 mb-6">
-      <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
+      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
         <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-700 rounded mb-3 animate-pulse" />
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -328,7 +328,7 @@ function TrendingSectionSkeleton() {
           ))}
         </div>
       </div>
-      <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
+      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
         <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-700 rounded mb-3 animate-pulse" />
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -366,7 +366,7 @@ function SearchFiltersSkeleton() {
 
 function TableSkeleton() {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+    <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
       <div className="p-4 border-b border-neutral-200 dark:border-neutral-800">
         <div className="h-6 w-48 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
       </div>

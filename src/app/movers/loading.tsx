@@ -16,7 +16,7 @@ export default function MoversLoading() {
         {/* Title skeleton */}
         <div className="text-center mb-8">
           <div className="h-10 w-48 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mx-auto mb-2" />
-          <div className="h-5 w-72 bg-neutral-100 dark:bg-neutral-900 rounded animate-pulse mx-auto" />
+          <div className="h-5 w-72 bg-neutral-100 dark:bg-black rounded animate-pulse mx-auto" />
         </div>
 
         {/* Summary cards skeleton */}
@@ -24,7 +24,7 @@ export default function MoversLoading() {
           {[...Array(2)].map((_, i) => (
             <div
               key={i}
-              className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800"
+              className="bg-neutral-50 dark:bg-black rounded-xl p-6 border border-neutral-200 dark:border-neutral-800"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-800 rounded-lg animate-pulse" />
@@ -40,7 +40,7 @@ export default function MoversLoading() {
           {[...Array(2)].map((_, col) => (
             <div
               key={col}
-              className="bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-6"
+              className="bg-neutral-50 dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-6"
             >
               <div className="h-6 w-32 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-6" />
 

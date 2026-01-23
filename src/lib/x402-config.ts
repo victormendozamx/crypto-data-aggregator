@@ -362,37 +362,37 @@ export function getPaymentRequirements(
 export const PREMIUM_CATEGORIES = {
   ai: {
     name: 'AI Analysis',
-    icon: '🧠',
+    icon: 'brain',
     description: 'AI-powered market insights and analysis',
   },
   whales: {
     name: 'Whale Tracking',
-    icon: '🐋',
+    icon: 'whale',
     description: 'Track large holders and smart money',
   },
   screener: {
     name: 'Advanced Screener',
-    icon: '🔍',
+    icon: 'search',
     description: 'Find opportunities with powerful filters',
   },
   data: {
     name: 'Historical Data',
-    icon: '📊',
+    icon: 'chart',
     description: 'Deep historical data for research',
   },
   realtime: {
     name: 'Real-Time Feeds',
-    icon: '⚡',
+    icon: 'zap',
     description: 'Live WebSocket data streams',
   },
   alerts: {
     name: 'Premium Alerts',
-    icon: '🔔',
+    icon: 'bell',
     description: 'Advanced alerting with webhooks',
   },
   pass: {
     name: 'Access Passes',
-    icon: '🎫',
+    icon: 'ticket',
     description: 'Unlimited access for a time period',
   },
 } as const;

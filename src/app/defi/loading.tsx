@@ -16,7 +16,7 @@ export default function DefiLoading() {
         {/* Title skeleton */}
         <div className="mb-8">
           <div className="h-10 w-48 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-2" />
-          <div className="h-5 w-80 bg-neutral-100 dark:bg-neutral-900 rounded animate-pulse" />
+          <div className="h-5 w-80 bg-neutral-100 dark:bg-black rounded animate-pulse" />
         </div>
 
         {/* Stats cards skeleton */}
@@ -24,7 +24,7 @@ export default function DefiLoading() {
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800"
+              className="bg-neutral-50 dark:bg-black rounded-xl p-6 border border-neutral-200 dark:border-neutral-800"
             >
               <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-3" />
               <div className="h-8 w-40 bg-neutral-300 dark:bg-neutral-700 rounded animate-pulse mb-2" />
@@ -34,7 +34,7 @@ export default function DefiLoading() {
         </div>
 
         {/* Protocol list skeleton */}
-        <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 p-6">
+        <div className="bg-neutral-50 dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-6">
           <div className="h-6 w-40 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-6" />
 
           <div className="space-y-4">
@@ -47,12 +47,12 @@ export default function DefiLoading() {
                   <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-800 rounded-full animate-pulse" />
                   <div>
                     <div className="h-5 w-32 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-1" />
-                    <div className="h-3 w-20 bg-neutral-100 dark:bg-neutral-900 rounded animate-pulse" />
+                    <div className="h-3 w-20 bg-neutral-100 dark:bg-black rounded animate-pulse" />
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="h-5 w-24 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse mb-1" />
-                  <div className="h-3 w-16 bg-neutral-100 dark:bg-neutral-900 rounded animate-pulse" />
+                  <div className="h-3 w-16 bg-neutral-100 dark:bg-black rounded animate-pulse" />
                 </div>
               </div>
             ))}
