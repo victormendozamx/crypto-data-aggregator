@@ -6,6 +6,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Flame } from 'lucide-react';
 
 interface Topic {
   name: string;
@@ -31,7 +32,10 @@ const defaultTopics: Topic[] = [
 export default function TrendingTopics({ topics = defaultTopics }: TrendingTopicsProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h3 className="font-bold text-lg mb-4">🔥 Trending Topics</h3>
+      <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+        <Flame className="w-5 h-5 text-orange-500" />
+        Trending Topics
+      </h3>
       
       <div className="space-y-2">
         {topics.map((topic, index) => (

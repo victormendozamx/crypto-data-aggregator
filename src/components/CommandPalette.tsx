@@ -2,6 +2,29 @@
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import {
+  Home,
+  TrendingUp,
+  Landmark,
+  Flame,
+  Rocket,
+  Search,
+  Scale,
+  Folder,
+  Tag,
+  Info,
+  Moon,
+  Star,
+  BookOpen,
+  Share2,
+  Image,
+  Bookmark,
+  Trash2,
+  MapPin,
+  Zap,
+  Settings,
+  type LucideIcon,
+} from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -12,7 +35,7 @@ interface Command {
   id: string;
   label: string;
   description?: string;
-  icon: string;
+  icon: LucideIcon;
   category: 'navigation' | 'action' | 'search' | 'settings';
   shortcut?: string;
   action: () => void;
@@ -32,84 +55,84 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       {
         id: 'home',
         label: 'Go to Home',
-        icon: '🏠',
+        icon: Home,
         category: 'navigation',
         action: () => router.push('/'),
       },
       {
         id: 'markets',
         label: 'Go to Markets',
-        icon: '📈',
+        icon: TrendingUp,
         category: 'navigation',
         action: () => router.push('/markets'),
       },
       {
         id: 'defi',
         label: 'Go to DeFi Dashboard',
-        icon: '🏦',
+        icon: Landmark,
         category: 'navigation',
         action: () => router.push('/defi'),
       },
       {
         id: 'trending',
         label: 'Go to Trending',
-        icon: '🔥',
+        icon: Flame,
         category: 'navigation',
         action: () => router.push('/trending'),
       },
       {
         id: 'movers',
         label: 'Go to Top Movers',
-        icon: '🚀',
+        icon: Rocket,
         category: 'navigation',
         action: () => router.push('/movers'),
       },
       {
         id: 'bitcoin',
         label: 'Go to Bitcoin News',
-        icon: '₿',
+        icon: TrendingUp,
         category: 'navigation',
         action: () => router.push('/category/bitcoin'),
       },
       {
         id: 'ethereum',
         label: 'Go to Ethereum News',
-        icon: 'Ξ',
+        icon: TrendingUp,
         category: 'navigation',
         action: () => router.push('/category/ethereum'),
       },
       {
         id: 'nfts',
         label: 'Go to NFT News',
-        icon: '🎨',
+        icon: Image,
         category: 'navigation',
         action: () => router.push('/category/nft'),
       },
       {
         id: 'regulation',
         label: 'Go to Regulation News',
-        icon: '⚖️',
+        icon: Scale,
         category: 'navigation',
         action: () => router.push('/category/regulation'),
       },
       {
         id: 'sources',
         label: 'Go to News Sources',
-        icon: '📚',
+        icon: Folder,
         category: 'navigation',
         action: () => router.push('/sources'),
       },
       {
         id: 'topics',
         label: 'Go to Topics',
-        icon: '🏷️',
+        icon: Tag,
         category: 'navigation',
         action: () => router.push('/topics'),
       },
       {
         id: 'about',
         label: 'Go to About',
-        icon: 'ℹ️',
+        icon: Info,
         category: 'navigation',
         action: () => router.push('/about'),
       },
@@ -118,28 +141,28 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       {
         id: 'search-btc',
         label: 'Search Bitcoin news',
-        icon: '🔍',
+        icon: Search,
         category: 'search',
         action: () => router.push('/search?q=bitcoin'),
       },
       {
         id: 'search-eth',
         label: 'Search Ethereum news',
-        icon: '🔍',
+        icon: Search,
         category: 'search',
         action: () => router.push('/search?q=ethereum'),
       },
       {
         id: 'search-defi',
         label: 'Search DeFi news',
-        icon: '🔍',
+        icon: Search,
         category: 'search',
         action: () => router.push('/search?q=defi'),
       },
       {
         id: 'search-etf',
         label: 'Search ETF news',
-        icon: '🔍',
+        icon: Search,
         category: 'search',
         action: () => router.push('/search?q=etf'),
       },
@@ -149,7 +172,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         id: 'toggle-theme',
         label: 'Toggle Dark Mode',
         description: 'Switch between light and dark theme',
-        icon: '🌓',
+        icon: Moon,
         category: 'action',
         shortcut: '⌘⇧D',
         action: () => {
@@ -163,21 +186,21 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       {
         id: 'github',
         label: 'Open GitHub Repository',
-        icon: '⭐',
+        icon: Star,
         category: 'action',
         action: () => window.open('https://github.com/nirholas/crypto-data-aggregator', '_blank'),
       },
       {
         id: 'api-docs',
         label: 'View API Documentation',
-        icon: '📖',
+        icon: BookOpen,
         category: 'action',
         action: () => router.push('/about#api'),
       },
       {
         id: 'share',
         label: 'Share this site',
-        icon: '📤',
+        icon: Share2,
         category: 'action',
         action: () => {
           if (navigator.share) {
@@ -190,7 +213,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       {
         id: 'bookmarks',
         label: 'View Bookmarks',
-        icon: '🔖',
+        icon: Bookmark,
         category: 'navigation',
         action: () => router.push('/bookmarks'),
       },
@@ -200,7 +223,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         id: 'clear-cache',
         label: 'Clear Local Storage',
         description: 'Reset preferences and cache',
-        icon: '🗑️',
+        icon: Trash2,
         category: 'settings',
         action: () => {
           localStorage.clear();
@@ -295,11 +318,11 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   };
 
   // Category labels
-  const categoryLabels: Record<string, string> = {
-    navigation: '📍 Navigation',
-    search: '🔍 Quick Search',
-    action: '⚡ Actions',
-    settings: '⚙️ Settings',
+  const categoryLabels: Record<string, { label: string; icon: LucideIcon }> = {
+    navigation: { label: 'Navigation', icon: MapPin },
+    search: { label: 'Quick Search', icon: Search },
+    action: { label: 'Actions', icon: Zap },
+    settings: { label: 'Settings', icon: Settings },
   };
 
   if (!isOpen) return null;
@@ -348,67 +371,75 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         <div ref={listRef} className="max-h-[50vh] overflow-y-auto py-2">
           {flatCommands.length === 0 ? (
             <div className="px-4 py-8 text-center text-gray-500 dark:text-slate-400">
-              <div className="text-4xl mb-2">🔍</div>
+              <div className="flex justify-center mb-2">
+                <Search className="w-10 h-10" />
+              </div>
               <p>No commands found for "{query}"</p>
             </div>
           ) : (
-            Object.entries(groupedCommands).map(([category, cmds]) => (
-              <div key={category} className="mb-2">
-                <div className="px-4 py-2 text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wider">
-                  {categoryLabels[category] || category}
-                </div>
-                {cmds.map((cmd) => {
-                  const currentIndex = globalIndex++;
-                  const isSelected = currentIndex === selectedIndex;
+            Object.entries(groupedCommands).map(([category, cmds]) => {
+              const categoryConfig = categoryLabels[category] || { label: category, icon: MapPin };
+              const CategoryIcon = categoryConfig.icon;
+              return (
+                <div key={category} className="mb-2">
+                  <div className="px-4 py-2 text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                    <CategoryIcon className="w-3.5 h-3.5" />
+                    {categoryConfig.label}
+                  </div>
+                  {cmds.map((cmd) => {
+                    const currentIndex = globalIndex++;
+                    const isSelected = currentIndex === selectedIndex;
+                    const IconComponent = cmd.icon;
 
-                  return (
-                    <button
-                      key={cmd.id}
-                      data-index={currentIndex}
-                      onClick={() => executeCommand(cmd)}
-                      onMouseEnter={() => setSelectedIndex(currentIndex)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                        isSelected
-                          ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-900 dark:text-brand-100'
-                          : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <span className="text-xl w-8 text-center" aria-hidden="true">
-                        {cmd.icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{cmd.label}</div>
-                        {cmd.description && (
-                          <div className="text-xs text-gray-500 dark:text-slate-400 truncate">
-                            {cmd.description}
-                          </div>
+                    return (
+                      <button
+                        key={cmd.id}
+                        data-index={currentIndex}
+                        onClick={() => executeCommand(cmd)}
+                        onMouseEnter={() => setSelectedIndex(currentIndex)}
+                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                          isSelected
+                            ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-900 dark:text-brand-100'
+                            : 'text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        <span className="w-8 flex justify-center" aria-hidden="true">
+                          <IconComponent className="w-5 h-5" />
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium truncate">{cmd.label}</div>
+                          {cmd.description && (
+                            <div className="text-xs text-gray-500 dark:text-slate-400 truncate">
+                              {cmd.description}
+                            </div>
+                          )}
+                        </div>
+                        {cmd.shortcut && (
+                          <kbd className="px-2 py-0.5 text-xs font-medium text-gray-400 dark:text-slate-500 bg-gray-100 dark:bg-slate-800 rounded">
+                            {cmd.shortcut}
+                          </kbd>
                         )}
-                      </div>
-                      {cmd.shortcut && (
-                        <kbd className="px-2 py-0.5 text-xs font-medium text-gray-400 dark:text-slate-500 bg-gray-100 dark:bg-slate-800 rounded">
-                          {cmd.shortcut}
-                        </kbd>
-                      )}
-                      {isSelected && (
-                        <svg
-                          className="w-4 h-4 text-brand-600 dark:text-brand-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            ))
+                        {isSelected && (
+                          <svg
+                            className="w-4 h-4 text-brand-600 dark:text-brand-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })
           )}
         </div>
 

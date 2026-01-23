@@ -332,7 +332,7 @@ function EndpointCard({
   description: string;
 }) {
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 hover:shadow-lg transition">
+    <div className="bg-gray-50 dark:bg-black rounded-lg p-6 hover:shadow-lg transition">
       <div className="flex justify-between items-start mb-3">
         <h3 className="font-semibold text-lg dark:text-white">{name}</h3>
         <span className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-sm font-medium">

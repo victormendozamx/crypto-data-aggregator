@@ -3,6 +3,17 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import {
+  Landmark,
+  Image,
+  Scale,
+  Flame,
+  TrendingUp,
+  Folder,
+  BarChart3,
+  Search,
+  type LucideIcon,
+} from 'lucide-react';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -18,7 +29,7 @@ interface SearchResult {
   id: string;
   title: string;
   category: string;
-  categoryIcon: string;
+  categoryIcon: LucideIcon;
   source?: string;
   date?: string;
   url: string;
@@ -29,34 +40,34 @@ const MAX_RECENT_SEARCHES = 5;
 const DEBOUNCE_MS = 300;
 
 const popularSearches = [
-  { query: 'Bitcoin ETF', icon: '₿' },
-  { query: 'Ethereum merge', icon: 'Ξ' },
-  { query: 'DeFi protocols', icon: '🏦' },
-  { query: 'NFT marketplace', icon: '🎨' },
-  { query: 'Crypto regulation', icon: '⚖️' },
+  { query: 'Bitcoin ETF', icon: TrendingUp },
+  { query: 'Ethereum merge', icon: TrendingUp },
+  { query: 'DeFi protocols', icon: Landmark },
+  { query: 'NFT marketplace', icon: Image },
+  { query: 'Crypto regulation', icon: Scale },
 ];
 
 const quickActions = [
-  { label: 'Trending News', href: '/trending', icon: '🔥', description: 'See what\'s hot' },
-  { label: 'Market Data', href: '/markets', icon: '📈', description: 'Live prices & charts' },
-  { label: 'DeFi Dashboard', href: '/defi', icon: '🏦', description: 'TVL & yields' },
-  { label: 'News Sources', href: '/sources', icon: '📚', description: 'Browse by source' },
+  { label: 'Trending News', href: '/trending', icon: Flame, description: "See what's hot" },
+  { label: 'Market Data', href: '/markets', icon: TrendingUp, description: 'Live prices & charts' },
+  { label: 'DeFi Dashboard', href: '/defi', icon: Landmark, description: 'TVL & yields' },
+  { label: 'News Sources', href: '/sources', icon: Folder, description: 'Browse by source' },
 ];
 
 // Mock function to simulate live search - in production, replace with actual API call
 async function fetchSearchResults(query: string): Promise<SearchResult[]> {
   // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 200));
-  
+  await new Promise((resolve) => setTimeout(resolve, 200));
+
   if (!query.trim()) return [];
-  
+
   // Mock results based on query
   const mockResults: SearchResult[] = [
     {
       id: '1',
       title: `${query} - Latest developments and analysis`,
       category: 'bitcoin',
-      categoryIcon: '₿',
+      categoryIcon: TrendingUp,
       source: 'CoinDesk',
       date: '2 hours ago',
       url: `/search?q=${encodeURIComponent(query)}`,
@@ -65,7 +76,7 @@ async function fetchSearchResults(query: string): Promise<SearchResult[]> {
       id: '2',
       title: `Breaking: ${query} sees major institutional interest`,
       category: 'markets',
-      categoryIcon: '📈',
+      categoryIcon: TrendingUp,
       source: 'Bloomberg',
       date: '4 hours ago',
       url: `/search?q=${encodeURIComponent(query)}`,
@@ -74,13 +85,13 @@ async function fetchSearchResults(query: string): Promise<SearchResult[]> {
       id: '3',
       title: `How ${query} is reshaping the crypto landscape`,
       category: 'analysis',
-      categoryIcon: '📊',
+      categoryIcon: BarChart3,
       source: 'CryptoSlate',
       date: '1 day ago',
       url: `/search?q=${encodeURIComponent(query)}`,
     },
   ];
-  
+
   return mockResults;
 }
 
@@ -91,7 +102,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [activeTab, setActiveTab] = useState<'all' | 'articles' | 'actions'>('all');
-  
+
   const inputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -176,40 +187,43 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }, [searchQuery, searchResults, recentSearches.length]);
 
   // Handle keyboard navigation
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setSelectedIndex(prev => Math.min(prev + 1, totalItems - 1));
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setSelectedIndex(prev => Math.max(prev - 1, -1));
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (selectedIndex === -1 && searchQuery.trim()) {
-          handleSearch();
-        } else if (selectedIndex >= 0 && searchResults[selectedIndex]) {
-          router.push(searchResults[selectedIndex].url);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setSelectedIndex((prev) => Math.min(prev + 1, totalItems - 1));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setSelectedIndex((prev) => Math.max(prev - 1, -1));
+          break;
+        case 'Enter':
+          e.preventDefault();
+          if (selectedIndex === -1 && searchQuery.trim()) {
+            handleSearch();
+          } else if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+            router.push(searchResults[selectedIndex].url);
+            onClose();
+          }
+          break;
+        case 'Escape':
+          e.preventDefault();
           onClose();
-        }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        onClose();
-        break;
-      case 'Tab':
-        e.preventDefault();
-        // Cycle through tabs
-        setActiveTab(prev => {
-          if (prev === 'all') return 'articles';
-          if (prev === 'articles') return 'actions';
-          return 'all';
-        });
-        break;
-    }
-  }, [totalItems, selectedIndex, searchQuery, searchResults, router, onClose]);
+          break;
+        case 'Tab':
+          e.preventDefault();
+          // Cycle through tabs
+          setActiveTab((prev) => {
+            if (prev === 'all') return 'articles';
+            if (prev === 'articles') return 'actions';
+            return 'all';
+          });
+          break;
+      }
+    },
+    [totalItems, selectedIndex, searchQuery, searchResults, router, onClose]
+  );
 
   // Scroll selected item into view
   useEffect(() => {
@@ -238,7 +252,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     const newSearches = [
       { query: trimmed, timestamp: Date.now() },
-      ...recentSearches.filter(s => s.query.toLowerCase() !== trimmed.toLowerCase()),
+      ...recentSearches.filter((s) => s.query.toLowerCase() !== trimmed.toLowerCase()),
     ].slice(0, MAX_RECENT_SEARCHES);
 
     setRecentSearches(newSearches);
@@ -272,7 +286,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const removeRecentSearch = (query: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const newSearches = recentSearches.filter(s => s.query !== query);
+    const newSearches = recentSearches.filter((s) => s.query !== query);
     setRecentSearches(newSearches);
     localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(newSearches));
   };
@@ -282,39 +296,67 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const showResults = searchQuery.trim().length > 0;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-start justify-center pt-[8vh] md:pt-[12vh]"
       role="dialog"
       aria-modal="true"
       aria-label="Search"
     >
       {/* Backdrop with animated gradient */}
-      <div 
+      <div
         className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
-      
+
       {/* Modal */}
-      <div 
+      <div
         ref={modalRef}
-        className="relative w-full max-w-2xl mx-4 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-200/50 dark:border-slate-700/50 animate-fade-in-up"
+        className="relative w-full max-w-2xl mx-4 bg-white dark:bg-black rounded-2xl shadow-2xl overflow-hidden border border-gray-200/50 dark:border-slate-700/50 animate-fade-in-up"
         style={{
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05)',
         }}
       >
         {/* Search Header */}
-        <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="relative">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+          className="relative"
+        >
           <div className="flex items-center border-b border-gray-200 dark:border-slate-700">
             <div className="pl-5 text-gray-400">
               {isLoading ? (
                 <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
                 </svg>
               ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               )}
             </div>
@@ -345,7 +387,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   aria-label="Clear search"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               )}
@@ -382,57 +429,92 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             <div className="p-2">
               {searchResults.length > 0 ? (
                 <div className="space-y-1">
-                  {searchResults.map((result, index) => (
-                    <button
-                      key={result.id}
-                      data-index={index}
-                      onClick={() => handleResultClick(result)}
-                      onMouseEnter={() => setSelectedIndex(index)}
-                      className={`w-full flex items-start gap-3 p-3 rounded-xl transition-all text-left group ${
-                        selectedIndex === index
-                          ? 'bg-brand-50 dark:bg-brand-900/30 ring-2 ring-brand-500/20'
-                          : 'hover:bg-gray-50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl ${
-                        selectedIndex === index ? 'bg-brand-100 dark:bg-brand-800/50' : 'bg-gray-100 dark:bg-slate-700'
-                      }`}>
-                        {result.categoryIcon}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 line-clamp-1">
-                          {result.title}
+                  {searchResults.map((result, index) => {
+                    const CategoryIcon = result.categoryIcon;
+                    return (
+                      <button
+                        key={result.id}
+                        data-index={index}
+                        onClick={() => handleResultClick(result)}
+                        onMouseEnter={() => setSelectedIndex(index)}
+                        className={`w-full flex items-start gap-3 p-3 rounded-xl transition-all text-left group ${
+                          selectedIndex === index
+                            ? 'bg-brand-50 dark:bg-brand-900/30 ring-2 ring-brand-500/20'
+                            : 'hover:bg-gray-50 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        <div
+                          className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
+                            selectedIndex === index
+                              ? 'bg-brand-100 dark:bg-brand-800/50'
+                              : 'bg-gray-100 dark:bg-slate-700'
+                          }`}
+                        >
+                          <CategoryIcon className="w-5 h-5" />
                         </div>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-slate-400">
-                          {result.source && <span>{result.source}</span>}
-                          {result.source && result.date && <span>•</span>}
-                          {result.date && <span>{result.date}</span>}
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 line-clamp-1">
+                            {result.title}
+                          </div>
+                          <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-slate-400">
+                            {result.source && <span>{result.source}</span>}
+                            {result.source && result.date && <span>•</span>}
+                            {result.date && <span>{result.date}</span>}
+                          </div>
                         </div>
-                      </div>
-                      <svg className={`w-4 h-4 mt-1 transition-transform ${
-                        selectedIndex === index ? 'text-brand-500 translate-x-0' : 'text-gray-300 dark:text-slate-600 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'
-                      }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  ))}
+                        <svg
+                          className={`w-4 h-4 mt-1 transition-transform ${
+                            selectedIndex === index
+                              ? 'text-brand-500 translate-x-0'
+                              : 'text-gray-300 dark:text-slate-600 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    );
+                  })}
                 </div>
               ) : !isLoading ? (
                 <div className="py-8 text-center">
-                  <div className="text-4xl mb-3">🔍</div>
-                  <p className="text-gray-500 dark:text-slate-400">No results for "{searchQuery}"</p>
-                  <p className="text-sm text-gray-400 dark:text-slate-500 mt-1">Try different keywords</p>
+                  <div className="flex justify-center mb-3">
+                    <Search className="w-10 h-10 text-gray-400" />
+                  </div>
+                  <p className="text-gray-500 dark:text-slate-400">
+                    No results for "{searchQuery}"
+                  </p>
+                  <p className="text-sm text-gray-400 dark:text-slate-500 mt-1">
+                    Try different keywords
+                  </p>
                 </div>
               ) : null}
-              
+
               {/* Search action */}
               <button
                 onClick={handleSearch}
                 className="w-full flex items-center gap-3 p-3 mt-2 rounded-xl text-left hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors border border-dashed border-gray-200 dark:border-slate-700"
               >
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-900/30 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    className="w-5 h-5 text-brand-600 dark:text-brand-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
                 <div className="flex-1">
@@ -443,7 +525,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     Press Enter to see all results
                   </div>
                 </div>
-                <kbd className="px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-slate-800 rounded">↵</kbd>
+                <kbd className="px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-slate-800 rounded">
+                  ↵
+                </kbd>
               </button>
             </div>
           )}
@@ -456,8 +540,18 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 <div className="p-4 border-b border-gray-100 dark:border-slate-800">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       Recent Searches
                     </h3>
@@ -480,8 +574,18 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           onClick={(e) => removeRecentSearch(search.query, e)}
                           className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-300 dark:hover:bg-slate-600 rounded transition-all"
                         >
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          <svg
+                            className="w-3 h-3"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
                           </svg>
                         </span>
                       </button>
@@ -494,21 +598,29 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <div className="p-4 border-b border-gray-100 dark:border-slate-800">
                 <h3 className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                    />
                   </svg>
                   Trending Searches
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {popularSearches.map((item) => (
-                    <button
-                      key={item.query}
-                      onClick={() => handleQuickSearch(item.query)}
-                      className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-slate-800 dark:to-slate-800/50 hover:from-brand-50 hover:to-brand-100/50 dark:hover:from-brand-900/30 dark:hover:to-brand-800/20 rounded-full transition-all hover:scale-105 border border-gray-200/50 dark:border-slate-700/50"
-                    >
-                      <span aria-hidden="true">{item.icon}</span>
-                      {item.query}
-                    </button>
-                  ))}
+                  {popularSearches.map((item) => {
+                    const ItemIcon = item.icon;
+                    return (
+                      <button
+                        key={item.query}
+                        onClick={() => handleQuickSearch(item.query)}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-slate-800 dark:to-slate-800/50 hover:from-brand-50 hover:to-brand-100/50 dark:hover:from-brand-900/30 dark:hover:to-brand-800/20 rounded-full transition-all hover:scale-105 border border-gray-200/50 dark:border-slate-700/50"
+                      >
+                        <ItemIcon className="w-4 h-4" aria-hidden="true" />
+                        {item.query}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -516,31 +628,39 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               <div className="p-4">
                 <h3 className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
                   </svg>
                   Quick Actions
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
-                  {quickActions.map((action) => (
-                    <Link
-                      key={action.href}
-                      href={action.href}
-                      onClick={onClose}
-                      className="flex items-center gap-3 p-3 text-left rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all group border border-transparent hover:border-gray-200 dark:hover:border-slate-700"
-                    >
-                      <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                        {action.icon}
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white text-sm">
-                          {action.label}
+                  {quickActions.map((action) => {
+                    const ActionIcon = action.icon;
+                    return (
+                      <Link
+                        key={action.href}
+                        href={action.href}
+                        onClick={onClose}
+                        className="flex items-center gap-3 p-3 text-left rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-all group border border-transparent hover:border-gray-200 dark:hover:border-slate-700"
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <ActionIcon className="w-5 h-5" />
                         </div>
-                        <div className="text-xs text-gray-500 dark:text-slate-400">
-                          {action.description}
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-white text-sm">
+                            {action.label}
+                          </div>
+                          <div className="text-xs text-gray-500 dark:text-slate-400">
+                            {action.description}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </>
@@ -552,21 +672,31 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-4">
               <span className="hidden sm:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">↑↓</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                  ↑↓
+                </kbd>
                 navigate
               </span>
               <span className="hidden sm:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">↵</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                  ↵
+                </kbd>
                 select
               </span>
               <span className="hidden md:flex items-center gap-1.5">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">Tab</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                  Tab
+                </kbd>
                 switch tabs
               </span>
             </div>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">⌘</kbd>
-              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">K</kbd>
+              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                ⌘
+              </kbd>
+              <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-700 rounded border border-gray-200 dark:border-slate-600 font-medium shadow-sm">
+                K
+              </kbd>
               <span className="hidden sm:inline">to open</span>
             </span>
           </div>

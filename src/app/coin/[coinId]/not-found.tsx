@@ -5,10 +5,11 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Search } from 'lucide-react';
 
 export default function CoinNotFound() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -16,7 +17,7 @@ export default function CoinNotFound() {
           <div className="max-w-md w-full text-center">
             {/* 404 Icon */}
             <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-              <span className="text-5xl">🔍</span>
+              <Search className="w-12 h-12 text-gray-400" />
             </div>
 
             <h1 className="text-3xl font-bold text-white mb-3">

@@ -8,6 +8,8 @@ import { categories } from '@/lib/categories';
 import MarketStats from '@/components/MarketStats';
 import NewsCard from '@/components/NewsCard';
 import { NewsletterSignup } from '@/components/sidebar';
+import { Folder, Rocket, Code } from 'lucide-react';
+import { CATEGORY_ICONS, getCategoryIcon } from '@/lib/category-icons';
 
 interface Article {
   title: string;
@@ -68,23 +70,26 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
       {/* Categories */}
       <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden shadow-sm dark:shadow-lg">
         <div className="px-5 py-4 border-b border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-700/50">
-          <h3 className="font-bold text-gray-900 dark:text-white">
-            <span className="mr-2">📁</span>
+          <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <Folder className="w-4 h-4" />
             Categories
           </h3>
         </div>
         <div className="p-4">
           <div className="flex flex-wrap gap-2">
-            {featuredCategories.map((cat) => (
+            {featuredCategories.map((cat) => {
+              const CategoryIcon = getCategoryIcon(cat.slug);
+              return (
               <Link
                 key={cat.slug}
                 href={`/category/${cat.slug}`}
                 className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors ${cat.color}`}
               >
-                <span>{cat.icon}</span>
+                <CategoryIcon className="w-4 h-4" />
                 {cat.name}
               </Link>
-            ))}
+              );
+            })}
           </div>
           <Link 
             href="/topics" 
@@ -102,7 +107,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
         
         <div className="relative">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl">🚀</span>
+            <Rocket className="w-6 h-6" />
             <h3 className="font-bold text-lg">Free API</h3>
           </div>
           <p className="text-gray-300 text-sm mb-4">
@@ -122,7 +127,7 @@ export default function TrendingSidebar({ trendingArticles }: TrendingSidebarPro
               href="/examples" 
               className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/10 text-white rounded-lg text-sm font-semibold hover:bg-white/20 transition-colors"
             >
-              <span>💻</span>
+              <Code className="w-4 h-4" />
               Code Examples
             </Link>
           </div>

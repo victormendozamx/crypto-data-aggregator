@@ -1,8 +1,8 @@
 /**
  * @fileoverview Skeleton Loading Components
- * 
+ *
  * Animated placeholder components for loading states.
- * 
+ *
  * @module components/Skeletons
  */
 
@@ -14,11 +14,7 @@ interface SkeletonProps {
  * Base skeleton block with shimmer animation
  */
 export function Skeleton({ className = '' }: SkeletonProps) {
-  return (
-    <div
-      className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded ${className}`}
-    />
-  );
+  return <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded ${className}`} />;
 }
 
 /**
@@ -171,7 +167,7 @@ export function ArticlePageSkeleton() {
       <Skeleton className="h-6 w-24 mb-4 rounded-full" />
       <Skeleton className="h-12 w-full mb-2" />
       <Skeleton className="h-12 w-3/4 mb-6" />
-      
+
       <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
         <Skeleton className="w-12 h-12 rounded-full" />
         <div>
@@ -179,7 +175,7 @@ export function ArticlePageSkeleton() {
           <Skeleton className="h-3 w-24" />
         </div>
       </div>
-      
+
       <div className="space-y-4">
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-full" />
@@ -216,7 +212,7 @@ export function SidebarSkeleton() {
  */
 export function PageSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <HeroSkeleton />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">

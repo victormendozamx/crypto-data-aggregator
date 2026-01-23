@@ -9,6 +9,7 @@ import type { TokenPrice } from '@/lib/market-data';
 import SortableHeader, { type SortField, type SortOrder } from './SortableHeader';
 import CoinRow from './CoinRow';
 import TablePagination from './TablePagination';
+import { Search } from 'lucide-react';
 
 interface CoinsTableProps {
   coins: TokenPrice[];
@@ -35,7 +36,9 @@ export default function CoinsTable({
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="p-8 text-center">
-          <div className="text-4xl mb-4">🔍</div>
+          <div className="flex justify-center mb-4">
+            <Search className="w-10 h-10 text-gray-400" />
+          </div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
             No coins found
           </h3>
@@ -52,7 +55,7 @@ export default function CoinsTable({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 sticky top-0 z-10">
+            <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/50 sticky top-0 z-10">
               {/* Rank */}
               <SortableHeader
                 label="#"
@@ -62,12 +65,12 @@ export default function CoinsTable({
                 align="left"
                 className="w-12"
               />
-              
+
               {/* Coin */}
               <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
                 Coin
               </th>
-              
+
               {/* Price */}
               <SortableHeader
                 label="Price"
@@ -75,7 +78,7 @@ export default function CoinsTable({
                 currentSort={currentSort}
                 currentOrder={currentOrder}
               />
-              
+
               {/* 24h % */}
               <SortableHeader
                 label="24h %"
@@ -84,7 +87,7 @@ export default function CoinsTable({
                 currentOrder={currentOrder}
                 className="hidden sm:table-cell"
               />
-              
+
               {/* 7d % */}
               <SortableHeader
                 label="7d %"
@@ -93,7 +96,7 @@ export default function CoinsTable({
                 currentOrder={currentOrder}
                 className="hidden md:table-cell"
               />
-              
+
               {/* Market Cap */}
               <SortableHeader
                 label="Market Cap"
@@ -102,7 +105,7 @@ export default function CoinsTable({
                 currentOrder={currentOrder}
                 className="hidden lg:table-cell"
               />
-              
+
               {/* Volume */}
               <SortableHeader
                 label="24h Volume"
@@ -111,7 +114,7 @@ export default function CoinsTable({
                 currentOrder={currentOrder}
                 className="hidden xl:table-cell"
               />
-              
+
               {/* Circulating Supply */}
               <SortableHeader
                 label="Circulating Supply"
@@ -120,12 +123,12 @@ export default function CoinsTable({
                 currentOrder={currentOrder}
                 className="hidden xl:table-cell"
               />
-              
+
               {/* 7d Chart */}
               <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
                 Last 7 Days
               </th>
-              
+
               {/* Watchlist */}
               {showWatchlist && (
                 <th className="text-center text-gray-500 dark:text-gray-400 text-sm font-medium p-4 w-12">
@@ -136,16 +139,12 @@ export default function CoinsTable({
           </thead>
           <tbody>
             {coins.map((coin) => (
-              <CoinRow 
-                key={coin.id} 
-                coin={coin} 
-                showWatchlist={showWatchlist}
-              />
+              <CoinRow key={coin.id} coin={coin} showWatchlist={showWatchlist} />
             ))}
           </tbody>
         </table>
       </div>
-      
+
       {/* Pagination */}
       <TablePagination
         currentPage={currentPage}

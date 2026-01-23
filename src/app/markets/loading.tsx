@@ -17,7 +17,7 @@ export default function MarketsLoading() {
         <Header />
 
         {/* Global Stats Bar Skeleton */}
-        <div className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="bg-gray-50 dark:bg-black border-b border-gray-200 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center gap-4 py-3 overflow-hidden">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -75,9 +75,9 @@ export default function MarketsLoading() {
           {/* Category Tabs Skeleton */}
           <div className="flex gap-2 mb-4 overflow-hidden">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-              <Skeleton 
-                key={i} 
-                className={`h-10 rounded-full flex-shrink-0 ${i === 1 ? 'w-16' : 'w-24'}`} 
+              <Skeleton
+                key={i}
+                className={`h-10 rounded-full flex-shrink-0 ${i === 1 ? 'w-16' : 'w-24'}`}
               />
             ))}
           </div>
@@ -97,7 +97,7 @@ export default function MarketsLoading() {
           {/* Coins Table Skeleton */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             {/* Table Header */}
-            <div className="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
+            <div className="bg-gray-50 dark:bg-black/50 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center p-4 gap-4">
                 <Skeleton className="h-4 w-6" />
                 <Skeleton className="h-4 w-16" />
@@ -110,7 +110,7 @@ export default function MarketsLoading() {
                 <Skeleton className="h-4 w-20 hidden lg:block" />
               </div>
             </div>
-            
+
             {/* Table Rows */}
             <div className="divide-y divide-gray-100 dark:divide-gray-800">
               {Array.from({ length: 20 }).map((_, i) => (

@@ -316,7 +316,7 @@ export default function Header() {
 
       <header
         ref={headerRef}
-        className={`sticky top-0 z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-800 transition-all duration-300 ${
+        className={`sticky top-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-800 transition-all duration-300 ${
           isScrolled ? 'shadow-md' : 'shadow-sm'
         }`}
         style={{

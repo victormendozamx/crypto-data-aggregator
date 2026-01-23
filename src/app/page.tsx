@@ -14,6 +14,7 @@ import {
   type TokenPrice,
 } from '@/lib/market-data';
 import type { Metadata } from 'next';
+import { BarChart3 } from 'lucide-react';
 
 // Components
 import GlobalStatsBar from './markets/components/GlobalStatsBar';
@@ -244,8 +245,9 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
         <main className="px-4 py-6">
           {/* Page Header */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
-              📊 Cryptocurrency Markets
+            <h1 className="text-3xl font-bold text-black dark:text-white mb-2 flex items-center gap-3">
+              <BarChart3 className="w-8 h-8 text-brand-500" />
+              Cryptocurrency Markets
             </h1>
             <p className="text-neutral-600 dark:text-neutral-400">
               Live prices, charts, and market data for {totalCount.toLocaleString()} cryptocurrencies

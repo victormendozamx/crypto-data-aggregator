@@ -300,7 +300,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
+                    <tr className="bg-gray-50 dark:bg-black/50 border-b border-gray-200 dark:border-gray-700">
                       <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
                         #
                       </th>

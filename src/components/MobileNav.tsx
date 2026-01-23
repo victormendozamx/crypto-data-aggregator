@@ -3,22 +3,36 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { categories } from '@/lib/categories';
+import {
+  Home,
+  TrendingUp,
+  Landmark,
+  Flame,
+  Rocket,
+  Folder,
+  Tag,
+  Search,
+  Code,
+  Info,
+  Newspaper,
+  Star,
+} from 'lucide-react';
 
 // Navigation sections for mobile
 const mainNavItems = [
-  { href: '/', label: 'Home', icon: '🏠' },
-  { href: '/markets', label: 'Markets', icon: '📈' },
-  { href: '/defi', label: 'DeFi Dashboard', icon: '🏦' },
-  { href: '/trending', label: 'Trending', icon: '🔥' },
-  { href: '/movers', label: 'Top Movers', icon: '🚀' },
-  { href: '/sources', label: 'News Sources', icon: '📚' },
-  { href: '/topics', label: 'Topics', icon: '🏷️' },
-  { href: '/search', label: 'Search', icon: '🔍' },
+  { href: '/', label: 'Home', icon: Home },
+  { href: '/markets', label: 'Markets', icon: TrendingUp },
+  { href: '/defi', label: 'DeFi Dashboard', icon: Landmark },
+  { href: '/trending', label: 'Trending', icon: Flame },
+  { href: '/movers', label: 'Top Movers', icon: Rocket },
+  { href: '/sources', label: 'News Sources', icon: Folder },
+  { href: '/topics', label: 'Topics', icon: Tag },
+  { href: '/search', label: 'Search', icon: Search },
 ];
 
 const resourceLinks = [
-  { href: '/examples', label: 'Code Examples', icon: '💻' },
-  { href: '/about', label: 'About', icon: 'ℹ️' },
+  { href: '/examples', label: 'Code Examples', icon: Code },
+  { href: '/about', label: 'About', icon: Info },
 ];
 
 export function MobileNav() {
@@ -153,7 +167,7 @@ export function MobileNav() {
       <div
         ref={menuRef}
         id="mobile-menu"
-        className={`fixed top-0 right-0 h-full w-full sm:w-96 sm:max-w-[85vw] bg-white dark:bg-slate-900 shadow-2xl z-50 transform transition-transform duration-300 ease-out overflow-hidden flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-96 sm:max-w-[85vw] bg-white dark:bg-black shadow-2xl z-50 transform transition-transform duration-300 ease-out overflow-hidden flex flex-col ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="dialog"
@@ -161,11 +175,9 @@ export function MobileNav() {
         aria-label="Mobile navigation"
       >
         {/* Menu Header */}
-        <div className="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 px-5 py-4 flex items-center justify-between z-10">
+        <div className="sticky top-0 bg-white dark:bg-black border-b border-gray-100 dark:border-slate-800 px-5 py-4 flex items-center justify-between z-10">
           <div className="flex items-center gap-2.5">
-            <span className="text-xl" aria-hidden="true">
-              📰
-            </span>
+            <Newspaper className="w-5 h-5 text-brand-600 dark:text-amber-400" aria-hidden="true" />
             <span className="font-bold text-lg bg-gradient-to-r from-brand-600 to-brand-500 dark:from-amber-400 dark:to-amber-500 bg-clip-text text-transparent">
               Crypto News
             </span>
@@ -198,19 +210,22 @@ export function MobileNav() {
           <div className="px-4 py-6 space-y-6">
             {/* Main Navigation */}
             <div className="space-y-1">
-              {mainNavItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMenu}
-                  className="flex items-center gap-3 px-4 py-3.5 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl transition-colors focus-ring"
-                >
-                  <span className="text-xl w-7 text-center" aria-hidden="true">
-                    {item.icon}
-                  </span>
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              ))}
+              {mainNavItems.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMenu}
+                    className="flex items-center gap-3 px-4 py-3.5 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl transition-colors focus-ring"
+                  >
+                    <span className="w-7 flex justify-center" aria-hidden="true">
+                      <IconComponent className="w-5 h-5" />
+                    </span>
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Categories Section - Collapsible */}
@@ -289,27 +304,30 @@ export function MobileNav() {
                     : 'max-h-0 opacity-0'
                 }`}
               >
-                {resourceLinks.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl transition-colors focus-ring"
-                  >
-                    <span className="text-lg" aria-hidden="true">
-                      {item.icon}
-                    </span>
-                    <span className="font-medium">{item.label}</span>
-                  </Link>
-                ))}
+                {resourceLinks.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMenu}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl transition-colors focus-ring"
+                    >
+                      <span className="w-5 flex justify-center" aria-hidden="true">
+                        <IconComponent className="w-5 h-5" />
+                      </span>
+                      <span className="font-medium">{item.label}</span>
+                    </Link>
+                  );
+                })}
                 <a
                   href="https://github.com/nirholas/crypto-data-aggregator"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl transition-colors focus-ring"
                 >
-                  <span className="text-lg" aria-hidden="true">
-                    ⭐
+                  <span className="w-5 flex justify-center" aria-hidden="true">
+                    <Star className="w-5 h-5" />
                   </span>
                   <span className="font-medium">GitHub</span>
                   <svg
@@ -333,7 +351,7 @@ export function MobileNav() {
         </nav>
 
         {/* Footer CTA */}
-        <div className="sticky bottom-0 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 p-4">
+        <div className="sticky bottom-0 bg-white dark:bg-black border-t border-gray-100 dark:border-slate-800 p-4">
           <div className="bg-gradient-to-br from-brand-50 to-brand-100 dark:from-brand-900/30 dark:to-brand-800/30 rounded-2xl p-4 border border-brand-200/50 dark:border-brand-700/50">
             <h3 className="font-semibold text-brand-900 dark:text-brand-100 mb-1">
               Free Crypto API

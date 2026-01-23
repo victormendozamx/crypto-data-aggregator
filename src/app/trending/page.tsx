@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { Flame, TrendingUp, TrendingDown, Minus, BarChart3 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Trending Topics - Crypto Data Aggregator',
@@ -35,9 +36,9 @@ async function getTrending(): Promise<{ trending: TrendingTopic[]; articlesAnaly
 }
 
 const sentimentConfig = {
-  bullish: { emoji: '🟢', label: 'Bullish', color: 'text-green-600', bg: 'bg-green-100' },
-  bearish: { emoji: '🔴', label: 'Bearish', color: 'text-red-600', bg: 'bg-red-100' },
-  neutral: { emoji: '⚪', label: 'Neutral', color: 'text-gray-600', bg: 'bg-gray-100' },
+  bullish: { icon: TrendingUp, label: 'Bullish', color: 'text-green-600', bg: 'bg-green-100' },
+  bearish: { icon: TrendingDown, label: 'Bearish', color: 'text-red-600', bg: 'bg-red-100' },
+  neutral: { icon: Minus, label: 'Neutral', color: 'text-gray-600', bg: 'bg-gray-100' },
 };
 
 export default async function TrendingPage() {
@@ -50,7 +51,10 @@ export default async function TrendingPage() {
 
         <main className="px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">🔥 Trending Topics</h1>
+            <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+              <Flame className="w-8 h-8 text-orange-500" />
+              Trending Topics
+            </h1>
             <p className="text-gray-600">
               Real-time analysis of what&apos;s hot in crypto news • {data.articlesAnalyzed}{' '}
               articles analyzed
@@ -59,7 +63,9 @@ export default async function TrendingPage() {
 
           {data.trending.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {data.trending.map((topic, index) => (
+              {data.trending.map((topic, index) => {
+                const SentimentIcon = sentimentConfig[topic.sentiment].icon;
+                return (
                 <div
                   key={topic.topic}
                   className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition"
@@ -70,9 +76,9 @@ export default async function TrendingPage() {
                       <h3 className="text-xl font-bold">{topic.topic}</h3>
                     </div>
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${sentimentConfig[topic.sentiment].bg} ${sentimentConfig[topic.sentiment].color}`}
+                      className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${sentimentConfig[topic.sentiment].bg} ${sentimentConfig[topic.sentiment].color}`}
                     >
-                      {sentimentConfig[topic.sentiment].emoji}{' '}
+                      <SentimentIcon className="w-3 h-3" />
                       {sentimentConfig[topic.sentiment].label}
                     </span>
                   </div>
@@ -101,11 +107,14 @@ export default async function TrendingPage() {
                     View all {topic.topic} news →
                   </Link>
                 </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-16 bg-white rounded-xl">
-              <div className="text-6xl mb-4">📊</div>
+              <div className="flex justify-center mb-4">
+                <BarChart3 className="w-16 h-16 text-gray-400" />
+              </div>
               <h3 className="text-xl font-semibold text-gray-700 mb-2">Analyzing trends...</h3>
               <p className="text-gray-500">Check back soon for trending topics</p>
             </div>

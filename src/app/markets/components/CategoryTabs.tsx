@@ -7,20 +7,51 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useRef, useEffect, useState } from 'react';
+import { getCategoryIcon } from '@/lib/category-icons';
+import {
+  Globe,
+  Landmark,
+  Image,
+  Gamepad2,
+  Link2,
+  Package,
+  Dog,
+  Bot,
+  ArrowLeftRight,
+  DollarSign,
+  Lock,
+  HardDrive,
+  type LucideIcon,
+} from 'lucide-react';
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  'all': Globe,
+  'defi': Landmark,
+  'nft': Image,
+  'gaming': Gamepad2,
+  'layer-1': Link2,
+  'layer-2': Package,
+  'meme': Dog,
+  'ai': Bot,
+  'exchange': ArrowLeftRight,
+  'stablecoin': DollarSign,
+  'privacy': Lock,
+  'storage': HardDrive,
+};
 
 const CATEGORIES = [
-  { id: 'all', name: 'All', icon: '🌐' },
-  { id: 'defi', name: 'DeFi', icon: '🏦' },
-  { id: 'nft', name: 'NFT', icon: '🖼️' },
-  { id: 'gaming', name: 'Gaming', icon: '🎮' },
-  { id: 'layer-1', name: 'Layer 1', icon: '⛓️' },
-  { id: 'layer-2', name: 'Layer 2', icon: '📦' },
-  { id: 'meme', name: 'Memes', icon: '🐕' },
-  { id: 'ai', name: 'AI', icon: '🤖' },
-  { id: 'exchange', name: 'Exchange', icon: '💱' },
-  { id: 'stablecoin', name: 'Stablecoins', icon: '💵' },
-  { id: 'privacy', name: 'Privacy', icon: '🔒' },
-  { id: 'storage', name: 'Storage', icon: '💾' },
+  { id: 'all', name: 'All' },
+  { id: 'defi', name: 'DeFi' },
+  { id: 'nft', name: 'NFT' },
+  { id: 'gaming', name: 'Gaming' },
+  { id: 'layer-1', name: 'Layer 1' },
+  { id: 'layer-2', name: 'Layer 2' },
+  { id: 'meme', name: 'Memes' },
+  { id: 'ai', name: 'AI' },
+  { id: 'exchange', name: 'Exchange' },
+  { id: 'stablecoin', name: 'Stablecoins' },
+  { id: 'privacy', name: 'Privacy' },
+  { id: 'storage', name: 'Storage' },
 ];
 
 interface CategoryTabsProps {
@@ -119,7 +150,10 @@ export default function CategoryTabs({ activeCategory = 'all' }: CategoryTabsPro
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
-              <span>{category.icon}</span>
+              {(() => {
+                const IconComponent = CATEGORY_ICONS[category.id] || Globe;
+                return <IconComponent className="w-4 h-4" />;
+              })()}
               <span>{category.name}</span>
             </button>
           );
@@ -130,7 +164,9 @@ export default function CategoryTabs({ activeCategory = 'all' }: CategoryTabsPro
           href="/markets/categories"
           className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full font-medium text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
         >
-          <span>➕</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
           <span>More</span>
         </a>
       </div>

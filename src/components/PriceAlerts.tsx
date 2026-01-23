@@ -62,32 +62,31 @@ export function PriceAlerts() {
   // Fetch prices and check alerts
   useEffect(() => {
     const checkPrices = async () => {
-      if (alerts.filter(a => !a.triggered).length === 0) return;
-      
+      if (alerts.filter((a) => !a.triggered).length === 0) return;
+
       try {
-        const coinIds = [...new Set(alerts.map(a => a.coin))].join(',');
+        const coinIds = [...new Set(alerts.map((a) => a.coin))].join(',');
         const response = await fetch(
           `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd&include_24hr_change=true`
         );
         const data: PriceData = await response.json();
         setCurrentPrices(data);
-        
+
         // Check alerts
         const newTriggered: PriceAlert[] = [];
-        const updatedAlerts = alerts.map(alert => {
+        const updatedAlerts = alerts.map((alert) => {
           if (alert.triggered) return alert;
-          
+
           const price = data[alert.coin]?.usd;
           if (!price) return alert;
-          
-          const shouldTrigger = alert.direction === 'above' 
-            ? price >= alert.targetPrice
-            : price <= alert.targetPrice;
-          
+
+          const shouldTrigger =
+            alert.direction === 'above' ? price >= alert.targetPrice : price <= alert.targetPrice;
+
           if (shouldTrigger) {
             const triggered = { ...alert, triggered: true };
             newTriggered.push(triggered);
-            
+
             // Show browser notification
             if ('Notification' in window && Notification.permission === 'granted') {
               new Notification(`🚨 Price Alert: ${alert.symbol}`, {
@@ -95,16 +94,16 @@ export function PriceAlerts() {
                 icon: '/icons/icon-192x192.png',
               });
             }
-            
+
             return triggered;
           }
-          
+
           return alert;
         });
-        
+
         if (newTriggered.length > 0) {
           setAlerts(updatedAlerts);
-          setTriggeredAlerts(prev => [...prev, ...newTriggered]);
+          setTriggeredAlerts((prev) => [...prev, ...newTriggered]);
         }
       } catch (error) {
         console.error('Failed to check prices:', error);
@@ -123,7 +122,7 @@ export function PriceAlerts() {
 
   const addAlert = () => {
     if (!targetPrice || isNaN(parseFloat(targetPrice))) return;
-    
+
     const newAlert: PriceAlert = {
       id: Date.now().toString(),
       coin: selectedCoin.id,
@@ -133,10 +132,10 @@ export function PriceAlerts() {
       createdAt: new Date(),
       triggered: false,
     };
-    
-    setAlerts(prev => [...prev, newAlert]);
+
+    setAlerts((prev) => [...prev, newAlert]);
     setTargetPrice('');
-    
+
     // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission();
@@ -144,14 +143,14 @@ export function PriceAlerts() {
   };
 
   const removeAlert = (id: string) => {
-    setAlerts(prev => prev.filter(a => a.id !== id));
+    setAlerts((prev) => prev.filter((a) => a.id !== id));
   };
 
   const dismissTriggered = (id: string) => {
-    setTriggeredAlerts(prev => prev.filter(a => a.id !== id));
+    setTriggeredAlerts((prev) => prev.filter((a) => a.id !== id));
   };
 
-  const activeAlerts = alerts.filter(a => !a.triggered);
+  const activeAlerts = alerts.filter((a) => !a.triggered);
 
   return (
     <>
@@ -181,11 +180,10 @@ export function PriceAlerts() {
             <AlertTriangle className="w-5 h-5" />
             <div>
               <div className="font-medium">
-                {alert.symbol} {alert.direction === 'above' ? '↑' : '↓'} ${alert.targetPrice.toLocaleString()}
+                {alert.symbol} {alert.direction === 'above' ? '↑' : '↓'} $
+                {alert.targetPrice.toLocaleString()}
               </div>
-              <div className="text-sm text-amber-100">
-                Alert triggered!
-              </div>
+              <div className="text-sm text-amber-100">Alert triggered!</div>
             </div>
             <button
               onClick={() => dismissTriggered(alert.id)}
@@ -200,7 +198,7 @@ export function PriceAlerts() {
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden">
+          <div className="bg-white dark:bg-black rounded-xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2">
@@ -219,21 +217,25 @@ export function PriceAlerts() {
             <div className="p-4 space-y-4 overflow-y-auto max-h-[60vh]">
               {/* Add Alert Form */}
               <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg space-y-3">
-                <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">Create Alert</h3>
-                
+                <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">
+                  Create Alert
+                </h3>
+
                 <div className="grid grid-cols-2 gap-2">
                   <select
                     value={selectedCoin.id}
-                    onChange={(e) => setSelectedCoin(COINS.find(c => c.id === e.target.value) || COINS[0])}
+                    onChange={(e) =>
+                      setSelectedCoin(COINS.find((c) => c.id === e.target.value) || COINS[0])
+                    }
                     className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
                   >
-                    {COINS.map(coin => (
+                    {COINS.map((coin) => (
                       <option key={coin.id} value={coin.id}>
                         {coin.symbol} - {coin.name}
                       </option>
                     ))}
                   </select>
-                  
+
                   <select
                     value={direction}
                     onChange={(e) => setDirection(e.target.value as 'above' | 'below')}
@@ -243,10 +245,12 @@ export function PriceAlerts() {
                     <option value="below">Goes below</option>
                   </select>
                 </div>
-                
+
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      $
+                    </span>
                     <input
                       type="number"
                       value={targetPrice}
@@ -263,7 +267,7 @@ export function PriceAlerts() {
                     Add
                   </button>
                 </div>
-                
+
                 {currentPrices[selectedCoin.id] && (
                   <div className="text-xs text-gray-500">
                     Current price: ${currentPrices[selectedCoin.id].usd.toLocaleString()}
@@ -274,8 +278,10 @@ export function PriceAlerts() {
               {/* Active Alerts */}
               {activeAlerts.length > 0 && (
                 <div className="space-y-2">
-                  <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">Active Alerts</h3>
-                  {activeAlerts.map(alert => (
+                  <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">
+                    Active Alerts
+                  </h3>
+                  {activeAlerts.map((alert) => (
                     <div
                       key={alert.id}
                       className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
@@ -309,31 +315,37 @@ export function PriceAlerts() {
               )}
 
               {/* Triggered History */}
-              {alerts.filter(a => a.triggered).length > 0 && (
+              {alerts.filter((a) => a.triggered).length > 0 && (
                 <div className="space-y-2">
-                  <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">Triggered (History)</h3>
-                  {alerts.filter(a => a.triggered).slice(-5).reverse().map(alert => (
-                    <div
-                      key={alert.id}
-                      className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg opacity-60"
-                    >
-                      <div className="flex items-center gap-3">
-                        <AlertTriangle className="w-4 h-4 text-green-500" />
-                        <div>
-                          <div className="font-medium text-sm line-through">
-                            {alert.symbol} {alert.direction} ${alert.targetPrice.toLocaleString()}
-                          </div>
-                          <div className="text-xs text-gray-500">Triggered</div>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => removeAlert(alert.id)}
-                        className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                  <h3 className="font-medium text-sm text-gray-600 dark:text-gray-400">
+                    Triggered (History)
+                  </h3>
+                  {alerts
+                    .filter((a) => a.triggered)
+                    .slice(-5)
+                    .reverse()
+                    .map((alert) => (
+                      <div
+                        key={alert.id}
+                        className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg opacity-60"
                       >
-                        <X className="w-4 h-4 text-gray-400" />
-                      </button>
-                    </div>
-                  ))}
+                        <div className="flex items-center gap-3">
+                          <AlertTriangle className="w-4 h-4 text-green-500" />
+                          <div>
+                            <div className="font-medium text-sm line-through">
+                              {alert.symbol} {alert.direction} ${alert.targetPrice.toLocaleString()}
+                            </div>
+                            <div className="text-xs text-gray-500">Triggered</div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeAlert(alert.id)}
+                          className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                        >
+                          <X className="w-4 h-4 text-gray-400" />
+                        </button>
+                      </div>
+                    ))}
                 </div>
               )}
 

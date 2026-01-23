@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getTopCoins, formatPrice, formatPercent, formatNumber } from '@/lib/market-data';
 import type { Metadata } from 'next';
+import { Sparkles, Lightbulb } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Newly Listed Coins - Crypto Markets - Crypto Data Aggregator',
@@ -43,8 +44,9 @@ export default async function NewCoinsPage() {
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              🆕 Newly Listed Coins
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+              <Sparkles className="w-8 h-8 text-blue-500" />
+              Newly Listed Coins
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               Recently updated cryptocurrencies on the market
@@ -54,7 +56,7 @@ export default async function NewCoinsPage() {
           {/* Info Banner */}
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6">
             <div className="flex items-start gap-3">
-              <span className="text-xl">💡</span>
+              <Lightbulb className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-blue-800 dark:text-blue-200 font-medium">New listing alert</p>
                 <p className="text-blue-600 dark:text-blue-300 text-sm">
