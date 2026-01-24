@@ -84,6 +84,23 @@ async headers() {
 
 ## Rate Limiting
 
+### API v2 Rate Limiting ✅
+
+All `/api/v2/*` endpoints now include built-in rate limiting with response headers:
+
+```http
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1704067200
+```
+
+**Default Limits:**
+- **News/Articles**: 100 requests/minute
+- **Market Data**: 60 requests/minute
+- **AI Digest**: 20 requests/minute
+
+When rate limited, API returns `429 Too Many Requests` with `Retry-After` header.
+
 ### External API Limits
 
 | API            | Rate Limit    | Implementation       |

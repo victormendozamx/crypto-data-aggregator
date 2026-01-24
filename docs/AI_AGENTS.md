@@ -29,8 +29,65 @@ discovery mechanisms following emerging standards for AI-to-API communication.
 | **llms-full.txt**  | Extended documentation with examples |
 | **agents.json**    | Machine-readable endpoint catalog    |
 | **ai-plugin.json** | OpenAI plugin manifest               |
+| **mcp.json**       | MCP server configuration             |
 | **x402 Protocol**  | Autonomous micropayments             |
 | **Bazaar Listing** | Automatic discovery via x402 Bazaar  |
+| **OpenAPI Spec**   | Full API schema at `/api/v2/openapi.json` |
+
+---
+
+## MCP Server Support
+
+Crypto Data Aggregator provides a Model Context Protocol (MCP) server for AI agent integration.
+
+### Discovery
+
+Located at `/.well-known/mcp.json`:
+
+```bash
+curl https://crypto-data-aggregator.vercel.app/.well-known/mcp.json
+```
+
+### Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `get_coin_price` | Get real-time price data |
+| `get_market_data` | Comprehensive market data |
+| `get_defi_protocols` | DeFi protocol rankings |
+| `get_historical_data` | Historical OHLCV data |
+| `search_coins` | Search cryptocurrencies |
+| `get_fear_greed` | Fear & Greed Index |
+| `get_trending` | Trending coins |
+| `get_gas_prices` | Multi-chain gas prices |
+
+### Configuration for Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "crypto-data": {
+      "command": "npx",
+      "args": ["-y", "@crypto-data-aggregator/mcp"],
+      "env": {
+        "API_URL": "https://crypto-data-aggregator.vercel.app"
+      }
+    }
+  }
+}
+```
+
+### Self-Hosted MCP Server
+
+```bash
+# Clone and run locally
+git clone https://github.com/nirholas/crypto-data-aggregator
+cd crypto-data-aggregator/mcp
+npm install
+npm start
+```
 
 ---
 

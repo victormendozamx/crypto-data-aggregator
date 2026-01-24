@@ -7,8 +7,27 @@ centralized design token system.
 
 > **Migration Status: ✅ Complete** (January 2026)
 >
-> All data visualization components, loading states, and core UI have been migrated to design
-> tokens.
+> All data visualization components, loading states, coin pages, and core UI have been migrated to design
+> tokens. 60+ components now use the semantic color system.
+
+## Recent Migrations (January 2026)
+
+### Coin Page Components
+- `CoinConverter` - Currency converter widget
+- `CoinHeader` - Coin detail page header
+- `CoinInfo` - Links and description section
+- `CoinNews` - Related news articles
+- `DeveloperStats` - GitHub and community stats
+- `HistoricalTable` - OHLCV data table
+- `MarketStats` - Market cap, volume, supply
+- `MarketsTable` - Exchange trading pairs
+
+### Page Components
+- `DigestPage` - AI-powered daily digest
+- `SourcesPage` - News sources browser
+- `TopicPage` - Topic-filtered news
+- `FeaturedArticle` - Hero article component
+- `ReaderContent` - Article reader view
 
 ## Premium UI Component Library
 

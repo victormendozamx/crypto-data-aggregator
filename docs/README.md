@@ -12,7 +12,9 @@ contribute to the project.
 | [README](../README.md)                  | Project overview, quick start, features | Everyone      |
 | [CONTRIBUTING](../CONTRIBUTING.md)      | How to contribute to the project        | Contributors  |
 | [API Reference](API.md)                 | Complete API endpoint documentation     | Developers    |
+| [Swagger Docs](/docs/swagger)           | Interactive API documentation           | Developers    |
 | [AI Agents](AI_AGENTS.md)               | AI agent discoverability guide          | AI Developers |
+| [Archive System](ARCHIVE.md)            | Historical data collection              | Developers    |
 | [Architecture](ARCHITECTURE.md)         | System design and data flow             | Developers    |
 | [Tech Stack](TECH_STACK.md)             | Technologies, libraries, and tools      | Developers    |
 | [Components](COMPONENTS.md)             | React component reference               | Developers    |
@@ -40,7 +42,10 @@ contribute to the project.
 ### For Developers
 
 - [API Endpoints](API.md#market-data) - All available endpoints
+- [Swagger UI](/docs/swagger) - Interactive API documentation
+- [OpenAPI Spec](/api/v2/openapi.json) - Machine-readable API spec
 - [Component Library](COMPONENTS.md#data-display-components) - UI components
+- [Design System](DESIGN_SYSTEM.md) - Colors, tokens, and styling
 - [Tech Stack Details](TECH_STACK.md#core-framework) - Framework details
 
 ### Architecture Deep Dives

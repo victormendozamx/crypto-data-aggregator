@@ -4,11 +4,27 @@ Complete API documentation for Crypto Data Aggregator.
 
 All endpoints are prefixed with `/api/` and return JSON responses.
 
+> **📖 Interactive Documentation**: Try the [Swagger UI](/docs/swagger) for interactive API exploration with "Try it out" functionality.
+
+> **📥 OpenAPI Spec**: Download the [OpenAPI 3.1 specification](/api/v2/openapi.json) for code generation.
+
 ---
 
 ## Table of Contents
 
+- [Quick Start](#quick-start)
 - [Authentication](#authentication)
+- [Rate Limiting](#rate-limiting)
+- [API v2 (Recommended)](#api-v2-recommended)
+  - [Coins](#v2-coins)
+  - [Global Market](#v2-global)
+  - [DeFi](#v2-defi)
+  - [Gas Prices](#v2-gas)
+  - [Trending](#v2-trending)
+  - [Search](#v2-search)
+  - [Volatility](#v2-volatility)
+  - [Ticker](#v2-ticker)
+- [Legacy API v1](#legacy-api-v1)
 - [Market Data](#market-data)
   - [Get Coins](#get-coins)
   - [Get Coin Snapshot](#get-coin-snapshot)
@@ -36,13 +52,6 @@ All endpoints are prefixed with `/api/` and return JSON responses.
   - [Get Portfolio](#get-portfolio)
   - [Add Holding](#add-holding)
   - [Remove Holding](#remove-holding)
-- [Premium API v1](#premium-api-v1)
-  - [Overview](#premium-overview)
-  - [Get Coins (Premium)](#get-coins-premium)
-  - [Get Historical Data](#get-historical-data)
-  - [Export Data](#export-data)
-  - [Gas Prices](#gas-prices)
-  - [DeFi Analytics](#defi-analytics)
 - [Premium API (x402)](#premium-api-x402)
   - [AI Analysis](#ai-analysis)
   - [Whale Tracking](#whale-tracking)
@@ -50,7 +59,24 @@ All endpoints are prefixed with `/api/` and return JSON responses.
   - [Access Passes](#access-passes)
 - [Response Formats](#response-formats)
 - [Error Handling](#error-handling)
-- [Rate Limits](#rate-limits)
+
+---
+
+## Quick Start
+
+```bash
+# Get top coins - no API key needed!
+curl https://crypto-data-aggregator.vercel.app/api/v2/coins
+
+# Get Bitcoin price
+curl https://crypto-data-aggregator.vercel.app/api/v2/coin/bitcoin
+
+# Get global market data
+curl https://crypto-data-aggregator.vercel.app/api/v2/global
+
+# Search for coins
+curl "https://crypto-data-aggregator.vercel.app/api/v2/search?query=eth"
+```
 
 ---
 
@@ -97,7 +123,235 @@ curl -H "X-PAYMENT: <base64-encoded-payment>" \
 
 See [AUTHENTICATION.md](AUTHENTICATION.md) for detailed documentation.
 
-### Rate Limits by Tier
+---
+
+## Rate Limiting
+
+All API v2 endpoints include rate limiting with informative headers.
+
+### Rate Limit Headers
+
+Every response includes:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 87
+X-RateLimit-Reset: 1706054400000
+```
+
+### Rate Limit Tiers
+
+| Tier       | Requests/Min | Requests/Day | Price     |
+| ---------- | ------------ | ------------ | --------- |
+| Free       | 30           | 1,000        | $0        |
+| API Key    | 60           | 10,000       | Free      |
+| Pro        | 300          | Unlimited    | $29/month |
+| x402       | Unlimited    | Unlimited    | Per-call  |
+
+### Rate Limit Response
+
+When rate limited, you'll receive:
+
+```json
+{
+  "success": false,
+  "error": "Rate limit exceeded",
+  "code": "RATE_LIMIT_EXCEEDED",
+  "retryAfter": 60
+}
+```
+
+---
+
+## API v2 (Recommended)
+
+The v2 API is our latest, most stable API with consistent response formats, rate limiting, and OpenAPI documentation.
+
+**Base URL**: `https://crypto-data-aggregator.vercel.app/api/v2`
+
+### V2 Endpoints Overview
+
+| Endpoint | Description | Rate Limit |
+|----------|-------------|------------|
+| `GET /api/v2/coins` | List coins with market data | 30/min |
+| `GET /api/v2/coin/:id` | Single coin details | 30/min |
+| `GET /api/v2/global` | Global market statistics | 30/min |
+| `GET /api/v2/defi` | DeFi protocol rankings | 30/min |
+| `GET /api/v2/gas` | Multi-chain gas prices | 60/min |
+| `GET /api/v2/trending` | Trending cryptocurrencies | 30/min |
+| `GET /api/v2/search` | Search coins | 30/min |
+| `GET /api/v2/volatility` | Volatility metrics | 30/min |
+| `GET /api/v2/ticker` | Real-time ticker data | 60/min |
+| `GET /api/v2/historical/:id` | Historical OHLCV data | 30/min |
+
+### V2 Coins
+
+Get list of coins with market data.
+
+```bash
+GET /api/v2/coins?limit=50&order=market_cap_desc
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | number | 100 | Results per page (max 250) |
+| `order` | string | `market_cap_desc` | Sort order |
+| `category` | string | - | Filter by category |
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "coins": [
+      {
+        "id": "bitcoin",
+        "symbol": "btc",
+        "name": "Bitcoin",
+        "current_price": 95000,
+        "market_cap": 1850000000000,
+        "market_cap_rank": 1,
+        "price_change_24h": 2.5
+      }
+    ],
+    "total": 100
+  },
+  "meta": {
+    "endpoint": "/api/v2/coins",
+    "timestamp": "2026-01-24T12:00:00Z"
+  }
+}
+```
+
+### V2 Global Market
+
+Get global cryptocurrency market statistics.
+
+```bash
+GET /api/v2/global
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "market": {
+      "total_market_cap": 3500000000000,
+      "total_volume_24h": 150000000000,
+      "btc_dominance": 52.5,
+      "active_cryptocurrencies": 15000,
+      "market_cap_change_24h": 1.2
+    },
+    "sentiment": {
+      "value": 45,
+      "classification": "Fear",
+      "timestamp": "2026-01-24T12:00:00Z"
+    }
+  }
+}
+```
+
+### V2 DeFi
+
+Get DeFi protocol rankings by TVL.
+
+```bash
+GET /api/v2/defi?limit=50&category=lending
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | number | 50 | Results (max 100) |
+| `category` | string | - | Filter by category |
+
+### V2 Gas Prices
+
+Get multi-chain gas prices.
+
+```bash
+GET /api/v2/gas?network=all
+```
+
+**Parameters:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `network` | string | `all` | `ethereum`, `bitcoin`, or `all` |
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "ethereum": {
+      "slow": 15,
+      "standard": 20,
+      "fast": 30
+    },
+    "bitcoin": {
+      "slow": 5,
+      "standard": 10,
+      "fast": 20
+    },
+    "units": {
+      "ethereum": "gwei",
+      "bitcoin": "sat/vB"
+    }
+  }
+}
+```
+
+### V2 Search
+
+Search for cryptocurrencies.
+
+```bash
+GET /api/v2/search?query=ethereum
+```
+
+### V2 Volatility
+
+Get volatility and risk metrics.
+
+```bash
+GET /api/v2/volatility?ids=bitcoin,ethereum,solana
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "metrics": [
+      {
+        "id": "bitcoin",
+        "volatility30d": 45.2,
+        "sharpeRatio": 1.2,
+        "maxDrawdown": -15.3,
+        "beta": 1.0,
+        "riskLevel": "medium"
+      }
+    ],
+    "summary": {
+      "averageVolatility30d": 55.3,
+      "highRiskAssets": 1
+    }
+  }
+}
+```
+
+---
+
+## Rate Limits by Tier
 
 | Tier       | Requests/Day    | Price     |
 | ---------- | --------------- | --------- |

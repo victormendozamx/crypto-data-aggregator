@@ -9,6 +9,7 @@ Comprehensive testing documentation for Crypto Data Aggregator.
 - [Overview](#overview)
 - [Test Stack](#test-stack)
 - [Running Tests](#running-tests)
+- [API Testing](#api-testing)
 - [Writing Tests](#writing-tests)
 - [Mocking](#mocking)
 - [Coverage](#coverage)
@@ -36,6 +37,7 @@ Coverage:    V8 provider
 | [Testing Library](https://testing-library.com/)             | Component testing              |
 | [jsdom](https://github.com/jsdom/jsdom)                     | Browser environment simulation |
 | [V8 Coverage](https://v8.dev/blog/javascript-code-coverage) | Code coverage                  |
+| [Playwright](https://playwright.dev/)                       | E2E testing                    |
 
 ---
 
@@ -74,6 +76,47 @@ When running `npm run test:watch`:
 | `p` | Filter by filename    |
 | `t` | Filter by test name   |
 | `q` | Quit                  |
+
+---
+
+## API Testing
+
+### Swagger UI
+
+Test API endpoints interactively using the built-in Swagger UI:
+
+```
+Development: http://localhost:3000/docs/swagger
+Production:  https://cryptonews.direct/docs/swagger
+```
+
+Features:
+- **Try It Out** - Execute requests directly
+- **Response examples** - See expected response formats
+- **Authentication** - Test with API keys
+- **Rate limit headers** - View remaining quota
+
+### OpenAPI Specification
+
+Import the OpenAPI 3.1 spec into your API testing tool:
+
+```bash
+# Download OpenAPI spec
+curl https://cryptonews.direct/api/v2/openapi.json > openapi.json
+
+# Test with curl
+curl -X GET "https://cryptonews.direct/api/v2/news?limit=5"
+```
+
+### E2E API Tests
+
+```bash
+# Run Playwright E2E tests
+npm run test:e2e
+
+# Run specific API tests
+npx playwright test e2e/api.spec.ts
+```
 
 ---
 

@@ -11,6 +11,51 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **Swagger UI Documentation** (`/docs/swagger`)
+  - Interactive API documentation with "Try it out" functionality
+  - Dark theme styling matching app design
+  - API key persistence in localStorage
+  - OpenAPI 3.1 specification at `/api/v2/openapi.json`
+
+- **Rate Limiting for API v2** - All v2 endpoints now include rate limiting
+  - Rate limit headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+  - Configurable limits per endpoint
+  - Graceful 429 responses with retry information
+
+- **SEO Enhancements**
+  - JSON-LD structured data in layout for WebApplication, WebAPI, FAQPage schemas
+  - Enhanced sitemap with MCP and AI discovery files
+  - Schema.org structured data at `/schema.json`
+
+- **MCP Server Discovery Files**
+  - `/.well-known/mcp.json` - MCP server configuration
+  - `/.well-known/security.txt` - Security policy
+  - `/.well-known/attribution.txt` - Data source credits
+  - `/humans.txt` - Human-readable credits
+  - `CITATION.cff` - Academic citation file
+  - `.github/FUNDING.yml` - GitHub sponsorship
+
+- **Premium UI Component Library** (`src/components/ui/`)
+  - `Button` - 7 variants (primary, secondary, ghost, outline, danger, success, glass)
+  - `Card` - 6 variants (default, elevated, glass, gradient, interactive, outline)
+  - `Badge` - Price change, rank, status, and chain badges
+  - `Input` - Search input, number input, textarea
+  - `Avatar` - With AvatarGroup for stacking
+  - `Tooltip` - Customizable positioning
+  - `Progress` - Linear and circular variants
+  - `Skeleton` - Content placeholder
+  - `Divider` - Gradient and glow variants
+
+- **Upstash Redis REST API Support**
+  - Edge-compatible Redis caching via REST API
+  - Automatic fallback to memory cache
+  - Support for both traditional Redis and Upstash
+
+- **Design Token Migration** - 15+ coin page components migrated
+  - CoinConverter, CoinHeader, CoinInfo, CoinNews
+  - DeveloperStats, HistoricalTable, MarketStats, MarketsTable
+  - Digest page, Sources page, Topic page, FeaturedArticle, ReaderContent
+
 - **Archive Runner Script** - Local scheduler for archive collection without GitHub Actions
   - `npm run archive` - Single collection run
   - `npm run archive:watch` - Continuous hourly collection

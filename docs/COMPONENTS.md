@@ -209,6 +209,118 @@ Go to Markets | | `d` | Toggle dark mode | | `/` | Focus search | | `?` | Show s
 
 ---
 
+## Premium UI Component Library
+
+**Location**: `src/components/ui/`
+
+A comprehensive, design-token-based component library with consistent styling.
+
+### Import
+
+```tsx
+import { 
+  Button, IconButton,
+  Card, CardHeader, CardContent, CardFooter, StatCard, FeatureCard,
+  Badge, PriceChangeBadge, RankBadge, StatusBadge, ChainBadge,
+  Input, SearchInput, NumberInput, Textarea,
+  Tooltip, Progress, CircularProgress,
+  Divider, Avatar, AvatarGroup, Skeleton
+} from '@/components/ui';
+```
+
+### Button
+
+**Variants**: `primary` | `secondary` | `ghost` | `outline` | `danger` | `success` | `glass`
+**Sizes**: `sm` | `md` | `lg`
+
+```tsx
+<Button variant="primary" size="md">Click me</Button>
+<Button variant="glass" leftIcon={<StarIcon />}>Favorite</Button>
+<IconButton variant="ghost" icon={<MenuIcon />} label="Menu" />
+```
+
+### Card
+
+**Variants**: `default` | `elevated` | `glass` | `gradient` | `interactive` | `outline`
+
+```tsx
+<Card variant="elevated">
+  <CardHeader title="Market Overview" action={<Button size="sm">View All</Button>} />
+  <CardContent>Content here</CardContent>
+  <CardFooter>Footer content</CardFooter>
+</Card>
+
+<StatCard 
+  title="Total Market Cap" 
+  value="$3.5T" 
+  change={2.5} 
+  icon={<ChartIcon />} 
+/>
+```
+
+### Badge
+
+```tsx
+<Badge variant="success">Active</Badge>
+<PriceChangeBadge value={5.25} />
+<RankBadge rank={1} />
+<StatusBadge status="online" />
+<ChainBadge chain="ethereum" />
+```
+
+### Input
+
+```tsx
+<Input placeholder="Enter value" />
+<SearchInput placeholder="Search coins..." onSearch={handleSearch} />
+<NumberInput value={100} onChange={setValue} min={0} max={1000} />
+<Textarea rows={4} placeholder="Description" />
+```
+
+### Avatar
+
+```tsx
+<Avatar src="/avatar.png" alt="User" size="md" />
+<AvatarGroup>
+  <Avatar src="/user1.png" alt="User 1" />
+  <Avatar src="/user2.png" alt="User 2" />
+  <Avatar src="/user3.png" alt="User 3" />
+</AvatarGroup>
+```
+
+### Progress
+
+```tsx
+<Progress value={75} max={100} variant="primary" showLabel />
+<CircularProgress value={60} size={48} strokeWidth={4} />
+```
+
+### Tooltip
+
+```tsx
+<Tooltip content="Helpful information" position="top">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+### Divider
+
+```tsx
+<Divider />
+<Divider variant="gradient" />
+<Divider label="OR" />
+```
+
+### Skeleton
+
+```tsx
+<Skeleton className="h-4 w-32" />
+<Skeleton variant="circular" size={40} />
+<Skeleton variant="rectangular" height={100} />
+```
+
+---
+
 ## Data Display Components
 
 ### Cards
