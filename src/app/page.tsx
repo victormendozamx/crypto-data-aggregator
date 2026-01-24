@@ -320,19 +320,39 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
 function TrendingSectionSkeleton() {
   return (
     <div className="grid md:grid-cols-2 gap-4 mb-6">
+      {/* Hot Coins */}
       <div className="bg-surface rounded-xl border border-surface-border p-4">
-        <div className="h-6 w-32 bg-surface-hover rounded mb-3 animate-pulse" />
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="skeleton-enhanced w-5 h-5 rounded" />
+          <div className="skeleton-enhanced h-5 w-24 rounded" />
+        </div>
+        <div className="flex gap-2 overflow-hidden">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-10 w-24 bg-surface rounded-lg animate-pulse" />
+            <div
+              key={i}
+              className="skeleton-enhanced h-10 w-24 rounded-lg flex-shrink-0"
+              style={{ animationDelay: `${i * 50}ms` }}
+            />
           ))}
         </div>
       </div>
+      {/* Top Gainers */}
       <div className="bg-surface rounded-xl border border-surface-border p-4">
-        <div className="h-6 w-32 bg-surface-hover rounded mb-3 animate-pulse" />
+        <div className="flex items-center gap-2 mb-3">
+          <div className="skeleton-enhanced w-5 h-5 rounded" />
+          <div className="skeleton-enhanced h-5 w-28 rounded" />
+        </div>
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-8 bg-surface rounded animate-pulse" />
+            <div
+              key={i}
+              className="flex items-center gap-2"
+              style={{ animationDelay: `${i * 50}ms` }}
+            >
+              <div className="skeleton-enhanced w-6 h-6 rounded-full" />
+              <div className="skeleton-enhanced h-4 flex-1 rounded" />
+              <div className="skeleton-enhanced h-4 w-16 rounded" />
+            </div>
           ))}
         </div>
       </div>
@@ -344,7 +364,11 @@ function CategoryTabsSkeleton() {
   return (
     <div className="flex gap-2 mb-4 overflow-hidden">
       {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-        <div key={i} className="h-10 w-24 bg-surface rounded-full animate-pulse flex-shrink-0" />
+        <div
+          key={i}
+          className="skeleton-enhanced h-10 w-24 rounded-full flex-shrink-0"
+          style={{ animationDelay: `${i * 40}ms` }}
+        />
       ))}
     </div>
   );
@@ -353,10 +377,10 @@ function CategoryTabsSkeleton() {
 function SearchFiltersSkeleton() {
   return (
     <div className="flex flex-wrap gap-3 mb-4">
-      <div className="h-10 w-64 bg-surface rounded-xl animate-pulse" />
-      <div className="h-10 w-32 bg-surface rounded-lg animate-pulse" />
-      <div className="h-10 w-32 bg-surface rounded-lg animate-pulse" />
-      <div className="h-10 w-32 bg-surface rounded-lg animate-pulse" />
+      <div className="skeleton-enhanced h-10 w-64 rounded-xl" />
+      <div className="skeleton-enhanced h-10 w-32 rounded-lg" style={{ animationDelay: '50ms' }} />
+      <div className="skeleton-enhanced h-10 w-32 rounded-lg" style={{ animationDelay: '100ms' }} />
+      <div className="skeleton-enhanced h-10 w-32 rounded-lg" style={{ animationDelay: '150ms' }} />
     </div>
   );
 }
@@ -364,21 +388,52 @@ function SearchFiltersSkeleton() {
 function TableSkeleton() {
   return (
     <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
-      <div className="p-4 border-b border-surface-border">
-        <div className="h-6 w-48 bg-surface-hover rounded animate-pulse" />
+      {/* Header */}
+      <div className="p-4 border-b border-surface-border bg-surface-alt">
+        <div className="flex items-center gap-4">
+          <div className="skeleton-enhanced h-4 w-8 rounded" />
+          <div className="skeleton-enhanced h-4 w-16 rounded" />
+          <div className="skeleton-enhanced h-4 w-16 rounded ml-auto" />
+          <div className="skeleton-enhanced h-4 w-14 rounded hidden sm:block" />
+          <div className="skeleton-enhanced h-4 w-14 rounded hidden md:block" />
+          <div className="skeleton-enhanced h-4 w-20 rounded hidden lg:block" />
+        </div>
       </div>
+      {/* Rows with staggered animation */}
       <div className="divide-y divide-surface-border">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-          <div key={i} className="flex items-center gap-4 p-4">
-            <div className="h-4 w-8 bg-surface-hover rounded animate-pulse" />
-            <div className="h-8 w-8 bg-surface-hover rounded-full animate-pulse" />
-            <div className="h-4 w-32 bg-surface-hover rounded animate-pulse" />
-            <div className="h-4 w-20 bg-surface-hover rounded animate-pulse ml-auto" />
-            <div className="h-4 w-16 bg-surface-hover rounded animate-pulse hidden sm:block" />
-            <div className="h-4 w-16 bg-surface-hover rounded animate-pulse hidden md:block" />
-            <div className="h-4 w-24 bg-surface-hover rounded animate-pulse hidden lg:block" />
+          <div
+            key={i}
+            className="flex items-center gap-4 p-4 coin-row-skeleton"
+            style={{ animationDelay: `${i * 50}ms` }}
+          >
+            <div className="skeleton-enhanced h-4 w-8 rounded" />
+            <div className="skeleton-enhanced h-8 w-8 rounded-full" />
+            <div className="flex-1 space-y-1">
+              <div className="skeleton-enhanced h-4 w-24 rounded" />
+              <div className="skeleton-enhanced h-3 w-12 rounded" />
+            </div>
+            <div className="skeleton-enhanced h-4 w-20 rounded ml-auto" />
+            <div className="skeleton-enhanced h-4 w-14 rounded hidden sm:block" />
+            <div className="skeleton-enhanced h-4 w-14 rounded hidden md:block" />
+            <div className="skeleton-enhanced h-4 w-24 rounded hidden lg:block" />
+            <div className="skeleton-enhanced h-10 w-20 rounded-lg hidden lg:block" />
           </div>
         ))}
+      </div>
+      {/* Pagination skeleton */}
+      <div className="p-4 border-t border-surface-border flex items-center justify-between">
+        <div className="skeleton-enhanced h-4 w-32 rounded" />
+        <div className="flex gap-2">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              className="skeleton-enhanced h-8 w-8 rounded-lg"
+              style={{ animationDelay: `${550 + i * 30}ms` }}
+            />
+          ))}
+        </div>
+        <div className="skeleton-enhanced h-4 w-24 rounded" />
       </div>
     </div>
   );

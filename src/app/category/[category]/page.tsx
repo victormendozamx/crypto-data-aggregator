@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 import Posts from '@/components/Posts';
 import CategoryNav from '@/components/CategoryNav';
 import TrendingSidebar from '@/components/TrendingSidebar';
-import { MarketMoodWidget } from '@/components/MarketMoodWidget';
+import MarketMoodWidget from '@/components/MarketMoodWidget';
 import { getNewsByCategory } from '@/lib/crypto-news';
 import { BreadcrumbStructuredData, NewsListStructuredData } from '@/components/StructuredData';
 import type { Metadata } from 'next';

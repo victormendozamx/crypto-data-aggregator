@@ -61,9 +61,6 @@ export default async function DominancePage() {
             />
           </div>
         </div>
-            altcoins.
-          </p>
-        </div>
 
         <DominanceChart coins={coins} />
       </main>

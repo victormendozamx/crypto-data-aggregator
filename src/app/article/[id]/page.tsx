@@ -23,7 +23,7 @@ import TrendingSidebar from '@/components/TrendingSidebar';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/components/StructuredData';
 import ShareButtons from '@/components/ShareButtons';
 import ArticleReactions from '@/components/ArticleReactions';
-import { BookmarkButton } from '@/components/BookmarkButton';
+import BookmarkButton from '@/components/BookmarkButton';
 
 interface Props {
   params: Promise<{ id: string }>;

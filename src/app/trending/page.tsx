@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Flame, TrendingUp, TrendingDown, Minus, BarChart3 } from 'lucide-react';
-import { MarketMoodWidget } from '@/components/MarketMoodWidget';
+import MarketMoodWidget from '@/components/MarketMoodWidget';
 import { SocialBuzz } from '@/components/SocialBuzz';
 
 export const metadata: Metadata = {
