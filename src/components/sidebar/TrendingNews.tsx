@@ -39,7 +39,7 @@ export default function TrendingNews({
   const trendingArticles = articles.slice(0, 5);
 
   return (
-    <div className="bg-surface rounded-2xl shadow-card dark:shadow-none dark:border border-surface-border p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-surface-border p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-lg text-text-primary flex items-center gap-2">

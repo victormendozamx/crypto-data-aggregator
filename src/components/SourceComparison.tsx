@@ -153,13 +153,13 @@ export function SourceComparison() {
                 <tr
                   key={source.slug}
                   className={`border-b border-surface-border hover:bg-surface-hover ${
-                    index === 0 ? 'bg-amber-50 dark:bg-amber-900/10' : ''
+                    index === 0 ? 'bg-warning/10' : ''
                   }`}
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       {index === 0 && (
-                        <span className="text-xs font-medium text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded">
+                        <span className="text-xs font-medium text-warning bg-warning/20 px-1.5 py-0.5 rounded">
                           #1
                         </span>
                       )}

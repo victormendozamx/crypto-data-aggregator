@@ -22,9 +22,9 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
     : null;
 
   return (
-    <tr className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors group">
+    <tr className="border-b border-surface-border hover:bg-surface-hover transition-colors group">
       {/* Rank */}
-      <td className="p-4 text-gray-500 dark:text-gray-400 text-sm">{coin.market_cap_rank}</td>
+      <td className="p-4 text-text-muted text-sm">{coin.market_cap_rank}</td>
 
       {/* Coin */}
       <td className="p-4">
@@ -41,10 +41,10 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
             )}
           </div>
           <div>
-            <span className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            <span className="font-medium text-text-primary group-hover:text-primary transition-colors">
               {coin.name}
             </span>
-            <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+            <span className="text-text-muted text-sm ml-2">
               {coin.symbol.toUpperCase()}
             </span>
           </div>
@@ -52,7 +52,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
       </td>
 
       {/* Price */}
-      <td className="p-4 text-right font-medium text-gray-900 dark:text-white">
+      <td className="p-4 text-right font-medium text-text-primary">
         {formatPrice(coin.current_price)}
       </td>
 
@@ -60,8 +60,8 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
       <td
         className={`p-4 text-right font-medium hidden sm:table-cell ${
           (coin.price_change_percentage_24h || 0) >= 0
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
+            ? 'text-gain'
+            : 'text-loss'
         }`}
       >
         {formatPercent(coin.price_change_percentage_24h)}
@@ -71,38 +71,38 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
       <td
         className={`p-4 text-right font-medium hidden md:table-cell ${
           (coin.price_change_percentage_7d_in_currency || 0) >= 0
-            ? 'text-green-600 dark:text-green-400'
-            : 'text-red-600 dark:text-red-400'
+            ? 'text-gain'
+            : 'text-loss'
         }`}
       >
         {formatPercent(coin.price_change_percentage_7d_in_currency)}
       </td>
 
       {/* Market Cap */}
-      <td className="p-4 text-right text-gray-700 dark:text-gray-300 hidden lg:table-cell">
+      <td className="p-4 text-right text-text-secondary hidden lg:table-cell">
         ${formatNumber(coin.market_cap)}
       </td>
 
       {/* 24h Volume */}
-      <td className="p-4 text-right text-gray-700 dark:text-gray-300 hidden xl:table-cell">
+      <td className="p-4 text-right text-text-secondary hidden xl:table-cell">
         ${formatNumber(coin.total_volume)}
       </td>
 
       {/* Circulating Supply */}
       <td className="p-4 text-right hidden xl:table-cell">
         <div className="flex flex-col items-end">
-          <span className="text-gray-700 dark:text-gray-300">
+          <span className="text-text-secondary">
             {formatNumber(coin.circulating_supply)} {coin.symbol.toUpperCase()}
           </span>
           {supplyPercentage !== null && (
             <div className="w-full max-w-[80px] mt-1">
-              <div className="h-1.5 bg-gray-200 dark:bg-black rounded-full overflow-hidden">
+              <div className="h-1.5 bg-surface-hover rounded-full overflow-hidden">
                 <div
                   className="h-full bg-blue-500 rounded-full"
                   style={{ width: `${Math.min(supplyPercentage, 100)}%` }}
                 />
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-xs text-text-muted">
                 {supplyPercentage.toFixed(0)}%
               </span>
             </div>
@@ -118,7 +118,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
             change={coin.price_change_percentage_7d_in_currency || 0}
           />
         ) : (
-          <div className="w-[100px] h-[32px] bg-gray-100 dark:bg-black rounded" />
+          <div className="w-[100px] h-[32px] bg-surface-hover rounded" />
         )}
       </td>
 
@@ -130,7 +130,7 @@ export default function CoinRow({ coin, showWatchlist = false }: CoinRowProps) {
               e.preventDefault();
               // TODO: Implement watchlist functionality
             }}
-            className="text-gray-300 dark:text-gray-600 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors"
+            className="text-text-muted hover:text-warning transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

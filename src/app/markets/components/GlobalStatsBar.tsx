@@ -25,14 +25,14 @@ interface StatItemProps {
 function StatItem({ label, value, change, icon, color }: StatItemProps) {
   return (
     <div className="flex items-center gap-2 px-4 py-2 whitespace-nowrap">
-      {icon && <span className="text-sm text-neutral-900 dark:text-white">{icon}</span>}
-      <span className="text-neutral-500 dark:text-neutral-400 text-sm">{label}:</span>
-      <span className={`font-semibold ${color || 'text-neutral-900 dark:text-white'}`}>
+      {icon && <span className="text-sm text-text-primary">{icon}</span>}
+      <span className="text-text-muted text-sm">{label}:</span>
+      <span className={`font-semibold ${color || 'text-text-primary'}`}>
         {value}
       </span>
       {change != null && (
         <span
-          className={`text-sm ${change >= 0 ? 'text-neutral-900 dark:text-white font-semibold' : 'text-neutral-500 dark:text-neutral-400'}`}
+          className={`text-sm ${change >= 0 ? 'text-text-primary font-semibold' : 'text-text-muted'}`}
         >
           {formatPercent(change)}
         </span>
@@ -50,13 +50,13 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
 
   if (!global) {
     return (
-      <div className="bg-neutral-50 dark:bg-black border-b border-neutral-200 dark:border-neutral-800">
+      <div className="bg-surface-alt border-b border-surface-border">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-4 py-2 overflow-x-auto scrollbar-hide">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-6 w-32 bg-neutral-200 dark:bg-black rounded animate-pulse"
+                className="h-6 w-32 bg-surface-hover rounded animate-pulse"
               />
             ))}
           </div>
@@ -68,7 +68,7 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
   const fearGreedValue = fearGreed ? Number(fearGreed.value) : 0;
 
   return (
-    <div className="bg-neutral-50 dark:bg-black border-b border-neutral-200 dark:border-neutral-800">
+    <div className="bg-surface-alt border-b border-surface-border">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-1 py-1 overflow-x-auto scrollbar-hide">
           <StatItem
@@ -77,11 +77,11 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
             change={global.market_cap_change_percentage_24h_usd}
           />
 
-          <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+          <div className="h-4 w-px bg-surface-border mx-2" />
 
           <StatItem label="24h Volume" value={`$${formatNumber(global.total_volume?.usd)}`} />
 
-          <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+          <div className="h-4 w-px bg-surface-border mx-2" />
 
           <StatItem
             label="BTC Dominance"
@@ -91,7 +91,7 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
 
           {global.market_cap_percentage?.eth && (
             <>
-              <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+              <div className="h-4 w-px bg-surface-border mx-2" />
               <StatItem
                 label="ETH Dominance"
                 value={`${global.market_cap_percentage.eth.toFixed(1)}%`}
@@ -102,20 +102,20 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
 
           {fearGreed && mounted && (
             <>
-              <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+              <div className="h-4 w-px bg-surface-border mx-2" />
               <div className="flex items-center gap-2 px-4 py-2 whitespace-nowrap">
-                <span className="text-neutral-500 dark:text-neutral-400 text-sm">
+                <span className="text-text-muted text-sm">
                   Fear & Greed:
                 </span>
-                <span className="font-semibold text-neutral-900 dark:text-white">
+                <span className="font-semibold text-text-primary">
                   {fearGreed.value}
                 </span>
-                <span className="text-neutral-500 dark:text-neutral-400 text-xs">
+                <span className="text-text-muted text-xs">
                   ({fearGreed.value_classification})
                 </span>
-                <div className="w-16 h-2 bg-neutral-200 dark:bg-black rounded-full overflow-hidden">
+                <div className="w-16 h-2 bg-surface-hover rounded-full overflow-hidden">
                   <div
-                    className="h-full transition-all bg-black dark:bg-white"
+                    className="h-full transition-all bg-text-primary"
                     style={{ width: `${fearGreedValue}%` }}
                   />
                 </div>
@@ -123,14 +123,14 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
             </>
           )}
 
-          <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+          <div className="h-4 w-px bg-surface-border mx-2" />
 
           <StatItem
             label="Active Cryptos"
             value={global.active_cryptocurrencies?.toLocaleString() || '0'}
           />
 
-          <div className="h-4 w-px bg-neutral-300 dark:bg-black mx-2" />
+          <div className="h-4 w-px bg-surface-border mx-2" />
 
           <StatItem label="Markets" value={global.markets?.toLocaleString() || '0'} />
         </div>

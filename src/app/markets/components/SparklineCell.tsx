@@ -42,7 +42,7 @@ export default function SparklineCell({
 
   if (!data || data.length < 2) {
     return (
-      <div className="bg-gray-100 dark:bg-black rounded animate-pulse" style={{ width, height }} />
+      <div className="bg-surface-hover rounded animate-pulse" style={{ width, height }} />
     );
   }
 

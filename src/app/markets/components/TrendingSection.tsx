@@ -38,11 +38,11 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
   return (
     <div className="grid md:grid-cols-2 gap-4 mb-6">
       {/* Trending Coins */}
-      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
+      <div className="bg-surface rounded-xl border border-surface-border p-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-bold text-lg flex items-center gap-2">
             <svg
-              className="w-5 h-5 text-neutral-900 dark:text-white"
+              className="w-5 h-5 text-text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -54,11 +54,11 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
                 d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"
               />
             </svg>
-            <span className="text-neutral-900 dark:text-white">Trending</span>
+            <span className="text-text-primary">Trending</span>
           </h2>
           <Link
             href="/markets/trending"
-            className="text-sm text-neutral-900 dark:text-white hover:underline"
+            className="text-sm text-text-primary hover:underline"
           >
             View All →
           </Link>
@@ -68,9 +68,9 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
             <Link
               key={coin.id}
               href={`/coin/${coin.id}`}
-              className="flex-shrink-0 flex items-center gap-2 bg-neutral-50 dark:bg-black hover:bg-neutral-100 dark:hover:bg-black rounded-lg px-3 py-2 transition-colors"
+              className="flex-shrink-0 flex items-center gap-2 bg-surface-alt hover:bg-surface-hover rounded-lg px-3 py-2 transition-colors"
             >
-              <span className="text-gray-400 text-xs font-medium">{index + 1}</span>
+              <span className="text-text-muted text-xs font-medium">{index + 1}</span>
               <div className="relative w-6 h-6">
                 {coin.thumb && (
                   <Image
@@ -84,7 +84,7 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
               </div>
               <span className="font-medium text-sm">{coin.symbol.toUpperCase()}</span>
               {coin.market_cap_rank && (
-                <span className="text-gray-400 text-xs">#{coin.market_cap_rank}</span>
+                <span className="text-text-muted text-xs">#{coin.market_cap_rank}</span>
               )}
             </Link>
           ))}
@@ -92,12 +92,12 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
       </div>
 
       {/* Top Gainers/Losers */}
-      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
+      <div className="bg-surface rounded-xl border border-surface-border p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <h2 className="font-bold text-lg flex items-center gap-2">
               <svg
-                className="w-5 h-5 text-neutral-900 dark:text-white"
+                className="w-5 h-5 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -118,18 +118,18 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
                   />
                 )}
               </svg>
-              <span className="text-neutral-900 dark:text-white">
+              <span className="text-text-primary">
                 Top {activeTab === 'gainers' ? 'Gainers' : 'Losers'}
               </span>
             </h2>
           </div>
-          <div className="flex bg-neutral-100 dark:bg-black rounded-lg p-0.5">
+          <div className="flex bg-surface-alt rounded-lg p-0.5">
             <button
               onClick={() => setActiveTab('gainers')}
               className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                 activeTab === 'gainers'
-                  ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow-sm'
-                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
+                  ? 'bg-surface text-text-primary shadow-sm'
+                  : 'text-text-muted hover:text-text-primary'
               }`}
             >
               Gainers
@@ -138,8 +138,8 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
               onClick={() => setActiveTab('losers')}
               className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                 activeTab === 'losers'
-                  ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow-sm'
-                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
+                  ? 'bg-surface text-text-primary shadow-sm'
+                  : 'text-text-muted hover:text-text-primary'
               }`}
             >
               Losers
@@ -152,7 +152,7 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
               <Link
                 key={coin.id}
                 href={`/coin/${coin.id}`}
-                className="flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-black rounded-lg px-2 py-1.5 transition-colors"
+                className="flex items-center justify-between hover:bg-surface-hover rounded-lg px-2 py-1.5 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="relative w-6 h-6">
@@ -166,16 +166,16 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
                       />
                     )}
                   </div>
-                  <span className="font-medium text-sm text-neutral-900 dark:text-white">
+                  <span className="font-medium text-sm text-text-primary">
                     {coin.symbol.toUpperCase()}
                   </span>
-                  <span className="text-neutral-500 text-xs hidden sm:inline">{coin.name}</span>
+                  <span className="text-text-muted text-xs hidden sm:inline">{coin.name}</span>
                 </div>
                 <span
                   className={`font-semibold text-sm ${
                     (coin.price_change_percentage_24h || 0) >= 0
-                      ? 'text-neutral-900 dark:text-white'
-                      : 'text-neutral-500 dark:text-neutral-400'
+                      ? 'text-gain'
+                      : 'text-loss'
                   }`}
                 >
                   {formatPercent(coin.price_change_percentage_24h)}
@@ -183,10 +183,10 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
               </Link>
             ))}
         </div>
-        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800">
+        <div className="mt-3 pt-3 border-t border-surface-border">
           <Link
             href={activeTab === 'gainers' ? '/markets/gainers' : '/markets/losers'}
-            className="text-sm text-neutral-900 dark:text-white hover:underline"
+            className="text-sm text-text-primary hover:underline"
           >
             View All {activeTab === 'gainers' ? 'Gainers' : 'Losers'} →
           </Link>

@@ -64,37 +64,37 @@ const sourceAccents: Record<
   CoinDesk: {
     solid: 'bg-blue-500',
     gradient: 'from-blue-500 to-indigo-500',
-    text: 'text-blue-600 dark:text-blue-400',
+    text: 'text-blue-500',
   },
   'The Block': {
     solid: 'bg-purple-500',
     gradient: 'from-purple-500 to-violet-500',
-    text: 'text-purple-600 dark:text-purple-400',
+    text: 'text-purple-500',
   },
   Decrypt: {
     solid: 'bg-emerald-500',
     gradient: 'from-emerald-500 to-teal-500',
-    text: 'text-emerald-600 dark:text-emerald-400',
+    text: 'text-emerald-500',
   },
   CoinTelegraph: {
     solid: 'bg-orange-500',
     gradient: 'from-orange-500 to-red-500',
-    text: 'text-orange-600 dark:text-orange-400',
+    text: 'text-orange-500',
   },
   'Bitcoin Magazine': {
     solid: 'bg-amber-500',
     gradient: 'from-amber-500 to-yellow-500',
-    text: 'text-amber-600 dark:text-amber-400',
+    text: 'text-amber-500',
   },
   Blockworks: {
     solid: 'bg-indigo-500',
     gradient: 'from-indigo-500 to-blue-500',
-    text: 'text-indigo-600 dark:text-indigo-400',
+    text: 'text-indigo-500',
   },
   'The Defiant': {
     solid: 'bg-pink-500',
     gradient: 'from-pink-500 to-rose-500',
-    text: 'text-pink-600 dark:text-pink-400',
+    text: 'text-pink-500',
   },
 };
 

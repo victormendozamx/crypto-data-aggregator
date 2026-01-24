@@ -95,7 +95,7 @@ export function NavLink({
   children,
   href,
   activePath,
-  activeClassName = 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30',
+  activeClassName = 'text-brand-600 bg-brand-50',
   inactiveClassName = 'text-text-secondary hover:text-text-primary hover:bg-surface-alt',
   className = '',
   ...props

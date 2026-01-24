@@ -65,7 +65,7 @@ export default function SortableHeader({
 
   return (
     <th 
-      className={`${alignClass} text-gray-500 dark:text-gray-400 text-sm font-medium p-4 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 transition-colors select-none ${className}`}
+      className={`${alignClass} text-text-muted text-sm font-medium p-4 cursor-pointer hover:text-text-secondary transition-colors select-none ${className}`}
       onClick={handleClick}
     >
       <div className={`flex items-center gap-1 ${align === 'right' ? 'justify-end' : align === 'center' ? 'justify-center' : 'justify-start'}`}>

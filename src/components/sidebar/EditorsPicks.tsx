@@ -57,7 +57,7 @@ export default function EditorsPicks({ articles }: EditorsPicksProps) {
   const picks = getVariedArticles(articles, 3);
 
   return (
-    <div className="bg-surface rounded-2xl shadow-card dark:shadow-none dark:border border-surface-border p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-surface-border p-6">
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
         <span className="text-xl" aria-hidden="true">

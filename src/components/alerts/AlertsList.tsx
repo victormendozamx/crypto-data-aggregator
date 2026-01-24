@@ -188,7 +188,7 @@ function AlertItem({ alert, onRemove, onReactivate }: AlertItemProps) {
             {alert.coinSymbol.toUpperCase()}
           </Link>
           {alert.repeat && (
-            <span className="text-xs bg-purple-500/20 text-purple-600 dark:text-purple-400 px-1.5 py-0.5 rounded">
+            <span className="text-xs bg-purple-500/20 text-purple-500 px-1.5 py-0.5 rounded">
               Repeat
             </span>
           )}

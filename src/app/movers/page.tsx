@@ -93,7 +93,7 @@ export default async function MoversPage() {
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Top Gainers */}
             <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
-              <div className="p-4 border-b border-surface-border bg-neutral-50 dark:bg-black">
+              <div className="p-4 border-b border-surface-border bg-surface-alt">
                 <div className="flex items-center gap-2">
                   <svg
                     className="w-6 h-6 text-text-primary"

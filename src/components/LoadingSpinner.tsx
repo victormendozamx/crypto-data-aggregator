@@ -85,7 +85,7 @@ export default function LoadingSpinner({
           <div
             className={`
               relative ${sizeClasses[size]}
-              border-4 border-brand-200 dark:border-brand-900
+              border-4 border-brand-200
               border-t-brand-500
               rounded-full
               animate-spin

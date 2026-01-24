@@ -73,9 +73,9 @@ export function SocialBuzz() {
       case 'bullish':
         return 'bg-surface-alt text-text-primary';
       case 'bearish':
-        return 'bg-neutral-400 dark:bg-neutral-600 text-white';
+        return 'bg-surface-hover text-text-secondary';
       default:
-        return 'bg-surface-alt text-neutral-700 dark:text-neutral-300';
+        return 'bg-surface-alt text-text-secondary';
     }
   };
 
@@ -98,8 +98,8 @@ export function SocialBuzz() {
           onClick={() => setTab('trending')}
           className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             tab === 'trending'
-              ? 'border-neutral-900 dark:border-white text-neutral-900 dark:text-white'
-              : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+              ? 'border-primary text-text-primary'
+              : 'border-transparent text-text-muted hover:text-text-secondary'
           }`}
         >
           <FireIcon className="w-4 h-4" />
@@ -109,8 +109,8 @@ export function SocialBuzz() {
           onClick={() => setTab('mentions')}
           className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             tab === 'mentions'
-              ? 'border-neutral-900 dark:border-white text-neutral-900 dark:text-white'
-              : 'border-transparent text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'
+              ? 'border-primary text-text-primary'
+              : 'border-transparent text-text-muted hover:text-text-secondary'
           }`}
         >
           <ChatBubbleLeftRightIcon className="w-4 h-4" />
@@ -127,22 +127,22 @@ export function SocialBuzz() {
               href={`/coin/${coin.id}`}
               className="flex items-center gap-4 p-4 bg-surface border border-surface-border rounded-lg hover:bg-surface-alt transition-colors"
             >
-              <span className="text-lg font-bold text-neutral-400 w-6">{index + 1}</span>
+              <span className="text-lg font-bold text-text-muted w-6">{index + 1}</span>
               <img src={coin.thumb} alt={coin.name} className="w-8 h-8 rounded-full" />
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-neutral-900 dark:text-white truncate">
+                <div className="font-medium text-text-primary truncate">
                   {coin.name}
                 </div>
-                <div className="text-sm text-neutral-500 dark:text-neutral-400 uppercase">
+                <div className="text-sm text-text-muted uppercase">
                   {coin.symbol}
                 </div>
               </div>
               {coin.market_cap_rank && (
-                <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                <div className="text-sm text-text-muted">
                   Rank #{coin.market_cap_rank}
                 </div>
               )}
-              <ArrowTrendingUpIcon className="w-5 h-5 text-neutral-400" />
+              <ArrowTrendingUpIcon className="w-5 h-5 text-text-muted" />
             </a>
           ))}
         </div>
@@ -151,7 +151,7 @@ export function SocialBuzz() {
       {/* Social Mentions Tab */}
       {tab === 'mentions' && (
         <div className="space-y-3">
-          <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+          <div className="text-sm text-text-muted mb-4">
             Social activity from Twitter, Reddit, Discord & Telegram
           </div>
           {socialMetrics.map((metric, index) => (
@@ -159,21 +159,21 @@ export function SocialBuzz() {
               key={metric.symbol}
               className="flex items-center gap-4 p-4 bg-surface border border-surface-border rounded-lg"
             >
-              <span className="text-lg font-bold text-neutral-400 w-6">{index + 1}</span>
+              <span className="text-lg font-bold text-text-muted w-6">{index + 1}</span>
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-neutral-900 dark:text-white">
+                <div className="font-medium text-text-primary">
                   {metric.coin}
-                  <span className="ml-2 text-sm text-neutral-500 dark:text-neutral-400">
+                  <span className="ml-2 text-sm text-text-muted">
                     {metric.symbol}
                   </span>
                 </div>
-                <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                <div className="text-sm text-text-muted">
                   {metric.mentions.toLocaleString()} mentions · Top on {metric.topPlatform}
                 </div>
               </div>
               <div
                 className={`text-xs font-medium px-2 py-1 rounded ${
-                  metric.change >= 0 ? 'text-neutral-900 dark:text-white' : 'text-neutral-500'
+                  metric.change >= 0 ? 'text-gain' : 'text-loss'
                 }`}
               >
                 {metric.change >= 0 ? '+' : ''}

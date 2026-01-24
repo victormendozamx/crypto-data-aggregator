@@ -34,15 +34,15 @@ export default function CoinsTable({
 
   if (coins.length === 0) {
     return (
-      <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
         <div className="p-8 text-center">
           <div className="flex justify-center mb-4">
-            <Search className="w-10 h-10 text-gray-400" />
+            <Search className="w-10 h-10 text-text-muted" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-lg font-semibold text-text-primary mb-2">
             No coins found
           </h3>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-text-muted">
             Try adjusting your filters or search query
           </p>
         </div>
@@ -51,11 +51,11 @@ export default function CoinsTable({
   }
 
   return (
-    <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-black/50 sticky top-0 z-10">
+            <tr className="border-b border-surface-border bg-surface-alt sticky top-0 z-10">
               {/* Rank */}
               <SortableHeader
                 label="#"
@@ -67,7 +67,7 @@ export default function CoinsTable({
               />
 
               {/* Coin */}
-              <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+              <th className="text-left text-text-muted text-sm font-medium p-4">
                 Coin
               </th>
 
@@ -125,13 +125,13 @@ export default function CoinsTable({
               />
 
               {/* 7d Chart */}
-              <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
+              <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                 Last 7 Days
               </th>
 
               {/* Watchlist */}
               {showWatchlist && (
-                <th className="text-center text-gray-500 dark:text-gray-400 text-sm font-medium p-4 w-12">
+                <th className="text-center text-text-muted text-sm font-medium p-4 w-12">
                   <span className="sr-only">Watchlist</span>
                 </th>
               )}

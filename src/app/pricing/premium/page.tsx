@@ -133,7 +133,7 @@ export default function PremiumPricingPage() {
       {/* How It Works */}
       <section className="py-16 px-4 bg-surface">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">How It Works</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-text-primary">How It Works</h2>
           <div className="grid md:grid-cols-4 gap-8">
             {[
               { step: 1, title: 'Make Request', description: 'Call any premium endpoint' },
@@ -142,13 +142,13 @@ export default function PremiumPricingPage() {
               { step: 4, title: 'Get Data', description: 'Receive premium data instantly' },
             ].map(({ step, title, description }) => (
               <div key={step} className="text-center">
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-primary">
                     {step}
                   </span>
                 </div>
-                <h3 className="font-semibold mb-2 dark:text-white">{title}</h3>
-                <p className="text-gray-600 dark:text-gray-400">{description}</p>
+                <h3 className="font-semibold mb-2 text-text-primary">{title}</h3>
+                <p className="text-text-secondary">{description}</p>
               </div>
             ))}
           </div>
@@ -158,10 +158,10 @@ export default function PremiumPricingPage() {
       {/* Access Passes */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4 dark:text-white">
+          <h2 className="text-3xl font-bold text-center mb-4 text-text-primary">
             Unlimited Access Passes
           </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-12">
+          <p className="text-center text-text-secondary mb-12">
             For power users: unlimited requests for a fixed price
           </p>
           <div className="grid md:grid-cols-3 gap-8">
@@ -170,22 +170,22 @@ export default function PremiumPricingPage() {
                 key={pass.name}
                 className={`rounded-xl p-8 ${
                   pass.popular
-                    ? 'bg-blue-600 text-white ring-4 ring-blue-300 dark:ring-blue-800'
-                    : 'bg-surface border border-gray-200 dark:border-gray-700'
+                    ? 'bg-blue-600 text-white ring-4 ring-blue-300'
+                    : 'bg-surface border border-surface-border'
                 }`}
               >
                 {pass.popular && <div className="text-sm font-semibold mb-2">MOST POPULAR</div>}
-                <h3 className={`text-2xl font-bold mb-2 ${pass.popular ? '' : 'dark:text-white'}`}>
+                <h3 className={`text-2xl font-bold mb-2 ${pass.popular ? '' : 'text-text-primary'}`}>
                   {pass.name}
                 </h3>
                 <div className="text-4xl font-bold mb-4">${pass.price.toFixed(2)}</div>
                 <p
-                  className={`mb-6 ${pass.popular ? 'text-blue-100' : 'text-gray-600 dark:text-gray-400'}`}
+                  className={`mb-6 ${pass.popular ? 'text-blue-100' : 'text-text-secondary'}`}
                 >
                   {pass.duration} of unlimited access
                 </p>
                 <ul
-                  className={`space-y-3 mb-8 ${pass.popular ? 'text-blue-100' : 'text-gray-600 dark:text-gray-400'}`}
+                  className={`space-y-3 mb-8 ${pass.popular ? 'text-blue-100' : 'text-text-secondary'}`}
                 >
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-green-400" /> All premium endpoints
@@ -210,8 +210,8 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4 bg-surface">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <Brain className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
-            <h2 className="text-3xl font-bold dark:text-white">AI Analysis</h2>
+            <Brain className="w-10 h-10 text-indigo-500" />
+            <h2 className="text-3xl font-bold text-text-primary">AI Analysis</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {aiEndpoints.map((endpoint) => (
@@ -225,8 +225,8 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <Fish className="w-10 h-10 text-blue-600 dark:text-blue-400" />
-            <h2 className="text-3xl font-bold dark:text-white">Whale Tracking</h2>
+            <Fish className="w-10 h-10 text-primary" />
+            <h2 className="text-3xl font-bold text-text-primary">Whale Tracking</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {whaleEndpoints.map((endpoint) => (
@@ -240,8 +240,8 @@ export default function PremiumPricingPage() {
       <section className="py-16 px-4 bg-surface">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <BarChart3 className="w-10 h-10 text-purple-600 dark:text-purple-400" />
-            <h2 className="text-3xl font-bold dark:text-white">Data & Analytics</h2>
+            <BarChart3 className="w-10 h-10 text-purple-500" />
+            <h2 className="text-3xl font-bold text-text-primary">Data & Analytics</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {dataEndpoints.map((endpoint) => (
@@ -254,35 +254,35 @@ export default function PremiumPricingPage() {
       {/* Comparison */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">Why Pay-Per-Use?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-text-primary">Why Pay-Per-Use?</h2>
           <div className="bg-surface rounded-xl overflow-hidden shadow-lg">
             <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-black">
+              <thead className="bg-surface-alt">
                 <tr>
-                  <th className="px-6 py-4 text-left dark:text-white">Provider</th>
-                  <th className="px-6 py-4 text-left dark:text-white">Price</th>
-                  <th className="px-6 py-4 text-left dark:text-white">Model</th>
+                  <th className="px-6 py-4 text-left text-text-primary">Provider</th>
+                  <th className="px-6 py-4 text-left text-text-primary">Price</th>
+                  <th className="px-6 py-4 text-left text-text-primary">Model</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="divide-y divide-surface-border">
                 <tr>
-                  <td className="px-6 py-4 font-semibold text-blue-600">Crypto Data Aggregator</td>
-                  <td className="px-6 py-4 dark:text-white">From $0.01</td>
-                  <td className="px-6 py-4 text-green-600 font-medium flex items-center gap-1">
+                  <td className="px-6 py-4 font-semibold text-primary">Crypto Data Aggregator</td>
+                  <td className="px-6 py-4 text-text-primary">From $0.01</td>
+                  <td className="px-6 py-4 text-gain font-medium flex items-center gap-1">
                     Pay per use <Check className="w-4 h-4" />
                   </td>
                 </tr>
-                <tr className="text-gray-600 dark:text-gray-400">
+                <tr className="text-text-secondary">
                   <td className="px-6 py-4">CoinGecko Pro</td>
                   <td className="px-6 py-4">$129/month</td>
                   <td className="px-6 py-4">Subscription</td>
                 </tr>
-                <tr className="text-gray-600 dark:text-gray-400">
+                <tr className="text-text-secondary">
                   <td className="px-6 py-4">CoinMarketCap</td>
                   <td className="px-6 py-4">$99/month</td>
                   <td className="px-6 py-4">Subscription</td>
                 </tr>
-                <tr className="text-gray-600 dark:text-gray-400">
+                <tr className="text-text-secondary">
                   <td className="px-6 py-4">Messari</td>
                   <td className="px-6 py-4">$249/month</td>
                   <td className="px-6 py-4">Subscription</td>
@@ -290,7 +290,7 @@ export default function PremiumPricingPage() {
               </tbody>
             </table>
           </div>
-          <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
+          <p className="text-center mt-6 text-text-secondary">
             Make 100 requests/month? Pay ~$2 instead of $129.
           </p>
         </div>
@@ -335,15 +335,15 @@ function EndpointCard({
   description: string;
 }) {
   return (
-    <div className="bg-gray-50 dark:bg-black rounded-lg p-6 hover:shadow-lg transition">
+    <div className="bg-surface-alt rounded-lg p-6 hover:shadow-lg transition">
       <div className="flex justify-between items-start mb-3">
-        <h3 className="font-semibold text-lg dark:text-white">{name}</h3>
-        <span className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-sm font-medium">
+        <h3 className="font-semibold text-lg text-text-primary">{name}</h3>
+        <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
           ${price.toFixed(2)}
         </span>
       </div>
-      <p className="text-gray-600 dark:text-gray-400 mb-3">{description}</p>
-      <code className="text-sm bg-gray-200 dark:bg-black px-2 py-1 rounded text-gray-700 dark:text-gray-300">
+      <p className="text-text-secondary mb-3">{description}</p>
+      <code className="text-sm bg-surface-hover px-2 py-1 rounded text-text-secondary">
         GET {path}
       </code>
     </div>

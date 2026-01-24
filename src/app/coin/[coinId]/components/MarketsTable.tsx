@@ -35,13 +35,13 @@ function formatVolume(volume: number): string {
 function getTrustColor(score: string | null): string {
   switch (score) {
     case 'green':
-      return 'bg-black dark:bg-white';
+      return 'bg-gain';
     case 'yellow':
-      return 'bg-neutral-500 dark:bg-neutral-400';
+      return 'bg-warning';
     case 'red':
-      return 'bg-neutral-300 dark:bg-neutral-600';
+      return 'bg-loss';
     default:
-      return 'bg-neutral-200 dark:bg-black';
+      return 'bg-surface-alt';
   }
 }
 

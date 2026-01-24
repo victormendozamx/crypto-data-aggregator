@@ -357,12 +357,12 @@ export default function WatchlistPage() {
 
           {selectedCoins.size > 0 && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-text-muted">
                 {selectedCoins.size} selected
               </span>
               <button
                 onClick={handleBulkRemove}
-                className="flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/20 hover:bg-red-200 dark:hover:bg-red-900/40 text-red-700 dark:text-red-400 rounded-lg font-medium transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-loss/20 hover:bg-loss/30 text-loss rounded-lg font-medium transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
                 Remove
@@ -372,11 +372,11 @@ export default function WatchlistPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-surface rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-surface-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
+                <tr className="border-b border-surface-border">
                   <th className="px-4 py-4 text-left">
                     <input
                       type="checkbox"
@@ -384,17 +384,17 @@ export default function WatchlistPage() {
                         selectedCoins.size === filteredCoins.length && filteredCoins.length > 0
                       }
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-surface-border text-primary focus:ring-primary"
                     />
                   </th>
                   <th className="px-2 py-4 text-left w-8"></th>
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
+                  <th className="px-4 py-4 text-left text-sm font-semibold text-text-muted">
                     #
                   </th>
                   <th className="px-4 py-4 text-left">
                     <button
                       onClick={() => handleSort('name')}
-                      className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                      className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-text-primary"
                     >
                       Name <SortIcon field="name" />
                     </button>
@@ -402,7 +402,7 @@ export default function WatchlistPage() {
                   <th className="px-4 py-4 text-right">
                     <button
                       onClick={() => handleSort('price')}
-                      className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                      className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-text-primary ml-auto"
                     >
                       Price <SortIcon field="price" />
                     </button>
@@ -410,7 +410,7 @@ export default function WatchlistPage() {
                   <th className="px-4 py-4 text-right">
                     <button
                       onClick={() => handleSort('change24h')}
-                      className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                      className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-text-primary ml-auto"
                     >
                       24h <SortIcon field="change24h" />
                     </button>
@@ -418,7 +418,7 @@ export default function WatchlistPage() {
                   <th className="px-4 py-4 text-right hidden md:table-cell">
                     <button
                       onClick={() => handleSort('change7d')}
-                      className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                      className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-text-primary ml-auto"
                     >
                       7d <SortIcon field="change7d" />
                     </button>
@@ -426,12 +426,12 @@ export default function WatchlistPage() {
                   <th className="px-4 py-4 text-right hidden lg:table-cell">
                     <button
                       onClick={() => handleSort('marketCap')}
-                      className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                      className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-text-primary ml-auto"
                     >
                       Market Cap <SortIcon field="marketCap" />
                     </button>
                   </th>
-                  <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+                  <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                     Actions
                   </th>
                 </tr>
@@ -440,7 +440,7 @@ export default function WatchlistPage() {
                 {filteredCoins.map((coin, index) => (
                   <tr
                     key={coin.id}
-                    className={`border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-black/30 transition-colors ${
+                    className={`border-b border-surface-border hover:bg-surface-hover transition-colors ${
                       draggedItem === coin.id ? 'opacity-50' : ''
                     }`}
                     draggable
@@ -453,13 +453,13 @@ export default function WatchlistPage() {
                         type="checkbox"
                         checked={selectedCoins.has(coin.id)}
                         onChange={() => handleSelectCoin(coin.id)}
-                        className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
+                        className="rounded border-surface-border text-primary focus:ring-primary"
                       />
                     </td>
                     <td className="px-2 py-4">
                       <GripVertical className="w-4 h-4 text-gray-400 cursor-grab active:cursor-grabbing" />
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-4 py-4 text-sm text-text-muted">
                       {coin.market_cap_rank || '-'}
                     </td>
                     <td className="px-4 py-4">
@@ -467,19 +467,19 @@ export default function WatchlistPage() {
                         {coin.image ? (
                           <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
                         ) : (
-                          <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600" />
+                          <div className="w-8 h-8 rounded-full bg-surface-alt" />
                         )}
                         <div>
-                          <p className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          <p className="font-semibold text-text-primary group-hover:text-primary transition-colors">
                             {coin.name}
                           </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className="text-sm text-text-muted">
                             {coin.symbol.toUpperCase()}
                           </p>
                         </div>
                       </Link>
                     </td>
-                    <td className="px-4 py-4 text-right font-medium text-gray-900 dark:text-white">
+                    <td className="px-4 py-4 text-right font-medium text-text-primary">
                       $
                       {coin.current_price.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
@@ -490,8 +490,8 @@ export default function WatchlistPage() {
                       <span
                         className={`inline-flex items-center gap-1 font-medium ${
                           (coin.price_change_percentage_24h || 0) >= 0
-                            ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
+                            ? 'text-gain'
+                            : 'text-loss'
                         }`}
                       >
                         {(coin.price_change_percentage_24h || 0) >= 0 ? (
@@ -506,22 +506,22 @@ export default function WatchlistPage() {
                       <span
                         className={`font-medium ${
                           (coin.price_change_percentage_7d_in_currency || 0) >= 0
-                            ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
+                            ? 'text-gain'
+                            : 'text-loss'
                         }`}
                       >
                         {(coin.price_change_percentage_7d_in_currency || 0) >= 0 ? '+' : ''}
                         {(coin.price_change_percentage_7d_in_currency || 0).toFixed(2)}%
                       </span>
                     </td>
-                    <td className="px-4 py-4 text-right hidden lg:table-cell text-gray-600 dark:text-gray-300">
+                    <td className="px-4 py-4 text-right hidden lg:table-cell text-text-secondary">
                       ${(coin.market_cap / 1e9).toFixed(2)}B
                     </td>
                     <td className="px-4 py-4 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <Link
                           href={`/coin/${coin.id}#alerts`}
-                          className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          className="p-2 rounded-lg hover:bg-surface-hover text-text-muted hover:text-primary transition-colors"
                           title="Set alert"
                         >
                           <Bell className="w-4 h-4" />
@@ -536,7 +536,7 @@ export default function WatchlistPage() {
                               duration: 3000,
                             });
                           }}
-                          className="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/20 text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                          className="p-2 rounded-lg hover:bg-loss/20 text-text-muted hover:text-loss transition-colors"
                           title="Remove from watchlist"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -552,8 +552,8 @@ export default function WatchlistPage() {
           {/* No results */}
           {filteredCoins.length === 0 && searchQuery && (
             <div className="p-12 text-center">
-              <Search className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-500 dark:text-gray-400">
+              <Search className="w-12 h-12 text-text-muted mx-auto mb-4" />
+              <p className="text-text-muted">
                 No coins found matching &quot;{searchQuery}&quot;
               </p>
             </div>

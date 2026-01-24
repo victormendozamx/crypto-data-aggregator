@@ -117,9 +117,9 @@ export function NewsletterForm({ variant = 'card' }: NewsletterFormProps) {
 
   // Card variant (default)
   return (
-    <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800">
+    <div className="bg-gradient-to-br from-warning/10 to-orange-500/10 rounded-xl p-6 border border-warning/30">
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-amber-100 dark:bg-amber-900/50 rounded-lg">
+        <div className="p-2 bg-warning/20 rounded-lg">
           <Mail className="w-6 h-6 text-amber-600" />
         </div>
         <div>

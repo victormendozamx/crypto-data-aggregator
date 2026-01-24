@@ -49,7 +49,7 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
   const popularArticles = articles.slice(0, 5);
 
   return (
-    <div className="bg-surface rounded-2xl shadow-card dark:shadow-none dark:border border-surface-border p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-surface-border p-6">
       {/* Header with Filter */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-lg text-text-primary flex items-center gap-2">
@@ -97,7 +97,7 @@ export default function PopularStories({ articles }: PopularStoriesProps) {
             <Link
               key={articleId}
               href={`/article/${articleId}`}
-              className="group flex gap-3 p-2 -mx-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors focus-ring"
+              className="group flex gap-3 p-2 -mx-2 rounded-xl hover:bg-surface-hover transition-colors focus-ring"
               role="listitem"
             >
               {/* Gradient Thumbnail Placeholder */}
