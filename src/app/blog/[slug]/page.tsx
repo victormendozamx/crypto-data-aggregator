@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
               <Link href="/blog" className="text-white font-medium">
                 Blog
               </Link>
-              <Link href="/api" className="text-gray-400 hover:text-white transition">
+              <Link href="/developers" className="text-gray-400 hover:text-white transition">
                 API
               </Link>
             </nav>
@@ -278,7 +278,7 @@ export default async function BlogPostPage({ params }: Props) {
               © {new Date().getFullYear()} CryptoNews. All rights reserved.
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/api" className="text-gray-400 hover:text-white transition">
+              <Link href="/developers" className="text-gray-400 hover:text-white transition">
                 API
               </Link>
               <Link href="/blog" className="text-gray-400 hover:text-white transition">

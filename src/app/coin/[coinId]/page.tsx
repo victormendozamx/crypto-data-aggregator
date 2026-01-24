@@ -82,16 +82,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       openGraph: {
         title: `${name} Price: ${formatPrice(price)} | ${symbol}`,
         description: `${symbol} ${formatPercent(change24h)} in 24h. Market Cap: $${formatNumber(coinData.market_data?.market_cap?.usd)}`,
-        images: coinData.image?.large
-          ? [{ url: coinData.image.large, width: 250, height: 250, alt: name }]
-          : [],
+        images: [{
+          url: `/api/og?type=coin&title=${encodeURIComponent(name)}&ticker=${symbol}&price=${encodeURIComponent(formatPrice(price))}&change=${change24h.toFixed(2)}`,
+          width: 1200,
+          height: 630,
+          alt: `${name} (${symbol}) Price Chart`,
+        }],
         type: 'website',
       },
       twitter: {
-        card: 'summary',
-        title: `${name} (${symbol}) - ${formatPrice(price)}`,
-        description: `${symbol} ${formatPercent(change24h)} in 24h`,
-        images: coinData.image?.large ? [coinData.image.large] : [],
+        card: 'summary_large_image',
+        title: `${name} (${symbol}) - ${formatPrice(price)} ${change24h >= 0 ? '📈' : '📉'}`,
+        description: `${symbol} ${formatPercent(change24h)} in 24h | Market Cap: $${formatNumber(coinData.market_data?.market_cap?.usd)}`,
+        images: [`/api/og?type=coin&title=${encodeURIComponent(name)}&ticker=${symbol}&price=${encodeURIComponent(formatPrice(price))}&change=${change24h.toFixed(2)}`],
       },
       alternates: {
         canonical: `/coin/${coinId}`,

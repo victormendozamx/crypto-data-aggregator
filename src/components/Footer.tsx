@@ -247,7 +247,7 @@ export default function Footer() {
                 { href: '/docs/swagger', label: 'Swagger UI' },
                 { href: '/examples', label: 'Code Examples' },
                 { href: '/pricing', label: 'API Pricing' },
-                { href: '/api/feed/rss', label: 'RSS Feed' },
+                { href: '/api/rss', label: 'RSS Feed' },
                 { href: '/llms.txt', label: 'LLM Context' },
               ].map((item) => (
                 <li key={item.href}>

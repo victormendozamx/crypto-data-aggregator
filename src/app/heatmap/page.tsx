@@ -8,9 +8,20 @@ export const metadata: Metadata = {
   description:
     'Visual heatmap of the cryptocurrency market. See which coins are up or down at a glance with our interactive market visualization.',
   openGraph: {
-    title: 'Market Heatmap | Crypto Overview',
+    title: 'Market Heatmap 🗺️📊',
     description:
       'Visual heatmap of the cryptocurrency market. See which coins are up or down at a glance.',
+    images: [{
+      url: '/api/og?type=market&title=Market%20Heatmap&subtitle=Crypto%20Market%20Overview',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Market Heatmap 🗺️📊',
+    description: 'Visual heatmap of the cryptocurrency market. See which coins are up or down at a glance.',
+    images: ['/api/og?type=market&title=Market%20Heatmap&subtitle=Crypto%20Market%20Overview'],
   },
 };
 

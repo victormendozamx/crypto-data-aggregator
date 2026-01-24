@@ -52,7 +52,7 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
     return (
       <div className="bg-surface-alt border-b border-surface-border">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center gap-4 py-2 overflow-x-auto scrollbar-hide">
+          <div className="flex flex-wrap items-center gap-4 py-2">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
@@ -70,30 +70,30 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
   return (
     <div className="bg-surface-alt border-b border-surface-border">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center gap-1 py-1 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-wrap items-center gap-x-1 gap-y-2 py-2">
           <StatItem
             label="Market Cap"
             value={`$${formatNumber(global.total_market_cap?.usd)}`}
             change={global.market_cap_change_percentage_24h_usd}
           />
 
-          <div className="h-4 w-px bg-surface-border mx-2" />
+          <div className="hidden sm:block h-4 w-px bg-surface-border mx-2" />
 
           <StatItem label="24h Volume" value={`$${formatNumber(global.total_volume?.usd)}`} />
 
-          <div className="h-4 w-px bg-surface-border mx-2" />
+          <div className="hidden sm:block h-4 w-px bg-surface-border mx-2" />
 
           <StatItem
-            label="BTC Dominance"
+            label="BTC Dom"
             value={`${global.market_cap_percentage?.btc?.toFixed(1)}%`}
             icon="₿"
           />
 
           {global.market_cap_percentage?.eth && (
             <>
-              <div className="h-4 w-px bg-surface-border mx-2" />
+              <div className="hidden sm:block h-4 w-px bg-surface-border mx-2" />
               <StatItem
-                label="ETH Dominance"
+                label="ETH Dom"
                 value={`${global.market_cap_percentage.eth.toFixed(1)}%`}
                 icon="Ξ"
               />
@@ -102,7 +102,7 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
 
           {fearGreed && mounted && (
             <>
-              <div className="h-4 w-px bg-surface-border mx-2" />
+              <div className="hidden sm:block h-4 w-px bg-surface-border mx-2" />
               <div className="flex items-center gap-2 px-4 py-2 whitespace-nowrap">
                 <span className="text-text-muted text-sm">
                   Fear & Greed:
@@ -123,16 +123,20 @@ export default function GlobalStatsBar({ global, fearGreed }: GlobalStatsBarProp
             </>
           )}
 
-          <div className="h-4 w-px bg-surface-border mx-2" />
+          <div className="hidden lg:block h-4 w-px bg-surface-border mx-2" />
 
-          <StatItem
-            label="Active Cryptos"
-            value={global.active_cryptocurrencies?.toLocaleString() || '0'}
-          />
+          <div className="hidden lg:block">
+            <StatItem
+              label="Cryptos"
+              value={global.active_cryptocurrencies?.toLocaleString() || '0'}
+            />
+          </div>
 
-          <div className="h-4 w-px bg-surface-border mx-2" />
+          <div className="hidden xl:block h-4 w-px bg-surface-border mx-2" />
 
-          <StatItem label="Markets" value={global.markets?.toLocaleString() || '0'} />
+          <div className="hidden xl:block">
+            <StatItem label="Markets" value={global.markets?.toLocaleString() || '0'} />
+          </div>
         </div>
       </div>
     </div>

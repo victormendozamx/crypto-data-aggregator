@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'See what cryptocurrencies are trending on social media. Track mentions, sentiment, and buzz across Twitter, Reddit, Discord, and Telegram.',
   openGraph: {
-    title: 'Social Buzz | Trending Crypto',
+    title: 'Social Buzz 💬🔥',
     description: 'See what cryptocurrencies are trending on social media.',
+    images: [{
+      url: '/api/og?type=page&title=Social%20Buzz&subtitle=Trending%20Crypto%20Mentions',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Social Buzz 💬🔥',
+    description: 'See what cryptocurrencies are trending on social media.',
+    images: ['/api/og?type=page&title=Social%20Buzz&subtitle=Trending%20Crypto%20Mentions'],
   },
 };
 

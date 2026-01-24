@@ -28,8 +28,19 @@ export const metadata: Metadata = {
   description:
     'Live cryptocurrency prices, market data, charts, and analytics. Browse and discover cryptocurrencies.',
   openGraph: {
-    title: 'Crypto Markets - Crypto Data Aggregator',
+    title: 'Crypto Markets 📈💰',
     description: 'Live cryptocurrency prices, market data, charts, and analytics.',
+    images: [{
+      url: '/api/og?type=market&title=Crypto%20Markets&subtitle=Live%20Prices%20%26%20Analytics',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Crypto Markets 📈💰',
+    description: 'Live cryptocurrency prices, market data, charts, and analytics.',
+    images: ['/api/og?type=market&title=Crypto%20Markets&subtitle=Live%20Prices%20%26%20Analytics'],
   },
 };
 

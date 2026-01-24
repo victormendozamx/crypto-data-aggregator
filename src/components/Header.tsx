@@ -204,9 +204,9 @@ const navItems = [
         {
           title: 'AI & Integrations',
           links: [
-            { label: 'Ask AI', href: '/ask', icon: null },
+            { label: 'Ask AI', href: '/api/ask', icon: null },
             { label: 'LLM Context', href: '/llms.txt', icon: null },
-            { label: 'RSS Feed', href: '/api/feed/rss', icon: null },
+            { label: 'RSS Feed', href: '/api/rss', icon: null },
             { label: 'x402 Micropayments', href: '/pricing#x402', icon: null },
           ],
         },

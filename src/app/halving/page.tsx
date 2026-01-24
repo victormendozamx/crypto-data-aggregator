@@ -13,8 +13,19 @@ export const metadata: Metadata = {
   description:
     'Track the countdown to the next Bitcoin halving event. See block height, estimated date, and historical halving data.',
   openGraph: {
-    title: 'Bitcoin Halving Countdown',
+    title: 'Bitcoin Halving Countdown ⏳🪙',
     description: 'Track the countdown to the next Bitcoin halving event with live block data.',
+    images: [{
+      url: '/api/og?type=coin&title=Bitcoin%20Halving&subtitle=Countdown%20%26%20Historical%20Data&ticker=BTC',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bitcoin Halving Countdown ⏳🪙',
+    description: 'Track the countdown to the next Bitcoin halving event with live block data.',
+    images: ['/api/og?type=coin&title=Bitcoin%20Halving&subtitle=Countdown%20%26%20Historical%20Data&ticker=BTC'],
   },
 };
 

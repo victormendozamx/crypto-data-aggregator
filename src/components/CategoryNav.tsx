@@ -69,26 +69,10 @@ export default function CategoryNav({ activeCategory = '' }: CategoryNavProps) {
       className="border-b border-surface-border bg-surface/95 backdrop-blur-sm sticky top-[64px] z-30"
       aria-label="News categories"
     >
-      <div className="max-w-7xl mx-auto px-4 relative">
-        {/* Left fade indicator */}
-        <div
-          className={`absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none transition-opacity duration-200 ${
-            showLeftFade ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-hidden="true"
-        />
-
-        {/* Right fade indicator */}
-        <div
-          className={`absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none transition-opacity duration-200 ${
-            showRightFade ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-hidden="true"
-        />
-
+      <div className="max-w-7xl mx-auto px-4">
         <div
           ref={scrollContainerRef}
-          className="flex items-center gap-2 overflow-x-auto py-3 scrollbar-hide"
+          className="flex flex-wrap items-center gap-2 py-3"
           role="tablist"
           aria-label="Filter by category"
         >

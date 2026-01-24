@@ -20,6 +20,8 @@ import { AddHoldingModal } from '@/components/portfolio/AddHoldingModal';
 import { useToast } from '@/components/Toast';
 import { getTopCoins, TokenPrice } from '@/lib/market-data';
 import PageLayout from '@/components/PageLayout';
+import { SocialBuzzWidget } from '@/components/SocialBuzz';
+import ShareButtons from '@/components/ShareButtons';
 
 interface HoldingWithPrice extends Holding {
   currentPrice: number;
@@ -316,17 +318,30 @@ export default function PortfolioPage() {
         </div>
 
         {/* Holdings Table */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Holdings</h2>
-          <HoldingsTable
-            holdings={holdingsWithPrices}
-            onAddTransaction={(coinId) => {
-              const holding = holdings.find((h) => h.coinId === coinId);
-              // You could open the modal with prefilled coin here
-              setShowAddModal(true);
-            }}
-            isLoading={isLoading}
-          />
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+          <div className="lg:col-span-2">
+            <h2 className="text-xl font-semibold mb-4">Holdings</h2>
+            <HoldingsTable
+              holdings={holdingsWithPrices}
+              onAddTransaction={(coinId) => {
+                const holding = holdings.find((h) => h.coinId === coinId);
+                // You could open the modal with prefilled coin here
+                setShowAddModal(true);
+              }}
+              isLoading={isLoading}
+            />
+          </div>
+          <div className="lg:col-span-1 space-y-4">
+            <SocialBuzzWidget />
+            <div className="bg-[var(--surface)] rounded-xl border border-[var(--surface-border)] p-4">
+              <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-3">Share Portfolio Tracker</h3>
+              <ShareButtons
+                url="/portfolio"
+                title="Track your crypto portfolio with this awesome tool! 💼📊"
+                variant="default"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Footer Actions */}

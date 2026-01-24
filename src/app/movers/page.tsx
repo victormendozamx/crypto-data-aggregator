@@ -5,14 +5,31 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ShareButtons from '@/components/ShareButtons';
+import MarketMoodWidget from '@/components/MarketMoodWidget';
 import { getTopCoins, formatPrice, formatPercent, formatNumber } from '@/lib/market-data';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Top Gainers & Losers',
+  title: 'Top Gainers & Losers - Crypto Price Movers',
   description:
     'Real-time crypto price movers. See which coins are pumping and dumping in the last 24 hours.',
+  openGraph: {
+    title: 'Top Gainers & Losers 📈📉',
+    description: 'Real-time crypto price movers. See which coins are pumping and dumping today!',
+    images: [{
+      url: '/api/og?type=market&title=Top%20Gainers%20%26%20Losers&subtitle=Real-time%20crypto%20price%20movers',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Top Gainers & Losers 📈📉',
+    description: 'Real-time crypto price movers. See which coins are pumping and dumping today!',
+    images: ['/api/og?type=market&title=Top%20Gainers%20%26%20Losers&subtitle=Real-time%20crypto%20price%20movers'],
+  },
 };
 
 export const revalidate = 60;
@@ -42,23 +59,35 @@ export default async function MoversPage() {
         <main className="px-4 py-8">
           {/* Page Header */}
           <div className="mb-8">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-8 h-8 text-text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-              <h1 className="text-4xl font-bold text-text-primary">Top Movers</h1>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-8 h-8 text-text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+                <h1 className="text-4xl font-bold text-text-primary">Top Movers</h1>
+              </div>
+              <ShareButtons
+                url="/movers"
+                title="Check out today's top crypto movers! 📈📉"
+                variant="compact"
+              />
             </div>
             <p className="text-text-secondary mt-2">Biggest price changes in the last 24 hours</p>
+          </div>
+
+          {/* Market Mood Banner */}
+          <div className="mb-6">
+            <MarketMoodWidget />   
           </div>
 
           {/* Market Sentiment */}
@@ -114,7 +143,7 @@ export default async function MoversPage() {
                   </div>
                 </div>
               </div>
-              <div className="divide-y divide-surface-border max-h-[600px] overflow-y-auto">
+              <div className="divide-y divide-surface-border">
                 {gainers.map((coin, index) => (
                   <Link
                     key={coin.id}
@@ -169,7 +198,7 @@ export default async function MoversPage() {
                   </div>
                 </div>
               </div>
-              <div className="divide-y divide-surface-border max-h-[600px] overflow-y-auto">
+              <div className="divide-y divide-surface-border">
                 {losers.map((coin, index) => (
                   <Link
                     key={coin.id}

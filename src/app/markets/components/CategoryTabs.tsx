@@ -117,39 +117,16 @@ export default function CategoryTabs({ activeCategory = 'all' }: CategoryTabsPro
   );
 
   return (
-    <div className="relative mb-4">
-      {/* Left scroll button */}
-      {showLeftArrow && (
-        <button
-          onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-surface border border-surface-border rounded-full shadow-lg flex items-center justify-center hover:bg-surface-hover transition-colors"
-          aria-label="Scroll left"
-        >
-          <svg
-            className="w-4 h-4 text-text-secondary"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-      )}
-
+    <div className="mb-4">
       {/* Tabs container */}
-      <div ref={scrollRef} className="flex gap-2 overflow-x-auto scrollbar-hide px-1 py-1">
+      <div ref={scrollRef} className="flex flex-wrap gap-2 px-1 py-1">
         {CATEGORIES.map((category) => {
           const isActive = activeCategory === category.id;
           return (
             <button
               key={category.id}
               onClick={() => handleCategoryClick(category.id)}
-              className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full font-medium text-sm transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-medium text-sm transition-all ${
                 isActive
                   ? 'bg-primary text-white shadow-md'
                   : 'bg-surface-hover text-text-secondary hover:bg-surface-alt'
@@ -167,7 +144,7 @@ export default function CategoryTabs({ activeCategory = 'all' }: CategoryTabsPro
         {/* View all categories link */}
         <a
           href="/markets/categories"
-          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full font-medium text-sm bg-surface-hover text-text-secondary hover:bg-surface-alt transition-all"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full font-medium text-sm bg-surface-hover text-text-secondary hover:bg-surface-alt transition-all"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -176,23 +153,6 @@ export default function CategoryTabs({ activeCategory = 'all' }: CategoryTabsPro
         </a>
       </div>
 
-      {/* Right scroll button */}
-      {showRightArrow && (
-        <button
-          onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-surface border border-surface-border rounded-full shadow-lg flex items-center justify-center hover:bg-surface-hover transition-colors"
-          aria-label="Scroll right"
-        >
-          <svg
-            className="w-4 h-4 text-text-secondary"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      )}
     </div>
   );
 }

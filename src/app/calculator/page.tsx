@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'Convert between cryptocurrencies and calculate your potential profits. Free crypto converter and profit/loss calculator.',
   openGraph: {
-    title: 'Crypto Calculator | Convert & Calculate Profits',
+    title: 'Crypto Calculator 📱💰',
     description: 'Convert between cryptocurrencies and calculate your potential profits.',
+    images: [{
+      url: '/api/og?type=page&title=Crypto%20Calculator&subtitle=Convert%20%26%20Calculate%20Profits',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Crypto Calculator 📱💰',
+    description: 'Convert between cryptocurrencies and calculate your potential profits.',
+    images: ['/api/og?type=page&title=Crypto%20Calculator&subtitle=Convert%20%26%20Calculate%20Profits'],
   },
 };
 

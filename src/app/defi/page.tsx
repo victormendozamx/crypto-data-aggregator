@@ -5,6 +5,8 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ShareButtons from '@/components/ShareButtons';
+import MarketMoodWidget from '@/components/MarketMoodWidget';
 import { getTopProtocols, getTopChains, formatNumber, formatPercent } from '@/lib/market-data';
 import { getDefiNews } from '@/lib/crypto-news';
 import Posts from '@/components/Posts';
@@ -13,9 +15,24 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'DeFi Dashboard',
+  title: 'DeFi Dashboard - Protocol Rankings & TVL',
   description:
     'Live DeFi data - Protocol TVL rankings, chain analytics, yield opportunities, and DeFi news.',
+  openGraph: {
+    title: 'DeFi Dashboard 🏦💰',
+    description: 'Live DeFi protocol rankings, chain TVL analytics, and yield opportunities',
+    images: [{
+      url: '/api/og?type=page&title=DeFi%20Dashboard&subtitle=Protocol%20Rankings%20%26%20TVL%20Analytics',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DeFi Dashboard 🏦💰',
+    description: 'Live DeFi protocol rankings, chain TVL analytics, and yield opportunities',
+    images: ['/api/og?type=page&title=DeFi%20Dashboard&subtitle=Protocol%20Rankings%20%26%20TVL%20Analytics'],
+  },
 };
 
 export const revalidate = 60; // Revalidate every minute
@@ -39,25 +56,37 @@ export default async function DefiPage() {
         <main className="px-4 py-8">
           {/* Page Header */}
           <div className="mb-8">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-8 h-8 text-text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                />
-              </svg>
-              <h1 className="text-4xl font-bold text-text-primary">DeFi Dashboard</h1>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-8 h-8 text-text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+                <h1 className="text-4xl font-bold text-text-primary">DeFi Dashboard</h1>
+              </div>
+              <ShareButtons
+                url="/defi"
+                title="Check out the DeFi Dashboard - Live TVL rankings! 🏦"
+                variant="compact"
+              />
             </div>
             <p className="text-text-secondary mt-2">
               Live DeFi protocol rankings, chain TVL, and yield opportunities
             </p>
+          </div>
+
+          {/* Market Mood Widget */}
+          <div className="mb-6">
+            <MarketMoodWidget />
           </div>
 
           {/* Stats Overview */}

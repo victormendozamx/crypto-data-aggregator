@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'Visualize cryptocurrency market dominance. See the market share of Bitcoin, Ethereum, and other top cryptocurrencies.',
   openGraph: {
-    title: 'Market Dominance | Crypto Market Share',
+    title: 'Market Dominance 🥇🥈🥉',
     description: 'Visualize cryptocurrency market dominance and market share.',
+    images: [{
+      url: '/api/og?type=market&title=Market%20Dominance&subtitle=Crypto%20Market%20Share',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Market Dominance 🥇🥈🥉',
+    description: 'Visualize cryptocurrency market dominance and market share.',
+    images: ['/api/og?type=market&title=Market%20Dominance&subtitle=Crypto%20Market%20Share'],
   },
 };
 

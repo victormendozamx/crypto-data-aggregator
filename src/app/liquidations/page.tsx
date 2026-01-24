@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'Real-time cryptocurrency futures liquidations across major exchanges. Track longs and shorts getting liquidated.',
   openGraph: {
-    title: 'Liquidations | Live Futures Liquidation Feed',
+    title: 'Liquidations Feed 💥📉',
     description: 'Real-time cryptocurrency futures liquidations across major exchanges.',
+    images: [{
+      url: '/api/og?type=market&title=Liquidations%20Feed&subtitle=Live%20Futures%20Liquidations',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Liquidations Feed 💥📉',
+    description: 'Real-time cryptocurrency futures liquidations across major exchanges.',
+    images: ['/api/og?type=market&title=Liquidations%20Feed&subtitle=Live%20Futures%20Liquidations'],
   },
 };
 

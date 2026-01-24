@@ -63,12 +63,12 @@ export default function TrendingSection({ trending, coins }: TrendingSectionProp
             View All →
           </Link>
         </div>
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex flex-wrap gap-2">
           {trending.slice(0, 7).map((coin, index) => (
             <Link
               key={coin.id}
               href={`/coin/${coin.id}`}
-              className="flex-shrink-0 flex items-center gap-2 bg-surface-alt hover:bg-surface-hover rounded-lg px-3 py-2 transition-colors"
+              className="flex items-center gap-2 bg-surface-alt hover:bg-surface-hover rounded-lg px-3 py-2 transition-colors"
             >
               <span className="text-text-muted text-xs font-medium">{index + 1}</span>
               <div className="relative w-6 h-6">

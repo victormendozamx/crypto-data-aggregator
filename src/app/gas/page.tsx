@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'Live Ethereum gas prices and transaction cost estimator. Track gas fees for ETH transfers, swaps, and smart contract interactions.',
   openGraph: {
-    title: 'Gas Tracker | Ethereum Gas Prices',
+    title: 'Gas Tracker ⛽💸',
     description: 'Live Ethereum gas prices and transaction cost estimator.',
+    images: [{
+      url: '/api/og?type=page&title=Gas%20Tracker&subtitle=Ethereum%20Gas%20Prices',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gas Tracker ⛽💸',
+    description: 'Live Ethereum gas prices and transaction cost estimator.',
+    images: ['/api/og?type=page&title=Gas%20Tracker&subtitle=Ethereum%20Gas%20Prices'],
   },
 };
 

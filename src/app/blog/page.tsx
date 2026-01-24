@@ -38,7 +38,7 @@ export default function BlogPage() {
               <Link href="/blog" className="text-white font-medium">
                 Blog
               </Link>
-              <Link href="/api" className="text-gray-400 hover:text-white transition">
+              <Link href="/developers" className="text-gray-400 hover:text-white transition">
                 API
               </Link>
             </nav>
@@ -208,14 +208,14 @@ export default function BlogPage() {
               © {new Date().getFullYear()} CryptoNews. All rights reserved.
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/api" className="text-gray-400 hover:text-white transition">
+              <Link href="/developers" className="text-gray-400 hover:text-white transition">
                 API
               </Link>
               <Link href="/blog" className="text-gray-400 hover:text-white transition">
                 Blog
               </Link>
               <a
-                href="https://github.com"
+                href="https://github.com/nirholas/crypto-data-aggregator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition"

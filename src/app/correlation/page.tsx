@@ -8,8 +8,19 @@ export const metadata: Metadata = {
   description:
     'Analyze correlations between cryptocurrencies. See which coins move together and build a diversified portfolio.',
   openGraph: {
-    title: 'Correlation Matrix | Crypto Asset Correlations',
+    title: 'Correlation Matrix 📊🔗',
     description: 'Analyze correlations between cryptocurrencies.',
+    images: [{
+      url: '/api/og?type=page&title=Correlation%20Matrix&subtitle=Crypto%20Asset%20Correlations',
+      width: 1200,
+      height: 630,
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Correlation Matrix 📊🔗',
+    description: 'Analyze correlations between cryptocurrencies.',
+    images: ['/api/og?type=page&title=Correlation%20Matrix&subtitle=Crypto%20Asset%20Correlations'],
   },
 };
 

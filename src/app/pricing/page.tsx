@@ -129,7 +129,7 @@ export default function PricingPage() {
                 <Link
                   href={
                     tier.id === 'free'
-                      ? '/docs#api-key'
+                      ? '/developers'
                       : tier.id === 'pro'
                         ? '/pricing/upgrade?plan=pro'
                         : '/pricing/upgrade?plan=enterprise'
@@ -259,13 +259,13 @@ export default function PricingPage() {
             </p>
             <div className="flex gap-4 justify-center">
               <Link
-                href="/api/v1"
+                href="/developers"
                 className="px-6 py-3 bg-white text-[var(--primary)] font-medium rounded-lg hover:bg-white/90 transition-colors"
               >
                 View API Docs
               </Link>
               <Link
-                href="/docs#api-key"
+                href="/developers"
                 className="px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
               >
                 Get API Key
