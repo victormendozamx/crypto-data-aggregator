@@ -124,21 +124,21 @@ export default function CategoriesPage() {
 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
-            <Link href="/markets" className="hover:text-blue-600 dark:hover:text-blue-400">
+          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
+            <Link href="/markets" className="hover:text-primary">
               Markets
             </Link>
             <span>/</span>
-            <span className="text-gray-900 dark:text-white">Categories</span>
+            <span className="text-text-primary">Categories</span>
           </nav>
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-text-primary mb-2 flex items-center gap-3">
               <Folder className="w-8 h-8 text-brand-500" />
               Cryptocurrency Categories
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-text-muted">
               Explore cryptocurrencies organized by their primary use case
             </p>
           </div>
@@ -151,24 +151,24 @@ export default function CategoriesPage() {
                 <Link
                   key={category.id}
                   href={`/markets/categories/${category.id}`}
-                  className="group bg-surface rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all"
+                  className="group bg-surface rounded-xl border border-surface-border overflow-hidden hover:shadow-lg transition-all"
                 >
                   <div className={`h-2 bg-gradient-to-r ${category.color}`} />
                   <div className="p-5">
                     <div className="flex items-center gap-3 mb-3">
                       <CategoryIcon className="w-8 h-8" />
-                      <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      <h2 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors">
                         {category.name}
                       </h2>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    <p className="text-text-muted text-sm mb-4">
                       {category.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {category.examples.map((example) => (
                         <span
                           key={example}
-                          className="px-2 py-1 bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-300 text-xs rounded-full"
+                          className="px-2 py-1 bg-surface-alt text-text-secondary text-xs rounded-full"
                         >
                           {example}
                         </span>
@@ -182,7 +182,7 @@ export default function CategoriesPage() {
 
           {/* Back link */}
           <div className="mt-8 text-center">
-            <Link href="/markets" className="text-blue-600 dark:text-blue-400 hover:underline">
+            <Link href="/markets" className="text-primary hover:underline">
               ← Back to Markets
             </Link>
           </div>

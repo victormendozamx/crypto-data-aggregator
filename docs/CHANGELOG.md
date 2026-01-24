@@ -11,6 +11,23 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **13 New Free Data Sources** - Expanded data aggregation capabilities
+  - CryptoCompare: Historical OHLCV data, social stats (Twitter, Reddit, GitHub)
+  - Blockchain.com: Bitcoin on-chain stats, block height, network difficulty
+  - Messari: Research data, asset metrics (FREE tier: 20 requests/minute)
+  - CoinGlass: Funding rates, open interest across exchanges
+  - GoPlus Labs: Token security analysis (honeypot detection, tax check, trust score)
+  - Etherscan: Gas oracle, ETH supply stats (FREE tier: 5 calls/sec)
+  - Token Unlocks: Vesting schedule data for upcoming token unlocks
+- **additional-sources.ts** - New utility library with typed helper functions
+  - `getHistoricalOHLCV()` - Fetch historical price data with configurable intervals
+  - `getSocialStats()` - Get Twitter/Reddit/GitHub metrics for coins
+  - `getBitcoinStats()` - Bitcoin network stats (hashrate, difficulty, fees)
+  - `getFundingRates()` - Perpetual futures funding rates by exchange
+  - `getOpenInterest()` - Futures open interest aggregated across exchanges
+  - `getTokenSecurity()` - Honeypot/scam detection with calculated trust score
+  - `getEthGasOracle()` - Real-time Ethereum gas prices (safe, standard, fast)
+  - `getUpcomingUnlocks()` - Token vesting unlock schedules
 - **MarketMoodRing Component** - Animated SVG circular gauge displaying Fear & Greed Index
   - Gradient-filled rings with pulsing glow effects
   - 5 mood states: Extreme Fear, Fear, Neutral, Greed, Extreme Greed

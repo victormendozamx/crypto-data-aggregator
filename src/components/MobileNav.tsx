@@ -177,8 +177,8 @@ export function MobileNav() {
         {/* Menu Header */}
         <div className="sticky top-0 bg-[var(--bg-secondary)] border-b border-[var(--surface-border)] px-5 py-4 flex items-center justify-between z-10">
           <div className="flex items-center gap-2.5">
-            <Newspaper className="w-5 h-5 text-brand-600 dark:text-amber-400" aria-hidden="true" />
-            <span className="font-bold text-lg bg-gradient-to-r from-brand-600 to-brand-500 dark:from-amber-400 dark:to-amber-500 bg-clip-text text-transparent">
+            <Newspaper className="w-5 h-5 text-brand-500" aria-hidden="true" />
+            <span className="font-bold text-lg bg-gradient-to-r from-brand-600 to-brand-500 bg-clip-text text-transparent">
               Crypto News
             </span>
           </div>
@@ -353,7 +353,7 @@ export function MobileNav() {
         {/* Footer CTA */}
         <div className="sticky bottom-0 bg-[var(--bg-secondary)] border-t border-[var(--surface-border)] p-4">
           <div className="bg-gradient-to-br from-brand-50 to-brand-100 dark:from-brand-900/30 dark:to-brand-800/30 rounded-2xl p-4 border border-brand-200/50 dark:border-brand-700/50">
-            <h3 className="font-semibold text-brand-900 dark:text-brand-100 mb-1">
+            <h3 className="font-semibold text-brand-800 dark:text-brand-200 mb-1">
               Free Crypto API
             </h3>
             <p className="text-sm text-brand-700/80 dark:text-brand-300/80 mb-3">
@@ -362,7 +362,7 @@ export function MobileNav() {
             <Link
               href="/about"
               onClick={closeMenu}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-700 dark:bg-brand-600 text-white text-sm font-medium rounded-xl hover:bg-brand-800 dark:hover:bg-brand-500 active:scale-95 transition-all focus-ring shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-600 text-white text-sm font-medium rounded-xl hover:bg-brand-700 active:scale-95 transition-all focus-ring shadow-md hover:shadow-lg"
             >
               Get Started
               <svg

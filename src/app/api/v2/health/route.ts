@@ -7,6 +7,7 @@
 
 import { NextResponse } from 'next/server';
 import { checkSourceHealth } from '@/lib/data-sources';
+import { getHealthMetrics, logger } from '@/lib/monitoring';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,17 +15,22 @@ export async function GET() {
   const startTime = Date.now();
   
   try {
-    const health = await checkSourceHealth();
+    const [health, healthMetrics] = await Promise.all([
+      checkSourceHealth(),
+      Promise.resolve(getHealthMetrics()),
+    ]);
     const latency = Date.now() - startTime;
     
     const status = health.healthy ? 'healthy' : 'degraded';
     const httpStatus = health.healthy ? 200 : 503;
+
+    logger.info('Health check completed', { status, latency });
     
     return NextResponse.json(
       {
         status,
         version: '2.0.0',
-        uptime: process.uptime(),
+        uptime: healthMetrics.uptime,
         latency: `${latency}ms`,
         // Intentionally vague about data sources
         dataAvailability: {
@@ -34,6 +40,8 @@ export async function GET() {
         cache: {
           status: 'operational',
         },
+        memory: healthMetrics.memory,
+        metrics: healthMetrics.requests,
         timestamp: new Date().toISOString(),
       },
       {
@@ -45,6 +53,8 @@ export async function GET() {
       }
     );
   } catch (error) {
+    logger.error('Health check failed', error instanceof Error ? error : String(error));
+    
     return NextResponse.json(
       {
         status: 'error',

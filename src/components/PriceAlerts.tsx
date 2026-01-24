@@ -157,7 +157,7 @@ export function PriceAlerts() {
       {/* Alert Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="relative p-2 text-text-secondary hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+        className="relative p-2 text-text-secondary hover:text-amber-500 transition-colors"
         aria-label="Price Alerts"
         title="Price Alerts"
       >
@@ -246,7 +246,7 @@ export function PriceAlerts() {
 
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
                       $
                     </span>
                     <input
@@ -260,14 +260,14 @@ export function PriceAlerts() {
                   <button
                     onClick={addAlert}
                     disabled={!targetPrice}
-                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors"
+                    className="px-4 py-2 bg-amber-500 hover:bg-amber-600 disabled:bg-surface-alt disabled:text-text-muted disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors"
                   >
                     Add
                   </button>
                 </div>
 
                 {currentPrices[selectedCoin.id] && (
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-text-muted">
                     Current price: ${currentPrices[selectedCoin.id].usd.toLocaleString()}
                   </div>
                 )}
@@ -293,7 +293,7 @@ export function PriceAlerts() {
                             {alert.symbol} {alert.direction} ${alert.targetPrice.toLocaleString()}
                           </div>
                           {currentPrices[alert.coin] && (
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-text-muted">
                               Current: ${currentPrices[alert.coin].usd.toLocaleString()}
                             </div>
                           )}
@@ -301,9 +301,9 @@ export function PriceAlerts() {
                       </div>
                       <button
                         onClick={() => removeAlert(alert.id)}
-                        className="p-1.5 hover:bg-gray-200 dark:hover:bg-black rounded"
+                        className="p-1.5 hover:bg-surface-hover rounded"
                       >
-                        <X className="w-4 h-4 text-gray-400" />
+                        <X className="w-4 h-4 text-text-muted" />
                       </button>
                     </div>
                   ))}
@@ -344,7 +344,7 @@ export function PriceAlerts() {
               )}
 
               {alerts.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-text-muted">
                   <Bell className="w-12 h-12 mx-auto mb-3 opacity-30" />
                   <p>No price alerts set</p>
                   <p className="text-sm">Create an alert to get notified when prices move</p>

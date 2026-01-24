@@ -272,60 +272,60 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
-            <Link href="/markets" className="hover:text-blue-600 dark:hover:text-blue-400">
+            <Link href="/markets" className="hover:text-primary">
               Markets
             </Link>
             <span>/</span>
             <Link
               href="/markets/categories"
-              className="hover:text-blue-600 dark:hover:text-blue-400"
+              className="hover:text-primary"
             >
               Categories
             </Link>
             <span>/</span>
-            <span className="text-gray-900 dark:text-white">{category.name}</span>
+            <span className="text-text-primary">{category.name}</span>
           </nav>
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-text-primary mb-2 flex items-center gap-3">
               {(() => {
                 const Icon = getCategoryIcon(category.iconKey);
-                return <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />;
+                return <Icon className="w-8 h-8 text-primary" />;
               })()}
               {category.name} Cryptocurrencies
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-text-muted">
               {category.description} • {coins.length} coins
             </p>
           </div>
 
           {/* Coins Table */}
           {coins.length > 0 ? (
-            <div className="bg-surface rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-gray-50 dark:bg-black/50 border-b border-gray-200 dark:border-gray-700">
-                      <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                    <tr className="bg-surface-alt border-b border-surface-border">
+                      <th className="text-left text-text-muted text-sm font-medium p-4">
                         #
                       </th>
-                      <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                      <th className="text-left text-text-muted text-sm font-medium p-4">
                         Coin
                       </th>
-                      <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                      <th className="text-right text-text-muted text-sm font-medium p-4">
                         Price
                       </th>
-                      <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                      <th className="text-right text-text-muted text-sm font-medium p-4">
                         24h %
                       </th>
-                      <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden md:table-cell">
+                      <th className="text-right text-text-muted text-sm font-medium p-4 hidden md:table-cell">
                         7d %
                       </th>
-                      <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
+                      <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                         Market Cap
                       </th>
-                      <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
+                      <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                         Volume (24h)
                       </th>
                     </tr>

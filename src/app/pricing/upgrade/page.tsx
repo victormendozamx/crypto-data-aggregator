@@ -398,13 +398,13 @@ function UpgradeContent() {
           <div className="mb-4">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-text-secondary">Today&apos;s Usage</span>
-              <span className="text-black dark:text-white">
+              <span className="text-text-primary">
                 {keyInfo.usageToday.toLocaleString()} /{' '}
                 {keyInfo.rateLimit === -1 ? 'Unlimited' : keyInfo.rateLimit.toLocaleString()}{' '}
                 requests
               </span>
             </div>
-            <div className="h-2 bg-neutral-100 dark:bg-neutral-900 rounded-full overflow-hidden">
+            <div className="h-2 bg-surface-alt rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all ${
                   usagePercentage > 80
@@ -423,18 +423,18 @@ function UpgradeContent() {
       {/* Upgrade Options */}
       {keyInfo && keyInfo.tier !== 'enterprise' && (
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-black dark:text-white">
+          <h2 className="text-xl font-bold text-text-primary">
             {keyInfo.tier === 'pro' ? 'Renew or Extend' : 'Upgrade Options'}
           </h2>
 
           {upgrades.map((upgrade) => (
             <div
               key={upgrade.type}
-              className="border-2 border-black dark:border-white rounded-lg p-6"
+              className="border-2 border-surface-border rounded-lg p-6"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-black dark:text-white flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-text-primary flex items-center gap-2">
                     <Zap className="w-5 h-5 text-blue-500" />
                     {upgrade.name}
                   </h3>
@@ -443,7 +443,7 @@ function UpgradeContent() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-black dark:text-white">
+                  <div className="text-3xl font-bold text-text-primary">
                     {upgrade.price}
                   </div>
                   <div className="text-sm text-text-secondary">one-time payment</div>
@@ -462,7 +462,7 @@ function UpgradeContent() {
               <button
                 onClick={() => handleUpgrade(upgrade.type)}
                 disabled={upgrading || !wallet.connected || !wallet.isCorrectChain}
-                className="w-full py-3 px-4 bg-surface-alt text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 bg-black text-white rounded-lg font-medium hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
               >
                 {upgrading ? (
                   <>
@@ -497,7 +497,7 @@ function UpgradeContent() {
           <div className="border-2 border-surface-border rounded-lg p-6">
             <div className="flex items-center gap-3 mb-4">
               <Crown className="w-6 h-6 text-purple-500" />
-              <h3 className="text-lg font-semibold text-black dark:text-white">Need Enterprise?</h3>
+              <h3 className="text-lg font-semibold text-text-primary">Need Enterprise?</h3>
             </div>
             <p className="text-text-secondary mb-4">
               For unlimited requests, custom endpoints, and dedicated support, contact our sales
@@ -505,7 +505,7 @@ function UpgradeContent() {
             </p>
             <a
               href="mailto:sales@cryptodataaggregator.com"
-              className="inline-block px-6 py-2 border-2 border-black dark:border-white text-black dark:text-white rounded-lg font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900"
+              className="inline-block px-6 py-2 border-2 border-surface-border text-text-primary rounded-lg font-medium hover:bg-surface-hover"
             >
               Contact Sales
             </a>
@@ -517,7 +517,7 @@ function UpgradeContent() {
       {keyInfo?.tier === 'enterprise' && (
         <div className="border-2 border-purple-500 rounded-lg p-6 text-center">
           <Crown className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-black dark:text-white mb-2">
+          <h2 className="text-xl font-bold text-text-primary mb-2">
             You&apos;re on Enterprise
           </h2>
           <p className="text-text-secondary">

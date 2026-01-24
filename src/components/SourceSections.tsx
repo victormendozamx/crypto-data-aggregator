@@ -24,48 +24,41 @@ interface SourceSectionProps {
 
 const sourceInfo: Record<
   string,
-  { slug: string; color: string; darkColor: string; bgGradient: string }
+  { slug: string; color: string; bgGradient: string }
 > = {
   CoinDesk: {
     slug: 'coindesk',
-    color: 'text-blue-600',
-    darkColor: 'dark:text-blue-400',
+    color: 'text-blue-500',
     bgGradient: 'from-blue-600',
   },
   'The Block': {
     slug: 'theblock',
-    color: 'text-purple-600',
-    darkColor: 'dark:text-purple-400',
+    color: 'text-purple-500',
     bgGradient: 'from-purple-600',
   },
   Decrypt: {
     slug: 'decrypt',
-    color: 'text-emerald-600',
-    darkColor: 'dark:text-emerald-400',
+    color: 'text-emerald-500',
     bgGradient: 'from-emerald-600',
   },
   CoinTelegraph: {
     slug: 'cointelegraph',
     color: 'text-orange-500',
-    darkColor: 'dark:text-orange-400',
     bgGradient: 'from-orange-500',
   },
   'Bitcoin Magazine': {
     slug: 'bitcoinmagazine',
     color: 'text-amber-500',
-    darkColor: 'dark:text-amber-400',
     bgGradient: 'from-amber-500',
   },
   Blockworks: {
     slug: 'blockworks',
-    color: 'text-indigo-600',
-    darkColor: 'dark:text-indigo-400',
+    color: 'text-indigo-500',
     bgGradient: 'from-indigo-600',
   },
   'The Defiant': {
     slug: 'defiant',
-    color: 'text-pink-600',
-    darkColor: 'dark:text-pink-400',
+    color: 'text-pink-500',
     bgGradient: 'from-pink-600',
   },
 };
@@ -102,7 +95,6 @@ export default function SourceSections({
           const info = sourceInfo[source] || {
             slug: source.toLowerCase().replace(/\s+/g, ''),
             color: 'text-text-secondary',
-            darkColor: '',
             bgGradient: 'from-gray-600',
           };
           const displayArticles = sourceArticles.slice(0, articlesPerSource);
@@ -116,7 +108,7 @@ export default function SourceSections({
                     className={`w-1 h-6 bg-gradient-to-b ${info.bgGradient} to-transparent rounded-full`}
                   />
                   <h2 className="text-xl font-bold text-text-primary">
-                    More from <span className={`${info.color} ${info.darkColor}`}>{source}</span>
+                    More from <span className={info.color}>{source}</span>
                   </h2>
                 </div>
                 <Link

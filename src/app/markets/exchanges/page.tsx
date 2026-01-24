@@ -47,19 +47,19 @@ async function getExchanges(): Promise<Exchange[]> {
 
 // Trust score color mapping
 function getTrustScoreColor(score: number): string {
-  if (score >= 9) return 'text-green-600 dark:text-green-400';
-  if (score >= 7) return 'text-lime-600 dark:text-lime-400';
-  if (score >= 5) return 'text-yellow-600 dark:text-yellow-400';
-  if (score >= 3) return 'text-orange-600 dark:text-orange-400';
-  return 'text-red-600 dark:text-red-400';
+  if (score >= 9) return 'text-gain';
+  if (score >= 7) return 'text-lime-500';
+  if (score >= 5) return 'text-warning';
+  if (score >= 3) return 'text-orange-500';
+  return 'text-loss';
 }
 
 function getTrustScoreBg(score: number): string {
-  if (score >= 9) return 'bg-green-100 dark:bg-green-900/30';
-  if (score >= 7) return 'bg-lime-100 dark:bg-lime-900/30';
-  if (score >= 5) return 'bg-yellow-100 dark:bg-yellow-900/30';
-  if (score >= 3) return 'bg-orange-100 dark:bg-orange-900/30';
-  return 'bg-red-100 dark:bg-red-900/30';
+  if (score >= 9) return 'bg-gain/10';
+  if (score >= 7) return 'bg-lime-500/10';
+  if (score >= 5) return 'bg-warning/10';
+  if (score >= 3) return 'bg-orange-500/10';
+  return 'bg-loss/10';
 }
 
 // Average BTC price for volume calculation (rough estimate)
@@ -75,53 +75,53 @@ export default async function ExchangesPage() {
 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
-            <Link href="/markets" className="hover:text-blue-600 dark:hover:text-blue-400">
+          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
+            <Link href="/markets" className="hover:text-primary">
               Markets
             </Link>
             <span>/</span>
-            <span className="text-gray-900 dark:text-white">Exchanges</span>
+            <span className="text-text-primary">Exchanges</span>
           </nav>
 
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
-              <Building2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <h1 className="text-3xl font-bold text-text-primary mb-2 flex items-center gap-3">
+              <Building2 className="w-8 h-8 text-primary" />
               Cryptocurrency Exchanges
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-text-secondary">
               Top {exchanges.length} exchanges ranked by 24-hour trading volume
             </p>
           </div>
 
           {/* Exchanges Table */}
-          <div className="bg-surface rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-gray-50 dark:bg-black/50 border-b border-gray-200 dark:border-gray-700">
-                    <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                  <tr className="bg-surface-alt border-b border-surface-border">
+                    <th className="text-left text-text-muted text-sm font-medium p-4">
                       #
                     </th>
-                    <th className="text-left text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                    <th className="text-left text-text-muted text-sm font-medium p-4">
                       Exchange
                     </th>
-                    <th className="text-center text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                    <th className="text-center text-text-muted text-sm font-medium p-4">
                       Trust Score
                     </th>
-                    <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4">
+                    <th className="text-right text-text-muted text-sm font-medium p-4">
                       24h Volume (BTC)
                     </th>
-                    <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden md:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden md:table-cell">
                       24h Volume (USD)
                     </th>
-                    <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                       Year Est.
                     </th>
-                    <th className="text-right text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden lg:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                       Country
                     </th>
-                    <th className="text-center text-gray-500 dark:text-gray-400 text-sm font-medium p-4 hidden sm:table-cell">
+                    <th className="text-center text-text-muted text-sm font-medium p-4 hidden sm:table-cell">
                       Visit
                     </th>
                   </tr>
@@ -130,9 +130,9 @@ export default async function ExchangesPage() {
                   {exchanges.map((exchange) => (
                     <tr
                       key={exchange.id}
-                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-black/50 transition-colors"
+                      className="border-b border-surface-border hover:bg-surface-hover transition-colors"
                     >
-                      <td className="p-4 text-gray-500 dark:text-gray-400">
+                      <td className="p-4 text-text-muted">
                         {exchange.trust_score_rank}
                       </td>
                       <td className="p-4">
@@ -151,7 +151,7 @@ export default async function ExchangesPage() {
                               />
                             )}
                           </div>
-                          <span className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+                          <span className="font-medium text-text-primary hover:text-primary">
                             {exchange.name}
                           </span>
                         </Link>
@@ -163,19 +163,19 @@ export default async function ExchangesPage() {
                           {exchange.trust_score}/10
                         </span>
                       </td>
-                      <td className="p-4 text-right font-medium text-gray-900 dark:text-white">
+                      <td className="p-4 text-right font-medium text-text-primary">
                         ₿ {formatNumber(exchange.trade_volume_24h_btc_normalized)}
                       </td>
-                      <td className="p-4 text-right text-gray-700 dark:text-gray-300 hidden md:table-cell">
+                      <td className="p-4 text-right text-text-secondary hidden md:table-cell">
                         $
                         {formatNumber(
                           exchange.trade_volume_24h_btc_normalized * BTC_PRICE_ESTIMATE
                         )}
                       </td>
-                      <td className="p-4 text-right text-gray-700 dark:text-gray-300 hidden lg:table-cell">
+                      <td className="p-4 text-right text-text-secondary hidden lg:table-cell">
                         {exchange.year_established || '—'}
                       </td>
-                      <td className="p-4 text-right text-gray-700 dark:text-gray-300 hidden lg:table-cell">
+                      <td className="p-4 text-right text-text-secondary hidden lg:table-cell">
                         {exchange.country || '—'}
                       </td>
                       <td className="p-4 text-center hidden sm:table-cell">
@@ -183,7 +183,7 @@ export default async function ExchangesPage() {
                           href={exchange.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-black hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-alt hover:bg-primary/10 text-text-muted hover:text-primary transition-colors"
                           title={`Visit ${exchange.name}`}
                         >
                           <svg
@@ -209,12 +209,12 @@ export default async function ExchangesPage() {
           </div>
 
           {/* Info Banner */}
-          <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
+          <div className="mt-6 bg-primary/10 border border-primary/20 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <span className="text-xl">ℹ️</span>
               <div className="text-sm">
-                <p className="text-blue-800 dark:text-blue-200 font-medium">About Trust Score</p>
-                <p className="text-blue-600 dark:text-blue-300">
+                <p className="text-primary font-medium">About Trust Score</p>
+                <p className="text-text-secondary">
                   Trust score is calculated based on liquidity, scale of operations, cyber security,
                   and regulatory compliance. Volume shown is normalized to account for potential
                   wash trading.
@@ -225,7 +225,7 @@ export default async function ExchangesPage() {
 
           {/* Back link */}
           <div className="mt-8 text-center">
-            <Link href="/markets" className="text-blue-600 dark:text-blue-400 hover:underline">
+            <Link href="/markets" className="text-primary hover:underline">
               ← Back to Markets
             </Link>
           </div>

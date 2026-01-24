@@ -11,6 +11,14 @@ Documentation for external APIs, data flow, and caching strategies.
   - [CoinGecko](#coingecko)
   - [DeFiLlama](#defillama)
   - [Alternative.me](#alternativeme)
+  - [CryptoCompare](#cryptocompare)
+  - [Blockchain.com](#blockchaincom)
+  - [Messari](#messari)
+  - [CoinGlass](#coinglass)
+  - [GoPlus Labs](#goplus-labs)
+  - [Etherscan](#etherscan)
+  - [Mempool.space](#mempoolspace)
+  - [Blockstream](#blockstream)
 - [Caching Strategy](#caching-strategy)
 - [Data Models](#data-models)
 - [Error Handling](#error-handling)
@@ -20,31 +28,41 @@ Documentation for external APIs, data flow, and caching strategies.
 
 ## Overview
 
-Crypto Data Aggregator fetches data from three free, public APIs:
+Crypto Data Aggregator fetches data from **13+ free, public APIs**:
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   CoinGecko     │     │   DeFiLlama     │     │  Alternative.me │
-│  (Market Data)  │     │  (DeFi TVL)     │     │ (Fear & Greed)  │
-└────────┬────────┘     └────────┬────────┘     └────────┬────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │    Memory Cache (TTL)   │
-                    └────────────┬────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │     API Routes (/api)   │
-                    └────────────┬────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │     SWR Client Cache    │
-                    └────────────┬────────────┘
-                                 │
-                    ┌────────────▼────────────┐
-                    │      React Components   │
-                    └─────────────────────────┘
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│   CoinGecko     │  │   DeFiLlama     │  │  Alternative.me │  │  CryptoCompare  │
+│  (Market Data)  │  │  (DeFi TVL)     │  │ (Fear & Greed)  │  │ (OHLCV/Social)  │
+└────────┬────────┘  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘
+         │                    │                    │                    │
+┌────────┴────────┐  ┌────────┴────────┐  ┌────────┴────────┐  ┌────────┴────────┐
+│  Blockchain.com │  │    Messari      │  │   CoinGlass     │  │   GoPlus Labs   │
+│  (BTC On-chain) │  │   (Research)    │  │ (Funding/OI)    │  │ (Token Security)│
+└────────┬────────┘  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘
+         │                    │                    │                    │
+┌────────┴────────┐  ┌────────┴────────┐  ┌────────┴────────┐  ┌────────┴────────┐
+│   Etherscan     │  │  Mempool.space  │  │  Blockstream    │  │     Binance     │
+│  (Gas Oracle)   │  │   (Mempool)     │  │  (Esplora API)  │  │ (Exchange Data) │
+└────────┬────────┘  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘
+         │                    │                    │                    │
+         └────────────────────┴────────────────────┴────────────────────┘
+                                         │
+                            ┌────────────▼────────────┐
+                            │    Memory Cache (TTL)   │
+                            └────────────┬────────────┘
+                                         │
+                            ┌────────────▼────────────┐
+                            │     API Routes (/api)   │
+                            └────────────┬────────────┘
+                                         │
+                            ┌────────────▼────────────┐
+                            │     SWR Client Cache    │
+                            └────────────┬────────────┘
+                                         │
+                            ┌────────────▼────────────┐
+                            │      React Components   │
+                            └─────────────────────────┘
 ```
 
 ---
@@ -231,6 +249,284 @@ Crypto Data Aggregator fetches data from three free, public APIs:
   }
 }
 ```
+
+---
+
+### CryptoCompare
+
+**Base URL**: `https://min-api.cryptocompare.com/data`
+
+**Authentication**: None required for basic tier
+
+**Rate Limits**: 100,000 calls/month (free tier)
+
+#### Endpoints Used
+
+| Endpoint                      | Purpose                    | Cache TTL |
+| ----------------------------- | -------------------------- | --------- |
+| `GET /histoday`               | Daily OHLCV data           | 300s      |
+| `GET /histohour`              | Hourly OHLCV data          | 300s      |
+| `GET /histominute`            | Minute OHLCV data          | 60s       |
+| `GET /social/coin/latest`     | Social stats (Twitter, Reddit, GitHub) | 3600s |
+
+#### Example Response
+
+**GET /histoday?fsym=BTC&tsym=USD&limit=7**
+
+```json
+{
+  "Response": "Success",
+  "Data": [
+    {
+      "time": 1737417600,
+      "open": 94500,
+      "high": 96200,
+      "low": 93800,
+      "close": 95800,
+      "volumefrom": 12500,
+      "volumeto": 1187500000
+    }
+  ]
+}
+```
+
+---
+
+### Blockchain.com
+
+**Base URL**: `https://api.blockchain.info`
+
+**Authentication**: None required
+
+**Rate Limits**: Unlimited
+
+#### Endpoints Used
+
+| Endpoint            | Purpose                    | Cache TTL |
+| ------------------- | -------------------------- | --------- |
+| `GET /stats`        | Bitcoin network statistics | 600s      |
+| `GET /q/getblockcount` | Current block height    | 60s       |
+
+#### Example Response
+
+**GET /stats?format=json**
+
+```json
+{
+  "market_price_usd": 95800,
+  "hash_rate": 750000000000000000000,
+  "difficulty": 110568893081062,
+  "totalbc": 1960000000000000,
+  "n_tx": 450000,
+  "minutes_between_blocks": 9.5,
+  "total_fees_btc": 2500000000
+}
+```
+
+---
+
+### Messari
+
+**Base URL**: `https://data.messari.io/api/v1`
+
+**Authentication**: None required for public endpoints
+
+**Rate Limits**: 20 requests/minute (free tier)
+
+#### Endpoints Used
+
+| Endpoint                    | Purpose                    | Cache TTL |
+| --------------------------- | -------------------------- | --------- |
+| `GET /assets`               | List all assets            | 600s      |
+| `GET /assets/{symbol}/metrics` | Asset metrics & research | 300s      |
+
+#### Example Response
+
+**GET /assets/btc/metrics**
+
+```json
+{
+  "data": {
+    "id": "1e31218a-e44e-4285-820c-8282ee222035",
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "slug": "bitcoin",
+    "market_data": {
+      "price_usd": 95800,
+      "volume_last_24_hours": 45000000000,
+      "percent_change_usd_last_24_hours": 1.5
+    },
+    "marketcap": {
+      "current_marketcap_usd": 1876000000000
+    },
+    "roi_data": {
+      "percent_change_last_1_week": 5.2
+    }
+  }
+}
+```
+
+---
+
+### CoinGlass
+
+**Base URL**: `https://open-api.coinglass.com/public/v2`
+
+**Authentication**: None required for public endpoints
+
+**Rate Limits**: Generous (undocumented)
+
+#### Endpoints Used
+
+| Endpoint                | Purpose                    | Cache TTL |
+| ----------------------- | -------------------------- | --------- |
+| `GET /funding`          | Funding rates by exchange  | 300s      |
+| `GET /open_interest`    | Open interest aggregated   | 300s      |
+
+#### Example Response
+
+**GET /funding?symbol=BTC**
+
+```json
+{
+  "code": "0",
+  "data": [
+    {
+      "symbol": "BTC",
+      "exchangeName": "Binance",
+      "rate": 0.0001,
+      "predictedRate": 0.00012,
+      "nextFundingTime": 1737504000000
+    },
+    {
+      "symbol": "BTC",
+      "exchangeName": "Bybit",
+      "rate": 0.00008,
+      "predictedRate": 0.0001,
+      "nextFundingTime": 1737504000000
+    }
+  ]
+}
+```
+
+---
+
+### GoPlus Labs
+
+**Base URL**: `https://api.gopluslabs.io/api/v1`
+
+**Authentication**: None required
+
+**Rate Limits**: Unlimited
+
+#### Endpoints Used
+
+| Endpoint                          | Purpose                    | Cache TTL |
+| --------------------------------- | -------------------------- | --------- |
+| `GET /token_security/{chainId}`   | Token security analysis    | 3600s     |
+
+#### Chain IDs
+
+| Chain     | ID    |
+| --------- | ----- |
+| Ethereum  | `1`   |
+| BSC       | `56`  |
+| Polygon   | `137` |
+| Arbitrum  | `42161` |
+| Base      | `8453` |
+
+#### Example Response
+
+**GET /token_security/1?contract_addresses=0x....**
+
+```json
+{
+  "code": 1,
+  "result": {
+    "0x....": {
+      "is_open_source": "1",
+      "is_proxy": "0",
+      "is_mintable": "0",
+      "is_honeypot": "0",
+      "buy_tax": "0",
+      "sell_tax": "0",
+      "holder_count": "150000",
+      "lp_holder_count": "25"
+    }
+  }
+}
+```
+
+---
+
+### Etherscan
+
+**Base URL**: `https://api.etherscan.io/api`
+
+**Authentication**: None required for basic endpoints
+
+**Rate Limits**: 5 calls/second (free tier)
+
+#### Endpoints Used
+
+| Endpoint                           | Purpose                    | Cache TTL |
+| ---------------------------------- | -------------------------- | --------- |
+| `GET ?module=gastracker&action=gasoracle` | Current gas prices  | 15s       |
+| `GET ?module=stats&action=ethsupply2`     | ETH supply stats    | 3600s     |
+
+#### Example Response
+
+**GET ?module=gastracker&action=gasoracle**
+
+```json
+{
+  "status": "1",
+  "result": {
+    "LastBlock": "19500000",
+    "SafeGasPrice": "15",
+    "ProposeGasPrice": "18",
+    "FastGasPrice": "22",
+    "suggestBaseFee": "14.5",
+    "gasUsedRatio": "0.45,0.52,0.48,0.55,0.50"
+  }
+}
+```
+
+---
+
+### Mempool.space
+
+**Base URL**: `https://mempool.space/api`
+
+**Authentication**: None required
+
+**Rate Limits**: Generous
+
+#### Endpoints Used
+
+| Endpoint                | Purpose                    | Cache TTL |
+| ----------------------- | -------------------------- | --------- |
+| `GET /v1/fees/recommended` | Recommended BTC fees    | 60s       |
+| `GET /blocks/tip/height`   | Current block height     | 60s       |
+| `GET /mempool`             | Mempool statistics       | 30s       |
+
+---
+
+### Blockstream
+
+**Base URL**: `https://blockstream.info/api`
+
+**Authentication**: None required
+
+**Rate Limits**: Generous
+
+#### Endpoints Used
+
+| Endpoint                | Purpose                    | Cache TTL |
+| ----------------------- | -------------------------- | --------- |
+| `GET /blocks/tip/height` | Current block height      | 60s       |
+| `GET /block/{hash}`      | Block details             | 3600s     |
+| `GET /tx/{txid}`         | Transaction details       | 3600s     |
 
 ---
 
