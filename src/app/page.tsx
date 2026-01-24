@@ -35,6 +35,18 @@ export const metadata: Metadata = {
     title: 'Crypto Data Aggregator - Live Market Data & Analytics',
     description:
       'Real-time cryptocurrency prices, market data, DeFi analytics, and portfolio tracking.',
+    images: [{
+      url: '/api/og?type=market&title=Crypto%20Data%20Aggregator&subtitle=Live%20Market%20Data%20%26%20Analytics',
+      width: 1200,
+      height: 630,
+      alt: 'Crypto Data Aggregator - Live Market Dashboard',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Crypto Data Aggregator - Live Market Data & Analytics',
+    description: 'Real-time cryptocurrency prices, market data, DeFi analytics, and portfolio tracking.',
+    images: ['/api/og?type=market&title=Crypto%20Data%20Aggregator&subtitle=Live%20Market%20Data%20%26%20Analytics'],
   },
 };
 

@@ -3,6 +3,8 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Flame, TrendingUp, TrendingDown, Minus, BarChart3 } from 'lucide-react';
+import { MarketMoodWidget } from '@/components/MarketMoodWidget';
+import { SocialBuzz } from '@/components/SocialBuzz';
 
 export const metadata: Metadata = {
   title: 'Trending Topics - Crypto Data Aggregator',
@@ -59,6 +61,16 @@ export default async function TrendingPage() {
               Real-time analysis of what&apos;s hot in crypto news • {data.articlesAnalyzed}{' '}
               articles analyzed
             </p>
+          </div>
+
+          {/* Market Mood Banner */}
+          <div className="mb-8">
+            <MarketMoodWidget />
+          </div>
+
+          {/* Social Buzz Section */}
+          <div className="mb-8">
+            <SocialBuzz />
           </div>
 
           {data.trending.length > 0 ? (

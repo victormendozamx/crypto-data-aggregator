@@ -126,15 +126,22 @@ export default function PricingPage() {
                   ))}
                 </ul>
 
-                <button
-                  className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
+                <Link
+                  href={
+                    tier.id === 'free'
+                      ? '/docs#api-key'
+                      : tier.id === 'pro'
+                        ? '/pricing/upgrade?plan=pro'
+                        : '/pricing/upgrade?plan=enterprise'
+                  }
+                  className={`w-full py-3 px-4 rounded-lg font-medium transition-colors text-center block ${
                     tier.highlighted
                       ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)]'
                       : 'border-2 border-[var(--surface-border)] text-white hover:bg-[var(--surface-hover)]'
                   }`}
                 >
                   {tier.cta}
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -257,9 +264,12 @@ export default function PricingPage() {
               >
                 View API Docs
               </Link>
-              <button className="px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors">
+              <Link
+                href="/docs#api-key"
+                className="px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors"
+              >
                 Get API Key
-              </button>
+              </Link>
             </div>
           </div>
         </div>

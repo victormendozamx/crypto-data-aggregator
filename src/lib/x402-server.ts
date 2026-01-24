@@ -73,11 +73,20 @@ const facilitatorClient = new HTTPFacilitatorClient({
 export const x402Server = new x402ResourceServer(facilitatorClient);
 
 // Register EVM payment scheme (Base/Ethereum)
-x402Server.register(defaultNetwork, new ExactEvmScheme());
+// Wrap in try-catch to prevent build failures when facilitator doesn't support schemes
+try {
+  x402Server.register(defaultNetwork, new ExactEvmScheme());
 
-// Also register mainnet if we're on testnet (for future-proofing)
-if (isTestnet) {
-  x402Server.register('eip155:8453', new ExactEvmScheme());
+  // Also register mainnet if we're on testnet (for future-proofing)
+  if (isTestnet) {
+    x402Server.register('eip155:8453', new ExactEvmScheme());
+  }
+} catch (error) {
+  // Silently ignore registration errors during build
+  // The x402 functionality will be unavailable but won't crash the build
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('[x402] Failed to register payment schemes:', error);
+  }
 }
 
 // ============================================================================

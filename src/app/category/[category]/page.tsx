@@ -7,6 +7,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Posts from '@/components/Posts';
 import CategoryNav from '@/components/CategoryNav';
+import TrendingSidebar from '@/components/TrendingSidebar';
+import { MarketMoodWidget } from '@/components/MarketMoodWidget';
 import { getNewsByCategory } from '@/lib/crypto-news';
 import { BreadcrumbStructuredData, NewsListStructuredData } from '@/components/StructuredData';
 import type { Metadata } from 'next';
@@ -141,17 +143,34 @@ export default async function CategoryPage({ params }: Props) {
             </p>
           </div>
 
-          {/* News Grid */}
-          {data.articles.length > 0 ? (
-            <Posts articles={data.articles} />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-text-muted">No articles found in this category.</p>
-              <p className="text-sm text-text-muted mt-2">
-                Try checking back later or browse all news.
-              </p>
+          {/* Market Mood Banner */}
+          <div className="mb-8">
+            <MarketMoodWidget />
+          </div>
+
+          {/* Main Content with Sidebar */}
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* News Grid */}
+            <div className="lg:col-span-2">
+              {data.articles.length > 0 ? (
+                <Posts articles={data.articles} />
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-text-muted">No articles found in this category.</p>
+                  <p className="text-sm text-text-muted mt-2">
+                    Try checking back later or browse all news.
+                  </p>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Sidebar */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-4">
+                <TrendingSidebar />
+              </div>
+            </aside>
+          </div>
         </main>
         
         <Footer />

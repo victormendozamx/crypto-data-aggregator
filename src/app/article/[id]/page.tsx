@@ -21,6 +21,9 @@ import { ArticleContent } from '@/components/ArticleContent';
 import { RelatedArticles } from '@/components/RelatedArticles';
 import TrendingSidebar from '@/components/TrendingSidebar';
 import { ArticleStructuredData, BreadcrumbStructuredData } from '@/components/StructuredData';
+import ShareButtons from '@/components/ShareButtons';
+import { ArticleReactions } from '@/components/ArticleReactions';
+import { BookmarkButton } from '@/components/BookmarkButton';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -52,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: article.description || `Read the full article from ${article.source}`,
       type: 'article',
       publishedTime: article.pub_date || article.first_seen,
-      modifiedTime: article.updated_at || article.pub_date || article.first_seen,
+      modifiedTime: article.last_seen || article.pub_date || article.first_seen,
       authors: [article.source],
       section: article.tags?.[0] || 'Crypto News',
       tags: [...article.tickers, ...article.tags],
@@ -230,6 +233,25 @@ export default async function ArticlePage({ params }: Props) {
                     >
                       Read original on {article.source} ↗
                     </a>
+                  </div>
+
+                  {/* Engagement Row - Share, Bookmark, React */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-t border-surface-border pt-4 mt-4">
+                    <div className="flex items-center gap-3">
+                      <ShareButtons 
+                        url={articleUrl} 
+                        title={article.title}
+                        source={article.source}
+                        sentiment={article.sentiment.label}
+                        type="article"
+                        variant="compact"
+                      />
+                      <BookmarkButton 
+                        article={toNewsArticle(article)} 
+                        variant="button"
+                      />
+                    </div>
+                    <ArticleReactions articleId={article.id} />
                   </div>
                 </div>
               </article>
