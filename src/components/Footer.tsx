@@ -235,29 +235,30 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* API Endpoints */}
-          <nav aria-label="API Endpoints">
+          {/* Developer Resources */}
+          <nav aria-label="Developer Resources">
             <h3 className="font-bold text-text-primary text-lg mb-6 flex items-center gap-2">
               <span className="w-8 h-0.5 bg-primary" aria-hidden="true" />
-              API
+              Developers
             </h3>
             <ul className="space-y-3">
               {[
-                '/api/market/coins',
-                '/api/market/defi',
-                '/api/charts',
-                '/api/trending',
-                '/api/sentiment',
-              ].map((endpoint) => (
-                <li key={endpoint}>
+                { href: '/developers', label: 'API Documentation' },
+                { href: '/docs/swagger', label: 'Swagger UI' },
+                { href: '/examples', label: 'Code Examples' },
+                { href: '/pricing', label: 'API Pricing' },
+                { href: '/api/feed/rss', label: 'RSS Feed' },
+                { href: '/llms.txt', label: 'LLM Context' },
+              ].map((item) => (
+                <li key={item.href}>
                   <a
-                    href={endpoint}
+                    href={item.href}
                     className="group text-text-muted hover:text-text-primary transition-colors font-mono text-sm focus-ring rounded inline-flex items-center gap-2"
                   >
                     <span className="text-text-disabled group-hover:text-text-primary transition-colors">
                       →
                     </span>
-                    {endpoint}
+                    {item.label}
                   </a>
                 </li>
               ))}

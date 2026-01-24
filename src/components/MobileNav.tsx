@@ -16,6 +16,7 @@ import {
   Info,
   Newspaper,
   Star,
+  BookOpen,
 } from 'lucide-react';
 
 // Navigation sections for mobile
@@ -26,6 +27,7 @@ const mainNavItems = [
   { href: '/trending', label: 'Trending', icon: Flame },
   { href: '/movers', label: 'Top Movers', icon: Rocket },
   { href: '/watchlist', label: 'Watchlist', icon: Star },
+  { href: '/blog', label: 'Blog', icon: BookOpen },
   { href: '/search', label: 'Search', icon: Search },
 ];
 
@@ -36,12 +38,17 @@ const toolsLinks = [
   { href: '/liquidations', label: 'Liquidations', icon: Rocket },
   { href: '/volatility', label: 'Volatility', icon: TrendingUp },
   { href: '/halving', label: 'Bitcoin Halving', icon: Landmark },
+  { href: '/topics', label: 'Browse Topics', icon: Tag },
+  { href: '/read', label: 'Article Reader', icon: BookOpen },
   { href: '/bookmarks', label: 'Bookmarks', icon: Star },
 ];
 
 const resourceLinks = [
   { href: '/developers', label: 'API Docs', icon: Code },
+  { href: '/docs/swagger', label: 'Swagger UI', icon: Code },
+  { href: '/examples', label: 'Code Examples', icon: Code },
   { href: '/pricing', label: 'API Pricing', icon: Info },
+  { href: '/api/feed/rss', label: 'RSS Feed', icon: Info },
   { href: '/install', label: 'Install App', icon: Folder },
   { href: '/about', label: 'About', icon: Info },
 ];

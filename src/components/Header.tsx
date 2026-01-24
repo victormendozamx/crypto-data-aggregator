@@ -24,10 +24,20 @@ const navItems = [
           title: 'Market Data',
           links: [
             { label: 'All Cryptocurrencies', href: '/', icon: null },
-            { label: 'Top Movers', href: '/movers', icon: null },
+            { label: 'Top Gainers', href: '/markets/gainers', icon: null },
+            { label: 'Top Losers', href: '/markets/losers', icon: null },
             { label: 'Trending', href: '/trending', icon: null },
+            { label: 'New Listings', href: '/markets/new', icon: null },
+            { label: 'Categories', href: '/markets/categories', icon: null },
+          ],
+        },
+        {
+          title: 'Visualization',
+          links: [
             { label: 'Market Heatmap', href: '/heatmap', icon: null },
             { label: 'Dominance', href: '/dominance', icon: null },
+            { label: 'Top Movers', href: '/movers', icon: null },
+            { label: 'Exchanges', href: '/markets/exchanges', icon: null },
           ],
         },
         {
@@ -71,10 +81,13 @@ const navItems = [
           ],
         },
         {
-          title: 'News',
+          title: 'News & Content',
           links: [
             { label: 'Daily Digest', href: '/digest', icon: null },
             { label: 'News Sources', href: '/sources', icon: null },
+            { label: 'Browse Topics', href: '/topics', icon: null },
+            { label: 'Read Articles', href: '/read', icon: null },
+            { label: 'Blog', href: '/blog', icon: null },
           ],
         },
       ],
@@ -118,11 +131,60 @@ const navItems = [
     label: 'Portfolio',
     href: '/portfolio',
     icon: null,
+    megaMenu: {
+      sections: [
+        {
+          title: 'Your Assets',
+          links: [
+            { label: 'Portfolio Tracker', href: '/portfolio', icon: null },
+            { label: 'Watchlist', href: '/watchlist', icon: null },
+            { label: 'Bookmarks', href: '/bookmarks', icon: null },
+          ],
+        },
+        {
+          title: 'Settings',
+          links: [
+            { label: 'Preferences', href: '/settings', icon: null },
+            { label: 'Exchange Connections', href: '/settings/exchanges', icon: null },
+          ],
+        },
+      ],
+      featured: {
+        title: 'Portfolio Tracker',
+        description: 'Track your crypto holdings and performance',
+        href: '/portfolio',
+      },
+    },
   },
   {
-    label: 'Watchlist',
-    href: '/watchlist',
+    label: 'Blog',
+    href: '/blog',
     icon: null,
+    megaMenu: {
+      sections: [
+        {
+          title: 'Content',
+          links: [
+            { label: 'All Posts', href: '/blog', icon: null },
+            { label: 'Tutorials', href: '/blog/tag/tutorial', icon: null },
+            { label: 'Analysis', href: '/blog/tag/analysis', icon: null },
+            { label: 'Announcements', href: '/blog/tag/announcement', icon: null },
+          ],
+        },
+        {
+          title: 'Resources',
+          links: [
+            { label: 'About Us', href: '/about', icon: null },
+            { label: 'Install App', href: '/install', icon: null },
+          ],
+        },
+      ],
+      featured: {
+        title: 'CryptoNews Blog',
+        description: 'Insights, tutorials, and crypto market analysis',
+        href: '/blog',
+      },
+    },
   },
   {
     label: 'API',
@@ -134,15 +196,17 @@ const navItems = [
           title: 'Developer',
           links: [
             { label: 'API Documentation', href: '/developers', icon: null },
+            { label: 'Swagger UI', href: '/docs/swagger', icon: null },
+            { label: 'Code Examples', href: '/examples', icon: null },
             { label: 'Pricing & Tiers', href: '/pricing', icon: null },
-            { label: 'LLM Integration', href: '/llms.txt', icon: null },
           ],
         },
         {
-          title: 'AI Features',
+          title: 'AI & Integrations',
           links: [
-            { label: 'AI Analysis', href: '/pricing/premium', icon: null },
             { label: 'Ask AI', href: '/ask', icon: null },
+            { label: 'LLM Context', href: '/llms.txt', icon: null },
+            { label: 'RSS Feed', href: '/api/feed/rss', icon: null },
             { label: 'x402 Micropayments', href: '/pricing#x402', icon: null },
           ],
         },
