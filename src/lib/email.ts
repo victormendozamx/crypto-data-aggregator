@@ -7,6 +7,8 @@
  * @module lib/email
  */
 
+import { getCoinUrl } from '@/lib/urls';
+
 // =============================================================================
 // TYPES
 // =============================================================================
@@ -330,7 +332,7 @@ export async function sendPriceAlert(email: string, alert: PriceAlertData): Prom
     </div>
     
     <p style="text-align: center;">
-      <a href="${APP_URL}/coin/${alert.coinSymbol.toLowerCase()}" class="button">View ${alert.coinSymbol} Details</a>
+      <a href="${APP_URL}${getCoinUrl(alert.coinSymbol)}" class="button">View ${alert.coinSymbol} Details</a>
     </p>
     
     <div class="divider"></div>
@@ -344,7 +346,7 @@ export async function sendPriceAlert(email: string, alert: PriceAlertData): Prom
     to: email,
     subject: `${emoji} ${alert.coinSymbol} Price Alert: $${alert.currentPrice.toLocaleString()}`,
     html,
-    text: `Price Alert: ${conditionText}\n\nCurrent price: $${alert.currentPrice.toLocaleString()}\n\nView details: ${APP_URL}/coin/${alert.coinSymbol.toLowerCase()}`,
+    text: `Price Alert: ${conditionText}\n\nCurrent price: $${alert.currentPrice.toLocaleString()}\n\nView details: ${APP_URL}${getCoinUrl(alert.coinSymbol)}`,
     tags: [
       { name: 'type', value: 'alert' },
       { name: 'coin', value: alert.coinSymbol },

@@ -261,13 +261,19 @@ export default function WatchlistPage() {
                 Popular coins to get started
               </h3>
               <div className="flex flex-wrap justify-center gap-2">
-                {['Bitcoin', 'Ethereum', 'Solana', 'Cardano', 'Polkadot'].map((name) => (
+                {[
+                  { name: 'Bitcoin', id: 'bitcoin' },
+                  { name: 'Ethereum', id: 'ethereum' },
+                  { name: 'Solana', id: 'solana' },
+                  { name: 'Cardano', id: 'cardano' },
+                  { name: 'Polkadot', id: 'polkadot' },
+                ].map((coin) => (
                   <Link
-                    key={name}
-                    href={`/coin/${name.toLowerCase()}`}
+                    key={coin.id}
+                    href={`/coin/${coin.id}`}
                     className="px-4 py-2 bg-[var(--surface-hover)] hover:bg-[var(--primary)]/20 rounded-full text-sm font-medium text-[var(--text-secondary)] transition-colors"
                   >
-                    {name}
+                    {coin.name}
                   </Link>
                 ))}
               </div>

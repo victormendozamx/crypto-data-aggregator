@@ -6,15 +6,17 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReadingProgress from '@/components/ReadingProgress';
+import { getCoinUrl } from '@/lib/urls';
 import {
   getArticleById,
   getRelatedArticles,
   toNewsArticle,
   type EnrichedArticle,
 } from '@/lib/archive-v2';
+import { parseArticleUrl, buildArticleUrl, buildCanonicalUrl } from '@/lib/slugs';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { ArticleContent } from '@/components/ArticleContent';
 import { RelatedArticles } from '@/components/RelatedArticles';
 import TrendingSidebar from '@/components/TrendingSidebar';
@@ -25,7 +27,8 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
+  const { id: rawSlug } = await params;
+  const { id } = parseArticleUrl(rawSlug);
   const article = await getArticleById(id);
 
   if (!article) {
@@ -35,9 +38,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // Generate canonical URL with SEO-friendly slug
+  const canonicalPath = buildArticleUrl(article.id, article.title);
+
   return {
     title: article.title,
     description: article.description || `Read the full article from ${article.source}`,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
       title: article.title,
       description: article.description || `Read the full article from ${article.source}`,
@@ -45,6 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: article.pub_date || article.first_seen,
       authors: [article.source],
       tags: [...article.tickers, ...article.tags],
+      url: buildCanonicalUrl(canonicalPath),
     },
     twitter: {
       card: 'summary_large_image',
@@ -97,16 +107,25 @@ function formatPrice(price: number | null | undefined): string {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const { id } = await params;
+  const { id: rawSlug } = await params;
+  const { id } = parseArticleUrl(rawSlug);
   const article = await getArticleById(id);
 
   if (!article) {
     notFound();
   }
 
+  // Generate the canonical slug-based URL
+  const canonicalSlug = buildArticleUrl(article.id, article.title).replace('/article/', '');
+  
+  // If user accessed via old ID-only URL, redirect to SEO-friendly URL
+  if (rawSlug !== canonicalSlug && rawSlug === id) {
+    redirect(buildArticleUrl(article.id, article.title));
+  }
+
   const relatedArticles = await getRelatedArticles(article, 6);
   const sentiment = sentimentConfig[article.sentiment.label] || sentimentConfig.neutral;
-  const articleUrl = `https://free-crypto-news.vercel.app/article/${id}`;
+  const articleUrl = buildCanonicalUrl(buildArticleUrl(article.id, article.title));
 
   // Breadcrumb data for structured data
   const breadcrumbs = [
@@ -231,7 +250,7 @@ export default async function ArticlePage({ params }: Props) {
                         {article.tickers.map((ticker) => (
                           <Link
                             key={ticker}
-                            href={`/coin/${ticker.toLowerCase()}`}
+                            href={getCoinUrl(ticker)}
                             className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium hover:bg-orange-200 transition"
                           >
                             ${ticker}
