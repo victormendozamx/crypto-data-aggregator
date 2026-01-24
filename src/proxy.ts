@@ -1,12 +1,12 @@
 /**
- * Next.js Middleware for API Key Validation & x402 Payments
+ * Next.js Proxy for API Key Validation & x402 Payments
  *
- * This middleware:
+ * This proxy:
  * 1. Enforces API key requirements on /api/v1/* routes (free tier)
  * 2. Handles x402 payment flow on /api/premium/* routes
  *
  * Note: The actual x402 payment handling is done per-route using withX402()
- * in each API route handler. This middleware handles API key validation
+ * in each API route handler. This proxy handles API key validation
  * and rate limiting.
  */
 
@@ -194,25 +194,6 @@ async function handlePremiumRoute(request: NextRequest): Promise<NextResponse> {
   return NextResponse.next();
 }
 
-export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-
-  // Route to appropriate handler
-  if (pathname.startsWith('/api/v1')) {
-    return handleV1Route(request);
-  }
-  
-  if (pathname.startsWith('/api/v2')) {
-    return handleV2Route(request);
-  }
-
-  if (pathname.startsWith('/api/premium')) {
-    return handlePremiumRoute(request);
-  }
-
-  return NextResponse.next();
-}
-
 /**
  * Handle /api/v2/* routes - modern API with improved features
  */
@@ -309,4 +290,26 @@ async function handleV2Route(request: NextRequest): Promise<NextResponse> {
   response.headers.set('X-RateLimit-Reset', rateLimit.resetAt.toString());
   
   return response;
+}
+
+/**
+ * Next.js Proxy function (renamed from middleware in Next.js 16)
+ */
+export async function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Route to appropriate handler
+  if (pathname.startsWith('/api/v1')) {
+    return handleV1Route(request);
+  }
+  
+  if (pathname.startsWith('/api/v2')) {
+    return handleV2Route(request);
+  }
+
+  if (pathname.startsWith('/api/premium')) {
+    return handlePremiumRoute(request);
+  }
+
+  return NextResponse.next();
 }

@@ -213,7 +213,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - `getTokenSecurity()` - Honeypot/scam detection with calculated trust score
   - `getEthGasOracle()` - Real-time Ethereum gas prices (safe, standard, fast)
   - `getUpcomingUnlocks()` - Token vesting unlock schedules
-- **MarketMoodRing Component** - Animated SVG circular gauge displaying Fear & Greed Index
+- **MarketMoodRing Component** - `ff38de4`
   - Gradient-filled rings with pulsing glow effects
   - 5 mood states: Extreme Fear, Fear, Neutral, Greed, Extreme Greed
   - Interactive hover states with detailed tooltips
@@ -238,8 +238,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- **Design Token Migration (Complete)** - Migrated all components from hardcoded colors to
-  centralized design tokens
+- **Design Token Migration (Complete)** - `acaf150`, `718a5b1`, `0e1538a`
+  - Migrated all components from hardcoded colors to centralized design tokens
   - Data visualization components: charts.tsx, coin-charts, Screener, MarketStats,
     SentimentDashboard, CorrelationMatrix, DominanceChart, GasTracker, LiquidationsFeed, PriceWidget
   - All 16 loading.tsx skeleton files

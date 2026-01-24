@@ -22,6 +22,7 @@ module.exports = {
         // Surface hierarchy (cards, modals, dropdowns)
         surface: {
           DEFAULT: 'var(--surface)',
+          alt: 'var(--surface-alt)',
           hover: 'var(--surface-hover)',
           elevated: 'var(--surface-elevated)',
           border: 'var(--surface-border)',
@@ -36,6 +37,19 @@ module.exports = {
         },
 
         // Brand colors
+        brand: {
+          DEFAULT: 'var(--brand)',
+          50: 'rgba(247, 147, 26, 0.05)',
+          100: 'rgba(247, 147, 26, 0.1)',
+          200: 'rgba(247, 147, 26, 0.2)',
+          300: '#F9B154',
+          400: '#F8A23B',
+          500: 'var(--brand)',
+          600: 'var(--brand-hover)',
+          700: '#D47912',
+          800: '#B0640F',
+          900: '#8C500C',
+        },
         primary: {
           DEFAULT: 'var(--primary)',
           hover: 'var(--primary-hover)',

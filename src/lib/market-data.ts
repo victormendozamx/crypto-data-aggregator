@@ -835,12 +835,8 @@ export async function getSimplePrices(): Promise<SimplePrices> {
     return data;
   } catch (error) {
     console.error('Error fetching simple prices:', error);
-    // Return fallback data
-    return {
-      bitcoin: { usd: 0, usd_24h_change: 0 },
-      ethereum: { usd: 0, usd_24h_change: 0 },
-      solana: { usd: 0, usd_24h_change: 0 },
-    };
+    // Throw error instead of returning fake price data
+    throw new Error(`Failed to fetch real-time prices: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
 

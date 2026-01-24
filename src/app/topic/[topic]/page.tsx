@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Posts from '@/components/Posts';
 import { searchNews } from '@/lib/crypto-news';
+import { BreadcrumbStructuredData, NewsListStructuredData } from '@/components/StructuredData';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -122,6 +123,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: info?.title || topic,
     description: info?.description || `Latest news about ${topic}`,
+    alternates: {
+      canonical: `/topic/${topic}`,
+    },
+    openGraph: {
+      title: `${info?.title || topic} - Crypto Data Aggregator`,
+      description: info?.description || `Latest news about ${topic}`,
+      type: 'website',
+      url: `https://crypto-data-aggregator.vercel.app/topic/${topic}`,
+    },
   };
 }
 
@@ -134,12 +144,50 @@ export default async function TopicPage({ params }: Props) {
   const keywords = info?.keywords.join(',') || topic;
   const data = await searchNews(keywords, 30);
 
+  // Breadcrumb data for enhanced SEO
+  const breadcrumbs = [
+    { name: 'Home', url: 'https://crypto-data-aggregator.vercel.app' },
+    { name: 'Topics', url: 'https://crypto-data-aggregator.vercel.app/topics' },
+    { name: info?.title || topic, url: `https://crypto-data-aggregator.vercel.app/topic/${topic}` },
+  ];
+
   return (
     <div className="min-h-screen bg-surface">
+      {/* Structured Data for SEO */}
+      <BreadcrumbStructuredData items={breadcrumbs} />
+      <NewsListStructuredData
+        articles={data.articles.slice(0, 10).map(a => ({
+          title: a.title || '',
+          link: a.link || '',
+          pubDate: a.pubDate,
+          source: a.source,
+        }))}
+        listName={info?.title || topic}
+      />
+      
       <div className="max-w-7xl mx-auto">
         <Header />
         
         <main className="px-4 py-8">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+            <ol className="flex items-center gap-2 text-text-muted">
+              <li>
+                <Link href="/" className="hover:text-text-primary transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href="/topics" className="hover:text-text-primary transition-colors">
+                  Topics
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li className="text-text-primary">{info?.title || topic}</li>
+            </ol>
+          </nav>
+
           {/* Topic Header */}
           <div className="text-center mb-8">
             <span className="text-5xl mb-4 block">{info?.emoji || '📰'}</span>

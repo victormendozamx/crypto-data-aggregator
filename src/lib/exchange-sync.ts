@@ -101,50 +101,9 @@ export interface SyncResult {
 const ENCRYPTION_KEY = process.env.EXCHANGE_ENCRYPTION_KEY || 
   crypto.createHash('sha256').update('default-key-change-in-production').digest();
 
-// Demo mode - enable when no encryption key is set
-export const DEMO_MODE = !process.env.EXCHANGE_ENCRYPTION_KEY;
-
-// =============================================================================
-// DEMO/MOCK DATA (Used when API keys not configured or in development)
-// =============================================================================
-
-function generateMockBalances(exchangeId: ExchangeId): ExchangeBalance[] {
-  // Generate realistic-looking demo balances
-  const baseBalances: ExchangeBalance[] = [
-    { asset: 'BTC', free: 0.5 + Math.random() * 0.5, locked: 0, total: 0, usdValue: 0 },
-    { asset: 'ETH', free: 5 + Math.random() * 5, locked: 0.5, total: 0, usdValue: 0 },
-    { asset: 'USDT', free: 1000 + Math.random() * 5000, locked: 0, total: 0, usdValue: 0 },
-    { asset: 'SOL', free: 20 + Math.random() * 30, locked: 0, total: 0, usdValue: 0 },
-  ];
-
-  // Mock USD values
-  const prices: Record<string, number> = { BTC: 42000, ETH: 2500, USDT: 1, SOL: 100 };
-  
-  return baseBalances.map(b => ({
-    ...b,
-    total: b.free + b.locked,
-    usdValue: (b.free + b.locked) * (prices[b.asset] || 0),
-  }));
-}
-
-function generateMockTrades(exchangeId: ExchangeId): ExchangeTrade[] {
-  const symbols = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT'];
-  const trades: ExchangeTrade[] = [];
-  
-  for (let i = 0; i < 5; i++) {
-    trades.push({
-      id: `mock_${Date.now()}_${i}`,
-      symbol: symbols[Math.floor(Math.random() * symbols.length)],
-      side: Math.random() > 0.5 ? 'buy' : 'sell',
-      price: 40000 + Math.random() * 5000,
-      quantity: 0.01 + Math.random() * 0.1,
-      fee: 0.001,
-      feeCurrency: 'USDT',
-      timestamp: new Date(Date.now() - i * 86400000).toISOString(),
-    });
-  }
-  
-  return trades;
+// Check if encryption is properly configured
+export function isExchangeEncryptionConfigured(): boolean {
+  return !!process.env.EXCHANGE_ENCRYPTION_KEY;
 }
 
 const EXCHANGE_CONFIGS: Record<ExchangeId, {
@@ -714,13 +673,7 @@ async function getBybitBalances(credentials: ExchangeCredentials): Promise<Excha
 export async function testConnection(
   exchangeId: ExchangeId,
   credentials: ExchangeCredentials
-): Promise<{ success: boolean; error?: string; isDemo?: boolean }> {
-  // Demo mode - always succeed for testing
-  if (DEMO_MODE) {
-    console.log(`[Exchange] Demo mode: Simulating successful connection to ${exchangeId}`);
-    return { success: true, isDemo: true };
-  }
-
+): Promise<{ success: boolean; error?: string }> {
   // Validate that credentials are not empty
   if (!credentials.apiKey || !credentials.apiSecret) {
     return { success: false, error: 'API key and secret are required' };
@@ -756,12 +709,6 @@ export async function getBalances(
   exchangeId: ExchangeId,
   credentials: ExchangeCredentials
 ): Promise<ExchangeBalance[]> {
-  // Demo mode - return mock balances
-  if (DEMO_MODE) {
-    console.log(`[Exchange] Demo mode: Returning mock balances for ${exchangeId}`);
-    return generateMockBalances(exchangeId);
-  }
-
   try {
     switch (exchangeId) {
       case 'binance':

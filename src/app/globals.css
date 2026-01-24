@@ -14,8 +14,9 @@
   
   /* Surfaces */
   --surface: #1E2329;
-  --surface-hover: #252B36;
-  --surface-elevated: #2B3139;
+  --surface-alt: #252B36;
+  --surface-hover: #2B3139;
+  --surface-elevated: #323844;
   --surface-border: #2B3544;
   
   /* Text */
@@ -25,6 +26,8 @@
   --text-disabled: #5E6673;
   
   /* Brand */
+  --brand: #F7931A;
+  --brand-hover: #E88A15;
   --primary: #3861FB;
   --primary-hover: #4A73FF;
   --secondary: #8DC647;

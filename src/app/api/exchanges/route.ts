@@ -14,7 +14,7 @@ import {
   getAggregatedPortfolio,
   getUserExchanges,
   SUPPORTED_EXCHANGES,
-  DEMO_MODE,
+  isExchangeEncryptionConfigured,
   type ExchangeId,
   type ExchangeCredentials,
 } from '@/lib/exchange-sync';
@@ -51,13 +51,13 @@ export async function GET(request: NextRequest) {
     switch (action) {
       case 'status': {
         // Return exchange service status
+        const encryptionConfigured = isExchangeEncryptionConfigured();
         return NextResponse.json({
-          configured: !DEMO_MODE,
-          demoMode: DEMO_MODE,
+          configured: encryptionConfigured,
           supportedExchanges: SUPPORTED_EXCHANGES.map(e => e.id),
-          notes: DEMO_MODE
-            ? 'Exchange sync is in demo mode. Set EXCHANGE_ENCRYPTION_KEY in environment for live data.'
-            : undefined,
+          notes: !encryptionConfigured
+            ? 'Set EXCHANGE_ENCRYPTION_KEY in environment for secure credential storage.'
+            : 'Exchange sync ready - all data from real exchange APIs.',
         });
       }
 

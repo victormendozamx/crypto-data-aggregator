@@ -29,6 +29,10 @@ export type { InputProps, SearchInputProps, NumberInputProps, TextareaProps } fr
 export { default as Tooltip } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
 
+// Modal Component
+export { Modal, ConfirmModal } from './Modal';
+export type { ModalProps, ConfirmModalProps } from './Modal';
+
 // Progress Components
 export { default as Progress, ProgressBar, CircularProgress } from './Progress';
 export type { ProgressProps, ProgressBarProps, CircularProgressProps } from './Progress';

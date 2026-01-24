@@ -132,13 +132,8 @@ export function useMarketMood(options: UseMarketMoodOptions = {}): UseMarketMood
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unknown error';
         setError(message);
-
-        // Use fallback data on error
-        if (!cachedData) {
-          setValue(50);
-          setClassification('Neutral');
-          setHistory([]);
-        }
+        // Keep existing data if available, otherwise show error state
+        // Do not set fake fallback values
       } finally {
         setIsLoading(false);
       }

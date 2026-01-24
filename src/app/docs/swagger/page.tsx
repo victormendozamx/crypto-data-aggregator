@@ -386,15 +386,13 @@ export default function SwaggerDocsPage() {
               href="/api/v2/openapi.json"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 text-sm font-medium text-text-secondary hover:text-white 
-                         border border-surface-border rounded-lg hover:bg-surface-hover transition-colors"
+              className="px-4 py-1.5 text-sm font-medium text-text-secondary hover:text-white border border-surface-border rounded-lg hover:bg-surface-hover transition-colors"
             >
               OpenAPI Spec ↗
             </a>
             <Link
               href="/"
-              className="px-4 py-1.5 text-sm font-medium bg-cyan-600 text-white rounded-lg 
-                         hover:bg-cyan-500 transition-colors"
+              className="px-4 py-1.5 text-sm font-medium bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors"
             >
               Back to App
             </Link>
@@ -415,9 +413,7 @@ export default function SwaggerDocsPage() {
                 placeholder="Enter your API key for authenticated requests..."
                 value={apiKey}
                 onChange={(e) => handleApiKeyChange(e.target.value)}
-                className="w-full max-w-md px-4 py-2 bg-background-secondary border border-surface-border rounded-lg
-                           text-white placeholder:text-text-muted focus:ring-2 focus:ring-primary/50 
-                           focus:border-primary transition-colors"
+                className="w-full max-w-md px-4 py-2 bg-background-secondary border border-surface-border rounded-lg text-white placeholder:text-text-muted focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
               />
             </div>
             <div className="text-sm text-text-muted">

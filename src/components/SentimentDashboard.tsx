@@ -362,6 +362,7 @@ export function SentimentDashboard({
   refreshInterval = 60000,
 }: SentimentDashboardProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [sentimentData, setSentimentData] = useState<SentimentData | null>(null);
@@ -372,6 +373,7 @@ export function SentimentDashboard({
   useEffect(() => {
     async function fetchSentimentData() {
       setIsLoading(true);
+      setError(null);
       
       try {
         // Fetch Fear & Greed Index from alternative.me
@@ -462,19 +464,8 @@ export function SentimentDashboard({
         setLastUpdate(new Date());
       } catch (error) {
         console.error('Failed to fetch sentiment data:', error);
-        // Set fallback data
-        setSentimentData({
-          overall: 50,
-          bullish: 50,
-          bearish: 25,
-          neutral: 25,
-          fearGreedIndex: 50,
-          socialVolume: 0,
-          newsVolume: 0,
-          twitterMentions: 0,
-          redditActivity: 0,
-          timestamp: new Date().toISOString(),
-        });
+        // Set error state instead of fake fallback data
+        setError('Failed to fetch sentiment data. Please try again.');
       } finally {
         setIsLoading(false);
       }

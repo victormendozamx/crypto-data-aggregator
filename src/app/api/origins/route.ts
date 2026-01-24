@@ -267,7 +267,8 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
     
-    const mockArticle = {
+    // Create article object from user input for analysis
+    const articleToAnalyze = {
       title,
       description: description || '',
       link: '',
@@ -278,7 +279,7 @@ export async function POST(request: NextRequest) {
       timeAgo: 'just now'
     } as NewsArticle;
     
-    const result = findOriginalSources(mockArticle);
+    const result = findOriginalSources(articleToAnalyze);
     
     return NextResponse.json({
       success: true,

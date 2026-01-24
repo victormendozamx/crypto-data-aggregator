@@ -142,6 +142,74 @@ const nextConfig = {
       transform: 'lodash/{{member}}',
     },
   },
-};
 
+  // URL redirects for SEO
+  async redirects() {
+    return [
+      // Redirect old article IDs to search (for unknown old URLs)
+      // Note: Specific redirects are handled in the article page itself
+      
+      // Common URL variations
+      {
+        source: '/articles/:id',
+        destination: '/article/:id',
+        permanent: true,
+      },
+      {
+        source: '/coins/:id',
+        destination: '/coin/:id',
+        permanent: true,
+      },
+      {
+        source: '/categories/:slug',
+        destination: '/category/:slug',
+        permanent: true,
+      },
+      {
+        source: '/topics/:slug',
+        destination: '/topic/:slug',
+        permanent: true,
+      },
+      {
+        source: '/sources/:slug',
+        destination: '/source/:slug',
+        permanent: true,
+      },
+      // Trailing slash normalization
+      {
+        source: '/blog/',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/api/',
+        destination: '/developers',
+        permanent: true,
+      },
+      {
+        source: '/docs/',
+        destination: '/developers',
+        permanent: true,
+      },
+    ];
+  },
+
+  // URL rewrites for cleaner URLs
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // Allow coins to be accessed by symbol (e.g., /coin/btc)
+        {
+          source: '/c/:symbol',
+          destination: '/coin/:symbol',
+        },
+        // Short article URLs
+        {
+          source: '/a/:id',
+          destination: '/article/:id',
+        },
+      ],
+    };
+  },
+};
 module.exports = nextConfig;

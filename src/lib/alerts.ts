@@ -869,7 +869,7 @@ export async function testTriggerAlert(ruleId: string): Promise<AlertEvent | nul
   const rule = getAlertRule(ruleId);
   if (!rule) return null;
 
-  // Create a mock event
+  // Create a test event to verify alert pipeline
   const event = createAlertEvent(rule, {
     currentValue: 'test',
     context: { testMode: true },

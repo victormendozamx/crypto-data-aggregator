@@ -234,39 +234,9 @@ Requirements:
       } else {
         throw new Error('No JSON found in response');
       }
-    } catch {
-      // Fallback data
-      aiData = {
-        counterArguments: [
-          {
-            argument: 'The claim may be oversimplified and not account for market complexity.',
-            type: 'contextual',
-            strength: 'moderate',
-          },
-          {
-            argument: 'Historical patterns may not reliably predict future outcomes in crypto markets.',
-            type: 'logical',
-            strength: 'moderate',
-          },
-        ],
-        assumptions: [
-          {
-            assumption: 'Market conditions remain constant',
-            challenge: 'Crypto markets are highly dynamic and conditions change rapidly',
-          },
-        ],
-        alternativeInterpretations: [
-          'The same data could support different conclusions depending on timeframe',
-        ],
-        missingContext: [
-          'Broader macroeconomic factors',
-          'Regulatory developments',
-        ],
-        overallAssessment: {
-          claimStrength: 'moderate',
-          mainVulnerability: 'Insufficient consideration of external factors',
-        },
-      };
+    } catch (parseError) {
+      // Throw error instead of returning fake analysis
+      throw new Error(`Failed to parse AI counter-analysis response: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`);
     }
 
     // Validate and normalize counter-arguments

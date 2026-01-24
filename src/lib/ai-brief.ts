@@ -278,20 +278,9 @@ ${format === 'summary' ? 'Keep responses brief and focus on executive summary.' 
       } else {
         throw new Error('No JSON found in response');
       }
-    } catch {
-      // Fallback data
-      aiData = {
-        executiveSummary: 'Crypto markets continue with mixed signals. Check individual stories for details.',
-        topStories: articles.slice(0, 3).map((a: NewsArticle) => ({
-          headline: a.title,
-          summary: a.description || 'No summary available',
-          impact: 'medium' as const,
-          relatedTickers: ['BTC'],
-        })),
-        sectorsInFocus: [{ sector: 'General', trend: 'stable' as const, reason: 'Consolidation phase' }],
-        upcomingEvents: [],
-        riskAlerts: [],
-      };
+    } catch (parseError) {
+      // Throw error instead of returning fake analysis
+      throw new Error(`Failed to parse AI brief response: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`);
     }
 
     // Determine BTC trend

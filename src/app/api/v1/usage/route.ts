@@ -27,16 +27,14 @@ export async function GET(request: NextRequest) {
 
   // Check if KV is configured
   if (!isKvConfigured()) {
-    // Return demo data if KV not configured
-    return NextResponse.json({
-      tier: 'free',
-      usageToday: 0,
-      usageMonth: 0,
-      limit: 100,
-      remaining: 100,
-      resetAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      note: 'KV storage not configured - showing demo data',
-    });
+    // Return error if KV not configured - no fake data
+    return NextResponse.json(
+      {
+        error: 'Service unavailable',
+        message: 'Usage tracking requires KV storage to be configured. Please set up Vercel KV or Redis.',
+      },
+      { status: 503 }
+    );
   }
 
   // Validate API key

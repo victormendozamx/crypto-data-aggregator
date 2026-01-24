@@ -21,6 +21,7 @@ import {
   RefreshCw,
   ExternalLink,
   Loader2,
+  Bookmark,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -254,6 +255,14 @@ export function UserMenu({ user, onSignOut, className }: UserMenuProps) {
                 label="Watchlist & Alerts"
                 onClick={() => {
                   router.push('/watchlist');
+                  setIsOpen(false);
+                }}
+              />
+              <MenuItem
+                icon={Bookmark}
+                label="Bookmarks"
+                onClick={() => {
+                  router.push('/bookmarks');
                   setIsOpen(false);
                 }}
               />
