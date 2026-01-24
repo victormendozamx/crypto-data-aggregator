@@ -187,6 +187,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="/splash/apple-splash-light.png"
           media="(prefers-color-scheme: light)"
         />
+        {/* JSON-LD Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebApplication',
+              name: 'Crypto Data Aggregator',
+              description:
+                'Real-time cryptocurrency market data aggregator for 10,000+ coins and 200+ DeFi protocols',
+              url: 'https://crypto-data-aggregator.vercel.app',
+              applicationCategory: 'FinanceApplication',
+              operatingSystem: 'Web',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+              },
+              featureList: [
+                'Real-time cryptocurrency prices',
+                'DeFi protocol analytics',
+                'Portfolio tracking',
+                'Price alerts',
+                'Historical charts',
+                'Fear & Greed Index',
+                'Free REST API',
+                'MCP Server support',
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="bg-[var(--bg-primary)] antialiased min-h-screen text-white">
         {/* Skip Link for Accessibility */}

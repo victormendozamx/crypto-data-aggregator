@@ -64,10 +64,10 @@ const sourceGradients: Record<
 };
 
 const defaultGradient = {
-  gradient: 'from-gray-900 via-slate-800 to-gray-900',
-  accent: 'bg-gray-500',
+  gradient: 'from-surface-alt via-surface to-surface-alt',
+  accent: 'bg-surface-hover',
   mesh: 'radial-gradient(circle at 25% 25%, rgba(107, 114, 128, 0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(75, 85, 99, 0.3) 0%, transparent 50%)',
-  badge: 'bg-gray-500 text-white',
+  badge: 'bg-surface-hover text-text-primary',
 };
 
 // Calculate reading time estimate

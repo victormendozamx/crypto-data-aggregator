@@ -86,16 +86,16 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
   );
 
   return (
-    <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">{symbolUpper} Converter</h3>
+    <div className="bg-surface-alt/50 rounded-2xl border border-surface-border p-6">
+      <h3 className="text-lg font-semibold text-text-primary mb-4">{symbolUpper} Converter</h3>
 
       <div className="space-y-4">
         {/* Coin Input */}
         <div className="relative">
-          <label className="block text-xs text-gray-500 mb-1.5">
+          <label className="block text-xs text-text-muted mb-1.5">
             {name} ({symbolUpper})
           </label>
-          <div className="flex items-center bg-black rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
+          <div className="flex items-center bg-surface-alt rounded-xl border border-surface-border focus-within:border-amber-500/50 transition-colors">
             {image && (
               <div className="pl-3">
                 <img src={image} alt={name} className="w-6 h-6 rounded-full" />
@@ -105,14 +105,14 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
               type="text"
               value={coinAmount}
               onChange={(e) => handleCoinChange(e.target.value)}
-              className="flex-1 bg-transparent px-3 py-3 text-white text-lg font-medium focus:outline-none"
+              className="flex-1 bg-transparent px-3 py-3 text-text-primary text-lg font-medium focus:outline-none"
               placeholder="0"
             />
             <div className="flex items-center gap-1 pr-3">
-              <span className="text-gray-400 font-medium">{symbolUpper}</span>
+              <span className="text-text-muted font-medium">{symbolUpper}</span>
               <button
                 onClick={() => handleCopy('coin')}
-                className="p-1 text-gray-500 hover:text-gray-300 transition-colors"
+                className="p-1 text-text-muted hover:text-text-secondary transition-colors"
                 title="Copy"
               >
                 {copied === 'coin' ? (
@@ -150,10 +150,10 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
             onClick={handleSwap}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2 bg-black hover:bg-gray-600 rounded-full transition-colors"
+            className="p-2 bg-surface-hover hover:bg-surface-alt rounded-full transition-colors"
           >
             <svg
-              className="w-5 h-5 text-gray-300"
+              className="w-5 h-5 text-text-secondary"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -170,23 +170,23 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
 
         {/* USD Input */}
         <div className="relative">
-          <label className="block text-xs text-gray-500 mb-1.5">US Dollar (USD)</label>
-          <div className="flex items-center bg-black rounded-xl border border-gray-700 focus-within:border-amber-500/50 transition-colors">
+          <label className="block text-xs text-text-muted mb-1.5">US Dollar (USD)</label>
+          <div className="flex items-center bg-surface-alt rounded-xl border border-surface-border focus-within:border-amber-500/50 transition-colors">
             <div className="pl-3">
-              <span className="text-xl text-gray-400">$</span>
+              <span className="text-xl text-text-muted">$</span>
             </div>
             <input
               type="text"
               value={usdAmount}
               onChange={(e) => handleUsdChange(e.target.value)}
-              className="flex-1 bg-transparent px-3 py-3 text-white text-lg font-medium focus:outline-none"
+              className="flex-1 bg-transparent px-3 py-3 text-text-primary text-lg font-medium focus:outline-none"
               placeholder="0.00"
             />
             <div className="flex items-center gap-1 pr-3">
-              <span className="text-gray-400 font-medium">USD</span>
+              <span className="text-text-muted font-medium">USD</span>
               <button
                 onClick={() => handleCopy('usd')}
-                className="p-1 text-gray-500 hover:text-gray-300 transition-colors"
+                className="p-1 text-text-muted hover:text-text-secondary transition-colors"
                 title="Copy"
               >
                 {copied === 'usd' ? (
@@ -220,7 +220,7 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
 
         {/* Quick Amounts */}
         <div>
-          <span className="text-xs text-gray-500 mb-2 block">Quick amounts</span>
+          <span className="text-xs text-text-muted mb-2 block">Quick amounts</span>
           <div className="flex gap-2">
             {quickAmounts.map((amount) => (
               <button
@@ -229,7 +229,7 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
                 className={`flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                   coinAmount === amount.toString()
                     ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                    : 'bg-black text-gray-300 hover:bg-gray-600 border border-gray-600'
+                    : 'bg-surface-alt text-text-secondary hover:bg-surface-hover border border-surface-border'
                 }`}
               >
                 {amount} {symbolUpper}
@@ -239,14 +239,14 @@ export default function CoinConverter({ coinId, symbol, name, price, image }: Co
         </div>
 
         {/* Current Rate */}
-        <div className="pt-4 border-t border-gray-700/50">
+        <div className="pt-4 border-t border-surface-border">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-500">1 {symbolUpper} =</span>
-            <span className="text-white font-medium">{formatUsdDisplay(price)}</span>
+            <span className="text-text-muted">1 {symbolUpper} =</span>
+            <span className="text-text-primary font-medium">{formatUsdDisplay(price)}</span>
           </div>
           <div className="flex items-center justify-between text-sm mt-1">
-            <span className="text-gray-500">1 USD =</span>
-            <span className="text-white font-medium">
+            <span className="text-text-muted">1 USD =</span>
+            <span className="text-text-primary font-medium">
               {formatCoinDisplay(1 / price)} {symbolUpper}
             </span>
           </div>

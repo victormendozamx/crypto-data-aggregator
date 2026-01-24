@@ -348,7 +348,7 @@ export default function WatchlistPage() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted hover:text-text-secondary"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -457,7 +457,7 @@ export default function WatchlistPage() {
                       />
                     </td>
                     <td className="px-2 py-4">
-                      <GripVertical className="w-4 h-4 text-gray-400 cursor-grab active:cursor-grabbing" />
+                      <GripVertical className="w-4 h-4 text-text-muted cursor-grab active:cursor-grabbing" />
                     </td>
                     <td className="px-4 py-4 text-sm text-text-muted">
                       {coin.market_cap_rank || '-'}

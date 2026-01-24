@@ -80,7 +80,7 @@ export default async function CategoryPage({ params }: Props) {
   const data = await getNewsByCategory(category, 50);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
         <CategoryNav activeCategory={category} />
@@ -90,10 +90,10 @@ export default async function CategoryPage({ params }: Props) {
           <div className="text-center mb-8">
             <span className="text-5xl mb-4 block">{info.emoji}</span>
             <h1 className="text-4xl font-bold mb-3">{info.title}</h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-text-muted max-w-2xl mx-auto">
               {info.description}
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-text-muted mt-2">
               {data.articles.length} articles
             </p>
           </div>
@@ -103,8 +103,8 @@ export default async function CategoryPage({ params }: Props) {
             <Posts articles={data.articles} />
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500">No articles found in this category.</p>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-text-muted">No articles found in this category.</p>
+              <p className="text-sm text-text-muted mt-2">
                 Try checking back later or browse all news.
               </p>
             </div>

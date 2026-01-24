@@ -9,6 +9,7 @@ import { hybridAuthMiddleware } from '@/lib/x402';
 import { searchCoins, DataSourceError } from '@/lib/data-sources';
 import { validateQuery, searchQuerySchema, validationErrorResponse } from '@/lib/api-schemas';
 import { createRequestContext, completeRequest } from '@/lib/monitoring';
+import { checkRateLimit, addRateLimitHeaders, rateLimitResponse } from '@/lib/rate-limit';
 
 const ENDPOINT = '/api/v2/search';
 
@@ -20,6 +21,13 @@ const SECURITY_HEADERS = {
 
 export async function GET(request: NextRequest) {
   const ctx = createRequestContext(ENDPOINT);
+  
+  // Check rate limit
+  const rateLimitResult = checkRateLimit(request);
+  if (!rateLimitResult.allowed) {
+    completeRequest(ctx, 429);
+    return rateLimitResponse(rateLimitResult);
+  }
   
   const authResponse = await hybridAuthMiddleware(request, ENDPOINT);
   if (authResponse) {
@@ -44,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     completeRequest(ctx, 200);
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         data: {
@@ -61,6 +69,8 @@ export async function GET(request: NextRequest) {
       },
       { headers: SECURITY_HEADERS }
     );
+    
+    return addRateLimitHeaders(response, rateLimitResult);
   } catch (error) {
     const message = error instanceof DataSourceError 
       ? error.message 

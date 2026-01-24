@@ -203,3 +203,149 @@ export function withTiming<T extends Record<string, unknown>>(
     },
   };
 }
+
+// =============================================================================
+// DEPRECATION HEADERS
+// =============================================================================
+
+/**
+ * Add deprecation headers to a response for sunset APIs.
+ * 
+ * @param response - The response to add headers to
+ * @param deprecationDate - RFC 7231 date or '@YYYY-MM-DD' format
+ * @param sunsetDate - RFC 7231 date when API will be removed
+ * @param link - Optional link to migration documentation
+ * @returns The modified response with deprecation headers
+ * 
+ * @example
+ * ```typescript
+ * return addDeprecationHeaders(
+ *   jsonResponse(data),
+ *   '@2026-01-24',
+ *   'Sat, 25 Jul 2026 00:00:00 GMT',
+ *   'https://docs.example.com/v2-migration'
+ * );
+ * ```
+ */
+export function addDeprecationHeaders(
+  response: NextResponse,
+  deprecationDate: string,
+  sunsetDate: string,
+  link?: string
+): NextResponse {
+  response.headers.set('Deprecation', deprecationDate);
+  response.headers.set('Sunset', sunsetDate);
+  
+  if (link) {
+    const existingLink = response.headers.get('Link');
+    const deprecationLink = `<${link}>; rel="deprecation"`;
+    response.headers.set('Link', existingLink ? `${existingLink}, ${deprecationLink}` : deprecationLink);
+  }
+  
+  // Add warning header for clients that check it
+  response.headers.set(
+    'Warning',
+    `299 - "This API version is deprecated. Please migrate to /api/v2. Sunset: ${sunsetDate}"`
+  );
+  
+  return response;
+}
+
+/**
+ * V1 API deprecation configuration
+ */
+export const V1_DEPRECATION = {
+  deprecationDate: '@2026-01-24',
+  sunsetDate: 'Sat, 25 Jul 2026 00:00:00 GMT', // 6 months from now
+  migrationLink: 'https://crypto-data-aggregator.vercel.app/docs/swagger',
+};
+
+/**
+ * Wrap a v1 API response with deprecation headers
+ */
+export function v1Response<T>(data: T, options?: Parameters<typeof jsonResponse>[1]): NextResponse {
+  const response = jsonResponse(data, options);
+  return addDeprecationHeaders(
+    response,
+    V1_DEPRECATION.deprecationDate,
+    V1_DEPRECATION.sunsetDate,
+    V1_DEPRECATION.migrationLink
+  );
+}
+
+// =============================================================================
+// RATE LIMIT RESPONSES
+// =============================================================================
+
+/**
+ * Create a 429 Too Many Requests response with rate limit headers
+ */
+export function rateLimitResponse(
+  limit: number,
+  remaining: number,
+  resetTimestamp: number,
+  retryAfterSeconds: number
+): NextResponse {
+  return NextResponse.json(
+    {
+      error: 'Rate limit exceeded',
+      code: 'RATE_LIMITED',
+      limit,
+      remaining,
+      resetAt: new Date(resetTimestamp * 1000).toISOString(),
+      retryAfter: retryAfterSeconds,
+    },
+    {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(retryAfterSeconds),
+        'X-RateLimit-Limit': String(limit),
+        'X-RateLimit-Remaining': String(remaining),
+        'X-RateLimit-Reset': String(resetTimestamp),
+        'Cache-Control': 'no-store',
+      },
+    }
+  );
+}
+
+/**
+ * Add rate limit headers to any response
+ */
+export function withRateLimitHeaders(
+  response: NextResponse,
+  limit: number,
+  remaining: number,
+  resetTimestamp: number
+): NextResponse {
+  response.headers.set('X-RateLimit-Limit', String(limit));
+  response.headers.set('X-RateLimit-Remaining', String(remaining));
+  response.headers.set('X-RateLimit-Reset', String(resetTimestamp));
+  return response;
+}
+
+// =============================================================================
+// CORS HELPERS
+// =============================================================================
+
+/**
+ * Standard CORS headers for API responses
+ */
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key, If-None-Match',
+  'Access-Control-Expose-Headers': 'ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Deprecation, Sunset',
+  'Access-Control-Max-Age': '86400',
+};
+
+/**
+ * Create an OPTIONS response for CORS preflight
+ */
+export function corsPreflightResponse(): NextResponse {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+

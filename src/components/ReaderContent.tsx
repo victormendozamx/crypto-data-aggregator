@@ -114,9 +114,7 @@ function ArticleCard({
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <span
               <span className={`text-xs px-2 py-1 rounded-full border ${sourceColors[article.source] || 'bg-surface-alt text-text-primary'}`}>
-              >
                 {article.source}
               </span>
               <span className="text-xs text-text-muted">{article.timeAgo}</span>
@@ -217,13 +215,13 @@ function ArticleCard({
               </div>
             </div>
           ) : (
-            <div className="p-5 text-center text-gray-500">
+            <div className="p-5 text-center text-text-muted">
               <p>Failed to load article content.</p>
               <a
                 href={article.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline mt-2 inline-block"
+                className="text-primary hover:underline mt-2 inline-block"
               >
                 Read on {article.source} →
               </a>
@@ -299,7 +297,7 @@ export function ReaderContent({ articles }: ReaderContentProps) {
       </div>
 
       {filteredArticles.length === 0 && (
-        <div className="text-center py-12 text-gray-500">No articles found for this source.</div>
+        <div className="text-center py-12 text-text-muted">No articles found for this source.</div>
       )}
     </div>
   );

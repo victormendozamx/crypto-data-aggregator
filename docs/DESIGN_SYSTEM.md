@@ -10,6 +10,56 @@ centralized design token system.
 > All data visualization components, loading states, and core UI have been migrated to design
 > tokens.
 
+## Premium UI Component Library
+
+A new premium component library is available at `@/components/ui`:
+
+```tsx
+import { 
+  Button, IconButton,
+  Card, CardHeader, CardContent, CardFooter, StatCard, FeatureCard,
+  Badge, PriceChangeBadge, RankBadge, StatusBadge, ChainBadge,
+  Input, SearchInput, NumberInput, Textarea,
+  Tooltip, Progress, CircularProgress,
+  Divider, Avatar, AvatarGroup, Skeleton
+} from '@/components/ui';
+```
+
+### Button Variants
+- `primary` - Blue brand button with glow
+- `secondary` - Surface background with border
+- `ghost` - Transparent with hover state
+- `outline` - Primary border with transparent bg
+- `danger` - Red destructive action
+- `success` - Green positive action
+- `glass` - Glassmorphism effect
+
+### Card Variants
+- `default` - Standard surface card
+- `elevated` - Raised with larger shadow
+- `glass` - Glassmorphism effect
+- `gradient` - Top gradient accent bar
+- `interactive` - Click/tap feedback
+- `outline` - Border only
+
+### Premium CSS Classes
+New utility classes available in globals.css:
+- `.glass-card` - Premium glassmorphism
+- `.glass-modal` - Frosted glass for modals
+- `.gradient-border` - Animated gradient border
+- `.glow-primary` / `.glow-gain` / `.glow-loss` - Glow effects
+- `.btn-glow` / `.btn-shine` - Button effects
+- `.card-elevated` / `.card-gradient` - Card styles
+- `.live-pulse` - Live indicator animation
+- `.price-flash-up` / `.price-flash-down` - Price change flash
+- `.badge-glow` / `.badge-gradient` - Badge styles
+- `.table-premium` - Enhanced table styling
+- `.input-premium` / `.search-premium` - Form inputs
+- `.section-header` - Section title with accent
+- `.divider-gradient` / `.divider-glow` - Divider styles
+- `.number-mono` / `.number-display` - Number formatting
+- `.progress-bar` / `.progress-bar-animated` - Progress indicators
+
 ## Source of Truth
 
 1. **CSS Variables** - `src/app/globals.css` (`:root` block)

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function ArticleNotFound() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
         
@@ -12,7 +12,7 @@ export default function ArticleNotFound() {
           <div className="max-w-lg mx-auto text-center">
             <div className="text-8xl mb-6">📰</div>
             <h1 className="text-3xl font-bold mb-4">Article Not Found</h1>
-            <p className="text-gray-600 mb-8">
+            <p className="text-text-muted mb-8">
               This article isn't in our archive yet. It may be too new or the link might be incorrect.
             </p>
             
@@ -24,7 +24,7 @@ export default function ArticleNotFound() {
                 Browse Latest News
               </Link>
               
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-text-muted">
                 Our archive collects articles hourly. Check back soon!
               </p>
             </div>

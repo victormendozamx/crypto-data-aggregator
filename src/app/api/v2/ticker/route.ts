@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hybridAuthMiddleware } from '@/lib/x402';
 import { getExchangeTicker, DataSourceError } from '@/lib/data-sources';
+import { checkRateLimit, addRateLimitHeaders, rateLimitResponse } from '@/lib/rate-limit';
 
 const ENDPOINT = '/api/v2/ticker';
 
@@ -24,6 +25,12 @@ const SUPPORTED_SYMBOLS = [
 ];
 
 export async function GET(request: NextRequest) {
+  // Check rate limit
+  const rateLimitResult = checkRateLimit(request);
+  if (!rateLimitResult.allowed) {
+    return rateLimitResponse(rateLimitResult);
+  }
+  
   const authResponse = await hybridAuthMiddleware(request, ENDPOINT);
   if (authResponse) return authResponse;
 
@@ -75,7 +82,7 @@ export async function GET(request: NextRequest) {
     const successful = results.filter(r => !('error' in r));
     const failed = results.filter(r => 'error' in r).map(r => r.symbol);
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         data: symbolsToFetch.length === 1 ? successful[0] : successful,
@@ -89,6 +96,8 @@ export async function GET(request: NextRequest) {
       },
       { headers: SECURITY_HEADERS }
     );
+    
+    return addRateLimitHeaders(response, rateLimitResult);
   } catch (error) {
     const message = error instanceof DataSourceError 
       ? error.message 

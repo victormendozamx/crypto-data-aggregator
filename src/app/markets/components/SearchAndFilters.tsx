@@ -78,7 +78,7 @@ function FilterDropdown({ label, options, value, onChange }: DropdownProps) {
         <span className="text-text-muted">{label}:</span>
         <span className="text-text-primary">{selectedOption.label}</span>
         <svg
-          className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -209,7 +209,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
         <div ref={searchRef} className="relative flex-1 min-w-[200px] max-w-md">
           <div className="relative">
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -277,7 +277,7 @@ export default function SearchAndFilters({ coins }: SearchAndFiltersProps) {
                         {coin.symbol.toUpperCase()}
                       </span>
                       {coin.market_cap_rank && (
-                        <span className="ml-auto text-gray-400 text-xs">
+                        <span className="ml-auto text-text-muted text-xs">
                           #{coin.market_cap_rank}
                         </span>
                       )}

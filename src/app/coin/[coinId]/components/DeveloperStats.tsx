@@ -28,17 +28,17 @@ interface StatBoxProps {
   color?: string;
 }
 
-function StatBox({ icon, label, value, subLabel, color = 'text-gray-400' }: StatBoxProps) {
+function StatBox({ icon, label, value, subLabel, color = 'text-text-muted' }: StatBoxProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-black/50 rounded-xl p-4 text-center border border-gray-700/30"
+      className="bg-surface-alt/50 rounded-xl p-4 text-center border border-surface-border/30"
     >
-      <div className={`inline-flex p-2 rounded-lg bg-black ${color} mb-2`}>{icon}</div>
-      <div className="text-xl font-bold text-white">{value}</div>
-      <div className="text-xs text-gray-500">{label}</div>
-      {subLabel && <div className="text-xs text-gray-600 mt-1">{subLabel}</div>}
+      <div className={`inline-flex p-2 rounded-lg bg-surface-alt ${color} mb-2`}>{icon}</div>
+      <div className="text-xl font-bold text-text-primary">{value}</div>
+      <div className="text-xs text-text-muted">{label}</div>
+      {subLabel && <div className="text-xs text-text-muted/70 mt-1">{subLabel}</div>}
     </motion.div>
   );
 }
@@ -63,14 +63,14 @@ export default function DeveloperStats({
   }
 
   return (
-    <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">Developer & Community Stats</h3>
+    <div className="bg-surface-alt/50 rounded-2xl border border-surface-border p-6">
+      <h3 className="text-lg font-semibold text-text-primary mb-4">Developer & Community Stats</h3>
 
       <div className="space-y-6">
         {/* GitHub Stats */}
         {hasDevData && (
           <div>
-            <h4 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-2">
+            <h4 className="text-sm font-medium text-text-muted mb-3 flex items-center gap-2">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   fillRule="evenodd"
@@ -146,8 +146,8 @@ export default function DeveloperStats({
 
             {/* Commit Activity Chart */}
             {developerData!.last_4_weeks_commit_activity_series?.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-gray-700/50">
-                <span className="text-xs text-gray-500 mb-2 block">
+              <div className="mt-4 pt-4 border-t border-surface-border">
+                <span className="text-xs text-text-muted mb-2 block">
                   Commit Activity (Last 4 weeks)
                 </span>
                 <div className="flex items-end gap-1 h-12">
@@ -171,35 +171,35 @@ export default function DeveloperStats({
 
             {/* PR & Issues */}
             {(developerData!.pull_requests_merged > 0 || developerData!.closed_issues > 0) && (
-              <div className="mt-4 pt-4 border-t border-gray-700/50 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="mt-4 pt-4 border-t border-surface-border grid grid-cols-2 md:grid-cols-4 gap-4">
                 {developerData!.pull_requests_merged > 0 && (
                   <div>
-                    <span className="text-xs text-gray-500">PRs Merged</span>
-                    <p className="text-sm font-medium text-white">
+                    <span className="text-xs text-text-muted">PRs Merged</span>
+                    <p className="text-sm font-medium text-text-primary">
                       {formatNumber(developerData!.pull_requests_merged)}
                     </p>
                   </div>
                 )}
                 {developerData!.pull_request_contributors > 0 && (
                   <div>
-                    <span className="text-xs text-gray-500">Contributors</span>
-                    <p className="text-sm font-medium text-white">
+                    <span className="text-xs text-text-muted">Contributors</span>
+                    <p className="text-sm font-medium text-text-primary">
                       {formatNumber(developerData!.pull_request_contributors)}
                     </p>
                   </div>
                 )}
                 {developerData!.closed_issues > 0 && (
                   <div>
-                    <span className="text-xs text-gray-500">Closed Issues</span>
-                    <p className="text-sm font-medium text-white">
+                    <span className="text-xs text-text-muted">Closed Issues</span>
+                    <p className="text-sm font-medium text-text-primary">
                       {formatNumber(developerData!.closed_issues)}
                     </p>
                   </div>
                 )}
                 {developerData!.total_issues > 0 && (
                   <div>
-                    <span className="text-xs text-gray-500">Total Issues</span>
-                    <p className="text-sm font-medium text-white">
+                    <span className="text-xs text-text-muted">Total Issues</span>
+                    <p className="text-sm font-medium text-text-primary">
                       {formatNumber(developerData!.total_issues)}
                     </p>
                   </div>
@@ -211,8 +211,8 @@ export default function DeveloperStats({
 
         {/* Community Stats */}
         {hasCommunityData && (
-          <div className={hasDevData ? 'pt-6 border-t border-gray-700/50' : ''}>
-            <h4 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-2">
+          <div className={hasDevData ? 'pt-6 border-t border-surface-border' : ''}>
+            <h4 className="text-sm font-medium text-text-muted mb-3 flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"

@@ -96,7 +96,7 @@ const CATEGORIES = [
     iconKey: 'privacy',
     description: 'Cryptocurrencies focused on transaction privacy',
     examples: ['Monero', 'Zcash', 'Secret'],
-    color: 'from-gray-600 to-gray-800',
+    color: 'from-slate-600 to-slate-800',
   },
   {
     id: 'storage',

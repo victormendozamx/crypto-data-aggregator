@@ -58,16 +58,16 @@ export default function CoinHeader({
   return (
     <div className="space-y-4">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-gray-400">
-        <Link href="/" className="hover:text-white transition-colors">
+      <nav className="flex items-center gap-2 text-sm text-text-muted">
+        <Link href="/" className="hover:text-text-primary transition-colors">
           Home
         </Link>
-        <span className="text-gray-600">/</span>
-        <Link href="/markets" className="hover:text-white transition-colors">
+        <span className="text-text-muted/50">/</span>
+        <Link href="/markets" className="hover:text-text-primary transition-colors">
           Coins
         </Link>
-        <span className="text-gray-600">/</span>
-        <span className="text-white">{coin.name}</span>
+        <span className="text-text-muted/50">/</span>
+        <span className="text-text-primary">{coin.name}</span>
       </nav>
 
       {/* Main header */}
@@ -79,11 +79,11 @@ export default function CoinHeader({
               <img
                 src={imageUrl}
                 alt={coin.name}
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full ring-2 ring-gray-700"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full ring-2 ring-surface-border"
                 onError={() => setImgError(true)}
               />
             ) : (
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-2xl font-bold text-gray-900 ring-2 ring-gray-700">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-2xl font-bold text-text-primary ring-2 ring-surface-border">
                 {coin.symbol.charAt(0).toUpperCase()}
               </div>
             )}
@@ -92,10 +92,10 @@ export default function CoinHeader({
           {/* Name and symbol */}
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">{coin.name}</h1>
-              <span className="text-lg text-gray-400 font-medium">{coin.symbol.toUpperCase()}</span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-text-primary">{coin.name}</h1>
+              <span className="text-lg text-text-muted font-medium">{coin.symbol.toUpperCase()}</span>
               {coin.market_cap_rank && (
-                <span className="px-2 py-0.5 bg-black text-gray-300 text-xs font-medium rounded-md">
+                <span className="px-2 py-0.5 bg-surface-alt text-text-secondary text-xs font-medium rounded-md">
                   Rank #{coin.market_cap_rank}
                 </span>
               )}
@@ -108,7 +108,7 @@ export default function CoinHeader({
                   <Link
                     key={category}
                     href={`/category/${encodeURIComponent(category.toLowerCase().replace(/\s+/g, '-'))}`}
-                    className="px-2 py-0.5 bg-black hover:bg-black text-gray-400 hover:text-white text-xs rounded-md transition-colors"
+                    className="px-2 py-0.5 bg-surface-alt hover:bg-surface-hover text-text-muted hover:text-text-primary text-xs rounded-md transition-colors"
                   >
                     {category}
                   </Link>
@@ -127,7 +127,7 @@ export default function CoinHeader({
             className={`flex items-center gap-1.5 px-3 py-2 rounded-lg font-medium text-sm transition-colors ${
               isWatchlisted
                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                : 'bg-black text-gray-400 hover:text-white border border-gray-700 hover:border-gray-600'
+                : 'bg-surface-alt text-text-muted hover:text-text-primary border border-surface-border hover:border-surface-border'
             }`}
           >
             <motion.svg
@@ -150,7 +150,7 @@ export default function CoinHeader({
           {/* Price alert button */}
           <button
             onClick={onAlertClick}
-            className="flex items-center gap-1.5 px-3 py-2 bg-black text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-surface-alt text-text-muted hover:text-text-primary rounded-lg font-medium text-sm border border-surface-border hover:border-surface-border transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
@@ -167,7 +167,7 @@ export default function CoinHeader({
           <div className="relative">
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3 py-2 bg-black text-gray-400 hover:text-white rounded-lg font-medium text-sm border border-gray-700 hover:border-gray-600 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 bg-surface-alt text-text-muted hover:text-text-primary rounded-lg font-medium text-sm border border-surface-border hover:border-surface-border transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path

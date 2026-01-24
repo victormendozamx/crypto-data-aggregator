@@ -135,7 +135,7 @@ export default async function TopicPage({ params }: Props) {
   const data = await searchNews(keywords, 30);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
         
@@ -144,10 +144,10 @@ export default async function TopicPage({ params }: Props) {
           <div className="text-center mb-8">
             <span className="text-5xl mb-4 block">{info?.emoji || '📰'}</span>
             <h1 className="text-4xl font-bold mb-3">{info?.title || topic}</h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-text-secondary max-w-2xl mx-auto">
               {info?.description || `Latest news about ${topic}`}
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-text-muted mt-2">
               {data.totalCount} articles found
             </p>
           </div>
@@ -155,16 +155,16 @@ export default async function TopicPage({ params }: Props) {
           {/* Related Topics */}
           {info?.relatedTopics && info.relatedTopics.length > 0 && (
             <div className="mb-8 text-center">
-              <span className="text-sm text-gray-500">Related: </span>
+              <span className="text-sm text-text-muted">Related: </span>
               {info.relatedTopics.map((related, index) => (
                 <span key={related}>
                   <Link
                     href={`/topic/${related}`}
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-primary hover:underline"
                   >
                     {topicInfo[related]?.title || related}
                   </Link>
-                  {index < info.relatedTopics.length - 1 && <span className="text-gray-400"> • </span>}
+                  {index < info.relatedTopics.length - 1 && <span className="text-text-muted"> • </span>}
                 </span>
               ))}
             </div>
@@ -174,10 +174,10 @@ export default async function TopicPage({ params }: Props) {
           {data.articles.length > 0 ? (
             <Posts articles={data.articles} />
           ) : (
-            <div className="text-center py-12 bg-white rounded-xl border">
+            <div className="text-center py-12 bg-surface rounded-xl border border-surface-border">
               <span className="text-5xl mb-4 block">🔍</span>
-              <p className="text-gray-500 mb-2">No articles found for this topic.</p>
-              <p className="text-sm text-gray-400">
+              <p className="text-text-muted mb-2">No articles found for this topic.</p>
+              <p className="text-sm text-text-muted">
                 Try checking back later or browse all news.
               </p>
             </div>
@@ -185,7 +185,7 @@ export default async function TopicPage({ params }: Props) {
 
           {/* All Topics Link */}
           <div className="text-center mt-8">
-            <Link href="/topics" className="text-blue-600 hover:underline">
+            <Link href="/topics" className="text-primary hover:underline">
               View All Topics →
             </Link>
           </div>

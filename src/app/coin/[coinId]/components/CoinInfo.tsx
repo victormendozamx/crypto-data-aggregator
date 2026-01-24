@@ -48,13 +48,13 @@ function LinkItem({ href, icon, label, external = true }: LinkItemProps) {
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
-      className="flex items-center gap-2 px-3 py-2 bg-black/50 hover:bg-black/50 rounded-lg text-gray-300 hover:text-white text-sm transition-colors"
+      className="flex items-center gap-2 px-3 py-2 bg-surface-alt/50 hover:bg-surface-hover rounded-lg text-text-secondary hover:text-text-primary text-sm transition-colors"
     >
       {icon}
       <span>{label}</span>
       {external && (
         <svg
-          className="w-3 h-3 text-gray-500"
+          className="w-3 h-3 text-text-muted"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -101,8 +101,8 @@ export default function CoinInfo({ coin }: CoinInfoProps) {
   return (
     <div className="space-y-6">
       {/* Info & Links */}
-      <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Info & Links</h3>
+      <div className="bg-surface-alt/50 rounded-2xl border border-surface-border p-6">
+        <h3 className="text-lg font-semibold text-text-primary mb-4">Info & Links</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {homepage && (
@@ -240,12 +240,12 @@ export default function CoinInfo({ coin }: CoinInfoProps) {
 
         {/* Technical Info */}
         {(coin.genesis_date || coin.hashing_algorithm || coin.block_time_in_minutes) && (
-          <div className="mt-4 pt-4 border-t border-gray-700/50">
+          <div className="mt-4 pt-4 border-t border-surface-border">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {coin.genesis_date && (
                 <div>
-                  <span className="text-xs text-gray-500">Genesis Date</span>
-                  <p className="text-sm text-gray-300">
+                  <span className="text-xs text-text-muted">Genesis Date</span>
+                  <p className="text-sm text-text-secondary">
                     {new Date(coin.genesis_date).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
@@ -256,14 +256,14 @@ export default function CoinInfo({ coin }: CoinInfoProps) {
               )}
               {coin.hashing_algorithm && (
                 <div>
-                  <span className="text-xs text-gray-500">Algorithm</span>
-                  <p className="text-sm text-gray-300">{coin.hashing_algorithm}</p>
+                  <span className="text-xs text-text-muted">Algorithm</span>
+                  <p className="text-sm text-text-secondary">{coin.hashing_algorithm}</p>
                 </div>
               )}
               {coin.block_time_in_minutes && (
                 <div>
-                  <span className="text-xs text-gray-500">Block Time</span>
-                  <p className="text-sm text-gray-300">{coin.block_time_in_minutes} min</p>
+                  <span className="text-xs text-text-muted">Block Time</span>
+                  <p className="text-sm text-text-secondary">{coin.block_time_in_minutes} min</p>
                 </div>
               )}
             </div>
@@ -273,8 +273,8 @@ export default function CoinInfo({ coin }: CoinInfoProps) {
 
       {/* About */}
       {cleanDescription && (
-        <div className="bg-black/50 rounded-2xl border border-gray-700/50 p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">About {coin.name}</h3>
+        <div className="bg-surface-alt/50 rounded-2xl border border-surface-border p-6">
+          <h3 className="text-lg font-semibold text-text-primary mb-4">About {coin.name}</h3>
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -282,7 +282,7 @@ export default function CoinInfo({ coin }: CoinInfoProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-gray-400 text-sm leading-relaxed"
+              className="text-text-muted text-sm leading-relaxed"
             >
               {showFullDescription ? cleanDescription : shortDescription}
               {hasMore && !showFullDescription && '...'}

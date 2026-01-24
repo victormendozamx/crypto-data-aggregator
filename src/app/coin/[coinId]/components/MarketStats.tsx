@@ -85,7 +85,7 @@ function InfoTooltip({ id }: { id: string }) {
         onMouseLeave={() => setShow(false)}
         onFocus={() => setShow(true)}
         onBlur={() => setShow(false)}
-        className="text-gray-500 hover:text-gray-400 transition-colors"
+        className="text-text-muted hover:text-text-secondary transition-colors"
         aria-label={`Info about ${content.title}`}
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,12 +104,12 @@ function InfoTooltip({ id }: { id: string }) {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-black rounded-lg shadow-xl border border-gray-700"
+            className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-surface rounded-lg shadow-xl border border-surface-border"
           >
-            <h4 className="text-sm font-semibold text-white mb-1">{content.title}</h4>
-            <p className="text-xs text-gray-400">{content.description}</p>
+            <h4 className="text-sm font-semibold text-text-primary mb-1">{content.title}</h4>
+            <p className="text-xs text-text-muted">{content.description}</p>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full">
-              <div className="w-2 h-2 bg-black border-r border-b border-gray-700 transform rotate-45 -translate-y-1" />
+              <div className="w-2 h-2 bg-surface border-r border-b border-surface-border transform rotate-45 -translate-y-1" />
             </div>
           </motion.div>
         )}
@@ -132,27 +132,27 @@ function StatCard({ label, value, subValue, badge, progress, tooltipId }: StatCa
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
+      className="bg-surface-alt/50 rounded-xl border border-surface-border p-4"
     >
       <div className="flex items-center gap-1.5 mb-2">
-        <span className="text-xs text-gray-500 uppercase tracking-wide">{label}</span>
+        <span className="text-xs text-text-muted uppercase tracking-wide">{label}</span>
         {tooltipId && <InfoTooltip id={tooltipId} />}
       </div>
 
       <div className="flex items-baseline gap-2">
-        <span className="text-xl font-bold text-white">${value}</span>
+        <span className="text-xl font-bold text-text-primary">${value}</span>
         {badge && (
-          <span className="px-1.5 py-0.5 bg-black text-gray-300 text-xs font-medium rounded">
+          <span className="px-1.5 py-0.5 bg-surface-alt text-text-secondary text-xs font-medium rounded">
             #{badge}
           </span>
         )}
       </div>
 
-      {subValue && <p className="text-xs text-gray-400 mt-1">{subValue}</p>}
+      {subValue && <p className="text-xs text-text-muted mt-1">{subValue}</p>}
 
       {typeof progress === 'number' && (
         <div className="mt-2">
-          <div className="h-1.5 bg-black rounded-full overflow-hidden">
+          <div className="h-1.5 bg-surface-alt rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(100, progress)}%` }}
@@ -160,7 +160,7 @@ function StatCard({ label, value, subValue, badge, progress, tooltipId }: StatCa
               className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">{progress.toFixed(1)}% of max</p>
+          <p className="text-xs text-text-muted mt-1">{progress.toFixed(1)}% of max</p>
         </div>
       )}
     </motion.div>
@@ -203,20 +203,20 @@ export default function MarketStats({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
+        className="bg-surface-alt/50 rounded-xl border border-surface-border p-4"
       >
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="text-xs text-gray-500 uppercase tracking-wide">Circulating Supply</span>
+          <span className="text-xs text-text-muted uppercase tracking-wide">Circulating Supply</span>
           <InfoTooltip id="circulatingSupply" />
         </div>
 
-        <span className="text-xl font-bold text-white">
+        <span className="text-xl font-bold text-text-primary">
           {formatSupply(circulatingSupply, symbolUpper)}
         </span>
 
         {circulatingPercent !== null && (
           <div className="mt-2">
-            <div className="h-1.5 bg-black rounded-full overflow-hidden">
+            <div className="h-1.5 bg-surface-alt rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${Math.min(100, circulatingPercent)}%` }}
@@ -224,7 +224,7 @@ export default function MarketStats({
                 className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-text-muted mt-1">
               {circulatingPercent.toFixed(1)}% of max supply
             </p>
           </div>
@@ -235,22 +235,22 @@ export default function MarketStats({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-black/50 rounded-xl border border-gray-700/50 p-4"
+        className="bg-surface-alt/50 rounded-xl border border-surface-border p-4"
       >
         <div className="flex items-center gap-1.5 mb-2">
-          <span className="text-xs text-gray-500 uppercase tracking-wide">Max Supply</span>
+          <span className="text-xs text-text-muted uppercase tracking-wide">Max Supply</span>
           <InfoTooltip id="maxSupply" />
         </div>
 
-        <span className="text-xl font-bold text-white">
+        <span className="text-xl font-bold text-text-primary">
           {maxSupply ? formatSupply(maxSupply, symbolUpper) : '∞'}
         </span>
 
         {fullyDilutedValuation && (
           <div className="mt-2">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-gray-500">FDV:</span>
-              <span className="text-xs text-gray-400">${formatNumber(fullyDilutedValuation)}</span>
+              <span className="text-xs text-text-muted">FDV:</span>
+              <span className="text-xs text-text-secondary">${formatNumber(fullyDilutedValuation)}</span>
               <InfoTooltip id="fdv" />
             </div>
           </div>

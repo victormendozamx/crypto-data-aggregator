@@ -89,7 +89,7 @@ function getTrustScoreColor(score: string | null): string {
     case 'red':
       return 'bg-red-500';
     default:
-      return 'bg-gray-400';
+      return 'bg-text-muted';
   }
 }
 

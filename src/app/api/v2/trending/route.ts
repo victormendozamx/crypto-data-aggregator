@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hybridAuthMiddleware } from '@/lib/x402';
 import { getTrendingCoins, DataSourceError } from '@/lib/data-sources';
+import { checkRateLimit, addRateLimitHeaders, rateLimitResponse } from '@/lib/rate-limit';
 
 const ENDPOINT = '/api/v2/trending';
 
@@ -17,13 +18,19 @@ const SECURITY_HEADERS = {
 };
 
 export async function GET(request: NextRequest) {
+  // Check rate limit
+  const rateLimitResult = checkRateLimit(request);
+  if (!rateLimitResult.allowed) {
+    return rateLimitResponse(rateLimitResult);
+  }
+  
   const authResponse = await hybridAuthMiddleware(request, ENDPOINT);
   if (authResponse) return authResponse;
 
   try {
     const trending = await getTrendingCoins();
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: true,
         data: {
@@ -38,6 +45,8 @@ export async function GET(request: NextRequest) {
       },
       { headers: SECURITY_HEADERS }
     );
+    
+    return addRateLimitHeaders(response, rateLimitResult);
   } catch (error) {
     const message = error instanceof DataSourceError 
       ? error.message 

@@ -92,20 +92,20 @@ export default function HistoricalTable({
   }, [filteredData, coinId, dateRange, getChange]);
 
   return (
-    <div className="bg-black/50 rounded-2xl border border-gray-700/50 overflow-hidden">
+    <div className="bg-surface-alt/50 rounded-2xl border border-surface-border overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700/50">
+      <div className="p-4 border-b border-surface-border">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-white">Historical Data</h3>
-            <p className="text-sm text-gray-400">
+            <h3 className="text-lg font-semibold text-text-primary">Historical Data</h3>
+            <p className="text-sm text-text-muted">
               {filteredData.length} data points for {coinName}
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Date Range Selector */}
-            <div className="flex bg-black rounded-lg p-0.5">
+            <div className="flex bg-surface-alt rounded-lg p-0.5">
               {(['7d', '30d', '90d', '1y', 'all'] as const).map((range) => (
                 <button
                   key={range}
@@ -115,8 +115,8 @@ export default function HistoricalTable({
                   }}
                   className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                     dateRange === range
-                      ? 'bg-black text-white'
-                      : 'text-gray-500 hover:text-gray-300'
+                      ? 'bg-surface text-text-primary'
+                      : 'text-text-muted hover:text-text-secondary'
                   }`}
                 >
                   {range.toUpperCase()}
@@ -127,7 +127,7 @@ export default function HistoricalTable({
             {/* Export Button */}
             <button
               onClick={handleExportCSV}
-              className="flex items-center gap-2 px-3 py-1.5 bg-black hover:bg-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 bg-surface-hover hover:bg-surface-alt text-text-primary text-sm rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -147,28 +147,28 @@ export default function HistoricalTable({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-700/50">
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+            <tr className="border-b border-surface-border">
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-text-muted">
                 Date
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-text-muted">
                 Open
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-text-muted">
                 High
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-text-muted">
                 Low
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-text-muted">
                 Close
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500">
+              <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wide text-text-muted">
                 Change
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700/30">
+          <tbody className="divide-y divide-surface-border/30">
             {paginatedData.map((data, index) => {
               const change = getChange(data);
               const isPositive = change >= 0;
@@ -179,29 +179,29 @@ export default function HistoricalTable({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.02 }}
-                  className="hover:bg-black/20 transition-colors"
+                  className="hover:bg-surface-hover/20 transition-colors"
                 >
                   <td className="px-4 py-3">
-                    <span className="text-sm text-white">{formatDate(data.timestamp)}</span>
+                    <span className="text-sm text-text-primary">{formatDate(data.timestamp)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-gray-300">{formatPrice(data.open)}</span>
+                    <span className="text-sm text-text-secondary">{formatPrice(data.open)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-green-400">{formatPrice(data.high)}</span>
+                    <span className="text-sm text-gain">{formatPrice(data.high)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm text-red-400">{formatPrice(data.low)}</span>
+                    <span className="text-sm text-loss">{formatPrice(data.low)}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm font-medium text-text-primary">
                       {formatPrice(data.close)}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">
                     <span
                       className={`text-sm font-medium ${
-                        isPositive ? 'text-green-400' : 'text-red-400'
+                        isPositive ? 'text-gain' : 'text-loss'
                       }`}
                     >
                       {formatPercent(change)}
@@ -216,36 +216,36 @@ export default function HistoricalTable({
 
       {/* Summary Stats */}
       {filteredData.length > 0 && (
-        <div className="p-4 border-t border-gray-700/50 bg-black/30">
+        <div className="p-4 border-t border-surface-border bg-surface-alt/30">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <span className="text-gray-500">Period High</span>
-              <p className="text-green-400 font-medium">
+              <span className="text-text-muted">Period High</span>
+              <p className="text-gain font-medium">
                 {formatPrice(Math.max(...filteredData.map((d) => d.high)))}
               </p>
             </div>
             <div>
-              <span className="text-gray-500">Period Low</span>
-              <p className="text-red-400 font-medium">
+              <span className="text-text-muted">Period Low</span>
+              <p className="text-loss font-medium">
                 {formatPrice(Math.min(...filteredData.map((d) => d.low)))}
               </p>
             </div>
             <div>
-              <span className="text-gray-500">Avg Close</span>
-              <p className="text-white font-medium">
+              <span className="text-text-muted">Avg Close</span>
+              <p className="text-text-primary font-medium">
                 {formatPrice(
                   filteredData.reduce((sum, d) => sum + d.close, 0) / filteredData.length
                 )}
               </p>
             </div>
             <div>
-              <span className="text-gray-500">Period Change</span>
+              <span className="text-text-muted">Period Change</span>
               {filteredData.length > 1 && (
                 <p
                   className={`font-medium ${
                     filteredData[0].close >= filteredData[filteredData.length - 1].close
-                      ? 'text-green-400'
-                      : 'text-red-400'
+                      ? 'text-gain'
+                      : 'text-loss'
                   }`}
                 >
                   {formatPercent(
@@ -262,8 +262,8 @@ export default function HistoricalTable({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="p-4 border-t border-gray-700/50 flex items-center justify-between">
-          <span className="text-sm text-gray-400">
+        <div className="p-4 border-t border-surface-border flex items-center justify-between">
+          <span className="text-sm text-text-muted">
             Page {page} of {totalPages}
           </span>
 
@@ -271,14 +271,14 @@ export default function HistoricalTable({
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-surface-hover hover:bg-surface-alt disabled:bg-surface-alt disabled:text-text-muted text-text-primary text-sm rounded-lg transition-colors"
             >
               Previous
             </button>
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-surface-hover hover:bg-surface-alt disabled:bg-surface-alt disabled:text-text-muted text-text-primary text-sm rounded-lg transition-colors"
             >
               Next
             </button>
@@ -289,7 +289,7 @@ export default function HistoricalTable({
       {/* Empty State */}
       {filteredData.length === 0 && (
         <div className="p-8 text-center">
-          <p className="text-gray-400">No historical data available</p>
+          <p className="text-text-muted">No historical data available</p>
         </div>
       )}
     </div>

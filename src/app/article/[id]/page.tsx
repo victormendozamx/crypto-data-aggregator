@@ -69,7 +69,7 @@ const sourceColors: Record<string, string> = {
 const sentimentConfig = {
   very_positive: { emoji: '🟢', label: 'Very Bullish', color: 'bg-green-100 text-green-800' },
   positive: { emoji: '🟢', label: 'Bullish', color: 'bg-green-50 text-green-700' },
-  neutral: { emoji: '⚪', label: 'Neutral', color: 'bg-gray-100 text-gray-700' },
+  neutral: { emoji: '⚪', label: 'Neutral', color: 'bg-surface-alt text-text-secondary' },
   negative: { emoji: '🔴', label: 'Bearish', color: 'bg-red-50 text-red-700' },
   very_negative: { emoji: '🔴', label: 'Very Bearish', color: 'bg-red-100 text-red-800' },
 };

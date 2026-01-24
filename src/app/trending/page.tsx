@@ -38,7 +38,7 @@ async function getTrending(): Promise<{ trending: TrendingTopic[]; articlesAnaly
 const sentimentConfig = {
   bullish: { icon: TrendingUp, label: 'Bullish', color: 'text-green-600', bg: 'bg-green-100' },
   bearish: { icon: TrendingDown, label: 'Bearish', color: 'text-red-600', bg: 'bg-red-100' },
-  neutral: { icon: Minus, label: 'Neutral', color: 'text-gray-600', bg: 'bg-gray-100' },
+  neutral: { icon: Minus, label: 'Neutral', color: 'text-text-muted', bg: 'bg-surface-alt' },
 };
 
 export default async function TrendingPage() {
@@ -55,7 +55,7 @@ export default async function TrendingPage() {
               <Flame className="w-8 h-8 text-orange-500" />
               Trending Topics
             </h1>
-            <p className="text-gray-600">
+            <p className="text-text-muted">
               Real-time analysis of what&apos;s hot in crypto news • {data.articlesAnalyzed}{' '}
               articles analyzed
             </p>
@@ -68,11 +68,11 @@ export default async function TrendingPage() {
                 return (
                   <div
                     key={topic.topic}
-                    className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition"
+                    className="bg-surface rounded-xl border border-surface-border p-5 hover:shadow-lg transition"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl font-bold text-gray-300">#{index + 1}</span>
+                        <span className="text-2xl font-bold text-text-muted/50">#{index + 1}</span>
                         <h3 className="text-xl font-bold">{topic.topic}</h3>
                       </div>
                       <span
@@ -83,17 +83,17 @@ export default async function TrendingPage() {
                       </span>
                     </div>
 
-                    <div className="text-sm text-gray-500 mb-3">
+                    <div className="text-sm text-text-muted mb-3">
                       {topic.count} mentions in recent news
                     </div>
 
                     {topic.recentHeadlines.length > 0 && (
                       <div className="space-y-2">
-                        <p className="text-xs text-gray-500 uppercase font-medium">
+                        <p className="text-xs text-text-muted uppercase font-medium">
                           Recent Headlines
                         </p>
                         {topic.recentHeadlines.slice(0, 3).map((headline, i) => (
-                          <p key={i} className="text-sm text-gray-700 line-clamp-2">
+                          <p key={i} className="text-sm text-text-secondary line-clamp-2">
                             • {headline}
                           </p>
                         ))}
@@ -111,17 +111,17 @@ export default async function TrendingPage() {
               })}
             </div>
           ) : (
-            <div className="text-center py-16 bg-white rounded-xl">
+            <div className="text-center py-16 bg-surface rounded-xl">
               <div className="flex justify-center mb-4">
-                <BarChart3 className="w-16 h-16 text-gray-400" />
+                <BarChart3 className="w-16 h-16 text-text-muted" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Analyzing trends...</h3>
-              <p className="text-gray-500">Check back soon for trending topics</p>
+              <h3 className="text-xl font-semibold text-text-secondary mb-2">Analyzing trends...</h3>
+              <p className="text-text-muted">Check back soon for trending topics</p>
             </div>
           )}
 
           {/* Sentiment Legend */}
-          <div className="mt-8 p-4 bg-white rounded-xl border border-gray-200">
+          <div className="mt-8 p-4 bg-surface rounded-xl border border-surface-border">
             <h4 className="font-medium mb-3">Understanding Sentiment</h4>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
@@ -133,7 +133,7 @@ export default async function TrendingPage() {
                 <span>Bearish - Negative market sentiment</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-gray-400"></span>
+                <span className="w-3 h-3 rounded-full bg-text-muted"></span>
                 <span>Neutral - Mixed or balanced coverage</span>
               </div>
             </div>

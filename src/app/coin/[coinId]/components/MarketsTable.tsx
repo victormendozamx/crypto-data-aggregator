@@ -146,7 +146,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
           {/* Search */}
           <div className="relative">
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -176,7 +176,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-700/50">
+            <tr className="border-b border-surface-border">
               <th className="px-4 py-3 text-left">
                 <SortHeader label="Exchange" sortKeyName="exchange" />
               </th>
@@ -196,13 +196,13 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                 <SortHeader label="Trust" sortKeyName="trust" />
               </th>
               <th className="px-4 py-3 text-center">
-                <span className="text-xs font-medium uppercase tracking-wide text-gray-500">
+                <span className="text-xs font-medium uppercase tracking-wide text-text-muted">
                   Trade
                 </span>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700/30">
+          <tbody className="divide-y divide-surface-border/30">
             {paginatedTickers.map((ticker, index) => (
               <motion.tr
                 key={`${ticker.market.identifier}-${ticker.target}-${index}`}
@@ -235,14 +235,14 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
 
                 {/* Pair */}
                 <td className="px-4 py-3">
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-text-secondary">
                     {ticker.base}/{ticker.target}
                   </span>
                 </td>
 
                 {/* Price */}
                 <td className="px-4 py-3 text-right">
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-text-primary">
                     {formatPrice(ticker.converted_last.usd)}
                   </span>
                 </td>
@@ -252,10 +252,10 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                   <span
                     className={`text-sm ${
                       ticker.bid_ask_spread_percentage > 1
-                        ? 'text-neutral-400'
+                        ? 'text-text-muted'
                         : ticker.bid_ask_spread_percentage > 0.5
-                          ? 'text-neutral-300'
-                          : 'text-white font-medium'
+                          ? 'text-text-secondary'
+                          : 'text-text-primary font-medium'
                     }`}
                   >
                     {ticker.bid_ask_spread_percentage?.toFixed(2) || '-'}%
@@ -264,7 +264,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
 
                 {/* Volume */}
                 <td className="px-4 py-3 text-right">
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-text-secondary">
                     {formatVolume(ticker.converted_volume.usd)}
                   </span>
                 </td>
@@ -304,7 +304,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
                       </svg>
                     </a>
                   ) : (
-                    <span className="text-gray-600 text-xs">-</span>
+                    <span className="text-text-muted/50 text-xs">-</span>
                   )}
                 </td>
               </motion.tr>
@@ -315,8 +315,8 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="p-4 border-t border-gray-700/50 flex items-center justify-between">
-          <span className="text-sm text-gray-400">
+        <div className="p-4 border-t border-surface-border flex items-center justify-between">
+          <span className="text-sm text-text-muted">
             Showing {(page - 1) * ITEMS_PER_PAGE + 1}-
             {Math.min(page * ITEMS_PER_PAGE, filteredTickers.length)} of {filteredTickers.length}
           </span>
@@ -325,7 +325,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-surface-hover hover:bg-surface-alt disabled:bg-surface-alt disabled:text-text-muted text-text-primary text-sm rounded-lg transition-colors"
             >
               Previous
             </button>
@@ -362,7 +362,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1.5 bg-black hover:bg-gray-600 disabled:bg-black disabled:text-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="px-3 py-1.5 bg-surface-hover hover:bg-surface-alt disabled:bg-surface-alt disabled:text-text-muted text-text-primary text-sm rounded-lg transition-colors"
             >
               Next
             </button>
@@ -373,7 +373,7 @@ export default function MarketsTable({ tickers, coinSymbol }: MarketsTableProps)
       {/* Empty State */}
       {filteredTickers.length === 0 && (
         <div className="p-8 text-center">
-          <p className="text-gray-400">No trading pairs found</p>
+          <p className="text-text-muted">No trading pairs found</p>
         </div>
       )}
     </div>

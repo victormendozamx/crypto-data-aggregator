@@ -2,8 +2,17 @@
 
 <p align="center">
   <a href="https://github.com/nirholas/crypto-data-aggregator/stargazers"><img src="https://img.shields.io/github/stars/nirholas/crypto-data-aggregator?style=for-the-badge&logo=github&color=yellow" alt="GitHub Stars"></a>
+  <a href="https://github.com/nirholas/crypto-data-aggregator/network/members"><img src="https://img.shields.io/github/forks/nirholas/crypto-data-aggregator?style=for-the-badge&logo=github&color=orange" alt="GitHub Forks"></a>
   <a href="https://github.com/nirholas/crypto-data-aggregator/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nirholas/crypto-data-aggregator?style=for-the-badge&color=blue" alt="License"></a>
   <a href="https://github.com/nirholas/crypto-data-aggregator/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/nirholas/crypto-data-aggregator/ci.yml?style=for-the-badge&logo=github-actions&label=CI" alt="CI Status"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/nirholas/crypto-data-aggregator/issues"><img src="https://img.shields.io/github/issues/nirholas/crypto-data-aggregator?style=flat-square&color=red" alt="Issues"></a>
+  <a href="https://github.com/nirholas/crypto-data-aggregator/pulls"><img src="https://img.shields.io/github/issues-pr/nirholas/crypto-data-aggregator?style=flat-square&color=brightgreen" alt="PRs"></a>
+  <img src="https://img.shields.io/github/last-commit/nirholas/crypto-data-aggregator?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/github/repo-size/nirholas/crypto-data-aggregator?style=flat-square" alt="Repo Size">
+  <a href="https://crypto-data-aggregator.vercel.app"><img src="https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fcrypto-data-aggregator.vercel.app" alt="Website"></a>
 </p>
 
 <p align="center">
@@ -12,11 +21,12 @@
   <img src="https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS 4">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React 19">
   <img src="https://img.shields.io/badge/x402-Enabled-00D4AA?style=flat-square&logo=ethereum" alt="x402 Enabled">
-  <img src="https://img.shields.io/badge/AI_Agents-Ready-8B5CF6?style=flat-square&logo=robot" alt="AI Agents Ready">
+  <img src="https://img.shields.io/badge/MCP-Server-8B5CF6?style=flat-square&logo=anthropic" alt="MCP Server">
+  <img src="https://img.shields.io/badge/AI_Agents-Ready-8B5CF6?style=flat-square&logo=openai" alt="AI Agents Ready">
 </p>
 
 <p align="center">
-  <b>🆓 100% Free • 🔑 No API Keys Required • ⚡ Real-Time Data • 📱 PWA Ready • 🤖 AI Agent Ready</b>
+  <b>🆓 100% Free • 🔑 No API Keys Required • ⚡ Real-Time Data • 📱 PWA Ready • 🤖 AI Agent & MCP Ready</b>
 </p>
 
 <p align="center">

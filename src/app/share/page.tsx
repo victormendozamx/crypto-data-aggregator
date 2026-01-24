@@ -33,7 +33,7 @@ export default async function SharePage({ searchParams }: SharePageProps) {
   
   // Otherwise, show a simple share receipt page
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-surface-alt via-surface to-surface-alt flex items-center justify-center p-4">
       <div className="max-w-md w-full text-center space-y-6">
         <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/30">
           <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,17 +42,17 @@ export default async function SharePage({ searchParams }: SharePageProps) {
         </div>
         
         <div>
-          <h1 className="text-2xl font-bold text-white">Content Shared</h1>
-          <p className="text-gray-400 mt-2">Thanks for sharing with Free Crypto News!</p>
+          <h1 className="text-2xl font-bold text-text-primary">Content Shared</h1>
+          <p className="text-text-muted mt-2">Thanks for sharing with Free Crypto News!</p>
         </div>
         
         {(title || text) && (
-          <div className="bg-gray-800/50 rounded-xl p-4 text-left border border-gray-700/50">
+          <div className="bg-surface-alt/50 rounded-xl p-4 text-left border border-surface-border">
             {title && (
-              <p className="text-white font-medium">{title}</p>
+              <p className="text-text-primary font-medium">{title}</p>
             )}
             {text && (
-              <p className="text-gray-400 text-sm mt-2">{text}</p>
+              <p className="text-text-muted text-sm mt-2">{text}</p>
             )}
           </div>
         )}

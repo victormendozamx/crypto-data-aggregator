@@ -39,7 +39,7 @@ const categories = [
 
 export default function TopicsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
         
@@ -47,7 +47,7 @@ export default function TopicsPage() {
           {/* Page Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-3">🏷️ Browse Topics</h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-text-muted max-w-2xl mx-auto">
               Explore crypto news by topic. Find the latest updates on what matters to you.
             </p>
           </div>
@@ -60,11 +60,11 @@ export default function TopicsPage() {
                 <Link
                   key={cat.slug}
                   href={`/category/${cat.slug}`}
-                  className="bg-white rounded-xl border p-6 hover:shadow-lg hover:border-gray-300 transition group"
+                  className="bg-surface rounded-xl border border-surface-border p-6 hover:shadow-lg hover:border-surface-hover transition group"
                 >
                   <span className="text-4xl block mb-3">{cat.emoji}</span>
-                  <h3 className="font-bold text-lg group-hover:text-blue-600 transition">{cat.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1">{cat.description}</p>
+                  <h3 className="font-bold text-lg group-hover:text-primary transition">{cat.title}</h3>
+                  <p className="text-sm text-text-muted mt-1">{cat.description}</p>
                 </Link>
               ))}
             </div>
@@ -78,12 +78,12 @@ export default function TopicsPage() {
                 <Link
                   key={topic.slug}
                   href={`/topic/${topic.slug}`}
-                  className="bg-white rounded-xl border p-5 hover:shadow-lg hover:border-gray-300 transition group flex items-start gap-4"
+                  className="bg-surface rounded-xl border border-surface-border p-5 hover:shadow-lg hover:border-surface-hover transition group flex items-start gap-4"
                 >
                   <span className="text-3xl">{topic.emoji}</span>
                   <div>
-                    <h3 className="font-bold group-hover:text-blue-600 transition">{topic.title}</h3>
-                    <p className="text-sm text-gray-500">{topic.description}</p>
+                    <h3 className="font-bold group-hover:text-primary transition">{topic.title}</h3>
+                    <p className="text-sm text-text-muted">{topic.description}</p>
                   </div>
                 </Link>
               ))}
@@ -91,12 +91,12 @@ export default function TopicsPage() {
           </div>
 
           {/* Search CTA */}
-          <div className="mt-12 text-center bg-white rounded-xl border p-8">
+          <div className="mt-12 text-center bg-surface rounded-xl border border-surface-border p-8">
             <h3 className="text-xl font-bold mb-2">Can't find what you're looking for?</h3>
-            <p className="text-gray-600 mb-4">Use our search to find any crypto topic.</p>
+            <p className="text-text-muted mb-4">Use our search to find any crypto topic.</p>
             <Link
               href="/search"
-              className="inline-block bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition"
+              className="inline-block bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary-hover transition"
             >
               🔍 Search News
             </Link>

@@ -135,6 +135,15 @@ module.exports = {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         shimmer: 'shimmer 2s infinite',
         'spin-slow': 'spin 3s linear infinite',
+        // New premium animations
+        'float': 'float 6s ease-in-out infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+        'slide-up-fade': 'slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'slide-down-fade': 'slideDownFade 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'scale-in': 'scaleIn 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+        'shake': 'shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)',
+        'count-up': 'countUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        'border-glow': 'borderGlow 3s ease-in-out infinite',
       },
 
       keyframes: {
@@ -156,6 +165,46 @@ module.exports = {
         'bounce-subtle': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-4px)' },
+        },
+        // New premium keyframes
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        'glow-pulse': {
+          '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+          '50%': { opacity: '1', transform: 'scale(1.05)' },
+        },
+        slideUpFade: {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideDownFade: {
+          '0%': { opacity: '0', transform: 'translateY(-16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-4px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(4px)' },
+        },
+        countUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        borderGlow: {
+          '0%, 100%': { 
+            'border-color': 'rgba(56, 97, 251, 0.3)',
+            'box-shadow': '0 0 10px rgba(56, 97, 251, 0.1)'
+          },
+          '50%': { 
+            'border-color': 'rgba(56, 97, 251, 0.6)',
+            'box-shadow': '0 0 20px rgba(56, 97, 251, 0.3)'
+          },
         },
       },
 
