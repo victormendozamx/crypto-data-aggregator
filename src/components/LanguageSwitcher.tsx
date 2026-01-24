@@ -35,7 +35,7 @@ export function LanguageSwitcher({ variant = 'dropdown', className = '' }: Langu
           const nextIndex = (currentIndex + 1) % locales.length;
           handleChange(locales[nextIndex]);
         }}
-        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
+        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-text-muted hover:text-text-primary rounded-lg hover:bg-surface-hover transition-colors ${className}`}
         aria-label={t('selectLanguage')}
       >
         <span className="text-lg">🌐</span>
@@ -53,8 +53,8 @@ export function LanguageSwitcher({ variant = 'dropdown', className = '' }: Langu
             onClick={() => handleChange(loc)}
             className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
               loc === locale
-                ? 'bg-brand-500 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'bg-primary text-white'
+                : 'bg-surface-alt text-text-secondary hover:bg-surface-hover'
             }`}
           >
             {localeNames[loc]}
@@ -75,10 +75,10 @@ export function LanguageSwitcher({ variant = 'dropdown', className = '' }: Langu
           id="language-select"
           value={locale}
           onChange={(e) => handleChange(e.target.value)}
-          className="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors cursor-pointer"
+          className="appearance-none bg-transparent border border-surface-border rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-primary text-text-secondary hover:border-surface-border transition-colors cursor-pointer"
         >
           {locales.map((loc) => (
-            <option key={loc} value={loc} className="bg-white dark:bg-gray-900">
+            <option key={loc} value={loc} className="bg-surface">
               {localeNames[loc]}
             </option>
           ))}

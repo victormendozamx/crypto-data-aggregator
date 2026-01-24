@@ -109,9 +109,7 @@ export default function PriceWidget({ variant = 'compact', className = '' }: Pri
         <div className="flex items-center gap-1.5">
           <span className="text-amber-500 font-bold">₿</span>
           <span className="font-medium text-text-primary">{formatPrice(prices.bitcoin.usd)}</span>
-          <span
-            className={`text-xs font-medium ${btcChange >= 0 ? 'text-green-500' : 'text-red-500'}`}
-          >
+          <span className={`text-xs font-medium ${btcChange >= 0 ? 'text-gain' : 'text-loss'}`}>
             {formatChange(btcChange)}
           </span>
         </div>
@@ -119,9 +117,7 @@ export default function PriceWidget({ variant = 'compact', className = '' }: Pri
         <div className="flex items-center gap-1.5">
           <span className="text-blue-500 font-bold">Ξ</span>
           <span className="font-medium text-text-primary">{formatPrice(prices.ethereum.usd)}</span>
-          <span
-            className={`text-xs font-medium ${ethChange >= 0 ? 'text-green-500' : 'text-red-500'}`}
-          >
+          <span className={`text-xs font-medium ${ethChange >= 0 ? 'text-gain' : 'text-loss'}`}>
             {formatChange(ethChange)}
           </span>
         </div>
@@ -142,9 +138,7 @@ export default function PriceWidget({ variant = 'compact', className = '' }: Pri
             <span className="font-semibold text-text-primary">
               {formatPrice(prices.bitcoin.usd)}
             </span>
-            <span
-              className={`text-xs font-medium ${btcChange >= 0 ? 'text-green-500' : 'text-red-500'}`}
-            >
+            <span className={`text-xs font-medium ${btcChange >= 0 ? 'text-gain' : 'text-loss'}`}>
               {btcChange >= 0 ? '↑' : '↓'} {formatChange(btcChange)}
             </span>
           </div>
@@ -161,9 +155,7 @@ export default function PriceWidget({ variant = 'compact', className = '' }: Pri
             <span className="font-semibold text-text-primary">
               {formatPrice(prices.ethereum.usd)}
             </span>
-            <span
-              className={`text-xs font-medium ${ethChange >= 0 ? 'text-green-500' : 'text-red-500'}`}
-            >
+            <span className={`text-xs font-medium ${ethChange >= 0 ? 'text-gain' : 'text-loss'}`}>
               {ethChange >= 0 ? '↑' : '↓'} {formatChange(ethChange)}
             </span>
           </div>

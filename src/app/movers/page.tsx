@@ -35,7 +35,7 @@ export default async function MoversPage() {
     coins.reduce((sum, c) => sum + (c.price_change_percentage_24h || 0), 0) / coins.length;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -44,7 +44,7 @@ export default async function MoversPage() {
           <div className="mb-8">
             <div className="flex items-center gap-3">
               <svg
-                className="w-8 h-8 text-neutral-900 dark:text-white"
+                className="w-8 h-8 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -56,37 +56,33 @@ export default async function MoversPage() {
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 />
               </svg>
-              <h1 className="text-4xl font-bold text-neutral-900 dark:text-white">Top Movers</h1>
+              <h1 className="text-4xl font-bold text-text-primary">Top Movers</h1>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
-              Biggest price changes in the last 24 hours
-            </p>
+            <p className="text-text-secondary mt-2">Biggest price changes in the last 24 hours</p>
           </div>
 
           {/* Market Sentiment */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Gainers (24h)</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">{totalGainers}</p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Gainers (24h)</p>
+              <p className="text-2xl font-bold text-text-primary">{totalGainers}</p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Losers (24h)</p>
-              <p className="text-2xl font-bold text-neutral-500 dark:text-neutral-400">
-                {totalLosers}
-              </p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Losers (24h)</p>
+              <p className="text-2xl font-bold text-text-muted">{totalLosers}</p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Avg Change</p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Avg Change</p>
               <p
-                className={`text-2xl font-bold ${avgChange >= 0 ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}
+                className={`text-2xl font-bold ${avgChange >= 0 ? 'text-text-primary' : 'text-text-muted'}`}
               >
                 {formatPercent(avgChange)}
               </p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Sentiment</p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Sentiment</p>
               <p
-                className={`text-2xl font-bold ${totalGainers > totalLosers ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}
+                className={`text-2xl font-bold ${totalGainers > totalLosers ? 'text-text-primary' : 'text-text-muted'}`}
               >
                 {totalGainers > totalLosers ? 'Bullish' : 'Bearish'}
               </p>
@@ -96,11 +92,11 @@ export default async function MoversPage() {
           {/* Main Content */}
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Top Gainers */}
-            <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-              <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-black">
+            <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
+              <div className="p-4 border-b border-surface-border bg-neutral-50 dark:bg-black">
                 <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6 text-neutral-900 dark:text-white"
+                    className="w-6 h-6 text-text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -113,12 +109,8 @@ export default async function MoversPage() {
                     />
                   </svg>
                   <div>
-                    <h2 className="font-bold text-lg text-neutral-900 dark:text-white">
-                      Top Gainers
-                    </h2>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                      Best performers in 24h
-                    </p>
+                    <h2 className="font-bold text-lg text-text-primary">Top Gainers</h2>
+                    <p className="text-sm text-text-secondary">Best performers in 24h</p>
                   </div>
                 </div>
               </div>
@@ -135,19 +127,17 @@ export default async function MoversPage() {
                         <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
                       )}
                       <div>
-                        <span className="font-medium text-neutral-900 dark:text-white">
-                          {coin.name}
-                        </span>
+                        <span className="font-medium text-text-primary">{coin.name}</span>
                         <span className="text-neutral-500 text-sm ml-2">
                           {coin.symbol.toUpperCase()}
                         </span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-neutral-900 dark:text-white">
+                      <p className="font-medium text-text-primary">
                         {formatPrice(coin.current_price)}
                       </p>
-                      <p className="text-neutral-900 dark:text-white font-bold">
+                      <p className="text-text-primary font-bold">
                         +{formatPercent(coin.price_change_percentage_24h)}
                       </p>
                     </div>
@@ -157,11 +147,11 @@ export default async function MoversPage() {
             </div>
 
             {/* Top Losers */}
-            <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-              <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-black">
+            <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
+              <div className="p-4 border-b border-surface-border bg-neutral-50 dark:bg-black">
                 <div className="flex items-center gap-2">
                   <svg
-                    className="w-6 h-6 text-neutral-500 dark:text-neutral-400"
+                    className="w-6 h-6 text-text-muted"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -174,12 +164,8 @@ export default async function MoversPage() {
                     />
                   </svg>
                   <div>
-                    <h2 className="font-bold text-lg text-neutral-900 dark:text-white">
-                      Top Losers
-                    </h2>
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                      Worst performers in 24h
-                    </p>
+                    <h2 className="font-bold text-lg text-text-primary">Top Losers</h2>
+                    <p className="text-sm text-text-secondary">Worst performers in 24h</p>
                   </div>
                 </div>
               </div>
@@ -196,19 +182,17 @@ export default async function MoversPage() {
                         <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
                       )}
                       <div>
-                        <span className="font-medium text-neutral-900 dark:text-white">
-                          {coin.name}
-                        </span>
+                        <span className="font-medium text-text-primary">{coin.name}</span>
                         <span className="text-neutral-500 text-sm ml-2">
                           {coin.symbol.toUpperCase()}
                         </span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-neutral-900 dark:text-white">
+                      <p className="font-medium text-text-primary">
                         {formatPrice(coin.current_price)}
                       </p>
-                      <p className="text-neutral-500 dark:text-neutral-400 font-bold">
+                      <p className="text-text-muted font-bold">
                         {formatPercent(coin.price_change_percentage_24h)}
                       </p>
                     </div>
@@ -222,13 +206,13 @@ export default async function MoversPage() {
           <div className="mt-8 flex justify-center gap-4">
             <Link
               href="/markets"
-              className="bg-black dark:bg-white text-white dark:text-neutral-900 px-6 py-3 rounded-lg font-medium hover:bg-black dark:hover:bg-neutral-100 transition"
+              className="bg-surface-alt text-white dark:text-neutral-900 px-6 py-3 rounded-lg font-medium hover:bg-black dark:hover:bg-neutral-100 transition"
             >
               Full Markets Dashboard
             </Link>
             <Link
               href="/category/markets"
-              className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 px-6 py-3 rounded-lg font-medium hover:bg-neutral-50 dark:hover:bg-black transition"
+              className="bg-surface border border-surface-border text-text-secondary px-6 py-3 rounded-lg font-medium hover:bg-neutral-50 dark:hover:bg-black transition"
             >
               Market News
             </Link>

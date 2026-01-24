@@ -227,7 +227,7 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
   const paginatedCoins = filteredCoins.slice(startIndex, startIndex + perPage);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -239,7 +239,7 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
           <div className="mb-6">
             <div className="flex items-center gap-3">
               <svg
-                className="w-7 h-7 text-neutral-900 dark:text-white"
+                className="w-7 h-7 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -251,11 +251,9 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                 />
               </svg>
-              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
-                Cryptocurrency Markets
-              </h1>
+              <h1 className="text-3xl font-bold text-text-primary">Cryptocurrency Markets</h1>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+            <p className="text-text-secondary mt-2">
               Live prices, charts, and market data for {totalCount.toLocaleString()}{' '}
               cryptocurrencies
             </p>
@@ -300,22 +298,19 @@ export default async function MarketsPage({ searchParams }: MarketsPageProps) {
 function TrendingSectionSkeleton() {
   return (
     <div className="grid md:grid-cols-2 gap-4 mb-6">
-      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
-        <div className="h-6 w-32 bg-neutral-200 dark:bg-black rounded mb-3 animate-pulse" />
+      <div className="bg-surface rounded-xl border border-surface-border p-4">
+        <div className="h-6 w-32 bg-surface-alt rounded mb-3 animate-pulse" />
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              className="h-10 w-24 bg-neutral-100 dark:bg-black rounded-lg animate-pulse"
-            />
+            <div key={i} className="h-10 w-24 bg-surface-alt rounded-lg animate-pulse" />
           ))}
         </div>
       </div>
-      <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
-        <div className="h-6 w-32 bg-neutral-200 dark:bg-black rounded mb-3 animate-pulse" />
+      <div className="bg-surface rounded-xl border border-surface-border p-4">
+        <div className="h-6 w-32 bg-surface-alt rounded mb-3 animate-pulse" />
         <div className="space-y-2">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-8 bg-neutral-100 dark:bg-black rounded animate-pulse" />
+            <div key={i} className="h-8 bg-surface-alt rounded animate-pulse" />
           ))}
         </div>
       </div>
@@ -329,7 +324,7 @@ function CategoryTabsSkeleton() {
       {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
         <div
           key={i}
-          className="h-10 w-24 bg-neutral-100 dark:bg-black rounded-full animate-pulse flex-shrink-0"
+          className="h-10 w-24 bg-surface-alt rounded-full animate-pulse flex-shrink-0"
         />
       ))}
     </div>
@@ -339,30 +334,30 @@ function CategoryTabsSkeleton() {
 function SearchFiltersSkeleton() {
   return (
     <div className="flex flex-wrap gap-3 mb-4">
-      <div className="h-10 w-64 bg-neutral-100 dark:bg-black rounded-xl animate-pulse" />
-      <div className="h-10 w-32 bg-neutral-100 dark:bg-black rounded-lg animate-pulse" />
-      <div className="h-10 w-32 bg-neutral-100 dark:bg-black rounded-lg animate-pulse" />
-      <div className="h-10 w-32 bg-neutral-100 dark:bg-black rounded-lg animate-pulse" />
+      <div className="h-10 w-64 bg-surface-alt rounded-xl animate-pulse" />
+      <div className="h-10 w-32 bg-surface-alt rounded-lg animate-pulse" />
+      <div className="h-10 w-32 bg-surface-alt rounded-lg animate-pulse" />
+      <div className="h-10 w-32 bg-surface-alt rounded-lg animate-pulse" />
     </div>
   );
 }
 
 function TableSkeleton() {
   return (
-    <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-      <div className="p-4 border-b border-neutral-200 dark:border-neutral-800">
-        <div className="h-6 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+    <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
+      <div className="p-4 border-b border-surface-border">
+        <div className="h-6 w-48 bg-surface-alt rounded animate-pulse" />
       </div>
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
           <div key={i} className="flex items-center gap-4 p-4">
-            <div className="h-4 w-8 bg-neutral-200 dark:bg-black rounded animate-pulse" />
-            <div className="h-8 w-8 bg-neutral-200 dark:bg-black rounded-full animate-pulse" />
-            <div className="h-4 w-32 bg-neutral-200 dark:bg-black rounded animate-pulse" />
-            <div className="h-4 w-20 bg-neutral-200 dark:bg-black rounded animate-pulse ml-auto" />
-            <div className="h-4 w-16 bg-neutral-200 dark:bg-black rounded animate-pulse hidden sm:block" />
-            <div className="h-4 w-16 bg-neutral-200 dark:bg-black rounded animate-pulse hidden md:block" />
-            <div className="h-4 w-24 bg-neutral-200 dark:bg-black rounded animate-pulse hidden lg:block" />
+            <div className="h-4 w-8 bg-surface-alt rounded animate-pulse" />
+            <div className="h-8 w-8 bg-surface-alt rounded-full animate-pulse" />
+            <div className="h-4 w-32 bg-surface-alt rounded animate-pulse" />
+            <div className="h-4 w-20 bg-surface-alt rounded animate-pulse ml-auto" />
+            <div className="h-4 w-16 bg-surface-alt rounded animate-pulse hidden sm:block" />
+            <div className="h-4 w-16 bg-surface-alt rounded animate-pulse hidden md:block" />
+            <div className="h-4 w-24 bg-surface-alt rounded animate-pulse hidden lg:block" />
           </div>
         ))}
       </div>

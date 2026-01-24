@@ -63,7 +63,7 @@ export function MarketStatsSkeleton() {
             <Skeleton className="h-5 w-24 rounded" />
           </div>
         ))}
-        <div className="pt-4 border-t border-gray-100">
+        <div className="pt-4 border-t border-surface-border">
           <Skeleton className="h-2.5 w-full rounded-full" />
         </div>
       </div>

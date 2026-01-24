@@ -289,14 +289,14 @@ function ShortcutsHelp({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-black rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-auto"
+        className="bg-surface rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-white dark:bg-black px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">⌨️ Keyboard Shortcuts</h2>
+        <div className="sticky top-0 bg-surface px-6 py-4 border-b border-surface-border flex items-center justify-between">
+          <h2 className="text-lg font-bold text-text-primary">⌨️ Keyboard Shortcuts</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-alt transition-colors"
             aria-label="Close"
           >
             <svg
@@ -318,7 +318,7 @@ function ShortcutsHelp({ onClose }: { onClose: () => void }) {
         <div className="p-6 space-y-6">
           {shortcuts.map((section) => (
             <div key={section.category}>
-              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">
                 {section.category}
               </h3>
               <div className="space-y-2">
@@ -328,7 +328,7 @@ function ShortcutsHelp({ onClose }: { onClose: () => void }) {
                     <div className="flex items-center gap-1">
                       {shortcut.keys.map((key, i) => (
                         <span key={i}>
-                          <kbd className="px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-black rounded border border-gray-200 dark:border-gray-600">
+                          <kbd className="px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-black rounded border border-surface-border">
                             {key}
                           </kbd>
                           {i < shortcut.keys.length - 1 && (
@@ -346,10 +346,10 @@ function ShortcutsHelp({ onClose }: { onClose: () => void }) {
           ))}
         </div>
 
-        <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-black/50 rounded-b-2xl">
-          <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-            Press <kbd className="px-1.5 py-0.5 text-xs bg-gray-200 dark:bg-black rounded">?</kbd>{' '}
-            anytime to show this help
+        <div className="px-6 py-4 border-t border-surface-border bg-surface-alt/50 rounded-b-2xl">
+          <p className="text-sm text-text-muted text-center">
+            Press <kbd className="px-1.5 py-0.5 text-xs bg-surface-alt rounded">?</kbd> anytime to
+            show this help
           </p>
         </div>
       </div>

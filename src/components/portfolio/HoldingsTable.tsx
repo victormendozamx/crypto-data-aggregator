@@ -67,10 +67,10 @@ export function HoldingsTable({
 
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-surface rounded-2xl border border-surface-border overflow-hidden">
         <div className="animate-pulse p-4 space-y-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-16 bg-gray-200 dark:bg-black rounded" />
+            <div key={i} className="h-16 bg-surface-alt rounded" />
           ))}
         </div>
       </div>
@@ -82,27 +82,25 @@ export function HoldingsTable({
   }
 
   return (
-    <div className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="bg-surface rounded-2xl border border-surface-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-700">
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
-                Asset
-              </th>
-              <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+            <tr className="border-b border-surface-border">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-text-muted">Asset</th>
+              <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                 Holdings
               </th>
-              <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+              <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                 Avg. Buy
               </th>
-              <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+              <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                 Current Price
               </th>
               <th className="px-4 py-4 text-right">
                 <button
                   onClick={() => handleSort('value')}
-                  className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                  className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
                 >
                   Value
                   {sortField === 'value' &&
@@ -116,7 +114,7 @@ export function HoldingsTable({
               <th className="px-4 py-4 text-right">
                 <button
                   onClick={() => handleSort('profitLoss')}
-                  className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                  className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
                 >
                   P&L
                   {sortField === 'profitLoss' &&
@@ -130,7 +128,7 @@ export function HoldingsTable({
               <th className="px-4 py-4 text-right hidden md:table-cell">
                 <button
                   onClick={() => handleSort('change24h')}
-                  className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
+                  className="flex items-center gap-1 text-sm font-semibold text-text-muted hover:text-gray-700 dark:hover:text-gray-200 ml-auto"
                 >
                   24h
                   {sortField === 'change24h' &&
@@ -141,10 +139,10 @@ export function HoldingsTable({
                     ))}
                 </button>
               </th>
-              <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+              <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                 Allocation
               </th>
-              <th className="px-4 py-4 text-right text-sm font-semibold text-gray-500 dark:text-gray-400">
+              <th className="px-4 py-4 text-right text-sm font-semibold text-text-muted">
                 Actions
               </th>
             </tr>
@@ -152,7 +150,7 @@ export function HoldingsTable({
           <tbody>
             {sortedHoldings.map((holding) => (
               <React.Fragment key={holding.coinId}>
-                <tr className="border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-black/30 transition-colors">
+                <tr className="border-b border-surface-border/50 hover:bg-surface-hover transition-colors">
                   <td className="px-6 py-4">
                     <Link
                       href={`/coin/${holding.coinId}`}
@@ -165,43 +163,41 @@ export function HoldingsTable({
                           className="w-10 h-10 rounded-full"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-sm font-bold text-gray-600 dark:text-gray-300">
+                        <div className="w-10 h-10 rounded-full bg-surface-hover flex items-center justify-center text-sm font-bold text-text-muted">
                           {holding.coinSymbol.slice(0, 2).toUpperCase()}
                         </div>
                       )}
                       <div>
-                        <p className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <p className="font-semibold text-text-primary group-hover:text-primary transition-colors">
                           {holding.coinName}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-text-muted">
                           {holding.coinSymbol.toUpperCase()}
                         </p>
                       </div>
                     </Link>
                   </td>
                   <td className="px-4 py-4 text-right">
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="font-medium text-text-primary">
                       {holding.amount.toLocaleString(undefined, { maximumFractionDigits: 8 })}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {holding.coinSymbol.toUpperCase()}
-                    </p>
+                    <p className="text-sm text-text-muted">{holding.coinSymbol.toUpperCase()}</p>
                   </td>
-                  <td className="px-4 py-4 text-right text-gray-600 dark:text-gray-300">
+                  <td className="px-4 py-4 text-right text-text-secondary">
                     $
                     {holding.averageBuyPrice.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: holding.averageBuyPrice < 1 ? 6 : 2,
                     })}
                   </td>
-                  <td className="px-4 py-4 text-right font-medium text-gray-900 dark:text-white">
+                  <td className="px-4 py-4 text-right font-medium text-text-primary">
                     $
                     {holding.currentPrice.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: holding.currentPrice < 1 ? 6 : 2,
                     })}
                   </td>
-                  <td className="px-4 py-4 text-right font-semibold text-gray-900 dark:text-white">
+                  <td className="px-4 py-4 text-right font-semibold text-text-primary">
                     $
                     {holding.value.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
@@ -250,7 +246,7 @@ export function HoldingsTable({
                   </td>
                   <td className="px-4 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <div className="w-16 h-2 bg-gray-200 dark:bg-black rounded-full overflow-hidden">
+                      <div className="w-16 h-2 bg-surface-alt rounded-full overflow-hidden">
                         <div
                           className="h-full bg-blue-500 rounded-full"
                           style={{ width: `${Math.min(holding.allocation, 100)}%` }}
@@ -285,7 +281,7 @@ export function HoldingsTable({
                         onClick={() =>
                           setExpandedRow(expandedRow === holding.coinId ? null : holding.coinId)
                         }
-                        className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500 transition-colors"
+                        className="p-2 rounded-lg hover:bg-surface-alt text-gray-500 transition-colors"
                         title="Transaction history"
                       >
                         <History className="w-4 h-4" />
@@ -297,7 +293,7 @@ export function HoldingsTable({
                 {/* Expanded transaction history */}
                 {expandedRow === holding.coinId && (
                   <tr>
-                    <td colSpan={9} className="px-6 py-4 bg-gray-50 dark:bg-black/50">
+                    <td colSpan={9} className="px-6 py-4 bg-surface-alt/50">
                       <div className="space-y-2">
                         <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                           Transaction History
@@ -310,7 +306,7 @@ export function HoldingsTable({
                               .map((tx) => (
                                 <div
                                   key={tx.id}
-                                  className="flex items-center justify-between p-3 bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-700"
+                                  className="flex items-center justify-between p-3 bg-surface rounded-lg border border-surface-border"
                                 >
                                   <div className="flex items-center gap-3">
                                     <div
@@ -327,21 +323,21 @@ export function HoldingsTable({
                                       )}
                                     </div>
                                     <div>
-                                      <p className="font-medium text-gray-900 dark:text-white capitalize">
+                                      <p className="font-medium text-text-primary capitalize">
                                         {tx.type.replace('_', ' ')}
                                       </p>
-                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      <p className="text-sm text-text-muted">
                                         {new Date(tx.date).toLocaleDateString()}
                                         {tx.exchange && ` • ${tx.exchange}`}
                                       </p>
                                     </div>
                                   </div>
                                   <div className="text-right">
-                                    <p className="font-medium text-gray-900 dark:text-white">
+                                    <p className="font-medium text-text-primary">
                                       {tx.amount.toLocaleString()}{' '}
                                       {holding.coinSymbol.toUpperCase()}
                                     </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    <p className="text-sm text-text-muted">
                                       @ ${tx.pricePerCoin.toLocaleString()} = $
                                       {tx.totalValue.toLocaleString()}
                                     </p>
@@ -350,9 +346,7 @@ export function HoldingsTable({
                               ))}
                           </div>
                         ) : (
-                          <p className="text-gray-500 dark:text-gray-400 text-sm">
-                            No transactions
-                          </p>
+                          <p className="text-text-muted text-sm">No transactions</p>
                         )}
                       </div>
                     </td>

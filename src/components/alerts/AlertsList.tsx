@@ -2,16 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
-  Bell, 
-  BellOff, 
-  Trash2, 
-  Check, 
-  TrendingUp, 
-  TrendingDown, 
+import {
+  Bell,
+  BellOff,
+  Trash2,
+  Check,
+  TrendingUp,
+  TrendingDown,
   Percent,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { useAlerts, PriceAlert } from './AlertsProvider';
 import { useToast } from '@/components/Toast';
@@ -23,39 +23,31 @@ interface AlertsListProps {
   className?: string;
 }
 
-export function AlertsList({ 
-  coinId, 
+export function AlertsList({
+  coinId,
   maxItems,
   showHeader = true,
-  className = '' 
+  className = '',
 }: AlertsListProps) {
-  const { 
-    alerts, 
-    removeAlert, 
-    toggleAlert, 
-    clearTriggeredAlerts, 
-    clearAllAlerts,
-    isLoaded 
-  } = useAlerts();
+  const { alerts, removeAlert, toggleAlert, clearTriggeredAlerts, clearAllAlerts, isLoaded } =
+    useAlerts();
   const { addToast } = useToast();
 
   // Filter alerts
-  let filteredAlerts = coinId 
-    ? alerts.filter(a => a.coinId === coinId)
-    : alerts;
-  
+  let filteredAlerts = coinId ? alerts.filter((a) => a.coinId === coinId) : alerts;
+
   if (maxItems) {
     filteredAlerts = filteredAlerts.slice(0, maxItems);
   }
 
-  const activeAlerts = filteredAlerts.filter(a => !a.triggered);
-  const triggeredAlerts = filteredAlerts.filter(a => a.triggered);
+  const activeAlerts = filteredAlerts.filter((a) => !a.triggered);
+  const triggeredAlerts = filteredAlerts.filter((a) => a.triggered);
 
   if (!isLoaded) {
     return (
       <div className={`animate-pulse space-y-3 ${className}`}>
-        {[1, 2, 3].map(i => (
-          <div key={i} className="h-16 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-16 bg-surface-hover rounded-lg" />
         ))}
       </div>
     );
@@ -64,11 +56,9 @@ export function AlertsList({
   if (filteredAlerts.length === 0) {
     return (
       <div className={`text-center py-8 ${className}`}>
-        <Bell className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-        <p className="text-gray-500 dark:text-gray-400 mb-1">No alerts set</p>
-        <p className="text-sm text-gray-400 dark:text-gray-500">
-          Create alerts to get notified when prices change
-        </p>
+        <Bell className="w-12 h-12 text-text-muted mx-auto mb-3" />
+        <p className="text-text-secondary mb-1">No alerts set</p>
+        <p className="text-sm text-text-muted">Create alerts to get notified when prices change</p>
       </div>
     );
   }
@@ -98,9 +88,7 @@ export function AlertsList({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Bell className="w-5 h-5 text-blue-500" />
-            <h3 className="font-semibold text-gray-900 dark:text-white">
-              Price Alerts
-            </h3>
+            <h3 className="font-semibold text-text-primary">Price Alerts</h3>
             {activeAlerts.length > 0 && (
               <span className="text-xs bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded-full">
                 {activeAlerts.length} active
@@ -129,10 +117,10 @@ export function AlertsList({
           <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
             Active
           </h4>
-          {activeAlerts.map(alert => (
-            <AlertItem 
-              key={alert.id} 
-              alert={alert} 
+          {activeAlerts.map((alert) => (
+            <AlertItem
+              key={alert.id}
+              alert={alert}
               onRemove={() => handleRemove(alert.id, alert.coinSymbol)}
             />
           ))}
@@ -156,10 +144,10 @@ export function AlertsList({
               Clear all
             </button>
           </div>
-          {triggeredAlerts.map(alert => (
-            <AlertItem 
-              key={alert.id} 
-              alert={alert} 
+          {triggeredAlerts.map((alert) => (
+            <AlertItem
+              key={alert.id}
+              alert={alert}
               onRemove={() => handleRemove(alert.id, alert.coinSymbol)}
               onReactivate={() => handleReactivate(alert.id)}
             />
@@ -178,30 +166,26 @@ interface AlertItemProps {
 
 function AlertItem({ alert, onRemove, onReactivate }: AlertItemProps) {
   const ConditionIcon = getConditionIcon(alert.condition);
-  
+
   return (
-    <div 
+    <div
       className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${
-        alert.triggered
-          ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800'
-          : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+        alert.triggered ? 'bg-gain/10 border-gain/30' : 'bg-surface-alt border-surface-border'
       }`}
     >
-      <div className={`p-2 rounded-lg ${
-        alert.triggered
-          ? 'bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400'
-          : getConditionColor(alert.condition)
-      }`}>
-        {alert.triggered ? (
-          <Check className="w-4 h-4" />
-        ) : (
-          <ConditionIcon className="w-4 h-4" />
-        )}
+      <div
+        className={`p-2 rounded-lg ${
+          alert.triggered
+            ? 'bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400'
+            : getConditionColor(alert.condition)
+        }`}
+      >
+        {alert.triggered ? <Check className="w-4 h-4" /> : <ConditionIcon className="w-4 h-4" />}
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <Link 
+          <Link
             href={`/coin/${alert.coinId}`}
             className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
           >
@@ -273,13 +257,13 @@ function getConditionColor(condition: PriceAlert['condition']) {
 
 function getAlertDescription(alert: PriceAlert): string {
   const isPercent = alert.condition === 'percent_up' || alert.condition === 'percent_down';
-  
+
   if (isPercent) {
     return alert.condition === 'percent_up'
       ? `Price increases by ${alert.targetPercent}%`
       : `Price decreases by ${alert.targetPercent}%`;
   }
-  
+
   const priceStr = `$${alert.targetPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}`;
   return alert.condition === 'above'
     ? `Price goes above ${priceStr}`

@@ -32,7 +32,7 @@ export default async function DefiPage() {
   const totalChainTVL = chains.reduce((sum, c) => sum + (c.tvl || 0), 0);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -41,7 +41,7 @@ export default async function DefiPage() {
           <div className="mb-8">
             <div className="flex items-center gap-3">
               <svg
-                className="w-8 h-8 text-neutral-900 dark:text-white"
+                className="w-8 h-8 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -53,40 +53,30 @@ export default async function DefiPage() {
                   d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
                 />
               </svg>
-              <h1 className="text-4xl font-bold text-neutral-900 dark:text-white">
-                DeFi Dashboard
-              </h1>
+              <h1 className="text-4xl font-bold text-text-primary">DeFi Dashboard</h1>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+            <p className="text-text-secondary mt-2">
               Live DeFi protocol rankings, chain TVL, and yield opportunities
             </p>
           </div>
 
           {/* Stats Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Total DeFi TVL</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
-                ${formatNumber(totalTVL)}
-              </p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Total DeFi TVL</p>
+              <p className="text-2xl font-bold text-text-primary">${formatNumber(totalTVL)}</p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Top Protocols</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
-                {protocols.length}+
-              </p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Top Protocols</p>
+              <p className="text-2xl font-bold text-text-primary">{protocols.length}+</p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Active Chains</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
-                {chains.length}+
-              </p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Active Chains</p>
+              <p className="text-2xl font-bold text-text-primary">{chains.length}+</p>
             </div>
-            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-neutral-200 dark:border-neutral-800">
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Chain TVL</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
-                ${formatNumber(totalChainTVL)}
-              </p>
+            <div className="bg-neutral-50 dark:bg-black rounded-xl p-4 border border-surface-border">
+              <p className="text-text-muted text-sm">Chain TVL</p>
+              <p className="text-2xl font-bold text-text-primary">${formatNumber(totalChainTVL)}</p>
             </div>
           </div>
 
@@ -94,11 +84,11 @@ export default async function DefiPage() {
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Protocols Table (2/3) */}
             <div className="lg:col-span-2">
-              <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-                <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
+                <div className="p-4 border-b border-surface-border flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <svg
-                      className="w-5 h-5 text-neutral-900 dark:text-white"
+                      className="w-5 h-5 text-text-primary"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -111,35 +101,25 @@ export default async function DefiPage() {
                       />
                     </svg>
                     <div>
-                      <h2 className="font-bold text-lg text-neutral-900 dark:text-white">
-                        Top DeFi Protocols
-                      </h2>
-                      <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                        Ranked by Total Value Locked
-                      </p>
+                      <h2 className="font-bold text-lg text-text-primary">Top DeFi Protocols</h2>
+                      <p className="text-sm text-text-muted">Ranked by Total Value Locked</p>
                     </div>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-black text-sm">
-                        <th className="text-left text-neutral-500 dark:text-neutral-400 font-medium p-4">
-                          #
-                        </th>
-                        <th className="text-left text-neutral-500 dark:text-neutral-400 font-medium p-4">
-                          Protocol
-                        </th>
-                        <th className="text-right text-neutral-500 dark:text-neutral-400 font-medium p-4">
-                          TVL
-                        </th>
-                        <th className="text-right text-neutral-500 dark:text-neutral-400 font-medium p-4 hidden sm:table-cell">
+                      <tr className="border-b border-surface-border bg-neutral-50 dark:bg-black text-sm">
+                        <th className="text-left text-text-muted font-medium p-4">#</th>
+                        <th className="text-left text-text-muted font-medium p-4">Protocol</th>
+                        <th className="text-right text-text-muted font-medium p-4">TVL</th>
+                        <th className="text-right text-text-muted font-medium p-4 hidden sm:table-cell">
                           1d %
                         </th>
-                        <th className="text-right text-neutral-500 dark:text-neutral-400 font-medium p-4 hidden md:table-cell">
+                        <th className="text-right text-text-muted font-medium p-4 hidden md:table-cell">
                           7d %
                         </th>
-                        <th className="text-left text-neutral-500 dark:text-neutral-400 font-medium p-4 hidden lg:table-cell">
+                        <th className="text-left text-text-muted font-medium p-4 hidden lg:table-cell">
                           Category
                         </th>
                       </tr>
@@ -150,9 +130,7 @@ export default async function DefiPage() {
                           key={protocol.id}
                           className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-black transition"
                         >
-                          <td className="p-4 text-neutral-500 dark:text-neutral-400">
-                            {index + 1}
-                          </td>
+                          <td className="p-4 text-text-muted">{index + 1}</td>
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               {protocol.logo && (
@@ -163,11 +141,11 @@ export default async function DefiPage() {
                                 />
                               )}
                               <div>
-                                <span className="font-medium text-neutral-900 dark:text-white">
+                                <span className="font-medium text-text-primary">
                                   {protocol.name}
                                 </span>
                                 {protocol.symbol && (
-                                  <span className="text-neutral-500 dark:text-neutral-400 text-sm ml-2">
+                                  <span className="text-text-muted text-sm ml-2">
                                     {protocol.symbol}
                                   </span>
                                 )}
@@ -175,21 +153,21 @@ export default async function DefiPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="p-4 text-right font-medium text-neutral-900 dark:text-white">
+                          <td className="p-4 text-right font-medium text-text-primary">
                             ${formatNumber(protocol.tvl)}
                           </td>
                           <td
-                            className={`p-4 text-right hidden sm:table-cell ${(protocol.change_1d || 0) >= 0 ? 'text-neutral-900 dark:text-white font-semibold' : 'text-neutral-500 dark:text-neutral-400'}`}
+                            className={`p-4 text-right hidden sm:table-cell ${(protocol.change_1d || 0) >= 0 ? 'text-text-primary font-semibold' : 'text-text-muted'}`}
                           >
                             {formatPercent(protocol.change_1d)}
                           </td>
                           <td
-                            className={`p-4 text-right hidden md:table-cell ${(protocol.change_7d || 0) >= 0 ? 'text-neutral-900 dark:text-white font-semibold' : 'text-neutral-500 dark:text-neutral-400'}`}
+                            className={`p-4 text-right hidden md:table-cell ${(protocol.change_7d || 0) >= 0 ? 'text-text-primary font-semibold' : 'text-text-muted'}`}
                           >
                             {formatPercent(protocol.change_7d)}
                           </td>
                           <td className="p-4 hidden lg:table-cell">
-                            <span className="text-xs bg-neutral-100 dark:bg-black text-neutral-700 dark:text-neutral-300 px-2 py-1 rounded-full">
+                            <span className="text-xs bg-surface-alt text-text-secondary px-2 py-1 rounded-full">
                               {protocol.category}
                             </span>
                           </td>
@@ -204,11 +182,11 @@ export default async function DefiPage() {
             {/* Sidebar (1/3) */}
             <div className="space-y-6">
               {/* Chains TVL */}
-              <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-                <div className="p-4 border-b border-neutral-200 dark:border-neutral-800">
+              <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
+                <div className="p-4 border-b border-surface-border">
                   <div className="flex items-center gap-2">
                     <svg
-                      className="w-5 h-5 text-neutral-900 dark:text-white"
+                      className="w-5 h-5 text-text-primary"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -221,12 +199,8 @@ export default async function DefiPage() {
                       />
                     </svg>
                     <div>
-                      <h2 className="font-bold text-lg text-neutral-900 dark:text-white">
-                        Chain TVL
-                      </h2>
-                      <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                        Total Value Locked by blockchain
-                      </p>
+                      <h2 className="font-bold text-lg text-text-primary">Chain TVL</h2>
+                      <p className="text-sm text-text-muted">Total Value Locked by blockchain</p>
                     </div>
                   </div>
                 </div>
@@ -239,17 +213,15 @@ export default async function DefiPage() {
                       <div className="flex items-center gap-3">
                         <span className="text-neutral-400 text-sm w-5">{index + 1}</span>
                         <div>
-                          <span className="font-medium text-neutral-900 dark:text-white">
-                            {chain.name}
-                          </span>
+                          <span className="font-medium text-text-primary">{chain.name}</span>
                           {chain.tokenSymbol && (
-                            <span className="text-neutral-500 dark:text-neutral-400 text-xs ml-1">
+                            <span className="text-text-muted text-xs ml-1">
                               ({chain.tokenSymbol})
                             </span>
                           )}
                         </div>
                       </div>
-                      <span className="font-medium text-neutral-900 dark:text-white">
+                      <span className="font-medium text-text-primary">
                         ${formatNumber(chain.tvl)}
                       </span>
                     </div>
@@ -258,10 +230,10 @@ export default async function DefiPage() {
               </div>
 
               {/* Quick Actions */}
-              <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4">
+              <div className="bg-surface rounded-xl border border-surface-border p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <svg
-                    className="w-5 h-5 text-neutral-900 dark:text-white"
+                    className="w-5 h-5 text-text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -273,24 +245,18 @@ export default async function DefiPage() {
                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                     />
                   </svg>
-                  <h3 className="font-bold text-neutral-900 dark:text-white">Quick Links</h3>
+                  <h3 className="font-bold text-text-primary">Quick Links</h3>
                 </div>
                 <div className="space-y-2">
-                  <Link
-                    href="/category/defi"
-                    className="block text-neutral-900 dark:text-white hover:underline"
-                  >
+                  <Link href="/category/defi" className="block text-text-primary hover:underline">
                     DeFi News →
                   </Link>
-                  <Link
-                    href="/topic/layer2"
-                    className="block text-neutral-900 dark:text-white hover:underline"
-                  >
+                  <Link href="/topic/layer2" className="block text-text-primary hover:underline">
                     Layer 2 News →
                   </Link>
                   <Link
                     href="/topic/stablecoin"
-                    className="block text-neutral-900 dark:text-white hover:underline"
+                    className="block text-text-primary hover:underline"
                   >
                     Stablecoin News →
                   </Link>
@@ -298,7 +264,7 @@ export default async function DefiPage() {
                     href="https://defillama.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-neutral-900 dark:text-white hover:underline"
+                    className="block text-text-primary hover:underline"
                   >
                     DeFiLlama ↗
                   </a>
@@ -306,14 +272,14 @@ export default async function DefiPage() {
               </div>
 
               {/* Data Source */}
-              <div className="text-center text-neutral-500 dark:text-neutral-400 text-sm">
+              <div className="text-center text-text-muted text-sm">
                 <p>
                   Data from{' '}
                   <a
                     href="https://defillama.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-neutral-900 dark:text-white hover:underline"
+                    className="text-text-primary hover:underline"
                   >
                     DeFiLlama
                   </a>
@@ -327,7 +293,7 @@ export default async function DefiPage() {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-6 h-6 text-neutral-900 dark:text-white"
+                  className="w-6 h-6 text-text-primary"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -339,14 +305,9 @@ export default async function DefiPage() {
                     d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
                   />
                 </svg>
-                <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                  Latest DeFi News
-                </h2>
+                <h2 className="text-2xl font-bold text-text-primary">Latest DeFi News</h2>
               </div>
-              <Link
-                href="/category/defi"
-                className="text-neutral-900 dark:text-white hover:underline"
-              >
+              <Link href="/category/defi" className="text-text-primary hover:underline">
                 View All →
               </Link>
             </div>

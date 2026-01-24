@@ -45,7 +45,7 @@ export default async function TrendingPage() {
   const data = await getTrending();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -66,47 +66,47 @@ export default async function TrendingPage() {
               {data.trending.map((topic, index) => {
                 const SentimentIcon = sentimentConfig[topic.sentiment].icon;
                 return (
-                <div
-                  key={topic.topic}
-                  className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl font-bold text-gray-300">#{index + 1}</span>
-                      <h3 className="text-xl font-bold">{topic.topic}</h3>
-                    </div>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${sentimentConfig[topic.sentiment].bg} ${sentimentConfig[topic.sentiment].color}`}
-                    >
-                      <SentimentIcon className="w-3 h-3" />
-                      {sentimentConfig[topic.sentiment].label}
-                    </span>
-                  </div>
-
-                  <div className="text-sm text-gray-500 mb-3">
-                    {topic.count} mentions in recent news
-                  </div>
-
-                  {topic.recentHeadlines.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-xs text-gray-500 uppercase font-medium">
-                        Recent Headlines
-                      </p>
-                      {topic.recentHeadlines.slice(0, 3).map((headline, i) => (
-                        <p key={i} className="text-sm text-gray-700 line-clamp-2">
-                          • {headline}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-
-                  <Link
-                    href={`/search?q=${encodeURIComponent(topic.topic)}`}
-                    className="inline-block mt-4 text-sm text-blue-600 hover:underline"
+                  <div
+                    key={topic.topic}
+                    className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition"
                   >
-                    View all {topic.topic} news →
-                  </Link>
-                </div>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl font-bold text-gray-300">#{index + 1}</span>
+                        <h3 className="text-xl font-bold">{topic.topic}</h3>
+                      </div>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${sentimentConfig[topic.sentiment].bg} ${sentimentConfig[topic.sentiment].color}`}
+                      >
+                        <SentimentIcon className="w-3 h-3" />
+                        {sentimentConfig[topic.sentiment].label}
+                      </span>
+                    </div>
+
+                    <div className="text-sm text-gray-500 mb-3">
+                      {topic.count} mentions in recent news
+                    </div>
+
+                    {topic.recentHeadlines.length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-xs text-gray-500 uppercase font-medium">
+                          Recent Headlines
+                        </p>
+                        {topic.recentHeadlines.slice(0, 3).map((headline, i) => (
+                          <p key={i} className="text-sm text-gray-700 line-clamp-2">
+                            • {headline}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+
+                    <Link
+                      href={`/search?q=${encodeURIComponent(topic.topic)}`}
+                      className="inline-block mt-4 text-sm text-blue-600 hover:underline"
+                    >
+                      View all {topic.topic} news →
+                    </Link>
+                  </div>
                 );
               })}
             </div>

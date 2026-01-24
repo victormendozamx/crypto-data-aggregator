@@ -372,7 +372,7 @@ export default function WatchlistPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white dark:bg-black rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>

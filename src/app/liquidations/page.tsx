@@ -15,14 +15,12 @@ export const metadata: Metadata = {
 
 export default function LiquidationsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <Header />
       <main id="main-content" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
-            Liquidations Feed
-          </h1>
-          <p className="text-neutral-600 dark:text-neutral-400">
+          <h1 className="text-3xl font-bold text-text-primary mb-2">Liquidations Feed</h1>
+          <p className="text-text-secondary">
             Live futures liquidations across major exchanges. See who&apos;s getting rekt in
             real-time.
           </p>

@@ -24,25 +24,25 @@ export default async function TrendingPage() {
   const coinMap = new Map(topCoins.map((c) => [c.id, c]));
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-6">
-            <Link href="/markets" className="hover:text-neutral-900 dark:hover:text-white">
+          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
+            <Link href="/markets" className="hover:text-text-primary">
               Markets
             </Link>
             <span>/</span>
-            <span className="text-neutral-900 dark:text-white">Trending</span>
+            <span className="text-text-primary">Trending</span>
           </nav>
 
           {/* Page Header */}
           <div className="mb-8">
             <div className="flex items-center gap-3">
               <svg
-                className="w-7 h-7 text-neutral-900 dark:text-white"
+                className="w-7 h-7 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -60,11 +60,9 @@ export default async function TrendingPage() {
                   d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"
                 />
               </svg>
-              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
-                Trending Cryptocurrencies
-              </h1>
+              <h1 className="text-3xl font-bold text-text-primary">Trending Cryptocurrencies</h1>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+            <p className="text-text-secondary mt-2">
               The most searched coins on CoinGecko in the last 24 hours
             </p>
           </div>
@@ -77,7 +75,7 @@ export default async function TrendingPage() {
                 <Link
                   key={coin.id}
                   href={`/coin/${coin.id}`}
-                  className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-lg transition-all"
+                  className="bg-surface rounded-xl border border-surface-border p-4 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-lg transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
@@ -96,27 +94,23 @@ export default async function TrendingPage() {
                         )}
                       </div>
                     </div>
-                    <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                    <span className="text-sm text-text-muted">
                       Rank #{coin.market_cap_rank || 'N/A'}
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-bold text-neutral-900 dark:text-white">{coin.name}</h3>
-                    <p className="text-neutral-500 dark:text-neutral-400 text-sm">
-                      {coin.symbol.toUpperCase()}
-                    </p>
+                    <h3 className="font-bold text-text-primary">{coin.name}</h3>
+                    <p className="text-text-muted text-sm">{coin.symbol.toUpperCase()}</p>
                   </div>
                   {details && (
                     <div className="mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-800">
                       <div className="flex items-center justify-between">
-                        <span className="text-neutral-500 dark:text-neutral-400 text-sm">
-                          24h Change
-                        </span>
+                        <span className="text-text-muted text-sm">24h Change</span>
                         <span
                           className={`font-semibold ${
                             (details.price_change_percentage_24h || 0) >= 0
-                              ? 'text-neutral-900 dark:text-white'
-                              : 'text-neutral-500 dark:text-neutral-400'
+                              ? 'text-text-primary'
+                              : 'text-text-muted'
                           }`}
                         >
                           {formatPercent(details.price_change_percentage_24h)}
@@ -131,7 +125,7 @@ export default async function TrendingPage() {
 
           {/* Back link */}
           <div className="mt-8 text-center">
-            <Link href="/markets" className="text-neutral-900 dark:text-white hover:underline">
+            <Link href="/markets" className="text-text-primary hover:underline">
               ← Back to Markets
             </Link>
           </div>

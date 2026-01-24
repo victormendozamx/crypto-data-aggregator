@@ -1,16 +1,16 @@
 /**
  * @fileoverview Reading Progress Bar Component
- * 
+ *
  * Displays a visual indicator of scroll progress on article pages.
  * Uses a throttled scroll listener for performance and a gradient
  * background for visual appeal.
- * 
+ *
  * @module components/ReadingProgress
- * 
+ *
  * @example
  * // In an article page
  * import ReadingProgress from '@/components/ReadingProgress';
- * 
+ *
  * export default function ArticlePage() {
  *   return (
  *     <>
@@ -19,7 +19,7 @@
  *     </>
  *   );
  * }
- * 
+ *
  * @features
  * - Throttled scroll listener (requestAnimationFrame)
  * - Gradient progress bar (brand-500 to amber-500)
@@ -72,8 +72,8 @@ export default function ReadingProgress({ className = '' }: ReadingProgressProps
   }, []);
 
   return (
-    <div 
-      className={`fixed top-0 left-0 right-0 h-1 z-50 bg-gray-200/50 dark:bg-gray-700/50 ${className}`}
+    <div
+      className={`fixed top-0 left-0 right-0 h-1 z-50 bg-surface-border/50 ${className}`}
       role="progressbar"
       aria-valuenow={Math.round(progress)}
       aria-valuemin={0}

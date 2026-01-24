@@ -37,10 +37,10 @@ export function PortfolioSummary({
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-700 animate-pulse"
+            className="bg-surface rounded-2xl p-6 border border-surface-border animate-pulse"
           >
-            <div className="h-4 bg-gray-200 dark:bg-black rounded w-24 mb-3" />
-            <div className="h-8 bg-gray-200 dark:bg-black rounded w-32" />
+            <div className="h-4 bg-surface-alt rounded w-24 mb-3" />
+            <div className="h-8 bg-surface-alt rounded w-32" />
           </div>
         ))}
       </div>
@@ -50,12 +50,12 @@ export function PortfolioSummary({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Total Value */}
-      <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+      <div className="bg-surface rounded-2xl p-6 border border-surface-border">
+        <div className="flex items-center gap-2 text-text-muted mb-2">
           <DollarSign className="w-5 h-5" />
           <span className="text-sm font-medium">Total Value</span>
         </div>
-        <p className="text-3xl font-bold text-gray-900 dark:text-white">
+        <p className="text-3xl font-bold text-text-primary">
           $
           {totalValue.toLocaleString(undefined, {
             minimumFractionDigits: 2,
@@ -91,7 +91,7 @@ export function PortfolioSummary({
             : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
         }`}
       >
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+        <div className="flex items-center gap-2 text-text-muted mb-2">
           {isProfit ? (
             <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
           ) : (
@@ -122,14 +122,14 @@ export function PortfolioSummary({
       </div>
 
       {/* Best Performer */}
-      <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+      <div className="bg-surface rounded-2xl p-6 border border-surface-border">
+        <div className="flex items-center gap-2 text-text-muted mb-2">
           <ArrowUpRight className="w-5 h-5 text-green-600 dark:text-green-400" />
           <span className="text-sm font-medium">Best Performer</span>
         </div>
         {bestPerformer ? (
           <>
-            <p className="text-xl font-bold text-gray-900 dark:text-white">{bestPerformer.name}</p>
+            <p className="text-xl font-bold text-text-primary">{bestPerformer.name}</p>
             <p className="text-green-600 dark:text-green-400 font-medium">
               +{bestPerformer.change.toFixed(2)}%
             </p>
@@ -140,14 +140,14 @@ export function PortfolioSummary({
       </div>
 
       {/* Worst Performer */}
-      <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+      <div className="bg-surface rounded-2xl p-6 border border-surface-border">
+        <div className="flex items-center gap-2 text-text-muted mb-2">
           <ArrowDownRight className="w-5 h-5 text-red-600 dark:text-red-400" />
           <span className="text-sm font-medium">Worst Performer</span>
         </div>
         {worstPerformer ? (
           <>
-            <p className="text-xl font-bold text-gray-900 dark:text-white">{worstPerformer.name}</p>
+            <p className="text-xl font-bold text-text-primary">{worstPerformer.name}</p>
             <p className="text-red-600 dark:text-red-400 font-medium">
               {worstPerformer.change.toFixed(2)}%
             </p>

@@ -19,8 +19,8 @@ export default function CoinPageError({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-black/50 rounded-2xl border border-gray-700/50 p-8 text-center">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-surface rounded-2xl border border-surface-border p-8 text-center">
         {/* Error Icon */}
         <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/10 flex items-center justify-center">
           <svg
@@ -40,33 +40,33 @@ export default function CoinPageError({ error, reset }: ErrorProps) {
 
         <h1 className="text-2xl font-bold text-white mb-2">Something went wrong</h1>
 
-        <p className="text-gray-400 mb-6">
+        <p className="text-text-muted mb-6">
           We couldn&apos;t load the coin data. This might be a temporary issue with our data
           provider.
         </p>
 
         {error.digest && (
-          <p className="text-xs text-gray-500 mb-6 font-mono">Error ID: {error.digest}</p>
+          <p className="text-xs text-text-muted mb-6 font-mono">Error ID: {error.digest}</p>
         )}
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => reset()}
-            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold rounded-xl transition-colors"
+            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-text-primary font-semibold rounded-xl transition-colors"
           >
             Try again
           </button>
 
           <Link
             href="/markets"
-            className="px-6 py-3 bg-black hover:bg-gray-600 text-white font-medium rounded-xl transition-colors"
+            className="px-6 py-3 bg-surface-alt hover:bg-surface-border text-text-primary font-medium rounded-xl transition-colors"
           >
             Back to Markets
           </Link>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-700">
-          <p className="text-sm text-gray-500">
+        <div className="mt-8 pt-6 border-t border-surface-border">
+          <p className="text-sm text-text-muted">
             If this problem persists, please{' '}
             <a
               href="https://github.com/nirholas/crypto-data-aggregator/issues"

@@ -45,11 +45,7 @@ export default function LoadingSpinner({
             />
           ))}
         </div>
-        {text && (
-          <p className={`${textSizeClasses[size]} text-gray-500 dark:text-gray-400 font-medium`}>
-            {text}
-          </p>
-        )}
+        {text && <p className={`${textSizeClasses[size]} text-text-muted font-medium`}>{text}</p>}
       </div>
     );
   }
@@ -60,18 +56,14 @@ export default function LoadingSpinner({
         <div
           className={`
             ${sizeClasses[size]}
-            border-2 border-gray-200 dark:border-gray-700
+            border-2 border-surface-border
             border-t-brand-500
             rounded-full
             animate-spin
             motion-reduce:animate-none
           `}
         />
-        {text && (
-          <p className={`${textSizeClasses[size]} text-gray-500 dark:text-gray-400 font-medium`}>
-            {text}
-          </p>
-        )}
+        {text && <p className={`${textSizeClasses[size]} text-text-muted font-medium`}>{text}</p>}
       </div>
     );
   }
@@ -117,9 +109,7 @@ export default function LoadingSpinner({
           </div>
         </div>
         {text && (
-          <p className={`${textSizeClasses[size]} text-gray-600 dark:text-gray-400 font-medium`}>
-            {text}
-          </p>
+          <p className={`${textSizeClasses[size]} text-text-secondary font-medium`}>{text}</p>
         )}
       </div>
     );
@@ -175,7 +165,7 @@ export default function LoadingSpinner({
       </div>
       {text && (
         <p
-          className={`${textSizeClasses[size]} text-gray-600 dark:text-gray-400 font-medium animate-pulse motion-reduce:animate-none`}
+          className={`${textSizeClasses[size]} text-text-secondary font-medium animate-pulse motion-reduce:animate-none`}
         >
           {text}
         </p>
@@ -187,12 +177,12 @@ export default function LoadingSpinner({
 // Full page loading state
 export function PageLoader({ text = 'Loading...' }: { text?: string }) {
   return (
-    <div className="fixed inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="flex flex-col items-center gap-6 p-8 rounded-3xl bg-white dark:bg-black shadow-2xl border border-gray-200 dark:border-gray-800">
+    <div className="fixed inset-0 bg-surface/80 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="flex flex-col items-center gap-6 p-8 rounded-3xl bg-surface shadow-2xl border border-surface-border">
         <LoadingSpinner size="xl" variant="brand" />
         <div className="text-center">
-          <p className="text-lg font-semibold text-gray-900 dark:text-white">{text}</p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Please wait a moment</p>
+          <p className="text-lg font-semibold text-text-primary">{text}</p>
+          <p className="text-sm text-text-muted mt-1">Please wait a moment</p>
         </div>
       </div>
     </div>
@@ -202,17 +192,17 @@ export function PageLoader({ text = 'Loading...' }: { text?: string }) {
 // Skeleton loader for cards
 export function CardSkeleton() {
   return (
-    <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-800">
+    <div className="bg-surface rounded-2xl shadow-lg overflow-hidden border border-surface-border">
       {/* Image placeholder */}
       <div className="h-[200px] bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-700 animate-pulse motion-reduce:animate-none" />
       {/* Content placeholder */}
       <div className="p-5 space-y-4">
-        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-3/4 animate-pulse motion-reduce:animate-none" />
-        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-full animate-pulse motion-reduce:animate-none" />
-        <div className="h-4 bg-gray-200 dark:bg-black rounded-full w-5/6 animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-surface-alt rounded-full w-3/4 animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-surface-alt rounded-full w-full animate-pulse motion-reduce:animate-none" />
+        <div className="h-4 bg-surface-alt rounded-full w-5/6 animate-pulse motion-reduce:animate-none" />
         <div className="flex items-center gap-3 pt-2">
-          <div className="h-6 w-20 bg-gray-200 dark:bg-black rounded-full animate-pulse motion-reduce:animate-none" />
-          <div className="h-4 w-16 bg-gray-200 dark:bg-black rounded-full animate-pulse motion-reduce:animate-none" />
+          <div className="h-6 w-20 bg-surface-alt rounded-full animate-pulse motion-reduce:animate-none" />
+          <div className="h-4 w-16 bg-surface-alt rounded-full animate-pulse motion-reduce:animate-none" />
         </div>
       </div>
     </div>

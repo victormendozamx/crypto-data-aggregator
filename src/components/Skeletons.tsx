@@ -14,7 +14,7 @@ interface SkeletonProps {
  * Base skeleton block with shimmer animation
  */
 export function Skeleton({ className = '' }: SkeletonProps) {
-  return <div className={`animate-pulse bg-gray-200 dark:bg-black rounded ${className}`} />;
+  return <div className={`animate-pulse bg-surface-hover rounded ${className}`} />;
 }
 
 /**
@@ -22,7 +22,7 @@ export function Skeleton({ className = '' }: SkeletonProps) {
  */
 export function ArticleCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-gray-700 p-5 h-full">
+    <div className="bg-surface rounded-2xl border border-surface-border p-5 h-full">
       <div className="flex items-center justify-between mb-3">
         <Skeleton className="h-6 w-20 rounded-full" />
         <Skeleton className="h-4 w-16" />
@@ -31,7 +31,7 @@ export function ArticleCardSkeleton() {
       <Skeleton className="h-5 w-3/4 mb-4" />
       <Skeleton className="h-4 w-full mb-2" />
       <Skeleton className="h-4 w-2/3 mb-4" />
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
+      <div className="flex items-center justify-between pt-3 border-t border-surface-border">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-4 w-16" />
       </div>
@@ -61,7 +61,7 @@ export function ArticleCompactSkeleton() {
  */
 export function HeroSkeleton() {
   return (
-    <div className="relative h-[500px] bg-gray-200 dark:bg-black rounded-3xl overflow-hidden">
+    <div className="relative h-[500px] bg-surface-hover rounded-3xl overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-8">
         <Skeleton className="h-6 w-24 mb-4 rounded-full" />
@@ -86,7 +86,7 @@ export function HeroSkeleton() {
  */
 export function TrendingItemSkeleton() {
   return (
-    <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-black rounded-xl">
+    <div className="flex items-center gap-4 p-4 bg-surface-alt rounded-xl">
       <Skeleton className="w-10 h-10 rounded-lg" />
       <div className="flex-1">
         <Skeleton className="h-4 w-20 mb-1" />
@@ -126,7 +126,7 @@ export function PriceWidgetSkeleton() {
         <Skeleton className="w-6 h-6 rounded-full" />
         <Skeleton className="w-20 h-4" />
       </div>
-      <div className="w-px h-4 bg-gray-200 dark:bg-black" />
+      <div className="w-px h-4 bg-surface-border" />
       <div className="flex items-center gap-2">
         <Skeleton className="w-6 h-6 rounded-full" />
         <Skeleton className="w-20 h-4" />
@@ -142,7 +142,7 @@ export function SearchResultsSkeleton({ count = 5 }: { count?: number }) {
   return (
     <div className="space-y-4">
       {[...Array(count)].map((_, i) => (
-        <div key={i} className="flex gap-4 p-4 bg-white dark:bg-black rounded-xl">
+        <div key={i} className="flex gap-4 p-4 bg-surface rounded-xl">
           <div className="flex-1">
             <Skeleton className="h-5 w-3/4 mb-2" />
             <Skeleton className="h-4 w-full mb-2" />
@@ -168,7 +168,7 @@ export function ArticlePageSkeleton() {
       <Skeleton className="h-12 w-full mb-2" />
       <Skeleton className="h-12 w-3/4 mb-6" />
 
-      <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center gap-4 mb-8 pb-6 border-b border-surface-border">
         <Skeleton className="w-12 h-12 rounded-full" />
         <div>
           <Skeleton className="h-4 w-32 mb-1" />
@@ -197,7 +197,7 @@ export function ArticlePageSkeleton() {
 export function SidebarSkeleton() {
   return (
     <aside className="space-y-6">
-      <div className="bg-white dark:bg-black rounded-xl p-6">
+      <div className="bg-surface rounded-xl p-6">
         <Skeleton className="h-6 w-32 mb-4" />
         {[...Array(5)].map((_, i) => (
           <TrendingItemSkeleton key={i} />
@@ -212,7 +212,7 @@ export function SidebarSkeleton() {
  */
 export function PageSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
+    <div className="min-h-screen bg-surface-alt">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <HeroSkeleton />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">

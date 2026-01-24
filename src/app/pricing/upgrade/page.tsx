@@ -259,15 +259,15 @@ function UpgradeContent() {
       </div>
 
       {/* Wallet Connection */}
-      <div className="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6 mb-8">
+      <div className="border-2 border-surface-border rounded-lg p-6 mb-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Wallet className="w-6 h-6 text-neutral-600 dark:text-neutral-400" />
+            <Wallet className="w-6 h-6 text-text-secondary" />
             <div>
               <h2 className="text-lg font-semibold text-black dark:text-white">
                 Wallet Connection
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              <p className="text-sm text-text-secondary">
                 {wallet.connected
                   ? `Connected: ${wallet.address?.slice(0, 6)}...${wallet.address?.slice(-4)}`
                   : 'Connect your wallet to pay with USDC'}
@@ -286,7 +286,7 @@ function UpgradeContent() {
             {wallet.connected ? (
               <button
                 onClick={disconnect}
-                className="px-4 py-2 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-lg font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                className="px-4 py-2 border-2 border-surface-border text-text-secondary rounded-lg font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900"
               >
                 Disconnect
               </button>
@@ -294,7 +294,7 @@ function UpgradeContent() {
               <button
                 onClick={connect}
                 disabled={isConnecting}
-                className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-2 bg-surface-alt text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2"
               >
                 {isConnecting ? (
                   <>
@@ -312,8 +312,8 @@ function UpgradeContent() {
           </div>
         </div>
         {wallet.connected && wallet.isCorrectChain && wallet.usdcBalance && (
-          <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <div className="mt-4 pt-4 border-t border-surface-border">
+            <p className="text-sm text-text-secondary">
               USDC Balance:{' '}
               <span className="text-black dark:text-white font-mono">{wallet.usdcBalance}</span>
             </p>
@@ -328,7 +328,7 @@ function UpgradeContent() {
       </div>
 
       {/* API Key Input */}
-      <div className="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6 mb-8">
+      <div className="border-2 border-surface-border rounded-lg p-6 mb-8">
         <h2 className="text-lg font-semibold text-black dark:text-white mb-4">
           Enter Your API Key
         </h2>
@@ -338,12 +338,12 @@ function UpgradeContent() {
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="cda_free_..."
-            className="flex-1 px-4 py-2 border-2 border-neutral-200 dark:border-neutral-800 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:border-black dark:focus:border-white outline-none font-mono"
+            className="flex-1 px-4 py-2 border-2 border-surface-border rounded-lg bg-surface text-black dark:text-white focus:border-black dark:focus:border-white outline-none font-mono"
           />
           <button
             onClick={loadKeyInfo}
             disabled={loading}
-            className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2"
+            className="px-6 py-2 bg-surface-alt text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2"
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {loading ? 'Loading...' : 'Load Key'}
@@ -379,7 +379,7 @@ function UpgradeContent() {
 
       {/* Current Tier Info */}
       {keyInfo && (
-        <div className="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6 mb-8">
+        <div className="border-2 border-surface-border rounded-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div
@@ -391,15 +391,11 @@ function UpgradeContent() {
                 <h2 className="text-lg font-semibold text-black dark:text-white">
                   Current Plan: {keyInfo.tier.charAt(0).toUpperCase() + keyInfo.tier.slice(1)}
                 </h2>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Key ID: {keyInfo.id}
-                </p>
+                <p className="text-sm text-text-secondary">Key ID: {keyInfo.id}</p>
               </div>
             </div>
             {keyInfo.expiresAt && (
-              <div
-                className={`text-sm ${isExpiringSoon ? 'text-red-500' : 'text-neutral-600 dark:text-neutral-400'}`}
-              >
+              <div className={`text-sm ${isExpiringSoon ? 'text-red-500' : 'text-text-secondary'}`}>
                 {isExpiringSoon ? '⚠️ ' : ''}
                 Expires: {new Date(keyInfo.expiresAt).toLocaleDateString()}
               </div>
@@ -409,7 +405,7 @@ function UpgradeContent() {
           {/* Usage Bar */}
           <div className="mb-4">
             <div className="flex justify-between text-sm mb-2">
-              <span className="text-neutral-600 dark:text-neutral-400">Today&apos;s Usage</span>
+              <span className="text-text-secondary">Today&apos;s Usage</span>
               <span className="text-black dark:text-white">
                 {keyInfo.usageToday.toLocaleString()} /{' '}
                 {keyInfo.rateLimit === -1 ? 'Unlimited' : keyInfo.rateLimit.toLocaleString()}{' '}
@@ -450,7 +446,7 @@ function UpgradeContent() {
                     <Zap className="w-5 h-5 text-blue-500" />
                     {upgrade.name}
                   </h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 mt-1">
+                  <p className="text-text-secondary mt-1">
                     {upgrade.duration} • {upgrade.requestsPerDay.toLocaleString()} requests/day
                   </p>
                 </div>
@@ -458,9 +454,7 @@ function UpgradeContent() {
                   <div className="text-3xl font-bold text-black dark:text-white">
                     {upgrade.price}
                   </div>
-                  <div className="text-sm text-neutral-600 dark:text-neutral-400">
-                    one-time payment
-                  </div>
+                  <div className="text-sm text-text-secondary">one-time payment</div>
                 </div>
               </div>
 
@@ -468,7 +462,7 @@ function UpgradeContent() {
                 {upgrade.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span className="text-neutral-700 dark:text-neutral-300">{feature}</span>
+                    <span className="text-text-secondary">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -476,7 +470,7 @@ function UpgradeContent() {
               <button
                 onClick={() => handleUpgrade(upgrade.type)}
                 disabled={upgrading || !wallet.connected || !wallet.isCorrectChain}
-                className="w-full py-3 px-4 bg-black dark:bg-white text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 bg-surface-alt text-white dark:text-black rounded-lg font-medium hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {upgrading ? (
                   <>
@@ -508,12 +502,12 @@ function UpgradeContent() {
           ))}
 
           {/* Enterprise CTA */}
-          <div className="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
+          <div className="border-2 border-surface-border rounded-lg p-6">
             <div className="flex items-center gap-3 mb-4">
               <Crown className="w-6 h-6 text-purple-500" />
               <h3 className="text-lg font-semibold text-black dark:text-white">Need Enterprise?</h3>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+            <p className="text-text-secondary mb-4">
               For unlimited requests, custom endpoints, and dedicated support, contact our sales
               team.
             </p>
@@ -534,7 +528,7 @@ function UpgradeContent() {
           <h2 className="text-xl font-bold text-black dark:text-white mb-2">
             You&apos;re on Enterprise
           </h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
+          <p className="text-text-secondary">
             You have unlimited access to all API endpoints. Contact your account manager for any
             changes.
           </p>

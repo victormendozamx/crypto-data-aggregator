@@ -121,7 +121,7 @@ export default function PricingPage() {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      <span className="text-neutral-700 dark:text-neutral-300">{feature}</span>
+                      <span className="text-text-secondary">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -194,7 +194,7 @@ export default function PricingPage() {
 
             <div className="mt-6 p-4 bg-neutral-50 dark:bg-black rounded-lg">
               <h4 className="font-medium text-black dark:text-white mb-2">How it works:</h4>
-              <ol className="list-decimal list-inside space-y-1 text-neutral-600 dark:text-neutral-400">
+              <ol className="list-decimal list-inside space-y-1 text-text-secondary">
                 <li>Make a request to any endpoint</li>
                 <li>Receive HTTP 402 with payment details</li>
                 <li>Send USDC on Base to the provided address</li>
@@ -214,7 +214,7 @@ export default function PricingPage() {
                 <h3 className="font-medium text-black dark:text-white mb-2">
                   What payment methods do you accept?
                 </h3>
-                <p className="text-neutral-600 dark:text-neutral-400">
+                <p className="text-text-secondary">
                   For subscriptions: Credit card, crypto (BTC, ETH, USDC). For pay-per-request: USDC
                   on Base via x402 protocol.
                 </p>
@@ -223,7 +223,7 @@ export default function PricingPage() {
                 <h3 className="font-medium text-black dark:text-white mb-2">
                   Can I upgrade or downgrade my plan?
                 </h3>
-                <p className="text-neutral-600 dark:text-neutral-400">
+                <p className="text-text-secondary">
                   Yes, you can change your plan at any time. Upgrades take effect immediately,
                   downgrades at the next billing cycle.
                 </p>

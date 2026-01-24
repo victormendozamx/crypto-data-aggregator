@@ -223,17 +223,15 @@ function ComparePageContent() {
   const colors = ['#171717', '#404040', '#737373', '#a3a3a3', '#d4d4d4'];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
-            <Scale className="w-8 h-8 text-neutral-900 dark:text-white" />
+            <Scale className="w-8 h-8 text-text-primary" />
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Compare</h1>
-              <p className="text-neutral-500 dark:text-neutral-400">
-                Compare cryptocurrency performance
-              </p>
+              <h1 className="text-3xl font-bold text-text-primary">Compare</h1>
+              <p className="text-text-muted">Compare cryptocurrency performance</p>
             </div>
           </div>
 
@@ -247,7 +245,7 @@ function ComparePageContent() {
             </button>
             <button
               onClick={handleShare}
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-black hover:bg-neutral-200 dark:hover:bg-black rounded-lg text-neutral-700 dark:text-neutral-300 font-medium transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-surface-alt hover:bg-surface-alt rounded-lg text-text-secondary font-medium transition-colors"
             >
               <Share2 className="w-4 h-4" />
               <span className="hidden sm:inline">Share</span>
@@ -256,25 +254,25 @@ function ComparePageContent() {
         </div>
 
         {/* Coin Selector */}
-        <div className="bg-white dark:bg-black rounded-2xl border border-neutral-200 dark:border-neutral-800 p-4 mb-6">
+        <div className="bg-surface rounded-2xl border border-surface-border p-4 mb-6">
           <div className="flex flex-wrap items-center gap-3">
             {selectedCoins.map((coinId, index) => {
               const coin = getCoinInfo(coinId);
               return (
                 <div
                   key={coinId}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-neutral-100 dark:bg-black"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-surface-alt"
                   style={{ borderLeft: `4px solid ${colors[index % colors.length]}` }}
                 >
                   {coin && (
                     <>
-                      <span className="font-medium text-neutral-900 dark:text-white">
+                      <span className="font-medium text-text-primary">
                         {(coin as TokenPrice).symbol?.toUpperCase() || coinId}
                       </span>
                       {selectedCoins.length > 1 && (
                         <button
                           onClick={() => removeCoin(coinId)}
-                          className="p-1 rounded-full hover:bg-neutral-200 dark:hover:bg-black text-neutral-500"
+                          className="p-1 rounded-full hover:bg-surface-alt text-neutral-500"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -296,8 +294,8 @@ function ComparePageContent() {
                 </button>
 
                 {showCoinSelector && (
-                  <div className="absolute top-full left-0 mt-2 w-72 bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-xl z-10">
-                    <div className="p-3 border-b border-neutral-200 dark:border-neutral-800">
+                  <div className="absolute top-full left-0 mt-2 w-72 bg-surface rounded-xl border border-surface-border shadow-xl z-10">
+                    <div className="p-3 border-b border-surface-border">
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                         <input
@@ -305,7 +303,7 @@ function ComparePageContent() {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Search coins..."
-                          className="w-full pl-9 pr-4 py-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black text-neutral-900 dark:text-white text-sm focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent"
+                          className="w-full pl-9 pr-4 py-2 rounded-lg border border-surface-border bg-surface text-text-primary text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
                           autoFocus
                         />
                       </div>
@@ -324,22 +322,16 @@ function ComparePageContent() {
                               className="w-6 h-6 rounded-full"
                             />
                           ) : (
-                            <div className="w-6 h-6 rounded-full bg-neutral-200 dark:bg-black" />
+                            <div className="w-6 h-6 rounded-full bg-surface-alt" />
                           )}
                           <div>
-                            <p className="font-medium text-neutral-900 dark:text-white text-sm">
-                              {coin.name}
-                            </p>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                              {coin.symbol.toUpperCase()}
-                            </p>
+                            <p className="font-medium text-text-primary text-sm">{coin.name}</p>
+                            <p className="text-xs text-text-muted">{coin.symbol.toUpperCase()}</p>
                           </div>
                         </button>
                       ))}
                       {filteredCoins.length === 0 && (
-                        <p className="text-center py-4 text-neutral-500 dark:text-neutral-400 text-sm">
-                          No coins found
-                        </p>
+                        <p className="text-center py-4 text-text-muted text-sm">No coins found</p>
                       )}
                     </div>
                   </div>
@@ -348,15 +340,15 @@ function ComparePageContent() {
             )}
 
             {/* Time Range Selector */}
-            <div className="ml-auto flex items-center gap-1 bg-neutral-100 dark:bg-black rounded-lg p-1">
+            <div className="ml-auto flex items-center gap-1 bg-surface-alt rounded-lg p-1">
               {(['24h', '7d', '30d', '90d', '1y'] as TimeRange[]).map((range) => (
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     timeRange === range
-                      ? 'bg-white dark:bg-black text-neutral-900 dark:text-white shadow'
-                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
+                      ? 'bg-surface text-text-primary shadow'
+                      : 'text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   {range}
@@ -368,7 +360,7 @@ function ComparePageContent() {
 
         {/* Error */}
         {error && (
-          <div className="mb-6 p-4 bg-neutral-100 dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded-xl flex items-center gap-3 text-neutral-700 dark:text-neutral-300">
+          <div className="mb-6 p-4 bg-surface-alt border border-surface-border rounded-xl flex items-center gap-3 text-text-secondary">
             <AlertCircle className="w-5 h-5 flex-shrink-0" />
             <p>{error}</p>
             <button onClick={fetchCoinData} className="ml-auto text-sm font-medium underline">
@@ -378,11 +370,9 @@ function ComparePageContent() {
         )}
 
         {/* Chart Placeholder */}
-        <div className="bg-white dark:bg-black rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4">
-            Normalized Price Chart
-          </h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+        <div className="bg-surface rounded-2xl border border-surface-border p-6 mb-6">
+          <h2 className="text-lg font-semibold text-text-primary mb-4">Normalized Price Chart</h2>
+          <p className="text-sm text-text-muted mb-4">
             All prices normalized to 100 at the start of the period to show relative performance
           </p>
 
@@ -394,7 +384,7 @@ function ComparePageContent() {
             <div className="h-80 flex items-center justify-center bg-neutral-50 dark:bg-black/50 rounded-xl">
               {/* Simple visual representation */}
               <div className="text-center">
-                <p className="text-neutral-500 dark:text-neutral-400 mb-4">
+                <p className="text-text-muted mb-4">
                   Chart data loaded for {selectedCoins.length} coin
                   {selectedCoins.length !== 1 ? 's' : ''}
                 </p>
@@ -417,14 +407,10 @@ function ComparePageContent() {
                             opacity: 0.7,
                           }}
                         />
-                        <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
-                          {coin.symbol.toUpperCase()}
-                        </p>
+                        <p className="text-xs text-text-muted mt-2">{coin.symbol.toUpperCase()}</p>
                         <p
                           className={`text-xs font-medium ${
-                            change >= 0
-                              ? 'text-neutral-900 dark:text-white'
-                              : 'text-neutral-500 dark:text-neutral-400'
+                            change >= 0 ? 'text-text-primary' : 'text-text-muted'
                           }`}
                         >
                           {change >= 0 ? '+' : ''}
@@ -437,7 +423,7 @@ function ComparePageContent() {
               </div>
             </div>
           ) : (
-            <div className="h-80 flex items-center justify-center text-neutral-500 dark:text-neutral-400">
+            <div className="h-80 flex items-center justify-center text-text-muted">
               No data available
             </div>
           )}
@@ -462,12 +448,12 @@ function ComparePageContent() {
         </div>
 
         {/* Comparison Table */}
-        <div className="bg-white dark:bg-black rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-surface-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-neutral-200 dark:border-neutral-800">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-neutral-500 dark:text-neutral-400">
+                <tr className="border-b border-surface-border">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-text-muted">
                     Metric
                   </th>
                   {selectedCoins.map((coinId, index) => {
@@ -495,7 +481,7 @@ function ComparePageContent() {
                     return (
                       <td
                         key={coinId}
-                        className="px-4 py-4 text-right font-medium text-neutral-900 dark:text-white"
+                        className="px-4 py-4 text-right font-medium text-text-primary"
                       >
                         $
                         {coin?.current_price.toLocaleString(undefined, {
@@ -545,9 +531,7 @@ function ComparePageContent() {
                       <td key={coinId} className="px-4 py-4 text-right">
                         <span
                           className={`inline-flex items-center gap-1 font-medium ${
-                            change >= 0
-                              ? 'text-neutral-900 dark:text-white'
-                              : 'text-neutral-500 dark:text-neutral-400'
+                            change >= 0 ? 'text-text-primary' : 'text-text-muted'
                           }`}
                         >
                           {change >= 0 ? (
@@ -574,9 +558,7 @@ function ComparePageContent() {
                       <td key={coinId} className="px-4 py-4 text-right">
                         <span
                           className={`font-medium ${
-                            change >= 0
-                              ? 'text-neutral-900 dark:text-white'
-                              : 'text-neutral-500 dark:text-neutral-400'
+                            change >= 0 ? 'text-text-primary' : 'text-text-muted'
                           }`}
                         >
                           {change >= 0 ? '+' : ''}
@@ -619,9 +601,7 @@ function ComparePageContent() {
                     const change = coin?.ath_change_percentage || 0;
                     return (
                       <td key={coinId} className="px-4 py-4 text-right">
-                        <span className="text-neutral-500 dark:text-neutral-400 font-medium">
-                          {change.toFixed(1)}%
-                        </span>
+                        <span className="text-text-muted font-medium">{change.toFixed(1)}%</span>
                       </td>
                     );
                   })}
@@ -691,13 +671,13 @@ export default function ComparePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white dark:bg-black">
+        <div className="min-h-screen bg-surface">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="animate-pulse space-y-6">
-              <div className="h-12 bg-neutral-200 dark:bg-black rounded-lg w-48" />
-              <div className="h-20 bg-neutral-200 dark:bg-black rounded-2xl" />
-              <div className="h-80 bg-neutral-200 dark:bg-black rounded-2xl" />
-              <div className="h-96 bg-neutral-200 dark:bg-black rounded-2xl" />
+              <div className="h-12 bg-surface-alt rounded-lg w-48" />
+              <div className="h-20 bg-surface-alt rounded-2xl" />
+              <div className="h-80 bg-surface-alt rounded-2xl" />
+              <div className="h-96 bg-surface-alt rounded-2xl" />
             </div>
           </div>
         </div>

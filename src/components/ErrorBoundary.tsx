@@ -89,21 +89,19 @@ function DefaultErrorFallback({ error, onReset }: DefaultErrorFallbackProps) {
           </svg>
         </div>
 
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          Something went wrong
-        </h2>
+        <h2 className="text-xl font-bold text-text-primary mb-2">Something went wrong</h2>
 
-        <p className="text-gray-600 dark:text-slate-400 mb-6">
+        <p className="text-text-secondary mb-6">
           We encountered an unexpected error. Please try again or return to the homepage.
         </p>
 
         {/* Error details (development only) */}
         {process.env.NODE_ENV === 'development' && error && (
           <details className="mb-6 text-left">
-            <summary className="cursor-pointer text-sm text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300">
+            <summary className="cursor-pointer text-sm text-text-muted hover:text-text-secondary">
               Error details
             </summary>
-            <pre className="mt-2 p-3 bg-gray-100 dark:bg-black rounded-lg text-xs text-red-600 dark:text-red-400 overflow-auto max-h-40">
+            <pre className="mt-2 p-3 bg-surface-alt rounded-lg text-xs text-red-600 dark:text-red-400 overflow-auto max-h-40">
               {error.message}
               {error.stack && `\n\n${error.stack}`}
             </pre>
@@ -122,7 +120,7 @@ function DefaultErrorFallback({ error, onReset }: DefaultErrorFallbackProps) {
           )}
           <Link
             href="/"
-            className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-surface-alt hover:bg-surface-alt text-text-secondary font-medium rounded-lg transition-colors"
           >
             Go home
           </Link>
@@ -168,17 +166,17 @@ export function ErrorFallback({
         </svg>
       </div>
 
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
+      <h2 className="text-xl font-bold text-text-primary mb-2">{title}</h2>
 
-      <p className="text-gray-600 dark:text-slate-400 mb-6">{description}</p>
+      <p className="text-text-secondary mb-6">{description}</p>
 
       {/* Error details (development only) */}
       {process.env.NODE_ENV === 'development' && error && (
         <details className="mb-6 text-left">
-          <summary className="cursor-pointer text-sm text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300">
+          <summary className="cursor-pointer text-sm text-text-muted hover:text-text-secondary">
             Error details
           </summary>
-          <pre className="mt-2 p-3 bg-gray-100 dark:bg-black rounded-lg text-xs text-red-600 dark:text-red-400 overflow-auto max-h-40">
+          <pre className="mt-2 p-3 bg-surface-alt rounded-lg text-xs text-red-600 dark:text-red-400 overflow-auto max-h-40">
             {error.message}
             {error.stack && `\n\n${error.stack}`}
           </pre>
@@ -197,7 +195,7 @@ export function ErrorFallback({
         )}
         <Link
           href="/"
-          className="px-4 py-2 bg-gray-100 dark:bg-black hover:bg-gray-200 dark:hover:bg-black text-gray-700 dark:text-slate-300 font-medium rounded-lg transition-colors"
+          className="px-4 py-2 bg-surface-alt hover:bg-surface-alt text-text-secondary font-medium rounded-lg transition-colors"
         >
           Go home
         </Link>

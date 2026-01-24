@@ -71,20 +71,20 @@ export function SocialBuzz() {
   const getSentimentStyle = (sentiment: string) => {
     switch (sentiment) {
       case 'bullish':
-        return 'bg-black dark:bg-white text-white dark:text-neutral-900';
+        return 'bg-surface-alt text-text-primary';
       case 'bearish':
         return 'bg-neutral-400 dark:bg-neutral-600 text-white';
       default:
-        return 'bg-neutral-200 dark:bg-black text-neutral-700 dark:text-neutral-300';
+        return 'bg-surface-alt text-neutral-700 dark:text-neutral-300';
     }
   };
 
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-10 w-48 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+        <div className="h-10 w-48 bg-surface-alt rounded animate-pulse" />
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-16 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+          <div key={i} className="h-16 bg-surface-alt rounded animate-pulse" />
         ))}
       </div>
     );
@@ -93,7 +93,7 @@ export function SocialBuzz() {
   return (
     <div className="space-y-6">
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-neutral-200 dark:border-neutral-700">
+      <div className="flex gap-2 border-b border-surface-border">
         <button
           onClick={() => setTab('trending')}
           className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
@@ -125,7 +125,7 @@ export function SocialBuzz() {
             <a
               key={coin.id}
               href={`/coin/${coin.id}`}
-              className="flex items-center gap-4 p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-750 transition-colors"
+              className="flex items-center gap-4 p-4 bg-surface border border-surface-border rounded-lg hover:bg-surface-alt transition-colors"
             >
               <span className="text-lg font-bold text-neutral-400 w-6">{index + 1}</span>
               <img src={coin.thumb} alt={coin.name} className="w-8 h-8 rounded-full" />
@@ -157,7 +157,7 @@ export function SocialBuzz() {
           {socialMetrics.map((metric, index) => (
             <div
               key={metric.symbol}
-              className="flex items-center gap-4 p-4 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-700 rounded-lg"
+              className="flex items-center gap-4 p-4 bg-surface border border-surface-border rounded-lg"
             >
               <span className="text-lg font-bold text-neutral-400 w-6">{index + 1}</span>
               <div className="flex-1 min-w-0">
@@ -223,7 +223,7 @@ export function SocialBuzzWidget() {
     return (
       <div className="space-y-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-8 bg-neutral-200 dark:bg-black rounded animate-pulse" />
+          <div key={i} className="h-8 bg-surface-alt rounded animate-pulse" />
         ))}
       </div>
     );
@@ -239,7 +239,7 @@ export function SocialBuzzWidget() {
         <a
           key={coin.id}
           href={`/coin/${coin.id}`}
-          className="flex items-center gap-2 py-1.5 hover:bg-neutral-100 dark:hover:bg-black rounded px-2 -mx-2 transition-colors"
+          className="flex items-center gap-2 py-1.5 hover:bg-surface-alt rounded px-2 -mx-2 transition-colors"
         >
           <span className="text-xs font-medium text-neutral-400 w-4">{i + 1}</span>
           <img src={coin.thumb} alt="" className="w-5 h-5 rounded-full" />

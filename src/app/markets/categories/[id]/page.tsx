@@ -265,13 +265,13 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-6">
+          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
             <Link href="/markets" className="hover:text-blue-600 dark:hover:text-blue-400">
               Markets
             </Link>
@@ -302,7 +302,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
           {/* Coins Table */}
           {coins.length > 0 ? (
-            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="bg-surface rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -394,7 +394,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               </div>
             </div>
           ) : (
-            <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 p-8 text-center">
+            <div className="bg-surface rounded-xl border border-gray-200 dark:border-gray-700 p-8 text-center">
               <div className="flex justify-center mb-4">
                 <Search className="w-10 h-10 text-gray-400" />
               </div>

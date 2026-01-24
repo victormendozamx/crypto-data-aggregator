@@ -79,14 +79,11 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900 dark:text-white">Export / Import Watchlist</h3>
+    <div className="bg-surface rounded-xl border border-surface-border shadow-lg overflow-hidden">
+      <div className="px-4 py-3 border-b border-surface-border flex items-center justify-between">
+        <h3 className="font-semibold text-text-primary">Export / Import Watchlist</h3>
         {onClose && (
-          <button
-            onClick={onClose}
-            className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500"
-          >
+          <button onClick={onClose} className="p-1 rounded-lg hover:bg-surface-alt text-gray-500">
             <X className="w-5 h-5" />
           </button>
         )}
@@ -95,7 +92,7 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
       <div className="p-4 space-y-4">
         {/* Export Section */}
         <div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <p className="text-sm text-text-secondary mb-3">
             Export your watchlist ({watchlist.length} coin{watchlist.length !== 1 ? 's' : ''})
           </p>
           <div className="flex gap-2">
@@ -119,11 +116,11 @@ export function WatchlistExport({ onClose }: WatchlistExportProps) {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-200 dark:border-gray-700" />
+        <div className="border-t border-surface-border" />
 
         {/* Import Section */}
         <div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <p className="text-sm text-text-secondary mb-3">
             Import a previously exported watchlist (JSON format only)
           </p>
           <input

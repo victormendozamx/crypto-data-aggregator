@@ -47,7 +47,7 @@ export default function QuickShareButton({ title, url, className = '' }: QuickSh
         onClick={handleShare}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className="flex items-center justify-center w-8 h-8 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand-500"
+        className="flex items-center justify-center w-8 h-8 rounded-full bg-surface/90 hover:bg-surface-hover shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary"
         aria-label="Share article"
       >
         {copied ? (

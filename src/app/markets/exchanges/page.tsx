@@ -69,7 +69,7 @@ export default async function ExchangesPage() {
   const exchanges = await getExchanges();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
@@ -95,7 +95,7 @@ export default async function ExchangesPage() {
           </div>
 
           {/* Exchanges Table */}
-          <div className="bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-surface rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>

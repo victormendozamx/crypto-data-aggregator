@@ -19,13 +19,13 @@ interface PrefetchLinkProps extends Omit<LinkProps, 'onMouseEnter' | 'onFocus'> 
  * Enhanced Link component that prefetches on hover/focus with configurable delay
  * Provides visual feedback and optimizes navigation performance
  */
-export function PrefetchLink({ 
-  children, 
+export function PrefetchLink({
+  children,
   className = '',
   prefetchDelay = 100,
   showLoadingOnClick = false,
   href,
-  ...props 
+  ...props
 }: PrefetchLinkProps) {
   const [isPrefetching, setIsPrefetching] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -74,9 +74,7 @@ export function PrefetchLink({
       {...props}
     >
       {children}
-      {isPrefetching && (
-        <span className="sr-only">Loading...</span>
-      )}
+      {isPrefetching && <span className="sr-only">Loading...</span>}
     </Link>
   );
 }
@@ -98,13 +96,13 @@ export function NavLink({
   href,
   activePath,
   activeClassName = 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30',
-  inactiveClassName = 'text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800',
+  inactiveClassName = 'text-text-secondary hover:text-text-primary hover:bg-surface-alt',
   className = '',
   ...props
 }: NavLinkProps) {
   const hrefString = typeof href === 'string' ? href : href.pathname || '';
-  const isActive = activePath === hrefString || 
-                   (hrefString !== '/' && activePath?.startsWith(hrefString));
+  const isActive =
+    activePath === hrefString || (hrefString !== '/' && activePath?.startsWith(hrefString));
 
   return (
     <PrefetchLink

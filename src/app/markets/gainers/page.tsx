@@ -27,25 +27,25 @@ export default async function GainersPage() {
     .slice(0, 100);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto">
         <Header />
 
         <main className="px-4 py-6">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 mb-6">
-            <Link href="/markets" className="hover:text-neutral-900 dark:hover:text-white">
+          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
+            <Link href="/markets" className="hover:text-text-primary">
               Markets
             </Link>
             <span>/</span>
-            <span className="text-neutral-900 dark:text-white">Gainers</span>
+            <span className="text-text-primary">Gainers</span>
           </nav>
 
           {/* Page Header */}
           <div className="mb-8">
             <div className="flex items-center gap-3">
               <svg
-                className="w-7 h-7 text-neutral-900 dark:text-white"
+                className="w-7 h-7 text-text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -57,38 +57,32 @@ export default async function GainersPage() {
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 />
               </svg>
-              <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">Top Gainers</h1>
+              <h1 className="text-3xl font-bold text-text-primary">Top Gainers</h1>
             </div>
-            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
+            <p className="text-text-secondary mt-2">
               Cryptocurrencies with the highest 24h price gains
             </p>
           </div>
 
           {/* Gainers Table */}
-          <div className="bg-white dark:bg-black rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+          <div className="bg-surface rounded-xl border border-surface-border overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-neutral-50 dark:bg-black/50 border-b border-neutral-200 dark:border-neutral-800">
-                    <th className="text-left text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4">
-                      #
-                    </th>
-                    <th className="text-left text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4">
-                      Coin
-                    </th>
-                    <th className="text-right text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4">
-                      Price
-                    </th>
-                    <th className="text-right text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4">
+                  <tr className="bg-neutral-50 dark:bg-black/50 border-b border-surface-border">
+                    <th className="text-left text-text-muted text-sm font-medium p-4">#</th>
+                    <th className="text-left text-text-muted text-sm font-medium p-4">Coin</th>
+                    <th className="text-right text-text-muted text-sm font-medium p-4">Price</th>
+                    <th className="text-right text-text-muted text-sm font-medium p-4">
                       24h Change
                     </th>
-                    <th className="text-right text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4 hidden md:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden md:table-cell">
                       7d Change
                     </th>
-                    <th className="text-right text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4 hidden lg:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                       Market Cap
                     </th>
-                    <th className="text-right text-neutral-500 dark:text-neutral-400 text-sm font-medium p-4 hidden lg:table-cell">
+                    <th className="text-right text-text-muted text-sm font-medium p-4 hidden lg:table-cell">
                       Volume (24h)
                     </th>
                   </tr>
@@ -99,7 +93,7 @@ export default async function GainersPage() {
                       key={coin.id}
                       className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-black/50 transition-colors"
                     >
-                      <td className="p-4 text-neutral-500 dark:text-neutral-400">{index + 1}</td>
+                      <td className="p-4 text-text-muted">{index + 1}</td>
                       <td className="p-4">
                         <Link href={`/coin/${coin.id}`} className="flex items-center gap-3">
                           <div className="relative w-8 h-8">
@@ -114,34 +108,34 @@ export default async function GainersPage() {
                             )}
                           </div>
                           <div>
-                            <span className="font-medium text-neutral-900 dark:text-white hover:text-neutral-700 dark:hover:text-neutral-300">
+                            <span className="font-medium text-text-primary hover:text-neutral-700 dark:hover:text-neutral-300">
                               {coin.name}
                             </span>
-                            <span className="text-neutral-500 dark:text-neutral-400 text-sm ml-2">
+                            <span className="text-text-muted text-sm ml-2">
                               {coin.symbol.toUpperCase()}
                             </span>
                           </div>
                         </Link>
                       </td>
-                      <td className="p-4 text-right font-medium text-neutral-900 dark:text-white">
+                      <td className="p-4 text-right font-medium text-text-primary">
                         {formatPrice(coin.current_price)}
                       </td>
-                      <td className="p-4 text-right font-semibold text-neutral-900 dark:text-white">
+                      <td className="p-4 text-right font-semibold text-text-primary">
                         {formatPercent(coin.price_change_percentage_24h)}
                       </td>
                       <td
                         className={`p-4 text-right hidden md:table-cell ${
                           (coin.price_change_percentage_7d_in_currency || 0) >= 0
-                            ? 'text-neutral-900 dark:text-white font-semibold'
-                            : 'text-neutral-500 dark:text-neutral-400'
+                            ? 'text-text-primary font-semibold'
+                            : 'text-text-muted'
                         }`}
                       >
                         {formatPercent(coin.price_change_percentage_7d_in_currency)}
                       </td>
-                      <td className="p-4 text-right text-neutral-700 dark:text-neutral-300 hidden lg:table-cell">
+                      <td className="p-4 text-right text-text-secondary hidden lg:table-cell">
                         ${formatNumber(coin.market_cap)}
                       </td>
-                      <td className="p-4 text-right text-neutral-700 dark:text-neutral-300 hidden lg:table-cell">
+                      <td className="p-4 text-right text-text-secondary hidden lg:table-cell">
                         ${formatNumber(coin.total_volume)}
                       </td>
                     </tr>
@@ -153,7 +147,7 @@ export default async function GainersPage() {
 
           {/* Back link */}
           <div className="mt-8 text-center">
-            <Link href="/markets" className="text-neutral-900 dark:text-white hover:underline">
+            <Link href="/markets" className="text-text-primary hover:underline">
               ← Back to Markets
             </Link>
           </div>

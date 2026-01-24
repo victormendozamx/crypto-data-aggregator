@@ -124,24 +124,24 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-black rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden"
+        className="bg-surface rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-surface-border flex items-center justify-between">
           <div>
-            <h2 className="font-semibold text-gray-900 dark:text-white">
+            <h2 className="font-semibold text-text-primary">
               {step === 'coin' ? 'Select Coin' : 'Add Transaction'}
             </h2>
             {selectedCoin && step === 'details' && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-text-muted">
                 {selectedCoin.name} ({selectedCoin.symbol.toUpperCase()})
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-black text-gray-500 transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-alt text-gray-500 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -152,13 +152,13 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
           <div className="p-6">
             {/* Search */}
             <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search coins..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-primary focus:border-transparent"
                 autoFocus
               />
             </div>
@@ -169,21 +169,19 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                 <button
                   key={coin.id}
                   onClick={() => handleSelectCoin(coin)}
-                  className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-black transition-colors text-left"
+                  className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-surface-hover transition-colors text-left"
                 >
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-sm font-bold text-gray-600 dark:text-gray-300">
+                  <div className="w-10 h-10 rounded-full bg-surface-hover flex items-center justify-center text-sm font-bold text-text-muted">
                     {coin.symbol.slice(0, 2)}
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900 dark:text-white">{coin.name}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {coin.symbol.toUpperCase()}
-                    </p>
+                    <p className="font-medium text-text-primary">{coin.name}</p>
+                    <p className="text-sm text-text-muted">{coin.symbol.toUpperCase()}</p>
                   </div>
                 </button>
               ))}
               {filteredCoins.length === 0 && (
-                <p className="text-center py-8 text-gray-500 dark:text-gray-400">No coins found</p>
+                <p className="text-center py-8 text-text-muted">No coins found</p>
               )}
             </div>
           </div>
@@ -231,7 +229,7 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                           ? type === 'buy' || type === 'transfer_in'
                             ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 border-2 border-green-500'
                             : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border-2 border-red-500'
-                          : 'bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-400 border-2 border-transparent'
+                          : 'bg-gray-100 dark:bg-black text-text-secondary border-2 border-transparent'
                       }`}
                     >
                       {type === 'transfer_in'
@@ -258,7 +256,7 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                   placeholder="0.00"
                   step="any"
                   min="0"
-                  className="w-full px-4 py-3 pr-16 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 pr-16 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
@@ -281,12 +279,12 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                   placeholder="0.00"
                   step="any"
                   min="0"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
               </div>
               {totalValue > 0 && (
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mt-1 text-sm text-text-muted">
                   Total: $
                   {totalValue.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
@@ -308,7 +306,7 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   max={new Date().toISOString().split('T')[0]}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -327,7 +325,7 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                     value={exchange}
                     onChange={(e) => setExchange(e.target.value)}
                     placeholder="e.g. Coinbase"
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -342,7 +340,7 @@ export function AddHoldingModal({ isOpen, onClose, prefilledCoin }: AddHoldingMo
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Add note..."
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-black text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-surface-border bg-surface text-text-primary focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
